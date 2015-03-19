@@ -1,0 +1,43 @@
+package rs.emulate.legacy.config.varp;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
+import rs.emulate.legacy.config.DefaultDefinition;
+import rs.emulate.shared.prop.DefinitionProperty;
+import rs.emulate.shared.prop.Properties;
+import rs.emulate.shared.prop.PropertyMap;
+
+/**
+ * A default {@link ParameterVariableDefinition} used as a base.
+ * 
+ * @author Major
+ */
+public class DefaultParameterVariableDefinition extends DefaultDefinition {
+
+	/**
+	 * The default definition.
+	 */
+	private static final DefaultParameterVariableDefinition DEFAULT = new DefaultParameterVariableDefinition();
+
+	/**
+	 * A {@link Supplier} that returns a {@link PropertyMap} copy of this default definition.
+	 */
+	public static final Supplier<PropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+
+	/**
+	 * Creates the default parameter variable definition.
+	 */
+	private DefaultParameterVariableDefinition() {
+		super();
+	}
+
+	@Override
+	protected Map<Integer, DefinitionProperty<?>> init() {
+		Map<Integer, DefinitionProperty<?>> map = new HashMap<>(1);
+		map.put(5, Properties.unsignedShort(ParameterVariableProperty.PARAMETER, 0));
+		return map;
+	}
+
+}

@@ -1,0 +1,119 @@
+package rs.emulate.legacy.config.animation;
+
+import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.shared.prop.DefinitionProperty;
+import rs.emulate.shared.prop.PropertyMap;
+
+/**
+ * A {@link MutableDefinition} for an animation.
+ * 
+ * @author Major
+ */
+public class AnimationDefinition extends MutableDefinition {
+
+	/**
+	 * The name of the ArchiveEntry containing the AnimationDefinitions, without the extension.
+	 */
+	public static final String ENTRY_NAME = "seq";
+
+	/**
+	 * Creates the AnimationDefinition.
+	 * 
+	 * @param id The id of the definition.
+	 * @param properties The {@link PropertyMap}.
+	 */
+	public AnimationDefinition(int id, PropertyMap properties) {
+		super(id, properties);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the animating precedence of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> animatingPrecedence() {
+		return getProperty(AnimationProperty.ANIMATING_PRECEDENCE);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the {@link FrameCollection} of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<FrameCollection> frameCollection() {
+		return getProperty(AnimationProperty.FRAMES);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the loop offset of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> loopOffset() {
+		return getProperty(AnimationProperty.LOOP_OFFSET);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the maximum loop count of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> maximumLoops() {
+		return getProperty(AnimationProperty.MAXIMUM_LOOPS);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the player mainhand id of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> playerMainhand() {
+		return getProperty(AnimationProperty.PLAYER_MAINHAND);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the player offhand id of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> playerOffhand() {
+		return getProperty(AnimationProperty.PLAYER_OFFHAND);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the priority of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> priority() {
+		return getProperty(AnimationProperty.PRIORITY);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the replay mode of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> replayMode() {
+		return getProperty(AnimationProperty.REPLAY_MODE);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the stretches property of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Boolean> stretches() {
+		return getProperty(AnimationProperty.STRETCHES);
+	}
+
+	/**
+	 * Gets the {@link DefinitionProperty} containing the walking precedence of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final DefinitionProperty<Integer> walkingPrecedence() {
+		return getProperty(AnimationProperty.WALKING_PRECEDENCE);
+	}
+
+}
