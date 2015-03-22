@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.varbit;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * A {@link PropertyType} implementation for bit variables.
+ * A {@link ConfigPropertyType} implementation for bit variables.
  * 
  * @author Major
  */
-public enum BitVariableProperty implements PropertyType {
+public enum BitVariableProperty implements ConfigPropertyType {
 
 	/**
 	 * The variable property.
@@ -29,7 +29,7 @@ public enum BitVariableProperty implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

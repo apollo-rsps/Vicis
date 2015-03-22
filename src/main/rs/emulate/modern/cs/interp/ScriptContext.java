@@ -43,7 +43,7 @@ public final class ScriptContext {
 	/**
 	 * Creates the ScriptContext.
 	 *
-	 * @param operands The list of operands.
+	 * @param operands The {@link OperandTable}.
 	 */
 	public ScriptContext(OperandTable operands) {
 		this.operands = operands;

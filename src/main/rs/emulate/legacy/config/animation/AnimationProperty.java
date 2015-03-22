@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.animation;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * A {@link PropertyType} implementation for AnimationDefinitions.
+ * A {@link ConfigPropertyType} implementation for AnimationDefinitions.
  * 
  * @author Major
  */
-enum AnimationProperty implements PropertyType {
+enum AnimationProperty implements ConfigPropertyType {
 
 	/**
 	 * The frames property.
@@ -78,7 +78,7 @@ enum AnimationProperty implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

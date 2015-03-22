@@ -13,6 +13,16 @@ import rs.emulate.legacy.graphics.ImageFormat;
 public final class Sprite {
 
 	/**
+	 * Creates a {@link SpriteBuilder} with the specified name.
+	 * 
+	 * @param name The name of the Sprite being built.
+	 * @return The SpriteBuilder.
+	 */
+	public static SpriteBuilder builder(String name) {
+		return new SpriteBuilder(name);
+	}
+
+	/**
 	 * The format of this sprite.
 	 */
 	private final ImageFormat format;

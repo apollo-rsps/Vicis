@@ -1,15 +1,15 @@
 package rs.emulate.legacy.config.animation;
 
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 /**
- * A {@link MutableDefinition} for an animation.
+ * A {@link MutableConfigDefinition} for an animation.
  * 
  * @author Major
  */
-public class AnimationDefinition extends MutableDefinition {
+public class AnimationDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the ArchiveEntry containing the AnimationDefinitions, without the extension.

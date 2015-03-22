@@ -7,12 +7,12 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import rs.emulate.legacy.config.DefaultDefinition;
-import rs.emulate.legacy.config.DefinitionUtils;
+import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
-import rs.emulate.shared.prop.PropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -20,7 +20,7 @@ import rs.emulate.shared.util.DataBuffer;
  * 
  * @author Major
  */
-public class DefaultIdentityKitDefinition extends DefaultDefinition {
+public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 
 	/**
 	 * The DefaultIdentityKitDefinition.
@@ -63,12 +63,12 @@ public class DefaultIdentityKitDefinition extends DefaultDefinition {
 		defaults.put(3, Properties.alwaysTrue(IdentityKitProperty.PLAYER_DESIGN_STYLE, false));
 
 		for (int slot = 1; slot <= IdentityKitDefinition.COLOUR_COUNT; slot++) {
-			defaults.put(slot + 39, Properties.unsignedShort(DefinitionUtils.getOriginalColourPropertyName(slot), 0));
-			defaults.put(slot + 49, Properties.unsignedShort(DefinitionUtils.getReplacementColourPropertyName(slot), 0));
+			defaults.put(slot + 39, Properties.unsignedShort(ConfigDefinitionUtils.getOriginalColourPropertyName(slot), 0));
+			defaults.put(slot + 49, Properties.unsignedShort(ConfigDefinitionUtils.getReplacementColourPropertyName(slot), 0));
 		}
 
 		for (int model = 1; model <= IdentityKitDefinition.HEAD_MODEL_COUNT; model++) {
-			PropertyType name = DefinitionUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model);
+			ConfigPropertyType name = ConfigDefinitionUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model);
 			defaults.put(model + 59, Properties.unsignedShort(name, -1));
 		}
 

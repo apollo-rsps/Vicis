@@ -1,5 +1,7 @@
 package rs.emulate.shared.prop;
 
+import rs.emulate.legacy.config.ConfigPropertyType;
+
 /**
  * Contains static utility methods to create {@link DefinitionProperty} objects.
  * 
@@ -14,7 +16,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Integer> unsignedByte(PropertyType name, int defaultValue) {
+	public static DefinitionProperty<Integer> unsignedByte(ConfigPropertyType name, int defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER,
 				Byte.BYTES);
 	}
@@ -26,7 +28,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Boolean> alwaysFalse(PropertyType name, boolean defaultValue) {
+	public static DefinitionProperty<Boolean> alwaysFalse(ConfigPropertyType name, boolean defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.FALSE_DECODER, 0);
 	}
 
@@ -37,7 +39,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Integer> unsignedInt(PropertyType name, int defaultValue) {
+	public static DefinitionProperty<Integer> unsignedInt(ConfigPropertyType name, int defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.INT_ENCODER, PropertyDecoders.INT_DECODER,
 				Integer.BYTES);
 	}
@@ -49,7 +51,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Integer> unsignedShort(PropertyType name, int defaultValue) {
+	public static DefinitionProperty<Integer> unsignedShort(ConfigPropertyType name, int defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SHORT_DECODER,
 				Short.BYTES);
 	}
@@ -61,7 +63,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Integer> signedByte(PropertyType name, int defaultValue) {
+	public static DefinitionProperty<Integer> signedByte(ConfigPropertyType name, int defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.SIGNED_BYTE_DECODER,
 				Byte.BYTES);
 	}
@@ -73,7 +75,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Integer> signedShort(PropertyType name, int defaultValue) {
+	public static DefinitionProperty<Integer> signedShort(ConfigPropertyType name, int defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER,
 				PropertyDecoders.SIGNED_SHORT_DECODER, Short.BYTES);
 	}
@@ -85,7 +87,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<String> string(PropertyType name, String defaultValue) {
+	public static DefinitionProperty<String> string(ConfigPropertyType name, String defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.ASCII_STRING_ENCODER,
 				PropertyDecoders.STRING_DECODER, string -> string.length() + Byte.BYTES); // terminator byte
 	}
@@ -97,7 +99,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Integer> tribyte(PropertyType name, int defaultValue) {
+	public static DefinitionProperty<Integer> tribyte(ConfigPropertyType name, int defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.TRI_BYTE_ENCODER, PropertyDecoders.TRI_BYTE_DECODER,
 				3 * Byte.BYTES);
 	}
@@ -109,7 +111,7 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static DefinitionProperty<Boolean> alwaysTrue(PropertyType name, boolean defaultValue) {
+	public static DefinitionProperty<Boolean> alwaysTrue(ConfigPropertyType name, boolean defaultValue) {
 		return new DefinitionProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.TRUE_DECODER, 0);
 	}
 

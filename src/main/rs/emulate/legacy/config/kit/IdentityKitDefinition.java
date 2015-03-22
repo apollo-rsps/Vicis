@@ -2,8 +2,8 @@ package rs.emulate.legacy.config.kit;
 
 import java.util.List;
 
-import rs.emulate.legacy.config.DefinitionUtils;
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
@@ -15,7 +15,7 @@ import com.google.common.collect.ImmutableMap;
  *
  * @author Major
  */
-public class IdentityKitDefinition extends MutableDefinition {
+public class IdentityKitDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the archive entry containing the identity kit definitions, without the extension.
@@ -65,8 +65,8 @@ public class IdentityKitDefinition extends MutableDefinition {
 		ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
-			DefinitionProperty<Integer> original = getProperty(DefinitionUtils.getOriginalColourPropertyName(slot));
-			DefinitionProperty<Integer> replacement = getProperty(DefinitionUtils.getReplacementColourPropertyName(slot));
+			DefinitionProperty<Integer> original = getProperty(ConfigDefinitionUtils.getOriginalColourPropertyName(slot));
+			DefinitionProperty<Integer> replacement = getProperty(ConfigDefinitionUtils.getReplacementColourPropertyName(slot));
 
 			builder.put(original.getValue(), replacement.getValue());
 		}
@@ -81,7 +81,7 @@ public class IdentityKitDefinition extends MutableDefinition {
 	 * @return The property containing the head model id.
 	 */
 	public DefinitionProperty<Integer> getHeadModel(int model) {
-		return getProperty(DefinitionUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
+		return getProperty(ConfigDefinitionUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
 	}
 
 	/**

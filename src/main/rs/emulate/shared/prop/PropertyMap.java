@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.util.Assertions;
 
 import com.google.common.base.Preconditions;
@@ -38,7 +39,7 @@ public final class PropertyMap {
 	/**
 	 * The map of PropertyTypes to DefinitionProperty objects.
 	 */
-	private final Map<PropertyType, DefinitionProperty<?>> properties;
+	private final Map<ConfigPropertyType, DefinitionProperty<?>> properties;
 
 	/**
 	 * Creates the PropertyMap.
@@ -50,7 +51,7 @@ public final class PropertyMap {
 		Preconditions.checkArgument(opcodes.get(0) == null, "Opcode 0 is reserved.");
 		this.opcodes = new HashMap<>(opcodes);
 
-		Map<PropertyType, DefinitionProperty<?>> properties = new HashMap<>(opcodes.size());
+		Map<ConfigPropertyType, DefinitionProperty<?>> properties = new HashMap<>(opcodes.size());
 
 		for (Map.Entry<Integer, DefinitionProperty<?>> entry : opcodes.entrySet()) {
 			DefinitionProperty<?> property = entry.getValue().duplicate();
@@ -82,13 +83,13 @@ public final class PropertyMap {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} with the specified {@link PropertyType}.
+	 * Gets the {@link DefinitionProperty} with the specified {@link ConfigPropertyType}.
 	 *
 	 * @param name The name of the property.
 	 * @return The DefinitionProperty.
 	 * @throws IllegalArgumentException If no property with the specified name exists.
 	 */
-	public <T> DefinitionProperty<T> get(PropertyType name) {
+	public <T> DefinitionProperty<T> get(ConfigPropertyType name) {
 		return validate(properties.get(name), name);
 	}
 

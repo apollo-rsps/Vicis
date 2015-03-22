@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config.graphic;
 
-import rs.emulate.legacy.config.DefinitionUtils;
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.util.Assertions;
@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
  * 
  * @author Major
  */
-public class GraphicDefinition extends MutableDefinition {
+public class GraphicDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the archive entry containing the graphic definitions, without the extension.
@@ -106,7 +106,7 @@ public class GraphicDefinition extends MutableDefinition {
 	 */
 	public DefinitionProperty<Integer> originalColour(int slot) {
 		checkColourBounds(slot);
-		return getProperty(DefinitionUtils.getOriginalColourPropertyName(slot));
+		return getProperty(ConfigDefinitionUtils.getOriginalColourPropertyName(slot));
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class GraphicDefinition extends MutableDefinition {
 	 */
 	public DefinitionProperty<Integer> replacementColour(int slot) {
 		checkColourBounds(slot);
-		return getProperty(DefinitionUtils.getReplacementColourPropertyName(slot));
+		return getProperty(ConfigDefinitionUtils.getReplacementColourPropertyName(slot));
 	}
 
 	/**

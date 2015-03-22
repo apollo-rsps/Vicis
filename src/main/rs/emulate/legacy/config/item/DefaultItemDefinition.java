@@ -4,22 +4,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import rs.emulate.legacy.config.DefaultDefinition;
-import rs.emulate.legacy.config.DefinitionUtils;
+import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.DynamicPropertyType;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyDecoders;
 import rs.emulate.shared.prop.PropertyEncoders;
 import rs.emulate.shared.prop.PropertyMap;
-import rs.emulate.shared.prop.PropertyType;
 
 /**
  * A default {@link ItemDefinition} used as a base for actual definitions.
  * 
  * @author Major
  */
-public class DefaultItemDefinition extends DefaultDefinition {
+public class DefaultItemDefinition extends DefaultConfigDefinition {
 
 	/**
 	 * The DefaultItemDefinition.
@@ -68,14 +69,14 @@ public class DefaultItemDefinition extends DefaultDefinition {
 		properties.put(26, Properties.unsignedShort(ItemProperty.SECONDARY_FEMALE_MODEL, 0));
 
 		for (int action = 1; action <= ItemConstants.MENU_ACTION_COUNT; action++) {
-			PropertyType type = DefinitionUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, action);
+			ConfigPropertyType type = ConfigDefinitionUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, action);
 			properties.put(action + 29, Properties.string(type, "hidden"));
 
-			type = DefinitionUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, action);
+			type = ConfigDefinitionUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, action);
 			properties.put(action + 34, Properties.string(type, "hidden"));
 		}
 
-		properties.put(40, DefinitionUtils.createColourProperty(ItemProperty.COLOURS));
+		properties.put(40, ConfigDefinitionUtils.createColourProperty(ItemProperty.COLOURS));
 
 		properties.put(78, Properties.unsignedShort(ItemProperty.TERTIARY_MALE_MODEL, 0));
 		properties.put(79, Properties.unsignedShort(ItemProperty.TERTIARY_FEMALE_MODEL, 0));
@@ -91,14 +92,14 @@ public class DefaultItemDefinition extends DefaultDefinition {
 		properties.put(98, Properties.unsignedShort(ItemProperty.NOTE_TEMPLATE_ID, 0));
 
 		for (int option = 1; option <= ItemConstants.ITEM_STACK_COUNT; option++) {
-			PropertyType type = DefinitionUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option);
+			ConfigPropertyType type = ConfigDefinitionUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option);
 			properties.put(option + 99, new DefinitionProperty<>(type, ItemStack.EMPTY, ItemStack::encode, ItemStack::decode,
 					Short.BYTES * 2));
 		}
 
-		properties.put(110, Properties.unsignedShort(ItemProperty.GROUND_SCALE_X, DefinitionUtils.DEFAULT_SCALE));
-		properties.put(111, Properties.unsignedShort(ItemProperty.GROUND_SCALE_Y, DefinitionUtils.DEFAULT_SCALE));
-		properties.put(112, Properties.unsignedShort(ItemProperty.GROUND_SCALE_Z, DefinitionUtils.DEFAULT_SCALE));
+		properties.put(110, Properties.unsignedShort(ItemProperty.GROUND_SCALE_X, ConfigConstants.DEFAULT_SCALE));
+		properties.put(111, Properties.unsignedShort(ItemProperty.GROUND_SCALE_Y, ConfigConstants.DEFAULT_SCALE));
+		properties.put(112, Properties.unsignedShort(ItemProperty.GROUND_SCALE_Z, ConfigConstants.DEFAULT_SCALE));
 
 		properties.put(113, Properties.signedByte(ItemProperty.LIGHT_AMBIENCE, 0));
 		properties.put(114,

@@ -3,7 +3,7 @@ package rs.emulate.legacy.config.varbit;
 import java.util.Arrays;
 import java.util.List;
 
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
@@ -15,7 +15,7 @@ import com.google.common.primitives.Ints;
  * 
  * @author Major
  */
-public class BitVariableDefinition extends MutableDefinition {
+public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The List of bit masks used by the BitVariables.

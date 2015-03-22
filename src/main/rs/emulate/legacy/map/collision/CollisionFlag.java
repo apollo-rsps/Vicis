@@ -48,24 +48,6 @@ public enum CollisionFlag {
 	PROJECTILE_WEST(7);
 
 	/**
-	 * Returns an array of CollisionFlags that indicate if a Mob can be positioned on a tile.
-	 * 
-	 * @return The array of CollisionFlags.
-	 */
-	public static CollisionFlag[] mobs() {
-		return new CollisionFlag[] { MOB_NORTH, MOB_EAST, MOB_SOUTH, MOB_WEST };
-	}
-
-	/**
-	 * Returns an array of CollisionFlags that indicate if a Projectile can be positioned on a tile.
-	 * 
-	 * @return The array of CollisionFlags.
-	 */
-	public static CollisionFlag[] projectiles() {
-		return new CollisionFlag[] { PROJECTILE_NORTH, PROJECTILE_EAST, PROJECTILE_SOUTH, PROJECTILE_WEST };
-	}
-
-	/**
 	 * The index of the bit this flag is stored in.
 	 */
 	private final int bit;

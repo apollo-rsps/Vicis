@@ -38,7 +38,7 @@ enum RelationalOperator {
 	 */
 	public static RelationalOperator valueOf(int value) {
 		return Arrays.stream(values()).filter(operator -> operator.value == value).findFirst()
-				.orElseThrow(() -> new IllegalArgumentException("No RelationalOperator with a value of " + value + "exists."));
+				.orElseThrow(() -> new IllegalArgumentException("No RelationalOperator with a value of " + value + " exists."));
 	}
 
 	/**

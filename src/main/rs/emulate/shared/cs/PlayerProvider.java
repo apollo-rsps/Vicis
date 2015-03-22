@@ -261,6 +261,27 @@ public class PlayerProvider {
 	}
 
 	/**
+	 * Gets the combat level from the {@link SkillProvider} used by this PlayerProvider.
+	 * 
+	 * @return The combat level.
+	 */
+	public int getCombatLevel() {
+		Skill[] skills = this.skills.getSkills();
+		int attack = skills[0].getMaximumLevel();
+		int defence = skills[1].getMaximumLevel();
+		int strength = skills[2].getMaximumLevel();
+		int hitpoints = skills[3].getMaximumLevel();
+		int prayer = skills[4].getMaximumLevel();
+		int ranged = skills[5].getMaximumLevel();
+		int magic = skills[6].getMaximumLevel();
+
+		double base = (defence + hitpoints + Math.floor(prayer / 2)) * 0.25;
+		double melee = (attack + strength) * 0.325;
+
+		return (int) (base + Math.max(melee, Math.max(ranged, magic) * 0.4875));
+	}
+
+	/**
 	 * Gets the total level from the {@link SkillProvider} used by this PlayerProvider.
 	 * 
 	 * @return The total level.
@@ -268,7 +289,7 @@ public class PlayerProvider {
 	public int getTotalLevel() {
 		return skills.getTotal();
 	}
-	
+
 	/**
 	 * Gets the weight of the player.
 	 * 

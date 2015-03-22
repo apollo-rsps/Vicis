@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.npc;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * Contains {@link PropertyType} implementations for {@link NpcDefinition}s.
+ * Contains {@link ConfigPropertyType} implementations for {@link NpcDefinition}s.
  * 
  * @author Major
  */
-enum NpcProperty implements PropertyType {
+enum NpcProperty implements ConfigPropertyType {
 
 	/**
 	 * The model ids property.
@@ -124,7 +124,7 @@ enum NpcProperty implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

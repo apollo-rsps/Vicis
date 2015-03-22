@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config;
 
 /**
- * Contains constants related to the config archive.
+ * Contains constants related to entries in the config archive.
  * 
  * @author Major
  */
@@ -13,7 +13,12 @@ public final class ConfigConstants {
 	public static final String DATA_EXTENSION = ".dat";
 
 	/**
-	 * The opcode that indicates all of the data for a single definition has been read.
+	 * The default value for depth and breadth scales.
+	 */
+	public static final int DEFAULT_SCALE = 128;
+
+	/**
+	 * The value that indicates all of the data for a single ConfigDefinition has been read.
 	 */
 	public static final int DEFINITION_TERMINATOR = 0;
 

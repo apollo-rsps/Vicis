@@ -1,6 +1,6 @@
 package rs.emulate.legacy.config.varp;
 
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
@@ -9,7 +9,7 @@ import rs.emulate.shared.prop.PropertyMap;
  * 
  * @author Major
  */
-public class ParameterVariableDefinition extends MutableDefinition {
+public class ParameterVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the ArchiveEntry containing the ParameterVariableDefinitions, without the extension.

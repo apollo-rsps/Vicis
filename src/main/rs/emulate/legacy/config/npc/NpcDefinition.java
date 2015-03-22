@@ -2,16 +2,16 @@ package rs.emulate.legacy.config.npc;
 
 import java.util.Map;
 
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 /**
- * A {@link MutableDefinition} for an npc.
+ * A {@link MutableConfigDefinition} for an npc.
  * 
  * @author Major
  */
-public class NpcDefinition extends MutableDefinition {
+public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the archive entry containing the NpcDefinitions, without the extension.

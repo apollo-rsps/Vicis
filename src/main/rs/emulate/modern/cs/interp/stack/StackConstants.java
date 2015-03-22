@@ -17,7 +17,7 @@ final class StackConstants {
 	/**
 	 * The growth factor of a stack, multiplied with the current stack size to produce the new size of the stack.
 	 */
-	static final Function<Integer, Integer> GROWER = current -> (int) (current * 1.5f);
+	static final Function<Integer, Integer> GROWER = current -> (int) (current * 1.5);
 
 	/**
 	 * Sole private constructor to prevent instantiation.

@@ -7,8 +7,8 @@ import java.nio.ByteBuffer;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.CacheStringUtils;
+import rs.emulate.shared.util.DataBuffer;
 
 /**
  * A {@link ReferenceTable} holds details for all the files with a single type, such as checksums, versions and archive
@@ -21,7 +21,7 @@ public final class ReferenceTable {
 	/**
 	 * Represents a child entry within an {@link Entry} in the {@link ReferenceTable}.
 	 */
-	public static class ChildEntry {
+	public static final class ChildEntry {
 
 		/**
 		 * This entry's identifier.
@@ -50,10 +50,8 @@ public final class ReferenceTable {
 
 	/**
 	 * Represents a single entry within a {@link ReferenceTable}.
-	 *
-	 * @author Graham Edgecombe
 	 */
-	public static class Entry {
+	public static final class Entry {
 
 		/**
 		 * The CRC32 checksum of this entry.
@@ -132,7 +130,7 @@ public final class ReferenceTable {
 		 * @return The whirlpool digest.
 		 */
 		public byte[] getWhirlpool() {
-			return whirlpool;
+			return whirlpool.clone();
 		}
 
 		/**
@@ -193,7 +191,7 @@ public final class ReferenceTable {
 				throw new IllegalArgumentException("Whirlpool length must be 64.");
 			}
 
-			System.arraycopy(whirlpool, 0, this.whirlpool, 0, whirlpool.length);
+			this.whirlpool = whirlpool.clone();
 		}
 
 		/**

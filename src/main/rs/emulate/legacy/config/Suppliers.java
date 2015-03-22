@@ -33,7 +33,7 @@ public final class Suppliers {
 	 * 
 	 * @param <T> The definition type.
 	 */
-	public static final class DefinitionSupplier<T extends MutableDefinition> {
+	public static final class DefinitionSupplier<T extends MutableConfigDefinition> {
 
 		/**
 		 * The BiFunction that returns a new MutableDefinition.
@@ -54,8 +54,8 @@ public final class Suppliers {
 		 * Creates the definition supplier.
 		 * 
 		 * @param name The name of the ArchiveEntry, <strong>without</strong> an extension.
-		 * @param supplier A {@link Supplier} that returns a {@link DefaultDefinition}.
-		 * @param creator An (id, {@link PropertyMap}) {@link BiFunction} that creates a {@link MutableDefinition}.
+		 * @param supplier A {@link Supplier} that returns a {@link DefaultConfigDefinition}.
+		 * @param creator An (id, {@link PropertyMap}) {@link BiFunction} that creates a {@link MutableConfigDefinition}.
 		 */
 		public DefinitionSupplier(String name, Supplier<PropertyMap> supplier, BiFunction<Integer, PropertyMap, T> creator) {
 			this.name = name;
@@ -64,7 +64,7 @@ public final class Suppliers {
 		}
 
 		/**
-		 * Creates a new {@link MutableDefinition}.
+		 * Creates a new {@link MutableConfigDefinition}.
 		 * 
 		 * @param id The id.
 		 * @param map The {@link PropertyMap}.

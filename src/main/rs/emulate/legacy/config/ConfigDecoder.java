@@ -16,7 +16,7 @@ import rs.emulate.shared.util.DataBuffer;
  *
  * @param <T> The type the data is decoded into.
  */
-public final class ConfigDecoder<T extends MutableDefinition> {
+public final class ConfigDecoder<T extends MutableConfigDefinition> {
 
 	/**
 	 * The Buffer containing the data.

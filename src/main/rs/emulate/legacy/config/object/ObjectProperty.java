@@ -1,14 +1,14 @@
 package rs.emulate.legacy.config.object;
 
+import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.npc.MorphismSet;
-import rs.emulate.shared.prop.PropertyType;
 
 /**
- * Contains {@link PropertyType} implementations for {@link ObjectDefinition}s.
+ * Contains {@link ConfigPropertyType} implementations for {@link ObjectDefinition}s.
  * 
  * @author Major
  */
-enum ObjectProperty implements PropertyType {
+enum ObjectProperty implements ConfigPropertyType {
 
 	/**
 	 * The positioned models property.
@@ -185,7 +185,7 @@ enum ObjectProperty implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

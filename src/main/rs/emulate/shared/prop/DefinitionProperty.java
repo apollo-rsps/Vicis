@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.util.Assertions;
 
@@ -27,7 +28,7 @@ public final class DefinitionProperty<T> {
 	private final Function<DataBuffer, T> decoder;
 
 	/**
-	 * The default value of this property.
+	 * The default value of this DefinitionProperty.
 	 */
 	private final T defaultValue;
 
@@ -37,17 +38,17 @@ public final class DefinitionProperty<T> {
 	private final BiConsumer<DataBuffer, T> encoder;
 
 	/**
-	 * The name of this property.
-	 */
-	private final PropertyType type;
-
-	/**
-	 * A Function that returns the size of this property, in bytes.
+	 * A Function that returns the size of this DefinitionProperty, in bytes.
 	 */
 	private final Function<T, Integer> size;
 
 	/**
-	 * The value of this property, or {@link Optional#empty} if the value is the default.
+	 * The name of this DefinitionProperty.
+	 */
+	private final ConfigPropertyType type;
+
+	/**
+	 * The value of this DefinitionProperty, or {@link Optional#empty} if the value is the default.
 	 */
 	private Optional<T> value;
 
@@ -58,11 +59,11 @@ public final class DefinitionProperty<T> {
 	 * @param defaultValue The default value. May be null.
 	 * @param encoder A {@link BiConsumer} that encodes the value into a {@link DataBuffer}.
 	 * @param decoder A {@link Function} that decodes the value from a Buffer.
-	 * @param size A Function that takes the value of this property as the parameter and returns the size of the value,
-	 *            in bytes.
+	 * @param size A Function that takes the value of this DefinitionProperty as the parameter and returns the size of
+	 *            the value, in bytes.
 	 */
-	public DefinitionProperty(PropertyType name, T defaultValue, BiConsumer<DataBuffer, T> encoder, Function<DataBuffer, T> decoder,
-			Function<T, Integer> size) {
+	public DefinitionProperty(ConfigPropertyType name, T defaultValue, BiConsumer<DataBuffer, T> encoder,
+			Function<DataBuffer, T> decoder, Function<T, Integer> size) {
 		this(name, null, defaultValue, encoder, decoder, size);
 	}
 
@@ -75,8 +76,8 @@ public final class DefinitionProperty<T> {
 	 * @param decoder A {@link Function} that decodes the value from a Buffer.
 	 * @param size The size of the value, in bytes.
 	 */
-	public DefinitionProperty(PropertyType name, T defaultValue, BiConsumer<DataBuffer, T> encoder, Function<DataBuffer, T> decoder,
-			int size) {
+	public DefinitionProperty(ConfigPropertyType name, T defaultValue, BiConsumer<DataBuffer, T> encoder,
+			Function<DataBuffer, T> decoder, int size) {
 		this(name, defaultValue, encoder, decoder, value -> size);
 	}
 
@@ -88,10 +89,10 @@ public final class DefinitionProperty<T> {
 	 * @param defaultValue The default value. May be {@code null}.
 	 * @param encoder A {@link BiConsumer} that encodes the value into a {@link DataBuffer}.
 	 * @param decoder A {@link Function} that decodes the value from a Buffer.
-	 * @param size A function that takes the value of this property as the parameter and returns the size of the value,
-	 *            in bytes.
+	 * @param size A function that takes the value of this DefinitionProperty as the parameter and returns the size of
+	 *            the value, in bytes.
 	 */
-	public DefinitionProperty(PropertyType name, T value, T defaultValue, BiConsumer<DataBuffer, T> encoder,
+	public DefinitionProperty(ConfigPropertyType name, T value, T defaultValue, BiConsumer<DataBuffer, T> encoder,
 			Function<DataBuffer, T> decoder, Function<T, Integer> size) {
 		Assertions.checkNonNull("Decoder, encoder, and size lambdas must not be null.", decoder, encoder, size);
 		Preconditions.checkNotNull(name, "Name of property cannot be null.");
@@ -105,7 +106,7 @@ public final class DefinitionProperty<T> {
 	}
 
 	/**
-	 * Decodes a value from the specified {@link DataBuffer}, and sets the value of this property to it.
+	 * Decodes a value from the specified {@link DataBuffer}, and sets the value of this DefinitionProperty to it.
 	 *
 	 * @param buffer The buffer.
 	 */
@@ -124,7 +125,7 @@ public final class DefinitionProperty<T> {
 	}
 
 	/**
-	 * Encodes this property into a {@link DataBuffer}.
+	 * Encodes this DefinitionProperty into a {@link DataBuffer}.
 	 *
 	 * @return The buffer.
 	 * @throws NoSuchElementException If this method is called on a property without a value set.
@@ -150,7 +151,7 @@ public final class DefinitionProperty<T> {
 	}
 
 	/**
-	 * Gets the default value of this property.
+	 * Gets the default value of this DefinitionProperty.
 	 *
 	 * @return The default value.
 	 */
@@ -159,16 +160,25 @@ public final class DefinitionProperty<T> {
 	}
 
 	/**
-	 * Gets the type of this property.
+	 * Gets the formatted name of this DefinitionProperty.
+	 * 
+	 * @return The formatted name.
+	 */
+	public String getFormattedName() {
+		return type.formattedName();
+	}
+
+	/**
+	 * Gets the type of this DefinitionProperty.
 	 *
 	 * @return The type.
 	 */
-	public PropertyType getType() {
+	public ConfigPropertyType getType() {
 		return type;
 	}
 
 	/**
-	 * Gets the value of this property.
+	 * Gets the value of this DefinitionProperty.
 	 *
 	 * @return The value.
 	 */
@@ -182,14 +192,14 @@ public final class DefinitionProperty<T> {
 	}
 
 	/**
-	 * Resets the value of this property.
+	 * Resets the value of this DefinitionProperty.
 	 */
 	public void reset() {
 		value = Optional.empty();
 	}
 
 	/**
-	 * Sets the value of this property.
+	 * Sets the value of this DefinitionProperty.
 	 *
 	 * @param value The value. May be {@code null}.
 	 */
@@ -212,7 +222,7 @@ public final class DefinitionProperty<T> {
 	}
 
 	/**
-	 * Gets the {@code toString} message for the value of this property.
+	 * Gets the {@code toString} message for the value of this DefinitionProperty.
 	 * 
 	 * @return The message.
 	 */

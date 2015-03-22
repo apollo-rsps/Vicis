@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.varp;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * Contains {@link PropertyType} implementations for {@link ParameterVariableDefinition}s.
+ * Contains {@link ConfigPropertyType} implementations for {@link ParameterVariableDefinition}s.
  * 
  * @author Major
  */
-enum ParameterVariableProperty implements PropertyType {
+enum ParameterVariableProperty implements ConfigPropertyType {
 
 	/**
 	 * The parameter property.
@@ -29,7 +29,7 @@ enum ParameterVariableProperty implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

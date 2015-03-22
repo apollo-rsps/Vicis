@@ -17,7 +17,7 @@ import rs.emulate.shared.util.DataBuffer;
  *
  * @param <T> The type the data is encoded from.
  */
-public final class ConfigEncoder<T extends MutableDefinition> {
+public final class ConfigEncoder<T extends MutableConfigDefinition> {
 
 	/**
 	 * Returns whether or not the specified {@link Map} entry contains a {@link DefinitionProperty} that should be
@@ -114,7 +114,7 @@ public final class ConfigEncoder<T extends MutableDefinition> {
 	 * @param stream The ByteArrayOutputStream.
 	 * @param value The value to write.
 	 */
-	private void writeShort(ByteArrayOutputStream stream, int value) {
+	private void writeShort(ByteArrayOutputStream stream, int value) { // TODO move to utils class
 		byte[] bytes = { (byte) (value >> 8), (byte) value };
 		stream.write(bytes, 0, bytes.length); // write(byte[]) throws IOException unnecessarily
 	}

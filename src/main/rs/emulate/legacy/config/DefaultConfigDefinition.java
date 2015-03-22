@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableMap;
  * 
  * @author Major
  */
-public abstract class DefaultDefinition {
+public abstract class DefaultConfigDefinition {
 
 	/**
 	 * The map of opcodes to DefinitionProperty objects.
@@ -22,7 +22,7 @@ public abstract class DefaultDefinition {
 	/**
 	 * Creates the DefaultDefinition.
 	 */
-	protected DefaultDefinition() {
+	protected DefaultConfigDefinition() {
 		this.properties = ImmutableMap.copyOf(init());
 	}
 

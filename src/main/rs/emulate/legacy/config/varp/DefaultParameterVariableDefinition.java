@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import rs.emulate.legacy.config.DefaultDefinition;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
@@ -14,7 +14,7 @@ import rs.emulate.shared.prop.PropertyMap;
  * 
  * @author Major
  */
-public class DefaultParameterVariableDefinition extends DefaultDefinition {
+public class DefaultParameterVariableDefinition extends DefaultConfigDefinition {
 
 	/**
 	 * The default definition.

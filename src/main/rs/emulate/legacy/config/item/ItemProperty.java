@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.item;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * A {@link PropertyType} implementation for {@link ItemDefinition}s.
+ * A {@link ConfigPropertyType} implementation for {@link ItemDefinition}s.
  * 
  * @author Major
  */
-enum ItemProperty implements PropertyType {
+enum ItemProperty implements ConfigPropertyType {
 
 	/**
 	 * The model id property.
@@ -179,7 +179,7 @@ enum ItemProperty implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

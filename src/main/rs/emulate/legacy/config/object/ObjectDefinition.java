@@ -2,17 +2,17 @@ package rs.emulate.legacy.config.object;
 
 import java.util.Map;
 
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.legacy.config.npc.MorphismSet;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 /**
- * A {@link MutableDefinition} for an object.
+ * A {@link MutableConfigDefinition} for an object.
  * 
  * @author Major
  */
-public class ObjectDefinition extends MutableDefinition {
+public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the ArchiveEntry containing the ObjectDefinitions, without the extension.

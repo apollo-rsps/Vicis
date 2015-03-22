@@ -2,8 +2,8 @@ package rs.emulate.legacy.config.item;
 
 import java.util.Map;
 
-import rs.emulate.legacy.config.DefinitionUtils;
-import rs.emulate.legacy.config.MutableDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.world.Sex;
@@ -14,7 +14,7 @@ import rs.emulate.util.Assertions;
  * 
  * @author Major
  */
-public class ItemDefinition extends MutableDefinition {
+public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * The name of the archive entry containing the item definitions, without the extension.
@@ -68,7 +68,7 @@ public class ItemDefinition extends MutableDefinition {
 	 */
 	public DefinitionProperty<String> getGroundAction(int index) {
 		checkBounds(ItemConstants.MENU_ACTION_COUNT, index);
-		return getProperty(DefinitionUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index));
+		return getProperty(ConfigDefinitionUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ItemDefinition extends MutableDefinition {
 	 */
 	public DefinitionProperty<String> getInventoryAction(int index) {
 		checkBounds(ItemConstants.MENU_ACTION_COUNT, index);
-		return getProperty(DefinitionUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index));
+		return getProperty(ConfigDefinitionUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class ItemDefinition extends MutableDefinition {
 	 */
 	public DefinitionProperty<ItemStack> getItemStack(int index) {
 		checkBounds(ItemConstants.ITEM_STACK_COUNT, index);
-		return getProperty(DefinitionUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index));
+		return getProperty(ConfigDefinitionUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index));
 	}
 
 	/**

@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import rs.emulate.legacy.config.DefaultDefinition;
-import rs.emulate.legacy.config.DefinitionUtils;
+import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
 import rs.emulate.legacy.config.npc.MorphismSet;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
-import rs.emulate.shared.prop.PropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -18,7 +19,7 @@ import rs.emulate.shared.util.DataBuffer;
  * 
  * @author Major
  */
-public class DefaultObjectDefinition extends DefaultDefinition {
+public class DefaultObjectDefinition extends DefaultConfigDefinition {
 
 	/**
 	 * The default definition.
@@ -67,20 +68,20 @@ public class DefaultObjectDefinition extends DefaultDefinition {
 		properties.put(29, Properties.unsignedByte(ObjectProperty.AMBIENT_LIGHTING, 0));
 
 		for (int option = 1; option <= ObjectDefinition.INTERACTION_COUNT; option++) {
-			PropertyType name = DefinitionUtils.createOptionProperty(ObjectDefinition.INTERACTION_PROPERTY_PREFIX, option);
+			ConfigPropertyType name = ConfigDefinitionUtils.createOptionProperty(ObjectDefinition.INTERACTION_PROPERTY_PREFIX, option);
 			properties.put(option + 29, Properties.string(name, "hidden"));
 		}
 
 		properties.put(39, Properties.unsignedByte(ObjectProperty.LIGHT_DIFFUSION, 0));
-		properties.put(40, DefinitionUtils.createColourProperty(ObjectProperty.COLOURS));
+		properties.put(40, ConfigDefinitionUtils.createColourProperty(ObjectProperty.COLOURS));
 
 		properties.put(60, Properties.unsignedShort(ObjectProperty.MINIMAP_FUNCTION, -1));
 		properties.put(62, Properties.alwaysTrue(ObjectProperty.INVERTED, false));
 		properties.put(64, Properties.alwaysFalse(ObjectProperty.CAST_SHADOW, true));
 
-		properties.put(65, Properties.unsignedShort(ObjectProperty.SCALE_X, DefinitionUtils.DEFAULT_SCALE));
-		properties.put(66, Properties.unsignedShort(ObjectProperty.SCALE_Y, DefinitionUtils.DEFAULT_SCALE));
-		properties.put(67, Properties.unsignedShort(ObjectProperty.SCALE_Z, DefinitionUtils.DEFAULT_SCALE));
+		properties.put(65, Properties.unsignedShort(ObjectProperty.SCALE_X, ConfigConstants.DEFAULT_SCALE));
+		properties.put(66, Properties.unsignedShort(ObjectProperty.SCALE_Y, ConfigConstants.DEFAULT_SCALE));
+		properties.put(67, Properties.unsignedShort(ObjectProperty.SCALE_Z, ConfigConstants.DEFAULT_SCALE));
 
 		properties.put(68, Properties.unsignedShort(ObjectProperty.MAPSCENE, -1));
 		properties.put(69, Properties.unsignedShort(ObjectProperty.SURROUNDINGS, 0));

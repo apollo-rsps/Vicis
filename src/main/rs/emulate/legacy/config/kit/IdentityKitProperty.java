@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.kit;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * A {@link PropertyType} implementation for {@link IdentityKitDefinition}s.
+ * A {@link ConfigPropertyType} implementation for {@link IdentityKitDefinition}s.
  * 
  * @author Major
  */
-enum IdentityKitProperty implements PropertyType {
+enum IdentityKitProperty implements ConfigPropertyType {
 
 	/**
 	 * The part IdentityKitProperty.
@@ -44,7 +44,7 @@ enum IdentityKitProperty implements PropertyType {
 	 * @return The opcode.
 	 */
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

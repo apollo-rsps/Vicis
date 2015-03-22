@@ -7,20 +7,14 @@ import java.util.function.Function;
 
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.DynamicPropertyType;
-import rs.emulate.shared.prop.PropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
- * Contains constants and utility methods used in definitions.
+ * Contains utility methods used in config definitions.
  *
  * @author Major
  */
-public final class DefinitionUtils {
-
-	/**
-	 * The default value for depth and breadth scales.
-	 */
-	public static final int DEFAULT_SCALE = 128;
+public final class ConfigDefinitionUtils {
 
 	/**
 	 * The String prefixed when creating {@link DynamicPropertyType}s for original colours.
@@ -33,26 +27,12 @@ public final class DefinitionUtils {
 	private static final String REPLACEMENT_COLOUR_PREFIX = "replacement-colour";
 
 	/**
-	 * Returns a {@link DynamicPropertyType} with the name of the form "{@code [prefix]}-{@code [slot]}".
-	 * <p>
-	 * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
-	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
-	 * 
-	 * @param prefix The prefix.
-	 * @param option The option.
-	 * @return The DynamicPropertyType.
-	 */
-	public static DynamicPropertyType createOptionProperty(String prefix, int option) {
-		return DynamicPropertyType.valueOf(prefix + "-" + option, option);
-	}
-
-	/**
 	 * Creates a {@link DefinitionProperty} for a {@link Map} of original to replacement colour values.
 	 * 
-	 * @param type The {@link PropertyType} of the DefinitionProperty.
+	 * @param type The {@link ConfigPropertyType} of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
-	public static <T extends PropertyType> DefinitionProperty<Map<Integer, Integer>> createColourProperty(T type) {
+	public static <T extends ConfigPropertyType> DefinitionProperty<Map<Integer, Integer>> createColourProperty(T type) {
 		BiConsumer<DataBuffer, Map<Integer, Integer>> encoder = (buffer, colours) -> {
 			buffer.putByte(colours.size());
 			colours.entrySet().forEach(colour -> buffer.putShort(colour.getKey()).putShort(colour.getValue()));
@@ -71,6 +51,20 @@ public final class DefinitionUtils {
 
 		return new DefinitionProperty<>(type, new HashMap<Integer, Integer>(1), encoder, decoder, colours -> colours.size()
 				* Short.BYTES * 2 + Byte.BYTES);
+	}
+
+	/**
+	 * Returns a {@link DynamicPropertyType} with the name of the form "{@code [prefix]}-{@code [slot]}".
+	 * <p>
+	 * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
+	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
+	 * 
+	 * @param prefix The prefix.
+	 * @param option The option.
+	 * @return The DynamicPropertyType.
+	 */
+	public static DynamicPropertyType createOptionProperty(String prefix, int option) {
+		return DynamicPropertyType.valueOf(prefix + "-" + option, option);
 	}
 
 	/**
@@ -104,7 +98,7 @@ public final class DefinitionUtils {
 	/**
 	 * Sole private constructor to prevent instantiation.
 	 */
-	private DefinitionUtils() {
+	private ConfigDefinitionUtils() {
 
 	}
 

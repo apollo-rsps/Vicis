@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.graphic;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * A {@link PropertyType} implementation for graphic definitions.
+ * A {@link ConfigPropertyType} implementation for graphic definitions.
  * 
  * @author Major
  */
-public enum GraphicProperty implements PropertyType {
+public enum GraphicProperty implements ConfigPropertyType {
 
 	/**
 	 * The model id property.
@@ -64,7 +64,7 @@ public enum GraphicProperty implements PropertyType {
 	 * @return The opcode.
 	 */
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

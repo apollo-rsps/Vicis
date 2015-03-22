@@ -93,7 +93,7 @@ public final class LegacyIntepreter {
 	 */
 	public int interpret() {
 		for (LegacyInstruction instruction : script.getInstructions()) {
-			int value = interpret(instruction);
+			int value = evaluate(instruction);
 			if (context.hasFinished()) {
 				return context.getResult();
 			}
@@ -105,12 +105,12 @@ public final class LegacyIntepreter {
 	}
 
 	/**
-	 * Interprets the specified {@link LegacyInstruction}.
+	 * Evaluates the specified {@link LegacyInstruction}.
 	 * 
-	 * @param instruction The instruction to interpret.
-	 * @return The result of the interpretation.
+	 * @param instruction The instruction to evaluate.
+	 * @return The result of the evaluation.
 	 */
-	private int interpret(LegacyInstruction instruction) {
+	private int evaluate(LegacyInstruction instruction) {
 		int[] operands = instruction.getOperands();
 		PlayerProvider provider = context.getProvider();
 
@@ -133,6 +133,7 @@ public final class LegacyIntepreter {
 			case MOVE_SETTING2:
 				return provider.getSetting(operands[0]) * 100 / 46875;
 			case MOVE_COMBAT_LEVEL:
+				return provider.getCombatLevel();
 			case MOVE_TOTAL_LEVEL:
 				return provider.getTotalLevel();
 			case MOVE_CONTAINS_ITEM:

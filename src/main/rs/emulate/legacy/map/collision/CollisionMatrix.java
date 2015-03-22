@@ -15,12 +15,12 @@ public final class CollisionMatrix {
 	/**
 	 * Indicates that all types of traversal are allowed.
 	 */
-	private static final byte ALL_ALLOWED = 0b0000_0000;
+	private static final int ALL_ALLOWED = 0b0000_0000;
 
 	/**
 	 * Indicates that no types of traversal are allowed.
 	 */
-	private static final byte ALL_BLOCKED = (byte) 0b1111_1111;
+	private static final int ALL_BLOCKED = 0b1111_1111;
 
 	/**
 	 * Creates an array of CollisionMatrix objects, all of the specified width and length.
@@ -44,7 +44,7 @@ public final class CollisionMatrix {
 	/**
 	 * The collision matrix, as a {@code byte} array.
 	 */
-	private final byte[] matrix;
+	private final int[] matrix;
 
 	/**
 	 * The width of the matrix.
@@ -60,7 +60,7 @@ public final class CollisionMatrix {
 	public CollisionMatrix(int width, int length) {
 		this.width = width;
 		this.length = length;
-		matrix = new byte[width * length];
+		matrix = new int[width * length];
 	}
 
 	/**
@@ -73,7 +73,13 @@ public final class CollisionMatrix {
 	 * @return {@code true} if all of the CollisionFlags are set, otherwise {@code false}.
 	 */
 	public boolean all(int x, int y, CollisionFlag... flags) {
-		return Arrays.stream(flags).allMatch(flag -> (get(x, y) & flag.asByte()) != 0);
+		for (CollisionFlag flag : flags) {
+			if (!flagged(x, y, flag)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -86,7 +92,13 @@ public final class CollisionMatrix {
 	 * @return {@code true} if any of the CollisionFlags are set, otherwise {@code false}.
 	 */
 	public boolean any(int x, int y, CollisionFlag... flags) {
-		return Arrays.stream(flags).anyMatch(flag -> (get(x, y) & flag.asByte()) != 0);
+		for (CollisionFlag flag : flags) {
+			if (flagged(x, y, flag)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -145,17 +157,6 @@ public final class CollisionMatrix {
 	}
 
 	/**
-	 * Sets the appropriate index for the specified coordinate pair to the specified value.
-	 * 
-	 * @param x The x coordinate.
-	 * @param y The y coordinate.
-	 * @param value The value.
-	 */
-	private void set(int x, int y, byte value) {
-		matrix[indexOf(x, y)] = value;
-	}
-
-	/**
 	 * Sets (i.e. sets to {@code true}) the value of the specified {@link CollisionFlag} for the specified coordinate
 	 * pair.
 	 * 
@@ -186,6 +187,17 @@ public final class CollisionMatrix {
 		Preconditions.checkElementIndex(y, length, "Y coordinate must be [0, " + length + "), received " + y + ".");
 		int index = y * width + x;
 		return index;
+	}
+
+	/**
+	 * Sets the appropriate index for the specified coordinate pair to the specified value.
+	 * 
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @param value The value.
+	 */
+	private void set(int x, int y, int value) {
+		matrix[indexOf(x, y)] = value;
 	}
 
 }

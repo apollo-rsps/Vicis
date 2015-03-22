@@ -4,18 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.util.Assertions;
 
 import com.google.common.base.Preconditions;
 
 /**
- * A {@link PropertyType} that can be created at any point during runtime (rather than during the linking process as
+ * A {@link ConfigPropertyType} that can be created at any point during runtime (rather than during the linking process as
  * part of an enumerated type). Useful when there are lots of similar properties that would result in a huge amount of
  * enumerators (such as original and replacement colours). This class is immutable.
  * 
  * @author Major
  */
-public final class DynamicPropertyType implements PropertyType {
+public final class DynamicPropertyType implements ConfigPropertyType {
 
 	/**
 	 * The map (used as a cache) of opcodes to DynamicPropertyTypes.
@@ -68,7 +69,7 @@ public final class DynamicPropertyType implements PropertyType {
 	}
 
 	@Override
-	public int getOpcode() {
+	public int opcode() {
 		return opcode;
 	}
 

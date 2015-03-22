@@ -42,15 +42,6 @@ public final class ClientScriptContext {
 	}
 
 	/**
-	 * Gets the {@link PlayerProvider}.
-	 * 
-	 * @return The PlayerProvider.
-	 */
-	public PlayerProvider getProvider() {
-		return provider;
-	}
-
-	/**
 	 * Applies the specified {@link MathOperator} to the current value in this ClientScriptContext, using the
 	 * {@code value} parameter as the second operand of the MathOperator.
 	 * 
@@ -66,6 +57,15 @@ public final class ClientScriptContext {
 	 */
 	public void finish() {
 		finished = true;
+	}
+
+	/**
+	 * Gets the {@link PlayerProvider}.
+	 * 
+	 * @return The PlayerProvider.
+	 */
+	public PlayerProvider getProvider() {
+		return provider;
 	}
 
 	/**

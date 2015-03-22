@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import rs.emulate.legacy.config.DefaultDefinition;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.util.DataBuffer;
@@ -16,7 +16,7 @@ import rs.emulate.shared.util.DataBuffer;
  * 
  * @author Major
  */
-public class DefaultBitVariableDefinition extends DefaultDefinition {
+public class DefaultBitVariableDefinition extends DefaultConfigDefinition {
 
 	/**
 	 * The default definition.

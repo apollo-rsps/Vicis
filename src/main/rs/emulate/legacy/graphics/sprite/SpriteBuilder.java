@@ -74,7 +74,7 @@ public final class SpriteBuilder {
 	 */
 	public Sprite build() {
 		Preconditions.checkNotNull(raster, "Raster must be specified before building.");
-		Preconditions.checkArgument(height != 0 && width != 0, "Height and width cannot be 0.");
+		Preconditions.checkArgument(height != 0 && width != 0, "Height and width must not be 0.");
 		Preconditions.checkNotNull(format, "Format must be specified before building.");
 
 		return new Sprite(name, raster, format, height, width, offsetX, offsetY, resizeHeight, resizeWidth);
@@ -102,7 +102,7 @@ public final class SpriteBuilder {
 	/**
 	 * Sets the {@link ImageFormat} of the Sprite.
 	 * 
-	 * @param format The format. Cannot be {@code null}.
+	 * @param format The ImageFormat. Cannot be {@code null}.
 	 * @return This SpriteBuilder, for chaining.
 	 * @throws NullPointerException If the specified format is {@code null}.
 	 */
@@ -165,15 +165,15 @@ public final class SpriteBuilder {
 	}
 
 	/**
-	 * Sets the raster of the Sprite. The raster will be copied, so further modification to the passed array will not
-	 * affect the raster of this builder.
+	 * Sets the raster of the Sprite. Further modification of the passed array will not affect the raster of this
+	 * builder.
 	 *
-	 * @param raster The raster.
+	 * @param raster The raster. Must not be {@code null}.
 	 * @return This SpriteBuilder, for chaining.
 	 * @throws NullPointerException If the specified array is {@code null}.
 	 */
 	public SpriteBuilder setRaster(int[] raster) {
-		Preconditions.checkNotNull(raster, "Raster cannot be null.");
+		Preconditions.checkNotNull(raster, "Raster must not be null.");
 		this.raster = raster.clone();
 		return this;
 	}

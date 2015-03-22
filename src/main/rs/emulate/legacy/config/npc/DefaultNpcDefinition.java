@@ -7,12 +7,13 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import rs.emulate.legacy.config.DefaultDefinition;
-import rs.emulate.legacy.config.DefinitionUtils;
+import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.ConfigDefinitionUtils;
 import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
-import rs.emulate.shared.prop.PropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -20,7 +21,7 @@ import rs.emulate.shared.util.DataBuffer;
  * 
  * @author Major
  */
-public class DefaultNpcDefinition extends DefaultDefinition {
+public class DefaultNpcDefinition extends DefaultConfigDefinition {
 
 	/**
 	 * The DefaultNpcDefinition.
@@ -69,23 +70,23 @@ public class DefaultNpcDefinition extends DefaultDefinition {
 				MovementAnimationSet::encode, MovementAnimationSet::decode, Short.BYTES * 4));
 
 		for (int option = 1; option <= NpcDefinition.INTERACTION_COUNT; option++) {
-			PropertyType name = DefinitionUtils.createOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option);
+			ConfigPropertyType name = ConfigDefinitionUtils.createOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option);
 			properties.put(option + 29, Properties.string(name, "hidden"));
 		}
 
-		properties.put(40, DefinitionUtils.createColourProperty(NpcProperty.COLOURS));
+		properties.put(40, ConfigDefinitionUtils.createColourProperty(NpcProperty.COLOURS));
 
 		properties.put(60, new DefinitionProperty<>(NpcProperty.SECONDARY_MODELS, null, modelEncoder, modelDecoder,
 				models -> models.length * Short.BYTES + Byte.BYTES));
 
 		for (int option = 1; option <= 3; option++) {
-			properties.put(option + 89, Properties.unsignedShort(DefinitionUtils.createOptionProperty("unused", option), 0));
+			properties.put(option + 89, Properties.unsignedShort(ConfigDefinitionUtils.createOptionProperty("unused", option), 0));
 		}
 
 		properties.put(93, Properties.alwaysFalse(NpcProperty.MINIMAP_VISIBLE, true));
 		properties.put(95, Properties.unsignedShort(NpcProperty.COMBAT_LEVEL, -1));
-		properties.put(97, Properties.unsignedShort(NpcProperty.FLAT_SCALE, DefinitionUtils.DEFAULT_SCALE));
-		properties.put(98, Properties.unsignedShort(NpcProperty.HEIGHT_SCALE, DefinitionUtils.DEFAULT_SCALE));
+		properties.put(97, Properties.unsignedShort(NpcProperty.FLAT_SCALE, ConfigConstants.DEFAULT_SCALE));
+		properties.put(98, Properties.unsignedShort(NpcProperty.HEIGHT_SCALE, ConfigConstants.DEFAULT_SCALE));
 		properties.put(99, Properties.alwaysTrue(NpcProperty.PRIORITY_RENDER, false));
 
 		properties.put(100, Properties.unsignedByte(NpcProperty.LIGHT_MODIFIER, 0));
