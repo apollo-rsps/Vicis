@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.legacy.config.ConfigDefinitionUtils;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
 
@@ -36,8 +36,8 @@ public class DefaultGraphicDefinition extends DefaultConfigDefinition {
 	}
 
 	@Override
-	protected Map<Integer, DefinitionProperty<?>> init() {
-		Map<Integer, DefinitionProperty<?>> defaults = new HashMap<>(27);
+	protected Map<Integer, ConfigProperty<?>> init() {
+		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
 
 		defaults.put(1, Properties.unsignedShort(GraphicProperty.MODEL, 0));
 		defaults.put(2, Properties.unsignedShort(GraphicProperty.ANIMATION, -1));

@@ -1,19 +1,22 @@
 package rs.emulate.legacy.config.object;
 
+import java.util.Arrays;
+
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.util.Assertions;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 
 /**
- * A container for an object's possible model ids and positions. This class is immutable.
+ * A set of an object's possible model ids and positions. This class is immutable.
  * 
  * @author Major
  */
 public final class ModelSet {
 
 	/**
-	 * The empty model set, to be used as a default value.
+	 * The empty ModelSet, to be used as a default value.
 	 */
 	public static final ModelSet EMPTY = new ModelSet(new int[0], new int[0]);
 
@@ -62,7 +65,7 @@ public final class ModelSet {
 		int count = models.getCount();
 		buffer.putByte(count);
 
-		int[] positions = models.getPositions();
+		int[] positions = models.getType();
 		boolean positioned = positions.length != 0;
 
 		for (int index = 0; index < count; index++) {
@@ -80,12 +83,12 @@ public final class ModelSet {
 	private final int[] models;
 
 	/**
-	 * The model positions.
+	 * The model types.
 	 */
-	private final int[] positions;
+	private final int[] types;
 
 	/**
-	 * Creates the model set, with an empty array for the positions.
+	 * Creates the ModelSet, with an empty array for the types.
 	 * 
 	 * @param models The array of model ids. Cannot be null.
 	 * @throws NullPointerException If the {@code models} array array is null.
@@ -93,27 +96,27 @@ public final class ModelSet {
 	public ModelSet(int[] models) {
 		Preconditions.checkNotNull(models, "Models array cannot be null.");
 		this.models = models;
-		positions = new int[0];
+		types = new int[0];
 	}
 
 	/**
-	 * Creates the model set. The length of the {@code models} and {@code positions} arrays must be equal.
+	 * Creates the ModelSet. The length of the {@code models} and {@code types} arrays must be equal.
 	 * 
 	 * @param models The array of model ids. Cannot be null.
-	 * @param positions The array of model positions. Cannot be null.
-	 * @throws IllegalArgumentException If the {@code model} and {@code position} arrays are not of equal length.
-	 * @throws NullPointerException If either the {@code models} array or the {@code positions} array is null.
+	 * @param types The array of model types. Cannot be null.
+	 * @throws IllegalArgumentException If the {@code models} and {@code types} arrays are not of equal length.
+	 * @throws NullPointerException If either the {@code models} array or the {@code types} array is null.
 	 */
-	public ModelSet(int[] models, int[] positions) {
-		Assertions.checkNonNull("Neither the models nor positions array may be null.", models, positions);
-		Preconditions.checkArgument(models.length == positions.length, "Model and position arrays must have equal length.");
+	public ModelSet(int[] models, int[] types) {
+		Assertions.checkNonNull("Neither the models nor types array may be null.", models, types);
+		Preconditions.checkArgument(models.length == types.length, "Models and types arrays must have an equal length.");
 
 		this.models = models.clone();
-		this.positions = positions.clone();
+		this.types = types.clone();
 	}
 
 	/**
-	 * Gets the amount of models in this set.
+	 * Gets the amount of models in this ModelSet.
 	 * 
 	 * @return The amount.
 	 */
@@ -141,22 +144,28 @@ public final class ModelSet {
 	}
 
 	/**
-	 * Gets the position at the specified index.
+	 * Gets the type at the specified index.
 	 * 
 	 * @param index The index.
-	 * @return The position.
+	 * @return The type.
 	 */
-	public int getPosition(int index) {
-		return positions[index];
+	public int getType(int index) {
+		return types[index];
 	}
 
 	/**
-	 * Gets the model positions.
+	 * Gets the model types.
 	 * 
-	 * @return The model positions.
+	 * @return The model types.
 	 */
-	public int[] getPositions() {
-		return positions.clone();
+	public int[] getType() {
+		return types.clone();
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("ids", Arrays.toString(models)).add("types", Arrays.toString(types))
+				.toString();
 	}
 
 }

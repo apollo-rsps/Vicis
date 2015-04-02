@@ -24,7 +24,7 @@ public final class FileConstants {
 	public static final Path CORE_DIRECTORY;
 
 	static {
-		Path path = Paths.get(System.getProperty("user.home"), "/");
+		Path path = Paths.get(System.getProperty("user.home"));
 		boolean windows = System.getProperty("os.name").contains("Windows");
 
 		CORE_DIRECTORY = windows ? path.resolve("AppData/Roaming/EmulateRS/Vicis") : path.resolve(".vicis");

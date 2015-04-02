@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 import com.google.common.base.MoreObjects;
@@ -41,21 +40,21 @@ public abstract class MutableConfigDefinition {
 	}
 
 	/**
-	 * Adds a {@link DefinitionProperty} to this MutableDefinition, using the smallest available (positive) opcode.
+	 * Adds a {@link ConfigProperty} to this MutableDefinition, using the smallest available (positive) opcode.
 	 *
 	 * @param property The DefinitionProperty.
 	 */
-	public final void addProperty(DefinitionProperty<?> property) {
+	public final void addProperty(ConfigProperty<?> property) {
 		addProperty(properties.size(), property);
 	}
 
 	/**
-	 * Adds a {@link DefinitionProperty} with the specified opcode to this MutableDefinition.
+	 * Adds a {@link ConfigProperty} with the specified opcode to this MutableDefinition.
 	 *
 	 * @param opcode The opcode.
 	 * @param property The DefinitionProperty.
 	 */
-	public final void addProperty(int opcode, DefinitionProperty<?> property) {
+	public final void addProperty(int opcode, ConfigProperty<?> property) {
 		properties.put(opcode, property);
 	}
 
@@ -69,54 +68,54 @@ public abstract class MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link Set} of {@link Map} {@link Entry} objects containing the opcodes and {@link DefinitionProperty}
+	 * Gets the {@link Set} of {@link Map} {@link Entry} objects containing the opcodes and {@link ConfigProperty}
 	 * objects.
 	 *
 	 * @return The Set.
 	 */
-	public final Set<Entry<Integer, DefinitionProperty<?>>> getProperties() {
+	public final Set<Entry<Integer, ConfigProperty<?>>> getProperties() {
 		return properties.getProperties();
 	}
 
 	/**
-	 * Gets a {@link DefinitionProperty} with the specified opcode.
+	 * Gets a {@link ConfigProperty} with the specified opcode.
 	 *
 	 * @param opcode The opcode of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
-	public final <T> DefinitionProperty<T> getProperty(int opcode) {
+	public final <T> ConfigProperty<T> getProperty(int opcode) {
 		@SuppressWarnings("unchecked")
-		DefinitionProperty<T> property = (DefinitionProperty<T>) properties.get(opcode);
+		ConfigProperty<T> property = (ConfigProperty<T>) properties.get(opcode);
 		Preconditions.checkNotNull(property, "No property with opcode " + opcode + " exists.");
 		return property;
 	}
 
 	/**
-	 * Gets a {@link DefinitionProperty} with the specified {@link ConfigPropertyType}.
+	 * Gets a {@link ConfigProperty} with the specified {@link ConfigPropertyType}.
 	 *
 	 * @param name The name of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 * @throws IllegalArgumentException If no DefinitionProperty with the specified name exists.
 	 */
-	public final <T> DefinitionProperty<T> getProperty(ConfigPropertyType name) {
+	public final <T> ConfigProperty<T> getProperty(ConfigPropertyType name) {
 		@SuppressWarnings("unchecked")
-		DefinitionProperty<T> property = (DefinitionProperty<T>) properties.get(name);
+		ConfigProperty<T> property = (ConfigProperty<T>) properties.get(name);
 		Preconditions.checkNotNull(property, "No property called " + name + " exists.");
 		return property;
 	}
 
 	/**
-	 * Sets the {@link DefinitionProperty} with the specified name.
+	 * Sets the {@link ConfigProperty} with the specified name.
 	 *
 	 * @param opcode The opcode of the DefinitionProperty.
 	 * @param property The DefinitionProperty.
 	 */
-	public final void setProperty(int opcode, DefinitionProperty<?> property) {
+	public final void setProperty(int opcode, ConfigProperty<?> property) {
 		properties.put(opcode, property);
 	}
 
 	/**
-	 * Sets the value of the {@link DefinitionProperty} with the specified opcode.
+	 * Sets the value of the {@link ConfigProperty} with the specified opcode.
 	 * 
 	 * @param name The {@link ConfigPropertyType name} of the DefinitionProperty.
 	 * @param value The value.
@@ -129,9 +128,9 @@ public abstract class MutableConfigDefinition {
 	public final String toString() {
 		ToStringHelper helper = MoreObjects.toStringHelper(this);
 
-		for (Map.Entry<Integer, DefinitionProperty<?>> entry : properties.getProperties()) {
-			DefinitionProperty<?> property = entry.getValue();
-			String name = property.getFormattedName();
+		for (Map.Entry<Integer, ConfigProperty<?>> entry : properties.getProperties()) {
+			ConfigProperty<?> property = entry.getValue();
+			String name = property.getName();
 
 			helper.add(name, property);
 		}

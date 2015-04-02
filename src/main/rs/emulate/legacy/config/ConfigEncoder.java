@@ -7,7 +7,6 @@ import java.util.Map;
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.archive.ArchiveEntry;
 import rs.emulate.legacy.archive.ArchiveUtils;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -20,13 +19,13 @@ import rs.emulate.shared.util.DataBuffer;
 public final class ConfigEncoder<T extends MutableConfigDefinition> {
 
 	/**
-	 * Returns whether or not the specified {@link Map} entry contains a {@link DefinitionProperty} that should be
+	 * Returns whether or not the specified {@link Map} entry contains a {@link ConfigProperty} that should be
 	 * encoded.
 	 * 
 	 * @param entry The Map entry.
 	 * @return {@code true} if the property should be encoded, {@code false} if not.
 	 */
-	private static boolean validProperty(Map.Entry<Integer, DefinitionProperty<?>> entry) {
+	private static boolean validProperty(Map.Entry<Integer, ConfigProperty<?>> entry) {
 		return entry.getValue().valuePresent();
 	}
 
@@ -94,13 +93,13 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 	}
 
 	/**
-	 * Writes the specified {@link Map} entry containing the opcode and {@link DefinitionProperty} to the specified
+	 * Writes the specified {@link Map} entry containing the opcode and {@link ConfigProperty} to the specified
 	 * {@link ByteArrayOutputStream}.
 	 *
 	 * @param entry The map entry.
 	 * @param os The byte array output stream.
 	 */
-	private void write(Map.Entry<Integer, DefinitionProperty<?>> entry, ByteArrayOutputStream os) {
+	private void write(Map.Entry<Integer, ConfigProperty<?>> entry, ByteArrayOutputStream os) {
 		DataBuffer buffer = entry.getValue().encode();
 		byte[] bytes = buffer.getBytes();
 

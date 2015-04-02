@@ -2,9 +2,9 @@ package rs.emulate.legacy.config.object;
 
 import java.util.Map;
 
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.legacy.config.npc.MorphismSet;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 /**
@@ -40,293 +40,293 @@ public class ObjectDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the ambient lighting factor.
+	 * Gets the {@link ConfigProperty} containing the ambient lighting factor.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> ambientLighting() {
+	public ConfigProperty<Integer> ambientLighting() {
 		return getProperty(ObjectProperty.AMBIENT_LIGHTING);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the animation id.
+	 * Gets the {@link ConfigProperty} containing the animation id.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> animation() {
+	public ConfigProperty<Integer> animation() {
 		return getProperty(ObjectProperty.ANIMATION);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the casts shadow flag.
+	 * Gets the {@link ConfigProperty} containing the casts shadow flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> castShadow() {
+	public ConfigProperty<Boolean> castShadow() {
 		return getProperty(ObjectProperty.CAST_SHADOW);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the {@link Map} of original to replacement colours.
+	 * Gets the {@link ConfigProperty} containing the {@link Map} of original to replacement colours.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Map<Integer, Integer>> colours() {
+	public ConfigProperty<Map<Integer, Integer>> colours() {
 		return getProperty(ObjectProperty.COLOURS);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the contour ground flag.
+	 * Gets the {@link ConfigProperty} containing the contour ground flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> contourGround() {
+	public ConfigProperty<Boolean> contourGround() {
 		return getProperty(ObjectProperty.CONTOUR_GROUND);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the decor displacement value.
+	 * Gets the {@link ConfigProperty} containing the decor displacement value.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> decorDisplacement() {
+	public ConfigProperty<Integer> decorDisplacement() {
 		return getProperty(ObjectProperty.DECOR_DISPLACEMENT);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the delay shading flag.
+	 * Gets the {@link ConfigProperty} containing the delay shading flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> delayShading() {
+	public ConfigProperty<Boolean> delayShading() {
 		return getProperty(ObjectProperty.DELAY_SHADING);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the description.
+	 * Gets the {@link ConfigProperty} containing the description.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<String> description() {
+	public ConfigProperty<String> description() {
 		return getProperty(ObjectProperty.DESCRIPTION);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the hollow flag.
+	 * Gets the {@link ConfigProperty} containing the hollow flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> hollow() {
+	public ConfigProperty<Boolean> hollow() {
 		return getProperty(ObjectProperty.HOLLOW);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the impenetrable flag.
+	 * Gets the {@link ConfigProperty} containing the impenetrable flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> impenetrable() {
+	public ConfigProperty<Boolean> impenetrable() {
 		return getProperty(ObjectProperty.IMPENETRABLE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the interactive flag.
+	 * Gets the {@link ConfigProperty} containing the interactive flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> interactive() {
+	public ConfigProperty<Boolean> interactive() {
 		return getProperty(ObjectProperty.INTERACTIVE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the inverted flag.
+	 * Gets the {@link ConfigProperty} containing the inverted flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> inverted() {
+	public ConfigProperty<Boolean> inverted() {
 		return getProperty(ObjectProperty.INVERTED);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the length.
+	 * Gets the {@link ConfigProperty} containing the length.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> length() {
+	public ConfigProperty<Integer> length() {
 		return getProperty(ObjectProperty.LENGTH);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the light diffusion factor.
+	 * Gets the {@link ConfigProperty} containing the light diffusion factor.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> lightDiffusion() {
+	public ConfigProperty<Integer> lightDiffusion() {
 		return getProperty(ObjectProperty.LIGHT_DIFFUSION);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the mapscene id.
+	 * Gets the {@link ConfigProperty} containing the mapscene id.
 	 * <p>
 	 * This refers to the "mapscene" image displayed beneath the object when it is drawn on the map.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> mapscene() {
+	public ConfigProperty<Integer> mapscene() {
 		return getProperty(ObjectProperty.MAPSCENE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the minimap function.
+	 * Gets the {@link ConfigProperty} containing the minimap function.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> minimapFunction() {
+	public ConfigProperty<Integer> minimapFunction() {
 		return getProperty(ObjectProperty.MINIMAP_FUNCTION);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the unpositioned {@link ModelSet}.
+	 * Gets the {@link ConfigProperty} containing the unpositioned {@link ModelSet}.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<ModelSet> models() {
+	public ConfigProperty<ModelSet> models() {
 		return getProperty(ObjectProperty.MODELS);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the {@link MorphismSet}.
+	 * Gets the {@link ConfigProperty} containing the {@link MorphismSet}.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<MorphismSet> morphismSet() {
+	public ConfigProperty<MorphismSet> morphismSet() {
 		return getProperty(ObjectProperty.MORPHISM_SET);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the name.
+	 * Gets the {@link ConfigProperty} containing the name.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<String> name() {
+	public ConfigProperty<String> name() {
 		return getProperty(ObjectProperty.NAME);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the obstructive ground flag.
+	 * Gets the {@link ConfigProperty} containing the obstructive ground flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> obstructiveGround() {
+	public ConfigProperty<Boolean> obstructiveGround() {
 		return getProperty(ObjectProperty.OBSTRUCTIVE_GROUND);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the occlusion flag.
+	 * Gets the {@link ConfigProperty} containing the occlusion flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> occlude() {
+	public ConfigProperty<Boolean> occlude() {
 		return getProperty(ObjectProperty.OCCLUDE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the positioned {@link ModelSet}.
+	 * Gets the {@link ConfigProperty} containing the positioned {@link ModelSet}.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<ModelSet> positionedModels() {
+	public ConfigProperty<ModelSet> positionedModels() {
 		return getProperty(ObjectProperty.POSITIONED_MODELS);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the width scaling factor.
+	 * Gets the {@link ConfigProperty} containing the width scaling factor.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> scaleX() {
+	public ConfigProperty<Integer> scaleX() {
 		return getProperty(ObjectProperty.SCALE_X);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the length scaling factor.
+	 * Gets the {@link ConfigProperty} containing the length scaling factor.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> scaleY() {
+	public ConfigProperty<Integer> scaleY() {
 		return getProperty(ObjectProperty.SCALE_Y);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the height scaling factor.
+	 * Gets the {@link ConfigProperty} containing the height scaling factor.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> scaleZ() {
+	public ConfigProperty<Integer> scaleZ() {
 		return getProperty(ObjectProperty.SCALE_Z);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the solid flag.
+	 * Gets the {@link ConfigProperty} containing the solid flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> solid() {
+	public ConfigProperty<Boolean> solid() {
 		return getProperty(ObjectProperty.SOLID);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the supports items flag, indicating whether or not the object
+	 * Gets the {@link ConfigProperty} containing the supports items flag, indicating whether or not the object
 	 * allows items to be placed on it.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Boolean> supportsItems() {
+	public ConfigProperty<Boolean> supportsItems() {
 		return getProperty(ObjectProperty.SUPPORTS_ITEMS);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the surroundings flag.
+	 * Gets the {@link ConfigProperty} containing the surroundings flag.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> surroundings() {
+	public ConfigProperty<Integer> surroundings() {
 		return getProperty(ObjectProperty.SURROUNDINGS);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the width translation.
+	 * Gets the {@link ConfigProperty} containing the width translation.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> translationX() {
+	public ConfigProperty<Integer> translationX() {
 		return getProperty(ObjectProperty.TRANSLATION_X);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the length translation.
+	 * Gets the {@link ConfigProperty} containing the length translation.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> translationY() {
+	public ConfigProperty<Integer> translationY() {
 		return getProperty(ObjectProperty.TRANSLATION_Y);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the height translation.
+	 * Gets the {@link ConfigProperty} containing the height translation.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> translationZ() {
+	public ConfigProperty<Integer> translationZ() {
 		return getProperty(ObjectProperty.TRANSLATION_Z);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the width.
+	 * Gets the {@link ConfigProperty} containing the width.
 	 * 
 	 * @return The DefinitionProperty.
 	 */
-	public DefinitionProperty<Integer> width() {
+	public ConfigProperty<Integer> width() {
 		return getProperty(ObjectProperty.WIDTH);
 	}
 

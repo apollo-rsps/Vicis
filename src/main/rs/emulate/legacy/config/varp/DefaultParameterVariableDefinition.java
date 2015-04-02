@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
 
@@ -34,8 +34,8 @@ public class DefaultParameterVariableDefinition extends DefaultConfigDefinition 
 	}
 
 	@Override
-	protected Map<Integer, DefinitionProperty<?>> init() {
-		Map<Integer, DefinitionProperty<?>> map = new HashMap<>(1);
+	protected Map<Integer, ConfigProperty<?>> init() {
+		Map<Integer, ConfigProperty<?>> map = new HashMap<>(1);
 		map.put(5, Properties.unsignedShort(ParameterVariableProperty.PARAMETER, 0));
 		return map;
 	}

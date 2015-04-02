@@ -27,7 +27,6 @@ public final class DynamicPropertyNameTest {
 	/**
 	 * Tests the {@link DynamicPropertyType} cache.
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void test() {
 		DynamicPropertyType first = DynamicPropertyType.valueOf(NAME, OPCODE);

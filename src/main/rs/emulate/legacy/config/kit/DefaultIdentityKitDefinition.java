@@ -7,10 +7,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.legacy.config.ConfigDefinitionUtils;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.util.DataBuffer;
@@ -40,10 +40,10 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 	}
 
 	@Override
-	protected Map<Integer, DefinitionProperty<?>> init() {
-		Map<Integer, DefinitionProperty<?>> defaults = new HashMap<>(27);
+	protected Map<Integer, ConfigProperty<?>> init() {
+		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
 
-		defaults.put(1, new DefinitionProperty<>(IdentityKitProperty.PART, Part.NULL, Part::encode, Part::decode, Byte.BYTES));
+		defaults.put(1, new ConfigProperty<>(IdentityKitProperty.PART, Part.NULL, Part::encode, Part::decode, Byte.BYTES));
 
 		BiConsumer<DataBuffer, int[]> modelsEncoder = (buffer, models) -> {
 			buffer.putByte(models.length);
@@ -58,7 +58,7 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 			return models;
 		};
 
-		defaults.put(2, new DefinitionProperty<>(IdentityKitProperty.MODELS, null, modelsEncoder, modelDecoder,
+		defaults.put(2, new ConfigProperty<>(IdentityKitProperty.MODELS, null, modelsEncoder, modelDecoder,
 				models -> models.length * Short.SIZE + Byte.SIZE));
 		defaults.put(3, Properties.alwaysTrue(IdentityKitProperty.PLAYER_DESIGN_STYLE, false));
 

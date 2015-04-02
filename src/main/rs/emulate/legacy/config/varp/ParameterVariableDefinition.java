@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config.varp;
 
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 /**
@@ -27,11 +27,11 @@ public class ParameterVariableDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the parameter.
+	 * Gets the {@link ConfigProperty} containing the parameter.
 	 * 
 	 * @return The definition property.
 	 */
-	public DefinitionProperty<Integer> getParameter() {
+	public ConfigProperty<Integer> getParameter() {
 		return getProperty(ParameterVariableProperty.PARAMETER);
 	}
 

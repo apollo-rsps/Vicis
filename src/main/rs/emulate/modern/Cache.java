@@ -127,7 +127,7 @@ public final class Cache implements Closeable {
 		Container tableContainer = Container.decode(store.read(255, type));
 		ReferenceTable table = ReferenceTable.decode(tableContainer.getData());
 
-		ReferenceTable.Entry entry = table.getEntry(file);
+		Entry entry = table.getEntry(file);
 		if (entry == null || member < 0 || member >= entry.capacity()) {
 			throw new FileNotFoundException();
 		}
@@ -174,9 +174,9 @@ public final class Cache implements Closeable {
 		CRC32 crc = new CRC32();
 		crc.update(bytes, 0, bytes.length);
 
-		ReferenceTable.Entry entry = table.getEntry(file);
+		Entry entry = table.getEntry(file);
 		if (entry == null) {
-			entry = new ReferenceTable.Entry();
+			entry = new Entry();
 			table.putEntry(file, entry);
 		}
 		entry.setVersion(container.getVersion());
@@ -208,18 +208,18 @@ public final class Cache implements Closeable {
 		Container tableContainer = Container.decode(store.read(255, type));
 		ReferenceTable table = ReferenceTable.decode(tableContainer.getData());
 
-		ReferenceTable.Entry entry = table.getEntry(file);
+		Entry entry = table.getEntry(file);
 		int oldArchiveSize = -1;
 		if (entry == null) {
-			entry = new ReferenceTable.Entry();
+			entry = new Entry();
 			table.putEntry(file, entry);
 		} else {
 			oldArchiveSize = entry.capacity();
 		}
 
-		ReferenceTable.ChildEntry child = entry.getEntry(member);
+		ChildEntry child = entry.getEntry(member);
 		if (child == null) {
-			child = new ReferenceTable.ChildEntry();
+			child = new ChildEntry();
 			entry.putEntry(member, child);
 		}
 
@@ -250,7 +250,7 @@ public final class Cache implements Closeable {
 		// create 'dummy' entries
 		for (int id = 0; id < archive.size(); id++) {
 			if (archive.getEntry(id) == null) {
-				entry.putEntry(id, new ReferenceTable.ChildEntry());
+				entry.putEntry(id, new ChildEntry());
 				archive.putEntry(id, ByteBuffer.allocate(1));
 			}
 		}

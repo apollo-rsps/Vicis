@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.legacy.config.ConfigDefinitionUtils;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.DynamicPropertyType;
 import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyDecoders;
@@ -40,8 +40,8 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 	}
 
 	@Override
-	protected Map<Integer, DefinitionProperty<?>> init() {
-		Map<Integer, DefinitionProperty<?>> properties = new HashMap<>();
+	protected Map<Integer, ConfigProperty<?>> init() {
+		Map<Integer, ConfigProperty<?>> properties = new HashMap<>();
 
 		properties.put(1, Properties.unsignedShort(ItemProperty.MODEL, 0));
 		properties.put(2, Properties.string(ItemProperty.NAME, "null"));
@@ -50,9 +50,9 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 		properties.put(5, Properties.unsignedShort(ItemProperty.SPRITE_PITCH, 0));
 		properties.put(6, Properties.unsignedShort(ItemProperty.SPRITE_CAMERA_ROLL, 0));
 
-		properties.put(7, new DefinitionProperty<>(ItemProperty.SPRITE_TRANSLATE_X, 0, PropertyEncoders.SHORT_ENCODER,
+		properties.put(7, new ConfigProperty<>(ItemProperty.SPRITE_TRANSLATE_X, 0, PropertyEncoders.SHORT_ENCODER,
 				PropertyDecoders.SIGNED_SHORT_DECODER, Short.BYTES));
-		properties.put(8, new DefinitionProperty<>(ItemProperty.SPRITE_TRANSLATE_Y, 0, PropertyEncoders.SHORT_ENCODER,
+		properties.put(8, new ConfigProperty<>(ItemProperty.SPRITE_TRANSLATE_Y, 0, PropertyEncoders.SHORT_ENCODER,
 				PropertyDecoders.SIGNED_SHORT_DECODER, Short.BYTES));
 
 		properties.put(10, Properties.unsignedShort(DynamicPropertyType.valueOf("unknown", 10), 0));
@@ -60,11 +60,11 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 		properties.put(12, Properties.unsignedInt(ItemProperty.VALUE, 1));
 		properties.put(16, Properties.alwaysTrue(ItemProperty.MEMBERS, false));
 
-		properties.put(23, new DefinitionProperty<>(ItemProperty.PRIMARY_MALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
+		properties.put(23, new ConfigProperty<>(ItemProperty.PRIMARY_MALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
 				PrimaryModel::decode, Short.BYTES + Byte.BYTES));
 		properties.put(24, Properties.unsignedShort(ItemProperty.SECONDARY_MALE_MODEL, 0));
 
-		properties.put(25, new DefinitionProperty<>(ItemProperty.PRIMARY_FEMALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
+		properties.put(25, new ConfigProperty<>(ItemProperty.PRIMARY_FEMALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
 				PrimaryModel::decode, Short.BYTES + Byte.BYTES));
 		properties.put(26, Properties.unsignedShort(ItemProperty.SECONDARY_FEMALE_MODEL, 0));
 
@@ -93,7 +93,7 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 
 		for (int option = 1; option <= ItemConstants.ITEM_STACK_COUNT; option++) {
 			ConfigPropertyType type = ConfigDefinitionUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option);
-			properties.put(option + 99, new DefinitionProperty<>(type, ItemStack.EMPTY, ItemStack::encode, ItemStack::decode,
+			properties.put(option + 99, new ConfigProperty<>(type, ItemStack.EMPTY, ItemStack::encode, ItemStack::decode,
 					Short.BYTES * 2));
 		}
 
@@ -103,7 +103,7 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 
 		properties.put(113, Properties.signedByte(ItemProperty.LIGHT_AMBIENCE, 0));
 		properties.put(114,
-				new DefinitionProperty<>(ItemProperty.LIGHT_DIFFUSION, 0, (buffer, light) -> buffer.putByte(light / 5),
+				new ConfigProperty<>(ItemProperty.LIGHT_DIFFUSION, 0, (buffer, light) -> buffer.putByte(light / 5),
 						buffer -> buffer.getByte() * 5, Byte.BYTES));
 
 		properties.put(115, Properties.unsignedByte(ItemProperty.TEAM, 0));

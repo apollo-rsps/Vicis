@@ -1,8 +1,8 @@
 package rs.emulate.legacy.config.graphic;
 
 import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.util.Assertions;
 
@@ -46,20 +46,20 @@ public class GraphicDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the animation id of this graphic.
+	 * Gets the {@link ConfigProperty} containing the animation id of this graphic.
 	 *
 	 * @return The animation id.
 	 */
-	public DefinitionProperty<Integer> animation() {
+	public ConfigProperty<Integer> animation() {
 		return getProperty(GraphicProperty.ANIMATION);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the model brightness of this graphic.
+	 * Gets the {@link ConfigProperty} containing the model brightness of this graphic.
 	 *
 	 * @return The brightness.
 	 */
-	public DefinitionProperty<Integer> brightness() {
+	public ConfigProperty<Integer> brightness() {
 		return getProperty(GraphicProperty.BRIGHTNESS);
 	}
 
@@ -72,8 +72,8 @@ public class GraphicDefinition extends MutableConfigDefinition {
 		ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
-			DefinitionProperty<Integer> original = originalColour(slot);
-			DefinitionProperty<Integer> replacement = replacementColour(slot);
+			ConfigProperty<Integer> original = originalColour(slot);
+			ConfigProperty<Integer> replacement = replacementColour(slot);
 			builder.put(original.getValue(), replacement.getValue());
 		}
 
@@ -81,69 +81,69 @@ public class GraphicDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the depth scale of this graphic.
+	 * Gets the {@link ConfigProperty} containing the depth scale of this graphic.
 	 *
 	 * @return The depth scale.
 	 */
-	public DefinitionProperty<Integer> depthScale() {
+	public ConfigProperty<Integer> depthScale() {
 		return getProperty(GraphicProperty.DEPTH_SCALE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the model id of this graphic.
+	 * Gets the {@link ConfigProperty} containing the model id of this graphic.
 	 *
 	 * @return The model id.
 	 */
-	public DefinitionProperty<Integer> modelId() {
+	public ConfigProperty<Integer> modelId() {
 		return getProperty(GraphicProperty.MODEL);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the original colour for the specified slot.
+	 * Gets the {@link ConfigProperty} containing the original colour for the specified slot.
 	 *
 	 * @param slot The slot.
 	 * @return The original colour.
 	 */
-	public DefinitionProperty<Integer> originalColour(int slot) {
+	public ConfigProperty<Integer> originalColour(int slot) {
 		checkColourBounds(slot);
 		return getProperty(ConfigDefinitionUtils.getOriginalColourPropertyName(slot));
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the replacement colour for the specified slot.
+	 * Gets the {@link ConfigProperty} containing the replacement colour for the specified slot.
 	 *
 	 * @param slot The slot.
 	 * @return The replacement colour.
 	 */
-	public DefinitionProperty<Integer> replacementColour(int slot) {
+	public ConfigProperty<Integer> replacementColour(int slot) {
 		checkColourBounds(slot);
 		return getProperty(ConfigDefinitionUtils.getReplacementColourPropertyName(slot));
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the rotation of this graphic.
+	 * Gets the {@link ConfigProperty} containing the rotation of this graphic.
 	 *
 	 * @return The rotation.
 	 */
-	public DefinitionProperty<Integer> rotation() {
+	public ConfigProperty<Integer> rotation() {
 		return getProperty(GraphicProperty.ROTATION);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the model shadow of this graphic.
+	 * Gets the {@link ConfigProperty} containing the model shadow of this graphic.
 	 *
 	 * @return The shadow.
 	 */
-	public DefinitionProperty<Integer> shadow() {
+	public ConfigProperty<Integer> shadow() {
 		return getProperty(GraphicProperty.SHADOW);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the breadth scale of this graphic.
+	 * Gets the {@link ConfigProperty} containing the breadth scale of this graphic.
 	 *
 	 * @return The breadth scale.
 	 */
-	public DefinitionProperty<Integer> vreadthScale() {
+	public ConfigProperty<Integer> breadthScale() {
 		return getProperty(GraphicProperty.BREADTH_SCALE);
 	}
 

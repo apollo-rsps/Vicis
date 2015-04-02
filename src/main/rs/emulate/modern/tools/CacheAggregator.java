@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.zip.CRC32;
 
 import rs.emulate.modern.Container;
+import rs.emulate.modern.Entry;
 import rs.emulate.modern.FileStore;
 import rs.emulate.modern.ReferenceTable;
-import rs.emulate.modern.ReferenceTable.Entry;
 import rs.emulate.shared.util.DataBuffer;
 
 /**

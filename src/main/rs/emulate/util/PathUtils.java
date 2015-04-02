@@ -44,7 +44,7 @@ public final class PathUtils {
 	 * @param settings The application {@link Settings}.
 	 * @return The Path.
 	 */
-	public static Path getResourcesPath(Settings settings) {
+	public static Path getResourcesPath(Settings settings) { // TODO do we still need this stuff
 		return Paths.get(settings.get("resources-path"));
 	}
 

@@ -248,6 +248,15 @@ public final class IndexedFileSystem implements Closeable {
 	}
 
 	/**
+	 * Gets the amount of indices in this IndexedFileSystem.
+	 * 
+	 * @return The amount of indices.
+	 */
+	public int getIndexCount() {
+		return indices.size();
+	}
+
+	/**
 	 * Checks if this {@link IndexedFileSystem} is read only.
 	 * 
 	 * @return {@code true} if so, {@code false} if not.

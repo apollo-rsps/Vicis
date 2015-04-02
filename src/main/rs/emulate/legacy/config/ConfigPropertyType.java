@@ -1,6 +1,5 @@
 package rs.emulate.legacy.config;
 
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.DynamicPropertyType;
 import rs.emulate.shared.prop.PropertyType;
 
@@ -20,13 +19,13 @@ public interface ConfigPropertyType extends PropertyType {
 	public int opcode();
 
 	/**
-	 * Gets the {@link DefinitionProperty} associated with this ConfigPropertyType from the specified
+	 * Gets the {@link ConfigProperty} associated with this ConfigPropertyType from the specified
 	 * {@link MutableConfigDefinition}.
 	 * 
 	 * @param definition The MutableDefinition.
 	 * @return The DefinitionProperty.
 	 */
-	default public <T> DefinitionProperty<T> propertyFrom(MutableConfigDefinition definition) {
+	default public <T> ConfigProperty<T> propertyFrom(MutableConfigDefinition definition) {
 		return definition.getProperty(this);
 	}
 

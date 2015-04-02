@@ -25,9 +25,19 @@ public final class FrameCollection {
 	private static final int NULL_SECONDARY_ID = 65_535;
 
 	/**
+	 * Gets the size of the specified FrameCollection, in bytes.
+	 * 
+	 * @param collection The FrameCollection.
+	 * @return The size, in bytes.
+	 */
+	public static int bytes(FrameCollection collection) {
+		return collection.getSize() * Short.BYTES * 3 + Byte.BYTES;
+	}
+
+	/**
 	 * Decodes a {@link FrameCollection} from the specified {@link DataBuffer}.
 	 * 
-	 * @param buffer The Buffer.
+	 * @param buffer The DataBuffer.
 	 * @return The FrameCollection.
 	 */
 	public static FrameCollection decode(DataBuffer buffer) {
@@ -47,7 +57,7 @@ public final class FrameCollection {
 	/**
 	 * Encodes the specified {@link FrameCollection} into the specified {@link DataBuffer}.
 	 * 
-	 * @param buffer The Buffer.
+	 * @param buffer The DataBuffer.
 	 * @param collection The FrameCollection.
 	 */
 	public static void encode(DataBuffer buffer, FrameCollection collection) {

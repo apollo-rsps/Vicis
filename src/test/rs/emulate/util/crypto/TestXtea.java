@@ -28,7 +28,6 @@ public final class TestXtea {
 	/**
 	 * Executes the decipher test.
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void testDecipher() {
 		for (String[] vector : TEST_VECTORS) {
@@ -59,7 +58,6 @@ public final class TestXtea {
 	/**
 	 * Executes the encipher test.
 	 */
-	@SuppressWarnings("static-method")
 	@Test
 	public void testEncipher() {
 		for (String[] vector : TEST_VECTORS) {

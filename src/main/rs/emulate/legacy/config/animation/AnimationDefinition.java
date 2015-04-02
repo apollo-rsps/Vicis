@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config.animation;
 
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 /**
@@ -27,92 +27,101 @@ public class AnimationDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the animating precedence of this animation.
+	 * Gets the {@link ConfigProperty} containing the animating precedence of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> animatingPrecedence() {
+	public final ConfigProperty<Integer> animatingPrecedence() {
 		return getProperty(AnimationProperty.ANIMATING_PRECEDENCE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the {@link FrameCollection} of this animation.
+	 * Gets the {@link ConfigProperty} containing the interleave order of this animation.
+	 * 
+	 * @return The DefinitionProperty.
+	 */
+	public final ConfigProperty<int[]> getInterleaveOrder() {
+		return getProperty(AnimationProperty.INTERLEAVE_ORDER);
+	}
+
+	/**
+	 * Gets the {@link ConfigProperty} containing the {@link FrameCollection} of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<FrameCollection> frameCollection() {
+	public final ConfigProperty<FrameCollection> frameCollection() {
 		return getProperty(AnimationProperty.FRAMES);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the loop offset of this animation.
+	 * Gets the {@link ConfigProperty} containing the loop offset of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> loopOffset() {
+	public final ConfigProperty<Integer> loopOffset() {
 		return getProperty(AnimationProperty.LOOP_OFFSET);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the maximum loop count of this animation.
+	 * Gets the {@link ConfigProperty} containing the maximum loop count of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> maximumLoops() {
+	public final ConfigProperty<Integer> maximumLoops() {
 		return getProperty(AnimationProperty.MAXIMUM_LOOPS);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the player mainhand id of this animation.
+	 * Gets the {@link ConfigProperty} containing the player mainhand id of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> playerMainhand() {
+	public final ConfigProperty<Integer> playerMainhand() {
 		return getProperty(AnimationProperty.PLAYER_MAINHAND);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the player offhand id of this animation.
+	 * Gets the {@link ConfigProperty} containing the player offhand id of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> playerOffhand() {
+	public final ConfigProperty<Integer> playerOffhand() {
 		return getProperty(AnimationProperty.PLAYER_OFFHAND);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the priority of this animation.
+	 * Gets the {@link ConfigProperty} containing the priority of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> priority() {
+	public final ConfigProperty<Integer> priority() {
 		return getProperty(AnimationProperty.PRIORITY);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the replay mode of this animation.
+	 * Gets the {@link ConfigProperty} containing the replay mode of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> replayMode() {
+	public final ConfigProperty<Integer> replayMode() {
 		return getProperty(AnimationProperty.REPLAY_MODE);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the stretches property of this animation.
+	 * Gets the {@link ConfigProperty} containing the stretches property of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Boolean> stretches() {
+	public final ConfigProperty<Boolean> stretches() {
 		return getProperty(AnimationProperty.STRETCHES);
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the walking precedence of this animation.
+	 * Gets the {@link ConfigProperty} containing the walking precedence of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
-	public final DefinitionProperty<Integer> walkingPrecedence() {
+	public final ConfigProperty<Integer> walkingPrecedence() {
 		return getProperty(AnimationProperty.WALKING_PRECEDENCE);
 	}
 

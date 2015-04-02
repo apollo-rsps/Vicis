@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.DynamicPropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
@@ -27,12 +26,12 @@ public final class ConfigDefinitionUtils {
 	private static final String REPLACEMENT_COLOUR_PREFIX = "replacement-colour";
 
 	/**
-	 * Creates a {@link DefinitionProperty} for a {@link Map} of original to replacement colour values.
+	 * Creates a {@link ConfigProperty} for a {@link Map} of original to replacement colour values.
 	 * 
 	 * @param type The {@link ConfigPropertyType} of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
-	public static <T extends ConfigPropertyType> DefinitionProperty<Map<Integer, Integer>> createColourProperty(T type) {
+	public static <T extends ConfigPropertyType> ConfigProperty<Map<Integer, Integer>> createColourProperty(T type) {
 		BiConsumer<DataBuffer, Map<Integer, Integer>> encoder = (buffer, colours) -> {
 			buffer.putByte(colours.size());
 			colours.entrySet().forEach(colour -> buffer.putShort(colour.getKey()).putShort(colour.getValue()));
@@ -49,7 +48,7 @@ public final class ConfigDefinitionUtils {
 			return colours;
 		};
 
-		return new DefinitionProperty<>(type, new HashMap<Integer, Integer>(1), encoder, decoder, colours -> colours.size()
+		return new ConfigProperty<>(type, new HashMap<Integer, Integer>(1), encoder, decoder, colours -> colours.size()
 				* Short.BYTES * 2 + Byte.BYTES);
 	}
 

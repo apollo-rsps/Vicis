@@ -3,6 +3,7 @@ package rs.emulate.editor;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,14 +12,13 @@ import rs.emulate.legacy.Cache;
 import rs.emulate.legacy.FileDescriptor;
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.archive.Archive;
-import rs.emulate.legacy.archive.CompressionType;
 import rs.emulate.legacy.config.ConfigDecoder;
-import rs.emulate.legacy.config.ConfigEncoder;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.legacy.config.Suppliers;
-import rs.emulate.legacy.config.animation.AnimationDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.primitives.Ints;
 
 /**
  * The core class.
@@ -59,7 +59,7 @@ public final class Editor extends Application {
 			this.fs = new IndexedFileSystem(Paths.get("data/resources/", version), AccessMode.READ_WRITE);
 
 			Cache cache = initCache();
-			cli(cache);
+			test(cache);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
@@ -70,7 +70,7 @@ public final class Editor extends Application {
 	private Cache initCache() throws IOException { // TODO this is shit
 		Cache cache = new Cache();
 
-		for (int type = 0; type < 5; type++) {
+		for (int type = 0; type < fs.getIndexCount(); type++) {
 			for (int file = 0; file < fs.getFileCount(type); file++) {
 				FileDescriptor descriptor = new FileDescriptor(type, file);
 				DataBuffer buffer = fs.getFile(descriptor);
@@ -86,17 +86,27 @@ public final class Editor extends Application {
 		return cache;
 	}
 
-	private void cli(Cache cache) throws IOException { // temporary
+	private void test(Cache cache) throws IOException { // temporary
 		FileDescriptor descriptor = new FileDescriptor(0, 2);
 		Archive config = cache.getArchive(descriptor);
-		ConfigDecoder<AnimationDefinition> decoder = new ConfigDecoder<>(config, Suppliers.ANIMATION_SUPPLIER);
-		List<AnimationDefinition> items = decoder.decode();
+		ConfigDecoder<? extends MutableConfigDefinition> decoder = new ConfigDecoder<>(config, Suppliers.OBJECT_SUPPLIER);
+		List<? extends MutableConfigDefinition> definitions = decoder.decode();
 
-		ConfigEncoder<AnimationDefinition> encoder = new ConfigEncoder<>(AnimationDefinition.ENTRY_NAME, items);
-		Archive archive = encoder.encodeInto(config);
-		cache.replaceArchive(descriptor, archive, CompressionType.ENTRY_COMPRESSION);
+		System.out.print("Type an id: ");
+		try (Scanner scanner = new Scanner(System.in)) {
+			while (true) {
+				String in = scanner.nextLine();
 
-		cache.encode(Paths.get("./data/test/317"));
+				if (in.equals("q")) {
+					break;
+				}
+
+				Integer value = Ints.tryParse(in);
+				if (value != null && value >= 0 && value < definitions.size()) {
+					System.out.println(definitions.get(value));
+				}
+			}
+		}
 	}
 
 }

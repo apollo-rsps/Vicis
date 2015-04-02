@@ -2,7 +2,6 @@ package rs.emulate.legacy.config;
 
 import java.util.Map;
 
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 import com.google.common.collect.ImmutableMap;
@@ -17,7 +16,7 @@ public abstract class DefaultConfigDefinition {
 	/**
 	 * The map of opcodes to DefinitionProperty objects.
 	 */
-	private final Map<Integer, DefinitionProperty<?>> properties;
+	private final Map<Integer, ConfigProperty<?>> properties;
 
 	/**
 	 * Creates the DefaultDefinition.
@@ -38,8 +37,8 @@ public abstract class DefaultConfigDefinition {
 	/**
 	 * Initialises the DefaultDefinition.
 	 * 
-	 * @return The {@link Map} of opcodes to {@link DefinitionProperty} objects.
+	 * @return The {@link Map} of opcodes to {@link ConfigProperty} objects.
 	 */
-	protected abstract Map<Integer, DefinitionProperty<?>> init();
+	protected abstract Map<Integer, ConfigProperty<?>> init();
 
 }

@@ -1,14 +1,15 @@
 package rs.emulate.legacy.config.animation;
 
+import static rs.emulate.shared.prop.Properties.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.prop.DefinitionProperty;
-import rs.emulate.shared.prop.Properties;
 import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.util.DataBuffer;
 
@@ -37,35 +38,36 @@ public class DefaultAnimationDefinition extends DefaultConfigDefinition {
 	}
 
 	@Override
-	protected Map<Integer, DefinitionProperty<?>> init() {
-		Map<Integer, DefinitionProperty<?>> properties = new HashMap<>(11);
+	protected Map<Integer, ConfigProperty<?>> init() {
+		Map<Integer, ConfigProperty<?>> properties = new HashMap<>(11);
 
-		properties.put(1, new DefinitionProperty<>(AnimationProperty.FRAMES, FrameCollection.EMPTY, FrameCollection::encode,
-				FrameCollection::decode, collection -> collection.getSize() * Short.BYTES * 3 + Byte.BYTES));
+		properties.put(1, new ConfigProperty<>(AnimationProperty.FRAMES, FrameCollection.EMPTY, FrameCollection::encode,
+				FrameCollection::decode, FrameCollection::bytes));
 
-		properties.put(2, Properties.unsignedShort(AnimationProperty.LOOP_OFFSET, -1));
+		properties.put(2, unsignedShort(AnimationProperty.LOOP_OFFSET, -1));
 
 		Function<DataBuffer, byte[]> interleaveDecoder = buffer -> {
 			int count = buffer.getUnsignedByte();
 			byte[] interleaveOrder = new byte[count];
-			
+
 			buffer.get(interleaveOrder);
 			return interleaveOrder;
 		};
 
-		BiConsumer<DataBuffer, byte[]> interleaveEncoder = (buffer, interleave) -> buffer.putByte(interleave.length).put(interleave);
+		BiConsumer<DataBuffer, byte[]> interleaveEncoder = (buffer, interleave) -> buffer.putByte(interleave.length).put(
+				interleave);
 
-		properties.put(3, new DefinitionProperty<>(AnimationProperty.INTERLEAVE_ORDER, null, interleaveEncoder,
+		properties.put(3, new ConfigProperty<>(AnimationProperty.INTERLEAVE_ORDER, new byte[0], interleaveEncoder,
 				interleaveDecoder, interleave -> interleave.length + Byte.BYTES));
 
-		properties.put(4, Properties.alwaysTrue(AnimationProperty.STRETCHES, false));
-		properties.put(5, Properties.unsignedByte(AnimationProperty.PRIORITY, 5));
-		properties.put(6, Properties.unsignedShort(AnimationProperty.PLAYER_MAINHAND, -1));
-		properties.put(7, Properties.unsignedShort(AnimationProperty.PLAYER_OFFHAND, -1));
-		properties.put(8, Properties.unsignedByte(AnimationProperty.MAXIMUM_LOOPS, 99));
-		properties.put(9, Properties.unsignedByte(AnimationProperty.ANIMATING_PRECEDENCE, -1));
-		properties.put(10, Properties.unsignedByte(AnimationProperty.WALKING_PRECEDENCE, -1));
-		properties.put(11, Properties.unsignedByte(AnimationProperty.REPLAY_MODE, 2));
+		properties.put(4, alwaysTrue(AnimationProperty.STRETCHES, false));
+		properties.put(5, unsignedByte(AnimationProperty.PRIORITY, 5));
+		properties.put(6, unsignedShort(AnimationProperty.PLAYER_MAINHAND, -1));
+		properties.put(7, unsignedShort(AnimationProperty.PLAYER_OFFHAND, -1));
+		properties.put(8, unsignedByte(AnimationProperty.MAXIMUM_LOOPS, 99));
+		properties.put(9, unsignedByte(AnimationProperty.ANIMATING_PRECEDENCE, -1));
+		properties.put(10, unsignedByte(AnimationProperty.WALKING_PRECEDENCE, -1));
+		properties.put(11, unsignedByte(AnimationProperty.REPLAY_MODE, 2));
 
 		return properties;
 	}

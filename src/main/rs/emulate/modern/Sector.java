@@ -4,6 +4,8 @@ import java.nio.ByteBuffer;
 
 import rs.emulate.shared.util.DataBuffer;
 
+import com.google.common.base.Preconditions;
+
 /**
  * A {@link Sector} contains a header and data. The header contains information used to verify the integrity of the
  * cache like the current file id, type and chunk. It also contains a pointer to the next sector such that the sectors
@@ -35,9 +37,7 @@ public final class Sector {
 	 * @return The sector.
 	 */
 	public static Sector decode(DataBuffer buffer) {
-		if (buffer.remaining() != SIZE) {
-			throw new IllegalArgumentException("Buffer must have " + SIZE + " bytes remaining.");
-		}
+		Preconditions.checkArgument(buffer.remaining() == SIZE, "Buffer must have " + SIZE + " bytes remaining.");
 
 		int id = buffer.getUnsignedShort();
 		int chunk = buffer.getUnsignedShort();

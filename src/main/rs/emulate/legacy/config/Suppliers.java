@@ -55,7 +55,8 @@ public final class Suppliers {
 		 * 
 		 * @param name The name of the ArchiveEntry, <strong>without</strong> an extension.
 		 * @param supplier A {@link Supplier} that returns a {@link DefaultConfigDefinition}.
-		 * @param creator An (id, {@link PropertyMap}) {@link BiFunction} that creates a {@link MutableConfigDefinition}.
+		 * @param creator An (id, {@link PropertyMap}) {@link BiFunction} that creates a {@link MutableConfigDefinition}
+		 *            .
 		 */
 		public DefinitionSupplier(String name, Supplier<PropertyMap> supplier, BiFunction<Integer, PropertyMap, T> creator) {
 			this.name = name;

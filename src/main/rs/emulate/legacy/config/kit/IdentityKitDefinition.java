@@ -3,8 +3,8 @@ package rs.emulate.legacy.config.kit;
 import java.util.List;
 
 import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.DefinitionProperty;
 import rs.emulate.shared.prop.PropertyMap;
 
 import com.google.common.collect.ImmutableList;
@@ -52,7 +52,7 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	 *
 	 * @return The property containing the body model ids.
 	 */
-	public DefinitionProperty<int[]> getBodyModels() {
+	public ConfigProperty<int[]> getBodyModels() {
 		return getProperty(IdentityKitProperty.MODELS);
 	}
 
@@ -65,8 +65,8 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 		ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
-			DefinitionProperty<Integer> original = getProperty(ConfigDefinitionUtils.getOriginalColourPropertyName(slot));
-			DefinitionProperty<Integer> replacement = getProperty(ConfigDefinitionUtils.getReplacementColourPropertyName(slot));
+			ConfigProperty<Integer> original = getProperty(ConfigDefinitionUtils.getOriginalColourPropertyName(slot));
+			ConfigProperty<Integer> replacement = getProperty(ConfigDefinitionUtils.getReplacementColourPropertyName(slot));
 
 			builder.put(original.getValue(), replacement.getValue());
 		}
@@ -75,12 +75,12 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the specified head model id of this identity kit.
+	 * Gets the {@link ConfigProperty} containing the specified head model id of this identity kit.
 	 * 
 	 * @param model The model id.
 	 * @return The property containing the head model id.
 	 */
-	public DefinitionProperty<Integer> getHeadModel(int model) {
+	public ConfigProperty<Integer> getHeadModel(int model) {
 		return getProperty(ConfigDefinitionUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
 	}
 
@@ -100,21 +100,21 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link DefinitionProperty} containing the part of this identity kit.
+	 * Gets the {@link ConfigProperty} containing the part of this identity kit.
 	 *
 	 * @return The property containing the part.
 	 */
-	public DefinitionProperty<Part> getPart() {
+	public ConfigProperty<Part> getPart() {
 		return getProperty(IdentityKitProperty.PART);
 	}
 
 	/**
-	 * Returns the {@link DefinitionProperty} containing whether or not this identity kit can be used when designing an
+	 * Returns the {@link ConfigProperty} containing whether or not this identity kit can be used when designing an
 	 * avatar.
 	 *
 	 * @return The property containing the is player style flag.
 	 */
-	public DefinitionProperty<Boolean> isPlayerDesignStyle() {
+	public ConfigProperty<Boolean> isPlayerDesignStyle() {
 		return getProperty(IdentityKitProperty.PLAYER_DESIGN_STYLE);
 	}
 

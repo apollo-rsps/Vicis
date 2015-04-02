@@ -1,7 +1,7 @@
 package rs.emulate.shared.util;
 
 /**
- * Contains string-related utility methods.
+ * Contains String-related utility methods.
  * 
  * @author Graham
  */

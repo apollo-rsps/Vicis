@@ -18,7 +18,7 @@ public final class ConfigConstants {
 	public static final int DEFAULT_SCALE = 128;
 
 	/**
-	 * The value that indicates all of the data for a single ConfigDefinition has been read.
+	 * The value that indicates all of the data for a single definition has been read.
 	 */
 	public static final int DEFINITION_TERMINATOR = 0;
 

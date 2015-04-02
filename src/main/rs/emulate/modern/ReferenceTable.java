@@ -19,193 +19,6 @@ import rs.emulate.shared.util.DataBuffer;
 public final class ReferenceTable {
 
 	/**
-	 * Represents a child entry within an {@link Entry} in the {@link ReferenceTable}.
-	 */
-	public static final class ChildEntry {
-
-		/**
-		 * This entry's identifier.
-		 */
-		private int identifier = -1;
-
-		/**
-		 * Gets the identifier of this entry.
-		 *
-		 * @return The identifier.
-		 */
-		public int getIdentifier() {
-			return identifier;
-		}
-
-		/**
-		 * Sets the identifier of this entry.
-		 *
-		 * @param identifier The identifier.
-		 */
-		public void setIdentifier(int identifier) {
-			this.identifier = identifier;
-		}
-
-	}
-
-	/**
-	 * Represents a single entry within a {@link ReferenceTable}.
-	 */
-	public static final class Entry {
-
-		/**
-		 * The CRC32 checksum of this entry.
-		 */
-		private int crc;
-
-		/**
-		 * The children in this entry.
-		 */
-		private SortedMap<Integer, ChildEntry> entries = new TreeMap<>();
-
-		/**
-		 * The identifier of this entry.
-		 */
-		private int identifier = -1;
-
-		/**
-		 * The version of this entry.
-		 */
-		private int version;
-
-		/**
-		 * The whirlpool digest of this entry.
-		 */
-		private byte[] whirlpool = new byte[64];
-
-		/**
-		 * Gets the maximum number of child entries.
-		 *
-		 * @return The maximum number of child entries.
-		 */
-		public int capacity() {
-			return entries.isEmpty() ? 0 : entries.lastKey() + 1;
-		}
-
-		/**
-		 * Gets the CRC32 checksum of this entry.
-		 *
-		 * @return The CRC32 checksum.
-		 */
-		public int getCrc() {
-			return crc;
-		}
-
-		/**
-		 * Gets the child entry with the specified id.
-		 *
-		 * @param id The id.
-		 * @return The entry, or {@code null} if it does not exist.
-		 */
-		public ChildEntry getEntry(int id) {
-			return entries.get(id);
-		}
-
-		/**
-		 * Gets the identifier of this entry.
-		 *
-		 * @return The identifier.
-		 */
-		public int getIdentifier() {
-			return identifier;
-		}
-
-		/**
-		 * Gets the version of this entry.
-		 *
-		 * @return The version.
-		 */
-		public int getVersion() {
-			return version;
-		}
-
-		/**
-		 * Gets the whirlpool digest of this entry.
-		 *
-		 * @return The whirlpool digest.
-		 */
-		public byte[] getWhirlpool() {
-			return whirlpool.clone();
-		}
-
-		/**
-		 * Replaces or inserts the child entry with the specified id.
-		 *
-		 * @param id The id.
-		 * @param entry The entry.
-		 */
-		public void putEntry(int id, ChildEntry entry) {
-			entries.put(id, entry);
-		}
-
-		/**
-		 * Removes the entry with the specified id.
-		 *
-		 * @param id The id.
-		 * @param entry The entry.
-		 */
-		public void removeEntry(int id, ChildEntry entry) {
-			entries.remove(id);
-		}
-
-		/**
-		 * Sets the CRC32 checksum of this entry.
-		 *
-		 * @param crc The CRC32 checksum.
-		 */
-		public void setCrc(int crc) {
-			this.crc = crc;
-		}
-
-		/**
-		 * Sets the identifier of this entry.
-		 *
-		 * @param identifier The identifier.
-		 */
-		public void setIdentifier(int identifier) {
-			this.identifier = identifier;
-		}
-
-		/**
-		 * Sets the version of this entry.
-		 *
-		 * @param version The version.
-		 */
-		public void setVersion(int version) {
-			this.version = version;
-		}
-
-		/**
-		 * Sets the whirlpool digest of this entry.
-		 *
-		 * @param whirlpool The whirlpool digest.
-		 * @throws IllegalArgumentException if the digest is not 64 bytes long.
-		 */
-		public void setWhirlpool(byte[] whirlpool) {
-			if (whirlpool.length != 64) {
-				throw new IllegalArgumentException("Whirlpool length must be 64.");
-			}
-
-			this.whirlpool = whirlpool.clone();
-		}
-
-		/**
-		 * Gets the number of actual child entries.
-		 *
-		 * @return The number of actual child entries.
-		 */
-		public int size() {
-			return entries.size();
-		}
-
-	}
-
-	/**
 	 * A flag which indicates this {@link ReferenceTable} contains {@link CacheStringUtils} hashed identifiers.
 	 */
 	public static final int FLAG_IDENTIFIERS = 0x01;
@@ -247,22 +60,22 @@ public final class ReferenceTable {
 
 		if ((table.flags & FLAG_IDENTIFIERS) != 0) {
 			for (int id : ids) {
-				table.entries.get(id).identifier = buffer.getInt();
+				table.entries.get(id).setIdentifier(buffer.getInt());
 			}
 		}
 
 		for (int id : ids) {
-			table.entries.get(id).crc = buffer.getInt();
+			table.entries.get(id).setCrc(buffer.getInt());
 		}
 
 		if ((table.flags & FLAG_WHIRLPOOL) != 0) {
 			for (int id : ids) {
-				buffer.get(table.entries.get(id).whirlpool);
+				buffer.get(table.entries.get(id).getWhirlpool());
 			}
 		}
 
 		for (int id : ids) {
-			table.entries.get(id).version = buffer.getInt();
+			table.entries.get(id).setVersion(buffer.getInt());
 		}
 
 		int[][] members = new int[size][];
@@ -284,14 +97,14 @@ public final class ReferenceTable {
 			size++;
 
 			for (int child : members[id]) {
-				table.entries.get(id).entries.put(child, new ChildEntry());
+				table.entries.get(id).putEntry(child, new ChildEntry());
 			}
 		}
 
 		if ((table.flags & FLAG_IDENTIFIERS) != 0) {
 			for (int id : ids) {
 				for (int child : members[id]) {
-					table.entries.get(id).entries.get(child).identifier = buffer.getInt();
+					table.entries.get(id).getEntry(child).setIdentifier(buffer.getInt());
 				}
 			}
 		}
@@ -352,8 +165,8 @@ public final class ReferenceTable {
 			if (format >= 6) {
 				os.writeInt(version);
 			}
+			
 			os.write(flags);
-
 			os.writeShort(entries.size());
 
 			int last = 0;
@@ -367,32 +180,32 @@ public final class ReferenceTable {
 
 			if ((flags & FLAG_IDENTIFIERS) != 0) {
 				for (Entry entry : entries.values()) {
-					os.writeInt(entry.identifier);
+					os.writeInt(entry.getIdentifier());
 				}
 			}
 
 			for (Entry entry : entries.values()) {
-				os.writeInt(entry.crc);
+				os.writeInt(entry.getCrc());
 			}
 
 			if ((flags & FLAG_WHIRLPOOL) != 0) {
 				for (Entry entry : entries.values()) {
-					os.write(entry.whirlpool);
+					os.write(entry.getWhirlpool());
 				}
 			}
 
 			for (Entry entry : entries.values()) {
-				os.writeInt(entry.version);
+				os.writeInt(entry.getVersion());
 			}
 
 			for (Entry entry : entries.values()) {
-				os.writeShort(entry.entries.size());
+				os.writeShort(entry.size());
 			}
 
 			for (Entry entry : entries.values()) {
 				last = 0;
 				for (int id = 0; id < entry.capacity(); id++) {
-					if (entry.entries.containsKey(id)) {
+					if (entry.hasChild(id)) {
 						int delta = id - last;
 						os.writeShort(delta);
 						last = id;
@@ -402,8 +215,8 @@ public final class ReferenceTable {
 
 			if ((flags & FLAG_IDENTIFIERS) != 0) {
 				for (Entry entry : entries.values()) {
-					for (ChildEntry child : entry.entries.values()) {
-						os.writeInt(child.identifier);
+					for (ChildEntry child : entry.getChildren()) {
+						os.writeInt(child.getIdentifier());
 					}
 				}
 			}

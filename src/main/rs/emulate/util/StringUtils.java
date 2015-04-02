@@ -1,45 +1,31 @@
 package rs.emulate.util;
 
-
+import java.util.StringJoiner;
 
 /**
- * Contains string-related utility methods.
+ * Contains String-related utility methods.
  * 
  * @author Major
  */
 public final class StringUtils {
 
 	/**
-	 * Camelcases the specified string.
+	 * Returns a new string consisting of the characters in the specified String, with the first letter of each word
+	 * capitalised, and the rest lower-case.
 	 *
-	 * @param string The string.
-	 * @return The camelcased string.
-	 */
-	public static String camelcase(String string) {
-		string = string.toLowerCase();
-
-		while (string.contains("-") || string.contains("_")) {
-			int index = string.indexOf("-");
-			if (index == -1) {
-				index = string.indexOf("_");
-			}
-
-			String first = string.substring(0, index), second = string.substring(index + 1);
-			string = first + Character.toUpperCase(second.charAt(0)) + second.substring(1);
-		}
-
-		return string;
-	}
-
-	/**
-	 * Returns a new string consisting of the characters in the specified string, with the first letter capitalised, and
-	 * the rest lower-case.
-	 *
-	 * @param string The string.
-	 * @return The capitalised string.
+	 * @param string The String.
+	 * @return The capitalised String.
 	 */
 	public static String capitalise(String string) {
-		return Character.toUpperCase(string.charAt(0)) + string.substring(1).toLowerCase();
+		String[] words = string.split(" ");
+		StringJoiner builder = new StringJoiner(" ");
+
+		for (String word : words) {
+			String capitalised = Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
+			builder.add(capitalised);
+		}
+
+		return builder.toString();
 	}
 
 	/**
