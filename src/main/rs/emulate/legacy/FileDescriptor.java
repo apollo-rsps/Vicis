@@ -1,5 +1,7 @@
 package rs.emulate.legacy;
 
+import com.google.common.base.MoreObjects;
+
 /**
  * A class which points to a file in the cache.
  * 
@@ -26,6 +28,11 @@ public final class FileDescriptor {
 	public FileDescriptor(int type, int file) {
 		this.type = type;
 		this.file = file;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this).add("type", type).add("file", file).toString();
 	}
 
 	@Override

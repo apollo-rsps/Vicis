@@ -159,8 +159,9 @@ public class PlayerProvider {
 		 * @return The Skills.
 		 */
 		default Skill[] getSkills() {
-			int skillCount = 21;
-			Skill[] skills = new Skill[skillCount];
+			int count = 21;
+			
+			Skill[] skills = new Skill[count];
 			for (int id = 0; id < skills.length; id++) {
 				skills[id] = get(id);
 			}

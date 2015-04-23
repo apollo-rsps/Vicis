@@ -1,6 +1,6 @@
 package rs.emulate.legacy.config.animation;
 
-import static rs.emulate.shared.prop.Properties.*;
+import static rs.emulate.shared.property.Properties.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +9,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -26,9 +26,9 @@ public class DefaultAnimationDefinition extends DefaultConfigDefinition {
 	private static final DefaultAnimationDefinition DEFAULT = new DefaultAnimationDefinition();
 
 	/**
-	 * A {@link Supplier} that returns a {@link PropertyMap} copy of this default definition.
+	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
 	 */
-	public static final Supplier<PropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
 	 * Creates the DefaultAnimationDefinition.

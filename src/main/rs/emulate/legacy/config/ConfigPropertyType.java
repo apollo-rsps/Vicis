@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config;
 
-import rs.emulate.shared.prop.DynamicPropertyType;
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.shared.property.DynamicPropertyType;
+import rs.emulate.shared.property.PropertyType;
 
 /**
  * A {@link PropertyType} used as part of the {@link ConfigEncoder} and {@link ConfigDecoder}, {@link #opcode()}. Should

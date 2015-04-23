@@ -34,7 +34,7 @@ public final class ClientScriptDumper {
 		opcodes.put(1, "push_icfg"); // push an int config ('varp')
 		opcodes.put(2, "set_icfg"); // pop an int config ('varp')
 		opcodes.put(3, "push_s"); // push string
-		opcodes.put(6, "goto"); // jump
+		opcodes.put(6, "jump"); // jump
 		opcodes.put(7, "if_ne_i"); // branch if ints not equal
 		opcodes.put(8, "if_eq_i"); // branch if ints equal
 		opcodes.put(9, "if_lt_i"); // branch if int <

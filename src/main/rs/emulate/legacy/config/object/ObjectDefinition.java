@@ -3,9 +3,9 @@ package rs.emulate.legacy.config.object;
 import java.util.Map;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.legacy.config.npc.MorphismSet;
-import rs.emulate.shared.prop.PropertyMap;
 
 /**
  * A {@link MutableConfigDefinition} for an object.
@@ -33,9 +33,9 @@ public class ObjectDefinition extends MutableConfigDefinition {
 	 * Creates the ObjectDefinition.
 	 * 
 	 * @param id The id.
-	 * @param properties The {@link PropertyMap}.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public ObjectDefinition(int id, PropertyMap properties) {
+	public ObjectDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 

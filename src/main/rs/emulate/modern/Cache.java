@@ -182,7 +182,7 @@ public final class Cache implements Closeable {
 		entry.setVersion(container.getVersion());
 		entry.setCrc((int) crc.getValue());
 
-		if ((table.getFlags() & ReferenceTable.FLAG_WHIRLPOOL) != 0) {
+		if ((table.getFlags() & ReferenceTable.HAS_HASHES) != 0) {
 			byte[] whirlpool = Whirlpool.whirlpool(bytes, 0, bytes.length);
 			entry.setWhirlpool(whirlpool);
 		}

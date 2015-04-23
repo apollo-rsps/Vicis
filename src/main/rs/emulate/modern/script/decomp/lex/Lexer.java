@@ -26,6 +26,11 @@ import com.google.common.collect.ImmutableSet;
 public final class Lexer implements AutoCloseable {
 
 	/**
+	 * Indicates that all of the data has been read.
+	 */
+	private static final int END_OF_STREAM = -1;
+
+	/**
 	 * TODO remove.
 	 * 
 	 * @param args The program args.
@@ -40,11 +45,6 @@ public final class Lexer implements AutoCloseable {
 			lexer.lex().forEach(System.out::println);
 		}
 	}
-
-	/**
-	 * Indicates that all of the data has been read.
-	 */
-	private static final int END_OF_STREAM = -1;
 
 	/**
 	 * The current line number.
@@ -68,7 +68,7 @@ public final class Lexer implements AutoCloseable {
 	 * @param mnemonics The Set of mnemonics.
 	 */
 	public Lexer(BufferedReader reader, Set<String> mnemonics) {
-		this.reader = new BufferedReader(reader);
+		this.reader = reader;
 		this.mnemonics = ImmutableSet.copyOf(mnemonics);
 	}
 

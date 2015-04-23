@@ -1,8 +1,8 @@
 package rs.emulate.legacy.config.varp;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 
 /**
  * A definition for a parameter variable (a 'varp').
@@ -20,9 +20,9 @@ public class ParameterVariableDefinition extends MutableConfigDefinition {
 	 * Creates the variable ParameterVariableDefinition.
 	 *
 	 * @param id The id.
-	 * @param properties The {@link PropertyMap}.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public ParameterVariableDefinition(int id, PropertyMap properties) {
+	public ParameterVariableDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 

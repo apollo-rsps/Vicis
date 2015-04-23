@@ -1,8 +1,8 @@
 package rs.emulate.legacy.config.animation;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 
 /**
  * A {@link MutableConfigDefinition} for an animation.
@@ -20,9 +20,9 @@ public class AnimationDefinition extends MutableConfigDefinition {
 	 * Creates the AnimationDefinition.
 	 * 
 	 * @param id The id of the definition.
-	 * @param properties The {@link PropertyMap}.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public AnimationDefinition(int id, PropertyMap properties) {
+	public AnimationDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 

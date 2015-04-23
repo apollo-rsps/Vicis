@@ -1,18 +1,18 @@
 package rs.emulate.legacy.config.object;
 
-import static rs.emulate.shared.prop.Properties.*;
+import static rs.emulate.shared.property.Properties.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
-import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.ConfigPropertyMap;
+import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.legacy.config.npc.MorphismSet;
-import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -28,12 +28,12 @@ public class DefaultObjectDefinition extends DefaultConfigDefinition {
 	private static final DefaultObjectDefinition DEFAULT = new DefaultObjectDefinition();
 
 	/**
-	 * A {@link Supplier} that returns a {@link PropertyMap} copy of this default definition.
+	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
 	 */
-	public static final Supplier<PropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
-	 * Creates the default object definition.
+	 * Creates the DefaultObjectDefinition.
 	 */
 	private DefaultObjectDefinition() {
 		super();
@@ -46,8 +46,8 @@ public class DefaultObjectDefinition extends DefaultConfigDefinition {
 		properties.put(1, new ConfigProperty<>(ObjectProperty.POSITIONED_MODELS, ModelSet.EMPTY, ModelSet::encode,
 				ModelSet::decodePositioned, set -> set.getCount() * (Short.BYTES + Byte.BYTES) + Byte.BYTES));
 
-		properties.put(2, string(ObjectProperty.NAME, "null"));
-		properties.put(3, string(ObjectProperty.DESCRIPTION, "null"));
+		properties.put(2, asciiString(ObjectProperty.NAME, "null"));
+		properties.put(3, asciiString(ObjectProperty.DESCRIPTION, "null"));
 
 		properties.put(5, new ConfigProperty<>(ObjectProperty.MODELS, ModelSet.EMPTY, ModelSet::encode, ModelSet::decode,
 				set -> Byte.BYTES + set.getCount() * Short.BYTES));
@@ -69,13 +69,13 @@ public class DefaultObjectDefinition extends DefaultConfigDefinition {
 		properties.put(29, signedByte(ObjectProperty.AMBIENT_LIGHTING, 0));
 
 		for (int option = 1; option <= ObjectDefinition.INTERACTION_COUNT; option++) {
-			ConfigPropertyType name = ConfigDefinitionUtils.createOptionProperty(ObjectDefinition.INTERACTION_PROPERTY_PREFIX,
+			ConfigPropertyType name = ConfigUtils.createOptionProperty(ObjectDefinition.INTERACTION_PROPERTY_PREFIX,
 					option);
-			properties.put(option + 29, string(name, "hidden"));
+			properties.put(option + 29, asciiString(name, "hidden"));
 		}
 
 		properties.put(39, signedByte(ObjectProperty.LIGHT_DIFFUSION, 0));
-		properties.put(40, ConfigDefinitionUtils.createColourProperty(ObjectProperty.COLOURS));
+		properties.put(40, ConfigUtils.createColourProperty(ObjectProperty.COLOURS));
 
 		properties.put(60, unsignedShort(ObjectProperty.MINIMAP_FUNCTION, -1));
 		properties.put(62, alwaysTrue(ObjectProperty.INVERTED, false));

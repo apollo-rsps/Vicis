@@ -1,4 +1,4 @@
-package rs.emulate.shared.prop;
+package rs.emulate.shared.property;
 
 import rs.emulate.util.StringUtils;
 
@@ -8,6 +8,7 @@ import rs.emulate.util.StringUtils;
  * 
  * @author Major
  */
+@FunctionalInterface
 public interface PropertyType {
 
 	/**

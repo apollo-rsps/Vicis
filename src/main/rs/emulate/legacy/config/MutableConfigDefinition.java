@@ -4,8 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import rs.emulate.shared.prop.PropertyMap;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
 import com.google.common.base.Preconditions;
@@ -20,7 +18,7 @@ public abstract class MutableConfigDefinition {
 	/**
 	 * The PropertyMap.
 	 */
-	protected final PropertyMap properties;
+	protected final ConfigPropertyMap properties;
 
 	/**
 	 * The id of this MutableDefinition.
@@ -31,12 +29,12 @@ public abstract class MutableConfigDefinition {
 	 * Creates the MutableDefinition.
 	 *
 	 * @param id The id of the MutableDefinition.
-	 * @param properties The {@link PropertyMap}. Must not be {@code null}.
+	 * @param properties The {@link ConfigPropertyMap}. Must not be {@code null}.
 	 */
-	public MutableConfigDefinition(int id, PropertyMap properties) {
+	public MutableConfigDefinition(int id, ConfigPropertyMap properties) {
 		Preconditions.checkNotNull(properties, "Map cannot be null.");
 		this.id = id;
-		this.properties = new PropertyMap(properties);
+		this.properties = new ConfigPropertyMap(properties);
 	}
 
 	/**

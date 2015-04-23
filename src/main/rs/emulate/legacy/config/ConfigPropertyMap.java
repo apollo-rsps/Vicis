@@ -1,4 +1,4 @@
-package rs.emulate.shared.prop;
+package rs.emulate.legacy.config;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -6,8 +6,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.util.Assertions;
 
 import com.google.common.base.Preconditions;
@@ -17,15 +15,15 @@ import com.google.common.base.Preconditions;
  *
  * @author Major
  */
-public final class PropertyMap {
+public final class ConfigPropertyMap {
 
 	/**
-	 * Validates that the specified property is valid (i.e. is not {@code null}).
+	 * Validates the specified {@link ConfigProperty} (i.e. ensures that it is not {@code null}).
 	 * 
-	 * @param property The {@link ConfigProperty} to validate.
-	 * @param key The key used to access the invalid property.
-	 * @return The property, if it is valid.
-	 * @throws IllegalArgumentException If the property is {@code null}.
+	 * @param property The ConfigProperty to validate.
+	 * @param key The key used to access the ConfigProperty.
+	 * @return The ConfigProperty.
+	 * @throws IllegalArgumentException If the ConfigProperty is {@code null}.
 	 */
 	@SuppressWarnings("unchecked")
 	private static <T> ConfigProperty<T> validate(ConfigProperty<?> property, Object key) {
@@ -33,12 +31,12 @@ public final class PropertyMap {
 	}
 
 	/**
-	 * The map of opcodes to DefinitionProperty objects.
+	 * The Map of opcodes to ConfigProperty objects.
 	 */
 	private final Map<Integer, ConfigProperty<?>> opcodes;
 
 	/**
-	 * The map of PropertyTypes to DefinitionProperty objects.
+	 * The Map of ConfigPropertyTypes to ConfigProperty objects.
 	 */
 	private final Map<ConfigPropertyType, ConfigProperty<?>> properties;
 
@@ -46,10 +44,10 @@ public final class PropertyMap {
 	 * Creates the PropertyMap.
 	 *
 	 * @param opcodes The {@link Map} of opcodes to {@link ConfigProperty} objects.
-	 * @throws IllegalArgumentException If the contains a mapping for opcode 0.
+	 * @throws IllegalArgumentException If {@code opcodes} contains a mapping for opcode 0.
 	 */
-	public PropertyMap(Map<Integer, ConfigProperty<?>> opcodes) {
-		Preconditions.checkArgument(opcodes.get(0) == null, "Opcode 0 is reserved.");
+	public ConfigPropertyMap(Map<Integer, ConfigProperty<?>> opcodes) {
+		Preconditions.checkArgument(!opcodes.containsKey(0), "Opcode 0 is reserved.");
 		this.opcodes = new HashMap<>(opcodes);
 
 		Map<ConfigPropertyType, ConfigProperty<?>> properties = new HashMap<>(opcodes.size());
@@ -64,20 +62,20 @@ public final class PropertyMap {
 	}
 
 	/**
-	 * Creates the PropertyMap, using an existing one as the base.
+	 * Creates the ConfigPropertyMap, using an existing one as the base.
 	 * 
-	 * @param map The base PropertyMap.
+	 * @param map The base ConfigPropertyMap.
 	 */
-	public PropertyMap(PropertyMap map) {
+	public ConfigPropertyMap(ConfigPropertyMap map) {
 		this(map.opcodes);
 	}
 
 	/**
 	 * Gets the {@link ConfigProperty} with the specified {@link ConfigPropertyType}.
 	 *
-	 * @param name The name of the DefinitionProperty.
-	 * @return The DefinitionProperty.
-	 * @throws IllegalArgumentException If no DefinitionProperty with the specified name exists.
+	 * @param name The name of the ConfigProperty.
+	 * @return The ConfigProperty.
+	 * @throws IllegalArgumentException If no ConfigProperty with the specified name exists.
 	 */
 	public <T> ConfigProperty<T> get(ConfigPropertyType name) {
 		return validate(properties.get(name), name);
@@ -86,19 +84,19 @@ public final class PropertyMap {
 	/**
 	 * Gets the {@link ConfigProperty} with the specified opcode.
 	 *
-	 * @param opcode The opcode of the DefinitionProperty.
-	 * @return The DefinitionProperty.
-	 * @throws IllegalArgumentException If no DefinitionProperty with the specified opcode exists.
+	 * @param opcode The opcode of the ConfigProperty.
+	 * @return The ConfigProperty.
+	 * @throws IllegalArgumentException If no ConfigProperty with the specified opcode exists.
 	 */
 	public <T> ConfigProperty<T> get(int opcode) {
 		return validate(opcodes.get(opcode), opcode);
 	}
 
 	/**
-	 * Gets a {@link Set} containing {@link java.util.Map.Entry Map.Entry} objects of opcodes to
-	 * {@link ConfigProperty} objects.
+	 * Gets a {@link Set} containing {@link java.util.Map.Entry Map.Entry} objects of opcodes to {@link ConfigProperty}
+	 * objects.
 	 * 
-	 * @return The set of map entries.
+	 * @return The Set of Map Entry objects.
 	 */
 	public Set<Map.Entry<Integer, ConfigProperty<?>>> getProperties() {
 		return opcodes.entrySet();
@@ -108,7 +106,7 @@ public final class PropertyMap {
 	 * Adds a {@link ConfigProperty} with the specified opcode.
 	 *
 	 * @param opcode The opcode.
-	 * @param property The DefinitionProperty.
+	 * @param property The ConfigProperty.
 	 */
 	public void put(int opcode, ConfigProperty<?> property) {
 		Assertions.checkPositive(opcode, "Error placing property - opcode must be positive.");
@@ -127,9 +125,9 @@ public final class PropertyMap {
 	}
 
 	/**
-	 * Gets a {@link Collection} containing the values of this map (i.e. the {@link ConfigProperty} objects).
+	 * Gets a {@link Collection} containing the values of this ConfigPropertyMap (i.e. the {@link ConfigProperty} objects).
 	 *
-	 * @return The values.
+	 * @return The Collection of values.
 	 */
 	public Collection<ConfigProperty<?>> values() {
 		return properties.values();

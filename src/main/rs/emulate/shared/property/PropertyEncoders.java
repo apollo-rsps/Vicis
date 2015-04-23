@@ -1,4 +1,4 @@
-package rs.emulate.shared.prop;
+package rs.emulate.shared.property;
 
 import java.nio.ByteBuffer;
 import java.util.function.BiConsumer;

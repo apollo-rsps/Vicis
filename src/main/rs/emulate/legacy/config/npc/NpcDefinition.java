@@ -3,8 +3,8 @@ package rs.emulate.legacy.config.npc;
 import java.util.Map;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 
 /**
  * A {@link MutableConfigDefinition} for an npc.
@@ -32,9 +32,9 @@ public class NpcDefinition extends MutableConfigDefinition {
 	 * Creates the NpcDefinition.
 	 * 
 	 * @param id The id of the npc.
-	 * @param properties The {@link PropertyMap}.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public NpcDefinition(int id, PropertyMap properties) {
+	public NpcDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 

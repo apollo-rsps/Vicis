@@ -2,10 +2,10 @@ package rs.emulate.legacy.config.item;
 
 import java.util.Map;
 
-import rs.emulate.legacy.config.ConfigDefinitionUtils;
+import rs.emulate.legacy.config.ConfigPropertyMap;
+import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.world.Sex;
 import rs.emulate.util.Assertions;
 
@@ -36,9 +36,9 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 * Creates the ItemDefinition.
 	 * 
 	 * @param id The id.
-	 * @param properties The {@link PropertyMap}.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public ItemDefinition(int id, PropertyMap properties) {
+	public ItemDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 
@@ -68,7 +68,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 */
 	public ConfigProperty<String> getGroundAction(int index) {
 		checkBounds(ItemConstants.MENU_ACTION_COUNT, index);
-		return getProperty(ConfigDefinitionUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index));
+		return getProperty(ConfigUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 */
 	public ConfigProperty<String> getInventoryAction(int index) {
 		checkBounds(ItemConstants.MENU_ACTION_COUNT, index);
-		return getProperty(ConfigDefinitionUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index));
+		return getProperty(ConfigUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 */
 	public ConfigProperty<ItemStack> getItemStack(int index) {
 		checkBounds(ItemConstants.ITEM_STACK_COUNT, index);
-		return getProperty(ConfigDefinitionUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index));
+		return getProperty(ConfigUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 * @return The property.
 	 */
 	public ConfigProperty<Integer> getLightAmbiance() {
-		return getProperty(ItemProperty.LIGHT_AMBIENCE);
+		return getProperty(ItemProperty.AMBIENCE);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 * @return The property.
 	 */
 	public ConfigProperty<Integer> getLightDiffusion() {
-		return getProperty(ItemProperty.LIGHT_DIFFUSION);
+		return getProperty(ItemProperty.CONTRAST);
 	}
 
 	/**

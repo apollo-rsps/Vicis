@@ -1,5 +1,7 @@
 package rs.emulate.legacy.widget;
 
+import java.util.Arrays;
+
 /**
  * The group a Widget belongs in.
  *
@@ -50,6 +52,18 @@ public enum WidgetGroup {
 	 * The item list group, specifying that a Widget has a bespoke inventory, which serves only as a list of items.
 	 */
 	ITEM_LIST(7);
+
+	/**
+	 * Gets the WidgetGroup with the specified integer value.
+	 * 
+	 * @param value The integer value.
+	 * @return The WidgetGroup.
+	 * @throws IllegalArgumentException If no WidgetGroup with the specified integer value exists.
+	 */
+	public static WidgetGroup valueOf(int value) {
+		return Arrays.stream(values()).filter(group -> group.value == value).findAny()
+				.orElseThrow(() -> new IllegalArgumentException("No WidgetGroup with a value of " + value + " exists."));
+	}
 
 	/**
 	 * The integer value of this WidgetGroup.

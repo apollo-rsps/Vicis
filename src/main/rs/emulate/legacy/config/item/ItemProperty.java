@@ -152,12 +152,12 @@ enum ItemProperty implements ConfigPropertyType {
 	/**
 	 * The light ambience property.
 	 */
-	LIGHT_AMBIENCE(113),
+	AMBIENCE(113),
 
 	/**
 	 * The light diffusion property.
 	 */
-	LIGHT_DIFFUSION(114),
+	CONTRAST(114),
 
 	/**
 	 * The team property.

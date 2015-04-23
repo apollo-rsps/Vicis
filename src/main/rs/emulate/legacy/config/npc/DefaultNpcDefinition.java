@@ -9,11 +9,11 @@ import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.legacy.config.ConfigDefinitionUtils;
-import rs.emulate.shared.prop.Properties;
-import rs.emulate.shared.prop.PropertyMap;
+import rs.emulate.legacy.config.ConfigUtils;
+import rs.emulate.shared.property.Properties;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -29,9 +29,9 @@ public class DefaultNpcDefinition extends DefaultConfigDefinition {
 	private static final DefaultNpcDefinition DEFAULT = new DefaultNpcDefinition();
 
 	/**
-	 * A {@link Supplier} that returns a {@link PropertyMap} copy of this default definition.
+	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
 	 */
-	public static final Supplier<PropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
 	 * Creates the DefaultNpcDefinition.
@@ -60,8 +60,8 @@ public class DefaultNpcDefinition extends DefaultConfigDefinition {
 		properties.put(1, new ConfigProperty<>(NpcProperty.MODELS, null, modelEncoder, modelDecoder, models -> models.length
 				* Short.BYTES + Byte.BYTES));
 
-		properties.put(2, Properties.string(NpcProperty.NAME, "null"));
-		properties.put(3, Properties.string(NpcProperty.DESCRIPTION, "null"));
+		properties.put(2, Properties.asciiString(NpcProperty.NAME, "null"));
+		properties.put(3, Properties.asciiString(NpcProperty.DESCRIPTION, "null"));
 		properties.put(12, Properties.unsignedByte(NpcProperty.SIZE, 1));
 		properties.put(13, Properties.unsignedShort(NpcProperty.IDLE_ANIMATION, -1));
 		properties.put(14, Properties.unsignedShort(NpcProperty.WALKING_ANIMATION, -1));
@@ -70,17 +70,17 @@ public class DefaultNpcDefinition extends DefaultConfigDefinition {
 				MovementAnimationSet::encode, MovementAnimationSet::decode, Short.BYTES * 4));
 
 		for (int option = 1; option <= NpcDefinition.INTERACTION_COUNT; option++) {
-			ConfigPropertyType name = ConfigDefinitionUtils.createOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option);
-			properties.put(option + 29, Properties.string(name, "hidden"));
+			ConfigPropertyType name = ConfigUtils.createOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option);
+			properties.put(option + 29, Properties.asciiString(name, "hidden"));
 		}
 
-		properties.put(40, ConfigDefinitionUtils.createColourProperty(NpcProperty.COLOURS));
+		properties.put(40, ConfigUtils.createColourProperty(NpcProperty.COLOURS));
 
 		properties.put(60, new ConfigProperty<>(NpcProperty.SECONDARY_MODELS, null, modelEncoder, modelDecoder,
 				models -> models.length * Short.BYTES + Byte.BYTES));
 
 		for (int option = 1; option <= 3; option++) {
-			properties.put(option + 89, Properties.unsignedShort(ConfigDefinitionUtils.createOptionProperty("unused", option), 0));
+			properties.put(option + 89, Properties.unsignedShort(ConfigUtils.createOptionProperty("unused", option), 0));
 		}
 
 		properties.put(93, Properties.alwaysFalse(NpcProperty.MINIMAP_VISIBLE, true));

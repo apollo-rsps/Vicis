@@ -6,7 +6,6 @@ import java.util.List;
 
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.config.Suppliers.DefinitionSupplier;
-import rs.emulate.shared.prop.PropertyMap;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -72,7 +71,7 @@ public final class ConfigDecoder<T extends MutableConfigDefinition> {
 	 * @return The decoded definition.
 	 */
 	private T decode(int id) {
-		PropertyMap properties = supplier.supplyDefault();
+		ConfigPropertyMap properties = supplier.supplyDefault();
 
 		int opcode = data.getUnsignedByte();
 		while (opcode != 0) {

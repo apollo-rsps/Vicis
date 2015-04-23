@@ -59,6 +59,11 @@ public enum LegacyInstructionType { // TODO these doc comments suck
 	 */
 	MOVE_EXPERIENCE_FOR_LEVEL(6, "mov_exp_lvl", OperandCount.ONE),
 
+	/**
+	 * Moves the value of the setting with the id of the operand into the accumulator.
+	 * <p>
+	 * Example: {@code mov_setting 0} moves the current value of setting 0 into the accumulator.
+	 */
 	MOVE_SETTING2(7, "mov_setting2", OperandCount.ONE), // TODO ! applies some sort of transformation
 
 	/**

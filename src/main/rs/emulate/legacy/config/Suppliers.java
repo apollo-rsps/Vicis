@@ -19,7 +19,6 @@ import rs.emulate.legacy.config.varbit.BitVariableDefinition;
 import rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition;
 import rs.emulate.legacy.config.varp.DefaultParameterVariableDefinition;
 import rs.emulate.legacy.config.varp.ParameterVariableDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 
 /**
  * Contains {@link DefinitionSupplier}s.
@@ -38,7 +37,7 @@ public final class Suppliers {
 		/**
 		 * The BiFunction that returns a new MutableDefinition.
 		 */
-		private final BiFunction<Integer, PropertyMap, T> creator;
+		private final BiFunction<Integer, ConfigPropertyMap, T> creator;
 
 		/**
 		 * The name of the ArchiveEntry.
@@ -48,17 +47,17 @@ public final class Suppliers {
 		/**
 		 * The PropertyMap Supplier.
 		 */
-		private final Supplier<PropertyMap> supplier;
+		private final Supplier<ConfigPropertyMap> supplier;
 
 		/**
 		 * Creates the definition supplier.
 		 * 
 		 * @param name The name of the ArchiveEntry, <strong>without</strong> an extension.
 		 * @param supplier A {@link Supplier} that returns a {@link DefaultConfigDefinition}.
-		 * @param creator An (id, {@link PropertyMap}) {@link BiFunction} that creates a {@link MutableConfigDefinition}
+		 * @param creator An (id, {@link ConfigPropertyMap}) {@link BiFunction} that creates a {@link MutableConfigDefinition}
 		 *            .
 		 */
-		public DefinitionSupplier(String name, Supplier<PropertyMap> supplier, BiFunction<Integer, PropertyMap, T> creator) {
+		public DefinitionSupplier(String name, Supplier<ConfigPropertyMap> supplier, BiFunction<Integer, ConfigPropertyMap, T> creator) {
 			this.name = name;
 			this.supplier = supplier;
 			this.creator = creator;
@@ -68,10 +67,10 @@ public final class Suppliers {
 		 * Creates a new {@link MutableConfigDefinition}.
 		 * 
 		 * @param id The id.
-		 * @param map The {@link PropertyMap}.
+		 * @param map The {@link ConfigPropertyMap}.
 		 * @return The MutableDefinition.
 		 */
-		public T createDefinition(int id, PropertyMap map) {
+		public T createDefinition(int id, ConfigPropertyMap map) {
 			return creator.apply(id, map);
 		}
 
@@ -85,11 +84,11 @@ public final class Suppliers {
 		}
 
 		/**
-		 * Gets a default {@link PropertyMap} from the supplier.
+		 * Gets a default {@link ConfigPropertyMap} from the supplier.
 		 * 
 		 * @return The PropertyMap.
 		 */
-		public PropertyMap supplyDefault() {
+		public ConfigPropertyMap supplyDefault() {
 			return supplier.get();
 		}
 

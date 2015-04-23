@@ -11,7 +11,7 @@ import com.google.common.base.Preconditions;
 public final class Variable {
 
 	/**
-	 * The empty instance used as the default value.
+	 * The empty Variable used as the default value.
 	 */
 	public static final Variable EMPTY = new Variable();
 
@@ -19,8 +19,7 @@ public final class Variable {
 	 * Returns whether or not the specified index is valid for a mask.
 	 * 
 	 * @param index The index.
-	 * @return {@code true} if the specified index is greater than or equal to 0, but less than 33, otherwise
-	 *         {@code false}.
+	 * @return {@code true} if {@code 0 <= index <= 32}, {@code false} if not.
 	 */
 	public static final boolean validMaskIndex(int index) {
 		return index >= 0 && index < 33;
@@ -42,7 +41,7 @@ public final class Variable {
 	private final int variable;
 
 	/**
-	 * Creates the variable.
+	 * Creates the Variable.
 	 * 
 	 * @param variable The variable id.
 	 * @param high The high bit mask index.
@@ -60,7 +59,7 @@ public final class Variable {
 	}
 
 	/**
-	 * Creates an empty variable with {@code -1} for each value.
+	 * Creates an empty Variable with {@code -1} for each value.
 	 */
 	private Variable() { // Public constructor will throw an exception for values of -1.
 		variable = high = low = -1;
@@ -112,7 +111,7 @@ public final class Variable {
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("Variable", variable).add("High", high).add("Low", low).toString();
+		return MoreObjects.toStringHelper(this).add("variable", variable).add("high bit", high).add("low bit", low).toString();
 	}
 
 }

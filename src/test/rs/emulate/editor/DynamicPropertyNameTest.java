@@ -4,7 +4,7 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
-import rs.emulate.shared.prop.DynamicPropertyType;
+import rs.emulate.shared.property.DynamicPropertyType;
 
 /**
  * Tests the caching used in {@link DynamicPropertyType}s to ensure that properties with the same name and opcode will

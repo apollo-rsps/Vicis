@@ -2,8 +2,6 @@ package rs.emulate.legacy.config;
 
 import java.util.Map;
 
-import rs.emulate.shared.prop.PropertyMap;
-
 import com.google.common.collect.ImmutableMap;
 
 /**
@@ -26,12 +24,12 @@ public abstract class DefaultConfigDefinition {
 	}
 
 	/**
-	 * Gets a {@link PropertyMap}
+	 * Gets a {@link ConfigPropertyMap}
 	 * 
 	 * @return The PropertyMap.
 	 */
-	public final PropertyMap toPropertyMap() {
-		return new PropertyMap(properties);
+	public final ConfigPropertyMap toPropertyMap() {
+		return new ConfigPropertyMap(properties);
 	}
 
 	/**

@@ -18,7 +18,7 @@ final class NameIdentifier {
 	private final Executor executor = Executors.newFixedThreadPool(THREAD_COUNT);
 
 	public static void main(String[] args) {
-		NameIdentifier identifier = new NameIdentifier(8297314, 1654911043);
+		NameIdentifier identifier = new NameIdentifier(22834782);// , -1857300557);
 		identifier.start();
 	}
 
@@ -67,31 +67,62 @@ final class NameIdentifier {
 
 		@Override
 		public void run() {
-			int current = 0;
-			while (true) {
-				StringBuilder builder = new StringBuilder();
-
-				int next = current;
-				do {
-					builder.append(IDENTIFIER_CHARS[Math.abs(next % 37)]);
-					next /= 37;
-				} while (next != 0);
-
-				if (hash(builder.toString().concat(".dat")) == identifier
-						|| hash(builder.toString().concat(".idx")) == identifier) {
-					System.out.println("Found for " + identifier + ": " + builder.toString());
-					break;
-				}
-
-				current++;
-			}
+			String match = recurse(1);
 		}
+
+		public String recurse(int length) {
+			System.out.println("length=" + length);
+			
+			int offset = ".dat".length();
+			char[] chars = new char[length + offset];
+			
+			int max = IDENTIFIER_CHARS.length;
+			char[] table = IDENTIFIER_CHARS;
+			int identifier = this.identifier;
+
+			for (int i = 0; i < length; i++) {
+				for (int char_index = 0; char_index < length; char_index++) {
+					for (int table_index = 0; table_index < max; table_index++) {
+						chars[char_index] = table[table_index];
+
+						chars[char_index + 1] = '.';
+						chars[char_index + 2] = 'd';
+						chars[char_index + 3] = 'a';
+						chars[char_index + 4] = 't';
+						System.out.println(new String(chars));
+
+						if (hash(chars) == identifier) {
+							return new String(chars);
+						}
+					}
+				}
+			}
+			if (length > 3) {
+				throw new RuntimeException("length > 20");
+			}
+
+			return recurse(length + 1);
+		}
+
+	}
+
+	public static int hash(char[] chars) {
+		int hash = 0;
+		int length = chars.length;
+
+		for (int index = 0; index < length; index++) {
+			hash = hash * 61 + chars[index] - 32;
+		}
+
+		return hash;
 	}
 
 	public static int hash(String name) {
 		int hash = 0;
-		for (char character : name.toUpperCase().toCharArray()) {
-			hash = hash * 61 + character - 32;
+		int length = name.length();
+
+		for (int index = 0; index < length; index++) {
+			hash = hash * 61 + name.charAt(index) - 32;
 		}
 
 		return hash;
@@ -100,7 +131,7 @@ final class NameIdentifier {
 	/**
 	 * The characters used in an identifier.
 	 */
-	private static final char[] IDENTIFIER_CHARS = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-			'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' };
+	private static final char[] IDENTIFIER_CHARS = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+			'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.' };
 
 }

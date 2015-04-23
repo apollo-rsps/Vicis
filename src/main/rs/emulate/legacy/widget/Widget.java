@@ -1,14 +1,13 @@
-package rs.emulate.legacy.widget.type;
+package rs.emulate.legacy.widget;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import rs.emulate.legacy.widget.WidgetGroup;
-import rs.emulate.legacy.widget.WidgetOption;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec;
+import rs.emulate.legacy.widget.type.Option;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.Preconditions;

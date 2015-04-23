@@ -332,6 +332,20 @@ public final class DataBuffer {
 	}
 
 	/**
+	 * Gets a 'large smart' (either a short or an int).
+	 * 
+	 * @return The value.
+	 */
+	public int getLargeSmart() {
+		byte value = buffer.get(buffer.position());
+		if (value >= 0) {
+			return buffer.getShort() & 0xFFFF;
+		}
+
+		return buffer.getInt() & 0x7FFF_FFFF;
+	}
+
+	/**
 	 * Gets a {@code long} from this DataBuffer.
 	 * 
 	 * @return The {@code long}.

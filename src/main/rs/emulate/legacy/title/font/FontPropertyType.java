@@ -1,6 +1,6 @@
 package rs.emulate.legacy.title.font;
 
-import rs.emulate.shared.prop.PropertyType;
+import rs.emulate.shared.property.PropertyType;
 
 /**
  * Contains {@link PropertyType}s for {@link Font}s.

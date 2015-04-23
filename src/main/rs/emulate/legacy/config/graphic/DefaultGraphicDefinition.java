@@ -6,10 +6,10 @@ import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.legacy.config.ConfigDefinitionUtils;
-import rs.emulate.shared.prop.Properties;
-import rs.emulate.shared.prop.PropertyMap;
+import rs.emulate.legacy.config.ConfigUtils;
+import rs.emulate.shared.property.Properties;
 
 /**
  * A default {@link GraphicDefinition} used as a base for an actual definition.
@@ -24,9 +24,9 @@ public class DefaultGraphicDefinition extends DefaultConfigDefinition {
 	private static final DefaultGraphicDefinition DEFAULT = new DefaultGraphicDefinition();
 
 	/**
-	 * A {@link Supplier} that returns a {@link PropertyMap} copy of this default definition.
+	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
 	 */
-	public static final Supplier<PropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
 	 * Creates the DefaultGraphicDefinition.
@@ -48,8 +48,8 @@ public class DefaultGraphicDefinition extends DefaultConfigDefinition {
 		defaults.put(8, Properties.unsignedByte(GraphicProperty.SHADOW, 0));
 
 		for (int slot = 1; slot <= GraphicDefinition.COLOUR_COUNT; slot++) {
-			defaults.put(slot + 40, Properties.unsignedShort(ConfigDefinitionUtils.getOriginalColourPropertyName(slot), 0));
-			defaults.put(slot + 50, Properties.unsignedShort(ConfigDefinitionUtils.getReplacementColourPropertyName(slot), 0));
+			defaults.put(slot + 40, Properties.unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0));
+			defaults.put(slot + 50, Properties.unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot), 0));
 		}
 
 		return defaults;

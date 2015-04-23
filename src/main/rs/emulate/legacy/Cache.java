@@ -153,7 +153,7 @@ public final class Cache {
 	public DataBuffer getFile(FileDescriptor descriptor) {
 		return files.get(descriptor);
 	}
-	
+
 	/**
 	 * Places an {@link Archive} with the specified {@link FileDescriptor} into this Cache.
 	 * 
@@ -163,6 +163,7 @@ public final class Cache {
 	 */
 	public void putArchive(FileDescriptor descriptor, Archive archive, CompressionType type) {
 		try {
+			System.out.println("Encoding " + descriptor + " with type " + type + ", size= " + archive.getSize());
 			files.put(descriptor, ArchiveCodec.encode(archive, type));
 		} catch (IOException e) {
 			throw new IllegalArgumentException("Invalid archive provided.", e);

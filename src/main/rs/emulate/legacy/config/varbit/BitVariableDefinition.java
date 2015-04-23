@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
@@ -39,9 +39,9 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 	 * Creates the BitVariableDefinition.
 	 * 
 	 * @param id The id.
-	 * @param properties The {@link PropertyMap}.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public BitVariableDefinition(int id, PropertyMap properties) {
+	public BitVariableDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 

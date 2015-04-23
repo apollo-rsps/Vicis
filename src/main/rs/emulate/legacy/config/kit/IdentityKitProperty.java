@@ -10,17 +10,17 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 enum IdentityKitProperty implements ConfigPropertyType {
 
 	/**
-	 * The part IdentityKitProperty.
+	 * The IdentityKitProperty that specifies which body part the identity kit is for.
 	 */
 	PART(1),
 
 	/**
-	 * The models IdentityKitProperty.
+	 * The IdentityKitProperty that specifies the body model ids of the identity kit. 
 	 */
 	MODELS(2),
 
 	/**
-	 * The player style IdentityKitProperty.
+	 * The IdentityKitProperty that specifies whether or not the identity kit may be used as a player design style.
 	 */
 	PLAYER_DESIGN_STYLE(3);
 

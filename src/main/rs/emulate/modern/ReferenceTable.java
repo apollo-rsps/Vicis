@@ -21,12 +21,16 @@ public final class ReferenceTable {
 	/**
 	 * A flag which indicates this {@link ReferenceTable} contains {@link CacheStringUtils} hashed identifiers.
 	 */
-	public static final int FLAG_IDENTIFIERS = 0x01;
+	public static final int HAS_IDENTIFIERS = 0x01;
 
 	/**
 	 * A flag which indicates this {@link ReferenceTable} contains whirlpool digests for its entries.
 	 */
-	public static final int FLAG_WHIRLPOOL = 0x02;
+	public static final int HAS_HASHES = 0x02;
+
+	private static final int HAS_UNKNOWN_4 = 0x4;
+
+	private static final int HAS_UNKNOWN_8 = 0x8;
 
 	/**
 	 * Decodes the slave checksum table contained in the specified {@link ByteBuffer}.
@@ -41,12 +45,15 @@ public final class ReferenceTable {
 		if (table.format >= 6) {
 			table.version = buffer.getInt();
 		}
+
 		table.flags = buffer.getUnsignedByte();
 
-		int[] ids = new int[buffer.getUnsignedShort()];
+		int entryCount = (table.format >= 7) ? buffer.getLargeSmart() : buffer.getUnsignedShort();
+
+		int[] ids = new int[entryCount];
 		int accumulator = 0, size = -1;
 		for (int i = 0; i < ids.length; i++) {
-			int delta = buffer.getUnsignedShort();
+			int delta = (table.format >= 7) ? buffer.getLargeSmart() : buffer.getUnsignedShort();
 			ids[i] = accumulator += delta;
 			if (ids[i] > size) {
 				size = ids[i];
@@ -58,7 +65,7 @@ public final class ReferenceTable {
 			table.entries.put(id, new Entry());
 		}
 
-		if ((table.flags & FLAG_IDENTIFIERS) != 0) {
+		if ((table.flags & HAS_IDENTIFIERS) != 0) {
 			for (int id : ids) {
 				table.entries.get(id).setIdentifier(buffer.getInt());
 			}
@@ -68,7 +75,7 @@ public final class ReferenceTable {
 			table.entries.get(id).setCrc(buffer.getInt());
 		}
 
-		if ((table.flags & FLAG_WHIRLPOOL) != 0) {
+		if ((table.flags & HAS_HASHES) != 0) {
 			for (int id : ids) {
 				buffer.get(table.entries.get(id).getWhirlpool());
 			}
@@ -101,7 +108,7 @@ public final class ReferenceTable {
 			}
 		}
 
-		if ((table.flags & FLAG_IDENTIFIERS) != 0) {
+		if ((table.flags & HAS_IDENTIFIERS) != 0) {
 			for (int id : ids) {
 				for (int child : members[id]) {
 					table.entries.get(id).getEntry(child).setIdentifier(buffer.getInt());
@@ -165,9 +172,15 @@ public final class ReferenceTable {
 			if (format >= 6) {
 				os.writeInt(version);
 			}
-			
+
 			os.write(flags);
-			os.writeShort(entries.size());
+			int size = entries.size();
+
+			if (format >= 7 && size >= 65_535) {
+				os.writeInt(size);
+			} else {
+				os.writeShort(size);
+			}
 
 			int last = 0;
 			for (int id = 0; id < capacity(); id++) {
@@ -178,7 +191,7 @@ public final class ReferenceTable {
 				}
 			}
 
-			if ((flags & FLAG_IDENTIFIERS) != 0) {
+			if ((flags & HAS_IDENTIFIERS) != 0) {
 				for (Entry entry : entries.values()) {
 					os.writeInt(entry.getIdentifier());
 				}
@@ -188,7 +201,7 @@ public final class ReferenceTable {
 				os.writeInt(entry.getCrc());
 			}
 
-			if ((flags & FLAG_WHIRLPOOL) != 0) {
+			if ((flags & HAS_HASHES) != 0) {
 				for (Entry entry : entries.values()) {
 					os.write(entry.getWhirlpool());
 				}
@@ -213,7 +226,7 @@ public final class ReferenceTable {
 				}
 			}
 
-			if ((flags & FLAG_IDENTIFIERS) != 0) {
+			if ((flags & HAS_IDENTIFIERS) != 0) {
 				for (Entry entry : entries.values()) {
 					for (ChildEntry child : entry.getChildren()) {
 						os.writeInt(child.getIdentifier());

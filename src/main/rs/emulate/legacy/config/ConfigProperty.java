@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.shared.prop.Property;
+import rs.emulate.shared.property.Property;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.util.Assertions;
 

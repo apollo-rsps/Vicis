@@ -1,4 +1,4 @@
-package rs.emulate.shared.prop;
+package rs.emulate.shared.property;
 
 import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyType;
@@ -18,8 +18,7 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> unsignedByte(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER,
-				Byte.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER, Byte.BYTES);
 	}
 
 	/**
@@ -41,8 +40,7 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> unsignedInt(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.INT_ENCODER, PropertyDecoders.INT_DECODER,
-				Integer.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.INT_ENCODER, PropertyDecoders.INT_DECODER, Integer.BYTES);
 	}
 
 	/**
@@ -77,8 +75,8 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> signedShort(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER,
-				PropertyDecoders.SIGNED_SHORT_DECODER, Short.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SIGNED_SHORT_DECODER,
+				Short.BYTES);
 	}
 
 	/**
@@ -88,9 +86,9 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static ConfigProperty<String> string(ConfigPropertyType name, String defaultValue) {
+	public static ConfigProperty<String> asciiString(ConfigPropertyType name, String defaultValue) {
 		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.ASCII_STRING_ENCODER,
-				PropertyDecoders.STRING_DECODER, string -> string.length() + Byte.BYTES); // terminator byte
+				PropertyDecoders.ASCII_STRING_DECODER, string -> string.length() + Byte.BYTES); // terminator byte
 	}
 
 	/**

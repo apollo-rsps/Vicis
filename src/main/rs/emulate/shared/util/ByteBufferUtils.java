@@ -38,17 +38,20 @@ public final class ByteBufferUtils {
 	 */
 	public static String toString(ByteBuffer buffer) {
 		StringBuilder builder = new StringBuilder("[");
-		for (int index = 0; index < buffer.limit(); index++) {
+
+		int limit = buffer.limit();
+		for (int index = 0; index < limit; index++) {
 			String hex = Integer.toHexString(buffer.get() & 0xFF).toUpperCase();
 			if (hex.length() == 1) {
 				hex = "0" + hex;
 			}
 
 			builder.append("0x").append(hex);
-			if (index != buffer.limit() - 1) {
+			if (index != limit - 1) {
 				builder.append(", ");
 			}
 		}
+
 		builder.append("]");
 		return builder.toString();
 	}

@@ -13,11 +13,6 @@ public enum TokenType {
 	INSTRUCTION,
 
 	/**
-	 * The string lexeme.
-	 */
-	STRING,
-
-	/**
 	 * The integer lexeme, for integer values no larger than {@link Integer#MAX_VALUE}.
 	 */
 	INTEGER,
@@ -25,6 +20,11 @@ public enum TokenType {
 	/**
 	 * The long lexeme, for integer values larger than {@link Long#MAX_VALUE}.
 	 */
-	LONG;
+	LONG,
+
+	/**
+	 * The string lexeme.
+	 */
+	STRING;
 
 }

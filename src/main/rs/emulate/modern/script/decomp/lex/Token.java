@@ -6,7 +6,7 @@ import com.google.common.base.MoreObjects;
  * A disassembled ClientScript Token.
  *
  * @author Major
- * @param <T> The type of lexeme.
+ * @param <T> The type of the lexeme.
  */
 public final class Token<T> {
 

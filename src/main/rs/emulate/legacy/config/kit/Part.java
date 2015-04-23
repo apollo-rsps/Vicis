@@ -67,10 +67,10 @@ enum Part {
 	 * Encodes the specified Part into the specified {@link DataBuffer}.
 	 * 
 	 * @param buffer The Buffer.
-	 * @param Part The Part.
+	 * @param part The Part.
 	 */
-	public static void encode(DataBuffer buffer, Part Part) {
-		buffer.putByte(Part.id);
+	public static void encode(DataBuffer buffer, Part part) {
+		buffer.putByte(part.id);
 	}
 
 	/**

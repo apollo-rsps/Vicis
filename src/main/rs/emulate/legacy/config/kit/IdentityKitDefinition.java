@@ -1,11 +1,9 @@
 package rs.emulate.legacy.config.kit;
 
-import java.util.List;
-
-import rs.emulate.legacy.config.ConfigDefinitionUtils;
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
+import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-import rs.emulate.shared.prop.PropertyMap;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -18,7 +16,7 @@ import com.google.common.collect.ImmutableMap;
 public class IdentityKitDefinition extends MutableConfigDefinition {
 
 	/**
-	 * The name of the archive entry containing the identity kit definitions, without the extension.
+	 * The name of the archive entry containing the encoded IdentityKitDefinitions, without the extension.
 	 */
 	public static final String ENTRY_NAME = "idk";
 
@@ -38,35 +36,35 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	protected static final String HEAD_MODEL_PREFIX = "head-model";
 
 	/**
-	 * Creates the identity kit definition.
+	 * Creates the IdentityKitDefinition.
 	 * 
-	 * @param id The id of this definition.
-	 * @param properties The {@link PropertyMap}.
+	 * @param id The id of the definition.
+	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public IdentityKitDefinition(int id, PropertyMap properties) {
+	public IdentityKitDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 
 	/**
-	 * Gets the {@link List} of body model ids of this identity kit.
+	 * Gets the {@link ConfigProperty} containing the body model ids of this IdentityKitDefinition.
 	 *
-	 * @return The property containing the body model ids.
+	 * @return The {@link IdentityKitProperty#MODELS} ConfigProperty.
 	 */
 	public ConfigProperty<int[]> getBodyModels() {
 		return getProperty(IdentityKitProperty.MODELS);
 	}
 
 	/**
-	 * Gets an {@link ImmutableMap} containing the original and replacement colour values.
+	 * Gets an {@link ImmutableMap} containing the original and replacement colour values of this IdentityKitDefinition.
 	 *
-	 * @return The map.
+	 * @return The ImmutableMap.
 	 */
 	public final ImmutableMap<Integer, Integer> getColours() {
 		ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
-			ConfigProperty<Integer> original = getProperty(ConfigDefinitionUtils.getOriginalColourPropertyName(slot));
-			ConfigProperty<Integer> replacement = getProperty(ConfigDefinitionUtils.getReplacementColourPropertyName(slot));
+			ConfigProperty<Integer> original = getProperty(ConfigUtils.getOriginalColourPropertyName(slot));
+			ConfigProperty<Integer> replacement = getProperty(ConfigUtils.getReplacementColourPropertyName(slot));
 
 			builder.put(original.getValue(), replacement.getValue());
 		}
@@ -75,19 +73,19 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the specified head model id of this identity kit.
+	 * Gets the {@link ConfigProperty} containing the specified head model id of this IdentityKitDefinition.
 	 * 
 	 * @param model The model id.
-	 * @return The property containing the head model id.
+	 * @return The head model ConfigProperty.
 	 */
 	public ConfigProperty<Integer> getHeadModel(int model) {
-		return getProperty(ConfigDefinitionUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
+		return getProperty(ConfigUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
 	}
 
 	/**
-	 * Gets an {@link ImmutableList} containing the head model ids of this definition.
+	 * Gets an {@link ImmutableList} containing the head model ids of this IdentityKitDefinition.
 	 *
-	 * @return The list.
+	 * @return The ImmutableList.
 	 */
 	public ImmutableList<Integer> getHeadModels() {
 		ImmutableList.Builder<Integer> builder = ImmutableList.builder();
@@ -100,19 +98,19 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the part of this identity kit.
+	 * Gets the {@link ConfigProperty} containing the part of this IdentityKitDefinition.
 	 *
-	 * @return The property containing the part.
+	 * @return The {@link IdentityKitProperty#PART} ConfigProperty.
 	 */
 	public ConfigProperty<Part> getPart() {
 		return getProperty(IdentityKitProperty.PART);
 	}
 
 	/**
-	 * Returns the {@link ConfigProperty} containing whether or not this identity kit can be used when designing an
-	 * avatar.
+	 * Returns the {@link ConfigProperty} containing whether or not this IdentityKitDefinition can be used when designing a
+	 * player.
 	 *
-	 * @return The property containing the is player style flag.
+	 * @return The {@link IdentityKitProperty#PLAYER_DESIGN_STYLE} ConfigProperty.
 	 */
 	public ConfigProperty<Boolean> isPlayerDesignStyle() {
 		return getProperty(IdentityKitProperty.PLAYER_DESIGN_STYLE);

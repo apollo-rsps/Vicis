@@ -12,9 +12,12 @@ import rs.emulate.legacy.Cache;
 import rs.emulate.legacy.FileDescriptor;
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.archive.Archive;
+import rs.emulate.legacy.archive.CompressionType;
 import rs.emulate.legacy.config.ConfigDecoder;
-import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.ConfigEncoder;
+import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.Suppliers;
+import rs.emulate.legacy.config.npc.NpcDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.MoreObjects;
@@ -53,7 +56,7 @@ public final class Editor extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		Application.Parameters parameters = getParameters();
-		String version = MoreObjects.firstNonNull(parameters.getNamed().get("version"), "319");
+		String version = MoreObjects.firstNonNull(parameters.getNamed().get("version"), "317");
 
 		try {
 			this.fs = new IndexedFileSystem(Paths.get("data/resources/", version), AccessMode.READ_WRITE);
@@ -89,9 +92,21 @@ public final class Editor extends Application {
 	private void test(Cache cache) throws IOException { // temporary
 		FileDescriptor descriptor = new FileDescriptor(0, 2);
 		Archive config = cache.getArchive(descriptor);
-		ConfigDecoder<? extends MutableConfigDefinition> decoder = new ConfigDecoder<>(config, Suppliers.OBJECT_SUPPLIER);
-		List<? extends MutableConfigDefinition> definitions = decoder.decode();
+		ConfigDecoder<NpcDefinition> decoder = new ConfigDecoder<>(config, Suppliers.NPC_SUPPLIER);
+		List<NpcDefinition> definitions = decoder.decode();
 
+		for (NpcDefinition def : definitions) {
+			ConfigProperty<String> name = def.name();
+			if (name.valuePresent() && name.getValue().toLowerCase().contains("runescape")) {
+				name.setValue("test123test");
+			}
+		}
+		
+		ConfigEncoder<NpcDefinition> encoder = new ConfigEncoder<>(NpcDefinition.ENTRY_NAME, definitions);
+		Archive result = encoder.encodeInto(config);
+		cache.replaceArchive(descriptor, result, CompressionType.ENTRY_COMPRESSION);
+		cache.encode(Paths.get("data/dump/317"));
+		
 		System.out.print("Type an id: ");
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {

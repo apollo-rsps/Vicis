@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.shared.prop.DynamicPropertyType;
+import rs.emulate.shared.property.DynamicPropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -13,7 +13,7 @@ import rs.emulate.shared.util.DataBuffer;
  *
  * @author Major
  */
-public final class ConfigDefinitionUtils {
+public final class ConfigUtils {
 
 	/**
 	 * The String prefixed when creating {@link DynamicPropertyType}s for original colours.
@@ -97,7 +97,7 @@ public final class ConfigDefinitionUtils {
 	/**
 	 * Sole private constructor to prevent instantiation.
 	 */
-	private ConfigDefinitionUtils() {
+	private ConfigUtils() {
 
 	}
 

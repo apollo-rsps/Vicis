@@ -1,4 +1,4 @@
-package rs.emulate.shared.prop;
+package rs.emulate.shared.property;
 
 import java.util.Arrays;
 import java.util.Objects;

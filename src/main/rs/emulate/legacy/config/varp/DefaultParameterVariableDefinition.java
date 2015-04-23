@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.prop.Properties;
-import rs.emulate.shared.prop.PropertyMap;
+import rs.emulate.shared.property.Properties;
 
 /**
  * A default {@link ParameterVariableDefinition} used as a base.
@@ -22,9 +22,9 @@ public class DefaultParameterVariableDefinition extends DefaultConfigDefinition 
 	private static final DefaultParameterVariableDefinition DEFAULT = new DefaultParameterVariableDefinition();
 
 	/**
-	 * A {@link Supplier} that returns a {@link PropertyMap} copy of this default definition.
+	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
 	 */
-	public static final Supplier<PropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
 	 * Creates the default parameter variable definition.

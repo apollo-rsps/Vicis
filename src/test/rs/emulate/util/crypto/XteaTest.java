@@ -12,7 +12,7 @@ import rs.emulate.shared.util.crypto.Xtea;
  * 
  * @author Graham
  */
-public final class TestXtea {
+public final class XteaTest {
 
 	/**
 	 * The vectors used in the XTEA enciphering/deciphering tests.
