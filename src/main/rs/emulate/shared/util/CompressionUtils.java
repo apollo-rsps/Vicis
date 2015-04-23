@@ -24,8 +24,8 @@ public final class CompressionUtils {
 	/**
 	 * Decompresses the BZIP2 data stored in the specified {@link ByteBuffer}.
 	 * 
-	 * @param buffer The buffer.
-	 * @return A new byte buffer containing the decompressed data.
+	 * @param buffer The DataBuffer.
+	 * @return A DataBuffer containing the decompressed data.
 	 * @throws IOException If there is an error decompressing the data.
 	 */
 	public static DataBuffer bunzip2(DataBuffer buffer) throws IOException {
@@ -33,10 +33,10 @@ public final class CompressionUtils {
 	}
 
 	/**
-	 * Uncompresses a BZIP2 file.
+	 * Decompresses a BZIP2 file.
 	 * 
 	 * @param bytes The compressed bytes without the header.
-	 * @return The uncompressed bytes.
+	 * @return The decompressed bytes.
 	 * @throws IOException if an I/O error occurs.
 	 */
 	public static byte[] bunzip2(byte[] bytes) throws IOException {
@@ -51,40 +51,41 @@ public final class CompressionUtils {
 	}
 
 	/**
-	 * Bzip2s the data stored in the specified {@link DataBuffer}.
+	 * BZIP2s the data stored in the specified {@link DataBuffer}.
 	 * 
-	 * @param buffer The buffer.
-	 * @return A new byte buffer containing the compressed data, without the bzip2 header.
+	 * @param buffer The DataBuffer.
+	 * @return A DataBuffer containing the compressed data, without the BZIP2 header.
 	 * @throws IOException If there is an error compressing the data.
 	 */
 	public static DataBuffer bzip2(DataBuffer buffer) throws IOException {
 		return DataBuffer.wrap(bzip2(buffer.getBytes()));
 	}
-
+	
 	/**
-	 * Compresses a BZIP2 file.
-	 * 
-	 * @param bytes The uncompressed bytes.
-	 * @return The compressed bytes without the header.
-	 * @throws IOException if an I/O error occurs.
+	 * Bzip2s the specified array, removing the header.
+	 *
+	 * @param uncompressed The uncompressed array.
+	 * @return The compressed array.
+	 * @throws IOException If there is an error compressing the array.
 	 */
-	public static byte[] bzip2(byte[] bytes) throws IOException {
-		/* try-with-resources not necessary as closing has no effect */
+	public static byte[] bzip2(byte[] uncompressed) throws IOException {
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		ByteStreams.copy(new ByteArrayInputStream(bytes), new BZip2CompressorOutputStream(bout, 1));
+		try (BZip2CompressorOutputStream os = new BZip2CompressorOutputStream(bout, 1)) {
+			os.write(uncompressed);
+			os.finish();
 
-		/* strip the header from the byte array and return it */
-		bytes = bout.toByteArray();
-		byte[] bzip2 = new byte[bytes.length - 4];
-		System.arraycopy(bytes, 4, bzip2, 0, bzip2.length);
-		return bzip2;
+			byte[] compressed = bout.toByteArray();
+			byte[] newCompressed = new byte[compressed.length - 4]; // Strip the header
+			System.arraycopy(compressed, 4, newCompressed, 0, newCompressed.length);
+			return newCompressed;
+		}
 	}
 
 	/**
 	 * Decompresses the GZIP data stored in the specified {@link DataBuffer}.
 	 * 
-	 * @param buffer The buffer.
-	 * @return A new byte buffer containing the decompressed data.
+	 * @param buffer The DataBuffer.
+	 * @return A DataBuffer containing the decompressed data.
 	 * @throws IOException If there is an error decompressing the data.
 	 */
 	public static DataBuffer gunzip(DataBuffer buffer) throws IOException {
@@ -97,15 +98,14 @@ public final class CompressionUtils {
 	/**
 	 * Gzips the data stored in the specified {@link DataBuffer}.
 	 * 
-	 * @param buffer The buffer.
-	 * @return A new byte buffer, containing the compressed data.
+	 * @param buffer The DataBuffer.
+	 * @return A DataBuffer containing the compressed data.
 	 * @throws IOException If there is an error compressing the data.
 	 */
 	public static DataBuffer gzip(DataBuffer buffer) throws IOException {
 		byte[] data = new byte[buffer.remaining()];
 		buffer.get(data);
 
-		/* try-with-resources not necessary as closing has no effect */
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 		ByteStreams.copy(new ByteArrayInputStream(data), new GZIPOutputStream(bout));
 
