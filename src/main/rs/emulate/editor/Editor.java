@@ -15,7 +15,6 @@ import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.archive.CompressionType;
 import rs.emulate.legacy.config.ConfigDecoder;
 import rs.emulate.legacy.config.ConfigEncoder;
-import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.Suppliers;
 import rs.emulate.legacy.config.npc.NpcDefinition;
 import rs.emulate.shared.util.DataBuffer;
@@ -94,13 +93,6 @@ public final class Editor extends Application {
 		Archive config = cache.getArchive(descriptor);
 		ConfigDecoder<NpcDefinition> decoder = new ConfigDecoder<>(config, Suppliers.NPC_SUPPLIER);
 		List<NpcDefinition> definitions = decoder.decode();
-
-		for (NpcDefinition def : definitions) {
-			ConfigProperty<String> name = def.name();
-			if (name.valuePresent() && name.getValue().toLowerCase().contains("runescape")) {
-				name.setValue("test123test");
-			}
-		}
 		
 		ConfigEncoder<NpcDefinition> encoder = new ConfigEncoder<>(NpcDefinition.ENTRY_NAME, definitions);
 		Archive result = encoder.encodeInto(config);

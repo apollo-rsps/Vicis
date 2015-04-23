@@ -78,10 +78,8 @@ public final class ArchiveCodec {
 			DataBuffer meta = DataBuffer.allocate(entryCount * (Integer.BYTES + 2 * 3) + Short.BYTES);
 			meta.putShort(entryCount);
 
-			int entryIdx = 0;
 			for (ArchiveEntry entry : entries) {
 				DataBuffer uncompressed = entry.getBuffer();
-				System.out.println("idx "+ entryIdx++ +", remaining="+uncompressed.remaining() +", capacity" + uncompressed.capacity());
 				DataBuffer compressed = CompressionUtils.bzip2(uncompressed);
 				uncompressed.position(0); // We just read from this buffer, so reset the position.
 
