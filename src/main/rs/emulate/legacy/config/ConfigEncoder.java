@@ -101,7 +101,7 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 	 */
 	private void write(Map.Entry<Integer, ConfigProperty<?>> entry, ByteArrayOutputStream os) {
 		DataBuffer buffer = entry.getValue().encode();
-		byte[] bytes = buffer.getBytes();
+		byte[] bytes = buffer.getRemainingBytes();
 
 		os.write(entry.getKey());
 		os.write(bytes, 0, bytes.length); // write(byte[]) throws IOException unnecessarily

@@ -116,7 +116,7 @@ public final class IndexedFileSystem implements Closeable {
 			CRC32 crc = new CRC32();
 
 			for (int file = 1; file < archives; file++) {
-				byte[] bytes = getFile(0, file).getBytes();
+				byte[] bytes = getFile(0, file).getRemainingBytes();
 				crc.update(bytes);
 
 				int value = (int) crc.getValue();

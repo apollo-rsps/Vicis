@@ -3,7 +3,9 @@ package rs.emulate.shared.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
@@ -29,7 +31,7 @@ public final class CompressionUtils {
 	 * @throws IOException If there is an error decompressing the data.
 	 */
 	public static DataBuffer bunzip2(DataBuffer buffer) throws IOException {
-		return DataBuffer.wrap(bunzip2(buffer.getBytes()));
+		return DataBuffer.wrap(bunzip2(buffer.getRemainingBytes()));
 	}
 
 	/**
@@ -58,9 +60,9 @@ public final class CompressionUtils {
 	 * @throws IOException If there is an error compressing the data.
 	 */
 	public static DataBuffer bzip2(DataBuffer buffer) throws IOException {
-		return DataBuffer.wrap(bzip2(buffer.getBytes()));
+		return DataBuffer.wrap(bzip2(buffer.getRemainingBytes()));
 	}
-	
+
 	/**
 	 * Bzip2s the specified array, removing the header.
 	 *
@@ -69,15 +71,15 @@ public final class CompressionUtils {
 	 * @throws IOException If there is an error compressing the array.
 	 */
 	public static byte[] bzip2(byte[] uncompressed) throws IOException {
-		ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		try (BZip2CompressorOutputStream os = new BZip2CompressorOutputStream(bout, 1)) {
-			os.write(uncompressed);
-			os.finish();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try (BZip2CompressorOutputStream compressor = new BZip2CompressorOutputStream(out, 1)) {
+			compressor.write(uncompressed);
+			compressor.finish();
 
-			byte[] compressed = bout.toByteArray();
-			byte[] newCompressed = new byte[compressed.length - 4]; // Strip the header
-			System.arraycopy(compressed, 4, newCompressed, 0, newCompressed.length);
-			return newCompressed;
+			byte[] compressed = out.toByteArray();
+			byte[] stripped = new byte[compressed.length - 4]; // Strip the header
+			System.arraycopy(compressed, 4, stripped, 0, stripped.length);
+			return stripped;
 		}
 	}
 
@@ -92,7 +94,20 @@ public final class CompressionUtils {
 		byte[] data = new byte[buffer.remaining()];
 		buffer.get(data);
 
-		return DataBuffer.wrap(ByteStreams.toByteArray(new GZIPInputStream(new ByteArrayInputStream(data))));
+		try (InputStream decompressor = new GZIPInputStream(new ByteArrayInputStream(data));
+				ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+			while (true) {
+				byte[] buf = new byte[1024];
+				int read = decompressor.read(buf, 0, buf.length);
+				if (read == -1) {
+					break;
+				}
+				
+				out.write(buf, 0, read);
+			}
+
+			return DataBuffer.wrap(out.toByteArray());
+		}
 	}
 
 	/**
@@ -103,13 +118,15 @@ public final class CompressionUtils {
 	 * @throws IOException If there is an error compressing the data.
 	 */
 	public static DataBuffer gzip(DataBuffer buffer) throws IOException {
-		byte[] data = new byte[buffer.remaining()];
-		buffer.get(data);
+		byte[] data = buffer.getRemainingBytes();
 
-		ByteArrayOutputStream bout = new ByteArrayOutputStream();
-		ByteStreams.copy(new ByteArrayInputStream(data), new GZIPOutputStream(bout));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try (DeflaterOutputStream compressor = new GZIPOutputStream(out)) {
+			compressor.write(data);
+			compressor.finish();
+		}
 
-		return DataBuffer.wrap(bout.toByteArray());
+		return DataBuffer.wrap(out.toByteArray());
 	}
 
 	/**

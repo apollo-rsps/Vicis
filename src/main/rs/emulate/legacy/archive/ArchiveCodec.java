@@ -90,10 +90,10 @@ public final class ArchiveCodec {
 				switch (compression) {
 					case ARCHIVE_COMPRESSION:
 					case NO_COMPRESSION:
-						bos.write(uncompressed.getBytes());
+						bos.write(uncompressed.getRemainingBytes());
 						break;
 					case ENTRY_COMPRESSION:
-						bos.write(compressed.getBytes());
+						bos.write(compressed.getRemainingBytes());
 						break;
 					default:
 						throw new IllegalArgumentException("Unrecognised compression type " + compression + ".");

@@ -252,7 +252,7 @@ public final class DataBuffer {
 	 *
 	 * @return The byte array containing the remaining data.
 	 */
-	public byte[] getBytes() {
+	public byte[] getRemainingBytes() {
 		byte[] bytes = new byte[buffer.remaining()];
 		buffer.get(bytes);
 		return bytes;
