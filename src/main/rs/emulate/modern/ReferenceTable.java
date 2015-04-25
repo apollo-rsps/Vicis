@@ -75,9 +75,22 @@ public final class ReferenceTable {
 			table.entries.get(id).setCrc(buffer.getInt());
 		}
 
+		if ((table.flags & HAS_UNKNOWN_8) != 0) {
+			for (int time = 0; time < ids.length; time++) {
+				buffer.getInt();
+			}
+		}
+
 		if ((table.flags & HAS_HASHES) != 0) {
 			for (int id : ids) {
 				buffer.get(table.entries.get(id).getWhirlpool());
+			}
+		}
+
+		if ((table.flags & HAS_UNKNOWN_4) != 0) {
+			for (int time = 0; time < ids.length; time++) {
+				buffer.getInt();
+				buffer.getInt();
 			}
 		}
 

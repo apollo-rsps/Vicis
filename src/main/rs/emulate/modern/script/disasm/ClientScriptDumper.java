@@ -360,7 +360,7 @@ public final class ClientScriptDumper {
 
 		opcodes.put(5630, "cancel_login"); // stops the client logging in
 
-		// client preferences (usually changeable in settings) creds method i believe
+		// client preferences (usually changeable in settings) creds method
 
 		opcodes.put(6001, "set_bright_pref");
 		opcodes.put(6002, "set_anim_bg_pref"); // animated background
