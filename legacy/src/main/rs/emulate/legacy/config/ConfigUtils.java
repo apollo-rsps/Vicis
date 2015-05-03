@@ -34,7 +34,7 @@ public final class ConfigUtils {
 	 * @param type The {@link ConfigPropertyType} of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
-	public static <T extends ConfigPropertyType> ConfigProperty<Map<Integer, Integer>> createColourProperty(T type) {
+	public static <T extends ConfigPropertyType> ConfigProperty<Map<Integer, Integer>> newColourProperty(T type) {
 		BiConsumer<DataBuffer, Map<Integer, Integer>> encoder = (buffer, colours) -> {
 			buffer.putByte(colours.size());
 			colours.entrySet().forEach(colour -> buffer.putShort(colour.getKey()).putShort(colour.getValue()));
@@ -69,7 +69,7 @@ public final class ConfigUtils {
 	 * @param option The option.
 	 * @return The DynamicPropertyType.
 	 */
-	public static DynamicPropertyType createOptionProperty(String prefix, int option) {
+	public static DynamicPropertyType newOptionProperty(String prefix, int option) {
 		return DynamicPropertyType.valueOf(prefix + "-" + option, option);
 	}
 
@@ -84,7 +84,7 @@ public final class ConfigUtils {
 	 * @return The DynamicPropertyType.
 	 */
 	public static DynamicPropertyType getOriginalColourPropertyName(int slot) {
-		return createOptionProperty(ORIGINAL_COLOUR_PREFIX, slot);
+		return newOptionProperty(ORIGINAL_COLOUR_PREFIX, slot);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public final class ConfigUtils {
 	 * @return The DynamicPropertyType.
 	 */
 	public static DynamicPropertyType getReplacementColourPropertyName(int slot) {
-		return createOptionProperty(REPLACEMENT_COLOUR_PREFIX, slot);
+		return newOptionProperty(REPLACEMENT_COLOUR_PREFIX, slot);
 	}
 
 	/**

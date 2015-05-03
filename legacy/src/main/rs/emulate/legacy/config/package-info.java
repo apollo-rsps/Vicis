@@ -1,4 +1,4 @@
 /**
- * Contains classes that use the config archive.
+ * Contains classes that utilise data in the config archive.
  */
 package rs.emulate.legacy.config;

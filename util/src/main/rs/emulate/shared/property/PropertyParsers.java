@@ -20,7 +20,7 @@ public final class PropertyParsers {
 	 * @return The Function.
 	 */
 	public static Function<String, Optional<String>> forAsciiString() {
-		return input -> CharMatcher.ASCII.matchesAllOf(input) ? Optional.of(input) : Optional.empty();
+		return input -> input != null && CharMatcher.ASCII.matchesAllOf(input) ? Optional.of(input) : Optional.empty();
 	}
 
 	/**

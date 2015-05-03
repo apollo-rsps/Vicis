@@ -8,7 +8,7 @@ import rs.emulate.util.Assertions;
 
 /**
  * The body part an {@link IdentityKitDefinition} is for.
- * 
+ *
  * @author Major
  */
 enum Part {
@@ -55,7 +55,7 @@ enum Part {
 
 	/**
 	 * Decodes a Part from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @return The Part.
 	 */
@@ -65,7 +65,7 @@ enum Part {
 
 	/**
 	 * Encodes the specified Part into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @param part The Part.
 	 */
@@ -82,9 +82,10 @@ enum Part {
 	 */
 	public static Part valueOf(int value) {
 		Assertions.checkWithin(0, 13, value, "Part value must be [0, 13] (received " + value + ").");
-		int id = value % 7; // 0-6 are male Parts, 7-13 are female.
+		Part[] values = values();
+		int id = value % values.length; // 0-6 are male, 7-13 are female.
 
-		return Arrays.stream(values()).filter(part -> part.id == id).findAny().get();
+		return Arrays.stream(values).filter(part -> part.id == id).findAny().get();
 	}
 
 	/**
@@ -97,7 +98,7 @@ enum Part {
 	 *
 	 * @param id The id of the Part.
 	 */
-	private Part(int id) {
+	Part(int id) {
 		this.id = id;
 	}
 

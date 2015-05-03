@@ -1,5 +1,16 @@
 package rs.emulate.legacy.config.graphic;
 
+import static rs.emulate.legacy.config.graphic.GraphicDefinition.COLOUR_COUNT;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.ANIMATION;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.BREADTH_SCALE;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.BRIGHTNESS;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.DEPTH_SCALE;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.MODEL;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.ROTATION;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.SHADOW;
+import static rs.emulate.shared.property.Properties.unsignedByte;
+import static rs.emulate.shared.property.Properties.unsignedShort;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -7,13 +18,12 @@ import java.util.function.Supplier;
 import rs.emulate.legacy.config.ConfigConstants;
 import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.shared.property.Properties;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
 
 /**
  * A default {@link GraphicDefinition} used as a base for an actual definition.
- * 
+ *
  * @author Major
  */
 public class DefaultGraphicDefinition extends DefaultConfigDefinition {
@@ -39,17 +49,17 @@ public class DefaultGraphicDefinition extends DefaultConfigDefinition {
 	protected Map<Integer, ConfigProperty<?>> init() {
 		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
 
-		defaults.put(1, Properties.unsignedShort(GraphicProperty.MODEL, 0));
-		defaults.put(2, Properties.unsignedShort(GraphicProperty.ANIMATION, -1));
-		defaults.put(4, Properties.unsignedShort(GraphicProperty.BREADTH_SCALE, ConfigConstants.DEFAULT_SCALE));
-		defaults.put(5, Properties.unsignedShort(GraphicProperty.DEPTH_SCALE, ConfigConstants.DEFAULT_SCALE));
-		defaults.put(6, Properties.unsignedShort(GraphicProperty.ROTATION, 0));
-		defaults.put(7, Properties.unsignedByte(GraphicProperty.BRIGHTNESS, 0));
-		defaults.put(8, Properties.unsignedByte(GraphicProperty.SHADOW, 0));
+		defaults.put(1, unsignedShort(MODEL, 0));
+		defaults.put(2, unsignedShort(ANIMATION, -1));
+		defaults.put(4, unsignedShort(BREADTH_SCALE, ConfigConstants.DEFAULT_SCALE));
+		defaults.put(5, unsignedShort(DEPTH_SCALE, ConfigConstants.DEFAULT_SCALE));
+		defaults.put(6, unsignedShort(ROTATION, 0));
+		defaults.put(7, unsignedByte(BRIGHTNESS, 0));
+		defaults.put(8, unsignedByte(SHADOW, 0));
 
-		for (int slot = 1; slot <= GraphicDefinition.COLOUR_COUNT; slot++) {
-			defaults.put(slot + 40, Properties.unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0));
-			defaults.put(slot + 50, Properties.unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot), 0));
+		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
+			defaults.put(slot + 40, unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0));
+			defaults.put(slot + 50, unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot), 0));
 		}
 
 		return defaults;

@@ -1,5 +1,12 @@
 package rs.emulate.legacy.config.npc;
 
+import static rs.emulate.legacy.config.npc.NpcProperty.*;
+import static rs.emulate.shared.property.Properties.alwaysFalse;
+import static rs.emulate.shared.property.Properties.alwaysTrue;
+import static rs.emulate.shared.property.Properties.asciiString;
+import static rs.emulate.shared.property.Properties.unsignedByte;
+import static rs.emulate.shared.property.Properties.unsignedShort;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,53 +65,49 @@ public class DefaultNpcDefinition extends DefaultConfigDefinition {
 			Arrays.stream(models).forEach(buffer::putShort);
 		};
 
-		properties.put(1, new ConfigProperty<>(NpcProperty.MODELS, null, modelEncoder, modelDecoder,
-				models -> models.length * Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
+		properties.put(1, new ConfigProperty<>(MODELS, null, modelEncoder, modelDecoder, models -> models.length
+				* Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
 
-		properties.put(2, Properties.asciiString(NpcProperty.NAME, "null"));
-		properties.put(3, Properties.asciiString(NpcProperty.DESCRIPTION, "null"));
-		properties.put(12, Properties.unsignedByte(NpcProperty.SIZE, 1));
-		properties.put(13, Properties.unsignedShort(NpcProperty.IDLE_ANIMATION, -1));
-		properties.put(14, Properties.unsignedShort(NpcProperty.WALKING_ANIMATION, -1));
+		properties.put(2, asciiString(NAME, "null"));
+		properties.put(3, asciiString(DESCRIPTION, "null"));
+		properties.put(12, unsignedByte(SIZE, 1));
+		properties.put(13, unsignedShort(IDLE_ANIMATION, -1));
+		properties.put(14, unsignedShort(WALKING_ANIMATION, -1));
 
 		properties
-				.put(17,
-						new ConfigProperty<>(NpcProperty.ANIMATION_SET, MovementAnimationSet.EMPTY,
-								MovementAnimationSet::encode, MovementAnimationSet::decode, Short.BYTES * 4,
-								input -> Optional.empty())); // XXX
+				.put(17, new ConfigProperty<>(ANIMATION_SET, MovementAnimationSet.EMPTY, MovementAnimationSet::encode,
+						MovementAnimationSet::decode, Short.BYTES * 4, input -> Optional.empty())); // XXX
 
 		for (int option = 1; option <= NpcDefinition.INTERACTION_COUNT; option++) {
-			ConfigPropertyType name = ConfigUtils.createOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX,
-					option);
-			properties.put(option + 29, Properties.asciiString(name, "hidden"));
+			ConfigPropertyType name = ConfigUtils.newOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option);
+			properties.put(option + 29, asciiString(name, "hidden"));
 		}
 
-		properties.put(40, ConfigUtils.createColourProperty(NpcProperty.COLOURS));
+		properties.put(40, ConfigUtils.newColourProperty(COLOURS));
 
-		properties.put(60, new ConfigProperty<>(NpcProperty.SECONDARY_MODELS, null, modelEncoder, modelDecoder,
+		properties.put(60, new ConfigProperty<>(SECONDARY_MODELS, null, modelEncoder, modelDecoder,
 				models -> models.length * Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
 
 		for (int option = 1; option <= 3; option++) {
-			properties
-					.put(option + 89, Properties.unsignedShort(ConfigUtils.createOptionProperty("unused", option), 0));
+			properties.put(option + 89, Properties.unsignedShort(ConfigUtils.newOptionProperty("unused", option), 0));
 		}
 
-		properties.put(93, Properties.alwaysFalse(NpcProperty.MINIMAP_VISIBLE, true));
-		properties.put(95, Properties.unsignedShort(NpcProperty.COMBAT_LEVEL, -1));
-		properties.put(97, Properties.unsignedShort(NpcProperty.FLAT_SCALE, ConfigConstants.DEFAULT_SCALE));
-		properties.put(98, Properties.unsignedShort(NpcProperty.HEIGHT_SCALE, ConfigConstants.DEFAULT_SCALE));
-		properties.put(99, Properties.alwaysTrue(NpcProperty.PRIORITY_RENDER, false));
+		properties.put(93, alwaysFalse(MINIMAP_VISIBLE, true));
+		properties.put(95, unsignedShort(COMBAT_LEVEL, -1));
+		properties.put(97, unsignedShort(FLAT_SCALE, ConfigConstants.DEFAULT_SCALE));
+		properties.put(98, unsignedShort(HEIGHT_SCALE, ConfigConstants.DEFAULT_SCALE));
+		properties.put(99, alwaysTrue(PRIORITY_RENDER, false));
 
-		properties.put(100, Properties.unsignedByte(NpcProperty.LIGHT_MODIFIER, 0));
-		properties.put(101, Properties.unsignedByte(NpcProperty.SHADOW_MODIFIER, 0)); // TODO needs to multiply by 5
-		properties.put(102, Properties.unsignedShort(NpcProperty.HEAD_ICON, -1));
-		properties.put(103, Properties.unsignedShort(NpcProperty.ROTATION, 32));
+		properties.put(100, unsignedByte(LIGHT_MODIFIER, 0));
+		properties.put(101, unsignedByte(SHADOW_MODIFIER, 0)); // TODO !! needs to multiply by 5
+		properties.put(102, unsignedShort(HEAD_ICON, -1));
+		properties.put(103, unsignedShort(ROTATION, 32));
 
-		properties.put(106, new ConfigProperty<>(NpcProperty.MORPHISM_SET, MorphismSet.EMPTY, MorphismSet::encode,
+		properties.put(106, new ConfigProperty<>(MORPHISM_SET, MorphismSet.EMPTY, MorphismSet::encode,
 				MorphismSet::decode, morphisms -> Short.BYTES * (2 + morphisms.getCount()) + Byte.BYTES,
 				input -> Optional.empty())); // XXX
 
-		properties.put(107, Properties.alwaysFalse(NpcProperty.CLICKABLE, true));
+		properties.put(107, alwaysFalse(CLICKABLE, true));
 
 		return properties;
 	}

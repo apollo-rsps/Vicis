@@ -1,5 +1,8 @@
 package rs.emulate.legacy.config.varp;
 
+import static rs.emulate.legacy.config.varp.ParameterVariableProperty.PARAMETER;
+import static rs.emulate.shared.property.Properties.unsignedShort;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -7,17 +10,16 @@ import java.util.function.Supplier;
 import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.property.Properties;
 
 /**
  * A default {@link ParameterVariableDefinition} used as a base.
- * 
+ *
  * @author Major
  */
 public class DefaultParameterVariableDefinition extends DefaultConfigDefinition {
 
 	/**
-	 * The default definition.
+	 * The DefaultParameterVariableDefinition.
 	 */
 	private static final DefaultParameterVariableDefinition DEFAULT = new DefaultParameterVariableDefinition();
 
@@ -27,7 +29,7 @@ public class DefaultParameterVariableDefinition extends DefaultConfigDefinition 
 	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
-	 * Creates the default parameter variable definition.
+	 * Creates the DefaultParameterVariableDefinition.
 	 */
 	private DefaultParameterVariableDefinition() {
 		super();
@@ -36,7 +38,9 @@ public class DefaultParameterVariableDefinition extends DefaultConfigDefinition 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {
 		Map<Integer, ConfigProperty<?>> map = new HashMap<>(1);
-		map.put(5, Properties.unsignedShort(ParameterVariableProperty.PARAMETER, 0));
+
+		map.put(5, unsignedShort(PARAMETER, 0));
+
 		return map;
 	}
 

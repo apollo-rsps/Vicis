@@ -1,5 +1,13 @@
 package rs.emulate.legacy.config.kit;
 
+import static rs.emulate.legacy.config.kit.IdentityKitDefinition.COLOUR_COUNT;
+import static rs.emulate.legacy.config.kit.IdentityKitDefinition.HEAD_MODEL_COUNT;
+import static rs.emulate.legacy.config.kit.IdentityKitProperty.MODELS;
+import static rs.emulate.legacy.config.kit.IdentityKitProperty.PART;
+import static rs.emulate.legacy.config.kit.IdentityKitProperty.PLAYER_DESIGN_STYLE;
+import static rs.emulate.shared.property.Properties.alwaysTrue;
+import static rs.emulate.shared.property.Properties.unsignedShort;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +21,6 @@ import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.property.Properties;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -44,8 +51,8 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 	protected Map<Integer, ConfigProperty<?>> init() {
 		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
 
-		defaults.put(1, new ConfigProperty<>(IdentityKitProperty.PART, Part.NULL, Part::encode, Part::decode,
-				Byte.BYTES, input -> Optional.empty())); // XXX
+		defaults.put(1,
+				new ConfigProperty<>(PART, Part.NULL, Part::encode, Part::decode, Byte.BYTES, in -> Optional.empty())); // XXX
 
 		BiConsumer<DataBuffer, int[]> modelsEncoder = (buffer, models) -> {
 			buffer.putByte(models.length);
@@ -60,18 +67,18 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 			return models;
 		};
 
-		defaults.put(2, new ConfigProperty<>(IdentityKitProperty.MODELS, null, modelsEncoder, modelDecoder,
-				models -> models.length * Short.SIZE + Byte.SIZE, input -> Optional.empty())); // XXX
-		defaults.put(3, Properties.alwaysTrue(IdentityKitProperty.PLAYER_DESIGN_STYLE, false));
+		defaults.put(2, new ConfigProperty<>(MODELS, null, modelsEncoder, modelDecoder, models -> models.length
+				* Short.SIZE + Byte.SIZE, input -> Optional.empty())); // XXX
+		defaults.put(3, alwaysTrue(PLAYER_DESIGN_STYLE, false));
 
-		for (int slot = 1; slot <= IdentityKitDefinition.COLOUR_COUNT; slot++) {
-			defaults.put(slot + 39, Properties.unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0));
-			defaults.put(slot + 49, Properties.unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot), 0));
+		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
+			defaults.put(slot + 39, unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0));
+			defaults.put(slot + 49, unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot), 0));
 		}
 
-		for (int model = 1; model <= IdentityKitDefinition.HEAD_MODEL_COUNT; model++) {
-			ConfigPropertyType name = ConfigUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model);
-			defaults.put(model + 59, Properties.unsignedShort(name, -1));
+		for (int model = 1; model <= HEAD_MODEL_COUNT; model++) {
+			ConfigPropertyType name = ConfigUtils.newOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model);
+			defaults.put(model + 59, unsignedShort(name, -1));
 		}
 
 		return defaults;

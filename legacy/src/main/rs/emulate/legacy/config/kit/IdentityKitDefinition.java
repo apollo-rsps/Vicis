@@ -79,7 +79,7 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	 * @return The head model ConfigProperty.
 	 */
 	public ConfigProperty<Integer> getHeadModel(int model) {
-		return getProperty(ConfigUtils.createOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
+		return getProperty(ConfigUtils.newOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
 	}
 
 	/**

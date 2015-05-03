@@ -68,7 +68,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 */
 	public ConfigProperty<String> getGroundAction(int index) {
 		checkBounds(ItemConstants.MENU_ACTION_COUNT, index);
-		return getProperty(ConfigUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index));
+		return getProperty(ConfigUtils.newOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 */
 	public ConfigProperty<String> getInventoryAction(int index) {
 		checkBounds(ItemConstants.MENU_ACTION_COUNT, index);
-		return getProperty(ConfigUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index));
+		return getProperty(ConfigUtils.newOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index));
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 	 */
 	public ConfigProperty<ItemStack> getItemStack(int index) {
 		checkBounds(ItemConstants.ITEM_STACK_COUNT, index);
-		return getProperty(ConfigUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index));
+		return getProperty(ConfigUtils.newOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index));
 	}
 
 	/**

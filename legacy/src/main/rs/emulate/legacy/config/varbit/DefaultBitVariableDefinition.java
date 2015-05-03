@@ -1,5 +1,7 @@
 package rs.emulate.legacy.config.varbit;
 
+import static rs.emulate.legacy.config.varbit.BitVariableProperty.VARIABLE;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -51,7 +53,7 @@ public class DefaultBitVariableDefinition extends DefaultConfigDefinition {
 			return new Variable(variable, high, low);
 		};
 
-		properties.put(1, new ConfigProperty<>(BitVariableProperty.VARIABLE, Variable.EMPTY, encoder, decoder,
+		properties.put(1, new ConfigProperty<>(VARIABLE, Variable.EMPTY, encoder, decoder,
 				Short.BYTES + 2 * Byte.BYTES, input -> Optional.empty())); // XXX
 
 		return properties;

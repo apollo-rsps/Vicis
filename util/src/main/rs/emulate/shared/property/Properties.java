@@ -96,13 +96,13 @@ public final class Properties {
 	}
 
 	/**
-	 * Creates a tri-byte {@link ConfigProperty} with no value.
+	 * Creates an unsigned tri-byte {@link ConfigProperty} with no value.
 	 *
 	 * @param name The name of the property.
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static ConfigProperty<Integer> tribyte(ConfigPropertyType name, int defaultValue) {
+	public static ConfigProperty<Integer> unsignedTribyte(ConfigPropertyType name, int defaultValue) {
 		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.TRI_BYTE_ENCODER,
 				PropertyDecoders.UNSIGNED_TRI_BYTE_DECODER, 3 * Byte.BYTES, PropertyParsers.unsignedTriByte());
 	}
