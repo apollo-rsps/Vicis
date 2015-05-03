@@ -22,14 +22,14 @@ import rs.emulate.legacy.config.varp.ParameterVariableDefinition;
 
 /**
  * Contains {@link DefinitionSupplier}s.
- * 
+ *
  * @author Major
  */
 public final class Suppliers {
 
 	/**
 	 * Supplies material for config decoders to avoid reflection.
-	 * 
+	 *
 	 * @param <T> The definition type.
 	 */
 	public static final class DefinitionSupplier<T extends MutableConfigDefinition> {
@@ -51,13 +51,14 @@ public final class Suppliers {
 
 		/**
 		 * Creates the definition supplier.
-		 * 
+		 *
 		 * @param name The name of the ArchiveEntry, <strong>without</strong> an extension.
 		 * @param supplier A {@link Supplier} that returns a {@link DefaultConfigDefinition}.
-		 * @param creator An (id, {@link ConfigPropertyMap}) {@link BiFunction} that creates a {@link MutableConfigDefinition}
-		 *            .
+		 * @param creator An (id, {@link ConfigPropertyMap}) {@link BiFunction} that creates a
+		 *            {@link MutableConfigDefinition} .
 		 */
-		public DefinitionSupplier(String name, Supplier<ConfigPropertyMap> supplier, BiFunction<Integer, ConfigPropertyMap, T> creator) {
+		public DefinitionSupplier(String name, Supplier<ConfigPropertyMap> supplier,
+				BiFunction<Integer, ConfigPropertyMap, T> creator) {
 			this.name = name;
 			this.supplier = supplier;
 			this.creator = creator;
@@ -65,7 +66,7 @@ public final class Suppliers {
 
 		/**
 		 * Creates a new {@link MutableConfigDefinition}.
-		 * 
+		 *
 		 * @param id The id.
 		 * @param map The {@link ConfigPropertyMap}.
 		 * @return The MutableDefinition.
@@ -76,7 +77,7 @@ public final class Suppliers {
 
 		/**
 		 * Gets the name of the ArchiveEntry.
-		 * 
+		 *
 		 * @return The name.
 		 */
 		public String getName() {
@@ -85,7 +86,7 @@ public final class Suppliers {
 
 		/**
 		 * Gets a default {@link ConfigPropertyMap} from the supplier.
-		 * 
+		 *
 		 * @return The PropertyMap.
 		 */
 		public ConfigPropertyMap supplyDefault() {
@@ -121,14 +122,14 @@ public final class Suppliers {
 	/**
 	 * A {@link DefinitionSupplier} for {@link ItemDefinition}s.
 	 */
-	public static final DefinitionSupplier<ItemDefinition> ITEM_SUPPLIER = new DefinitionSupplier<>(ItemDefinition.ENTRY_NAME,
-			DefaultItemDefinition.SUPPLIER, ItemDefinition::new);
+	public static final DefinitionSupplier<ItemDefinition> ITEM_SUPPLIER = new DefinitionSupplier<>(
+			ItemDefinition.ENTRY_NAME, DefaultItemDefinition.SUPPLIER, ItemDefinition::new);
 
 	/**
 	 * A {@link DefinitionSupplier} for {@link NpcDefinition}s.
 	 */
-	public static final DefinitionSupplier<NpcDefinition> NPC_SUPPLIER = new DefinitionSupplier<>(NpcDefinition.ENTRY_NAME,
-			DefaultNpcDefinition.SUPPLIER, NpcDefinition::new);
+	public static final DefinitionSupplier<NpcDefinition> NPC_SUPPLIER = new DefinitionSupplier<>(
+			NpcDefinition.ENTRY_NAME, DefaultNpcDefinition.SUPPLIER, NpcDefinition::new);
 
 	/**
 	 * A {@link DefinitionSupplier} for {@link ObjectDefinition}s.
@@ -140,6 +141,7 @@ public final class Suppliers {
 	 * A {@link DefinitionSupplier} for {@link ParameterVariableDefinition}s.
 	 */
 	public static final DefinitionSupplier<ParameterVariableDefinition> PARAMETER_VARIABLE_SUPPLIER = new DefinitionSupplier<>(
-			ParameterVariableDefinition.ENTRY_NAME, DefaultParameterVariableDefinition.SUPPLIER, ParameterVariableDefinition::new);
+			ParameterVariableDefinition.ENTRY_NAME, DefaultParameterVariableDefinition.SUPPLIER,
+			ParameterVariableDefinition::new);
 
 }

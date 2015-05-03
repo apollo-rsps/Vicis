@@ -3,8 +3,8 @@ package rs.emulate.legacy.config.graphic;
 import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
- * A {@link ConfigPropertyType} implementation for graphic definitions.
- * 
+ * A {@link ConfigPropertyType} implementation for {@link GraphicDefinition}s.
+ *
  * @author Major
  */
 public enum GraphicProperty implements ConfigPropertyType {
@@ -51,7 +51,7 @@ public enum GraphicProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the GraphicProperty.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 */
 	private GraphicProperty(int opcode) {
@@ -60,7 +60,7 @@ public enum GraphicProperty implements ConfigPropertyType {
 
 	/**
 	 * Gets the opcode of this property.
-	 * 
+	 *
 	 * @return The opcode.
 	 */
 	@Override
