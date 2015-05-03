@@ -6,10 +6,17 @@
   <artifactId>vicis</artifactId>
   <version>0.0.1</version>
 
-  <build>
-    <sourceDirectory>src/main</sourceDirectory>
-    <testSourceDirectory>src/test</testSourceDirectory>
+  <name>Vicis</name>
 
+  <modules>
+    <module>editor</module>
+    <module>legacy</module>
+    <module>main</module>
+    <module>util</module>
+    <module>tools</module>
+  </modules>
+
+  <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
