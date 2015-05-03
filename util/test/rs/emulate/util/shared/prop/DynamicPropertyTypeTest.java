@@ -1,4 +1,4 @@
-package rs.emulate.editor;
+package rs.emulate.util.shared.prop;
 
 import static org.junit.Assert.*;
 

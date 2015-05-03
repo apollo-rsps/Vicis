@@ -3,12 +3,13 @@ package rs.emulate.shared.property;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 import com.google.common.base.Preconditions;
 
 /**
  * A mutable property belonging to some sort of definition.
- * 
+ *
  * @author Major
  * @param <V> The type of the value.
  * @param <T> The type of {@link PropertyType}.
@@ -19,6 +20,11 @@ public class Property<V, T extends PropertyType> {
 	 * The default value of this DefinitionProperty.
 	 */
 	protected final V defaultValue;
+
+	/**
+	 * The Function that parses a value from the String passed to it.
+	 */
+	protected final Function<String, Optional<V>> parser;
 
 	/**
 	 * The type of this DefinitionProperty.
@@ -35,9 +41,10 @@ public class Property<V, T extends PropertyType> {
 	 *
 	 * @param type The {@link PropertyType}. Must not be {@code null}.
 	 * @param defaultValue The default value. May be {@code null}.
+	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
-	public Property(T type, V defaultValue) {
-		this(type, null, defaultValue);
+	public Property(T type, V defaultValue, Function<String, Optional<V>> parser) {
+		this(type, null, defaultValue, parser);
 	}
 
 	/**
@@ -46,12 +53,14 @@ public class Property<V, T extends PropertyType> {
 	 * @param type The {@link PropertyType}. Must not be {@code null}.
 	 * @param value The value. May be {@code null}.
 	 * @param defaultValue The default value. May be {@code null}.
+	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
-	public Property(T type, V value, V defaultValue) {
+	public Property(T type, V value, V defaultValue, Function<String, Optional<V>> parser) {
 		Preconditions.checkNotNull(type, "PropertyType cannot be null.");
 		this.type = type;
 		this.value = Optional.ofNullable(value);
 		this.defaultValue = defaultValue;
+		this.parser = Objects.requireNonNull(parser, "Parser must not be null.");
 	}
 
 	@Override
@@ -74,70 +83,8 @@ public class Property<V, T extends PropertyType> {
 	}
 
 	/**
-	 * Gets the name of this DefinitionProperty.
-	 * 
-	 * @return The name.
-	 */
-	public final String getName() {
-		return type.formattedName();
-	}
-
-	/**
-	 * Gets the type of this DefinitionProperty.
-	 *
-	 * @return The type.
-	 */
-	public final T getType() {
-		return type;
-	}
-
-	/**
-	 * Gets the value of this DefinitionProperty.
-	 *
-	 * @return The value.
-	 */
-	public final V getValue() {
-		return value.orElse(defaultValue);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(type, getValue());
-	}
-
-	/**
-	 * Resets the value of this DefinitionProperty.
-	 */
-	public final void reset() {
-		value = Optional.empty();
-	}
-
-	/**
-	 * Sets the value of this DefinitionProperty.
-	 *
-	 * @param value The value. May be {@code null}.
-	 */
-	public final void setValue(V value) {
-		this.value = Optional.ofNullable(value);
-	}
-
-	@Override
-	public final String toString() {
-		return getMessage();
-	}
-
-	/**
-	 * Returns whether or not there is a custom value present.
-	 *
-	 * @return {@code true} if there is a value, or {@code false} if the value is the default.
-	 */
-	public final boolean valuePresent() {
-		return value.isPresent();
-	}
-
-	/**
 	 * Gets the {@code toString} message for the value of this DefinitionProperty.
-	 * 
+	 *
 	 * @return The message.
 	 */
 	private String getMessage() {
@@ -176,6 +123,85 @@ public class Property<V, T extends PropertyType> {
 		}
 
 		return Arrays.toString((Object[]) value);
+	}
+
+	/**
+	 * Gets the name of this DefinitionProperty.
+	 *
+	 * @return The name.
+	 */
+	public final String getName() {
+		return type.formattedName();
+	}
+
+	/**
+	 * Gets the type of this DefinitionProperty.
+	 *
+	 * @return The type.
+	 */
+	public final T getType() {
+		return type;
+	}
+
+	/**
+	 * Gets the value of this DefinitionProperty.
+	 *
+	 * @return The value.
+	 */
+	public final V getValue() {
+		return value.orElse(defaultValue);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(type, getValue());
+	}
+
+	/**
+	 * Attempts to parse the specified input String, setting the value of this Property to the parsed value if parsing
+	 * was successful.
+	 *
+	 * @param input The input String.
+	 * @return {@code true} if parsing was successful, {@code false} if not.
+	 */
+	public boolean parse(String input) {
+		Optional<V> value = parser.apply(input);
+		if (value.isPresent()) {
+			this.value = value;
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Resets the value of this DefinitionProperty.
+	 */
+	public final void reset() {
+		value = Optional.empty();
+	}
+
+	/**
+	 * Sets the value of this DefinitionProperty.
+	 *
+	 * @param value The value. May be {@code null}.
+	 */
+	public final void setValue(V value) {
+		this.value = Optional.ofNullable(value);
+	}
+
+	@Override
+	public final String toString() {
+		return getMessage();
+	}
+
+	/**
+	 * Returns whether or not there is a custom value present.
+	 *
+	 * @return {@code true} if there is a value, or {@code false} if the value is the default.
+	 */
+	public final boolean valuePresent() {
+		return value.isPresent();
 	}
 
 }

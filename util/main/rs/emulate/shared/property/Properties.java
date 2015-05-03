@@ -5,7 +5,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
  * Contains static utility methods to create {@link ConfigProperty} objects.
- * 
+ *
  * @author Major
  */
 public final class Properties {
@@ -18,7 +18,8 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> unsignedByte(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER, Byte.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER,
+				Byte.BYTES, PropertyParsers.unsignedByte());
 	}
 
 	/**
@@ -29,7 +30,8 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Boolean> alwaysFalse(ConfigPropertyType name, boolean defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.FALSE_DECODER, 0);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.FALSE_DECODER,
+				0, PropertyParsers.forBoolean());
 	}
 
 	/**
@@ -39,8 +41,9 @@ public final class Properties {
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static ConfigProperty<Integer> unsignedInt(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.INT_ENCODER, PropertyDecoders.INT_DECODER, Integer.BYTES);
+	public static ConfigProperty<Long> unsignedInt(ConfigPropertyType name, long defaultValue) {
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.LONG_ENCODER, PropertyDecoders.INT_DECODER,
+				Integer.BYTES, PropertyParsers.unsignedInt());
 	}
 
 	/**
@@ -52,7 +55,7 @@ public final class Properties {
 	 */
 	public static ConfigProperty<Integer> unsignedShort(ConfigPropertyType name, int defaultValue) {
 		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SHORT_DECODER,
-				Short.BYTES);
+				Short.BYTES, PropertyParsers.unsignedShort());
 	}
 
 	/**
@@ -63,8 +66,8 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> signedByte(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.SIGNED_BYTE_DECODER,
-				Byte.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER,
+				PropertyDecoders.SIGNED_BYTE_DECODER, Byte.BYTES, PropertyParsers.signedByte());
 	}
 
 	/**
@@ -75,20 +78,21 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> signedShort(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SIGNED_SHORT_DECODER,
-				Short.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER,
+				PropertyDecoders.SIGNED_SHORT_DECODER, Short.BYTES, PropertyParsers.signedShort());
 	}
 
 	/**
 	 * Creates a string {@link ConfigProperty} with no value.
-	 * 
+	 *
 	 * @param name The name of the property.
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<String> asciiString(ConfigPropertyType name, String defaultValue) {
 		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.ASCII_STRING_ENCODER,
-				PropertyDecoders.ASCII_STRING_DECODER, string -> string.length() + Byte.BYTES); // terminator byte
+				PropertyDecoders.ASCII_STRING_DECODER, string -> string.length() + Byte.BYTES, // terminator byte
+				PropertyParsers.forAsciiString());
 	}
 
 	/**
@@ -99,8 +103,8 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Integer> tribyte(ConfigPropertyType name, int defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.TRI_BYTE_ENCODER, PropertyDecoders.TRI_BYTE_DECODER,
-				3 * Byte.BYTES);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.TRI_BYTE_ENCODER,
+				PropertyDecoders.UNSIGNED_TRI_BYTE_DECODER, 3 * Byte.BYTES, PropertyParsers.unsignedTriByte());
 	}
 
 	/**
@@ -111,7 +115,8 @@ public final class Properties {
 	 * @return The DefinitionProperty.
 	 */
 	public static ConfigProperty<Boolean> alwaysTrue(ConfigPropertyType name, boolean defaultValue) {
-		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.TRUE_DECODER, 0);
+		return new ConfigProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.TRUE_DECODER,
+				0, PropertyParsers.forBoolean());
 	}
 
 	/**

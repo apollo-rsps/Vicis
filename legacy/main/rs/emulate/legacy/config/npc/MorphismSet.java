@@ -9,7 +9,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * A set of morphisms for an npc or object.
- * 
+ *
  * @author Major
  */
 public final class MorphismSet {
@@ -21,35 +21,35 @@ public final class MorphismSet {
 
 	/**
 	 * Decodes a {@link MorphismSet} from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @return The MorphismSet.
 	 */
 	public static MorphismSet decode(DataBuffer buffer) {
-		int bitVariable = buffer.getUnsignedShort();
-		int variable = buffer.getUnsignedShort();
+		int varbit = buffer.getUnsignedShort();
+		int varp = buffer.getUnsignedShort();
 		int count = buffer.getUnsignedByte();
 		int[] morphisms = new int[count + 1];
 
 		Arrays.setAll(morphisms, index -> buffer.getUnsignedShort());
-		return new MorphismSet(bitVariable, variable, morphisms);
+		return new MorphismSet(varbit, varp, morphisms);
 	}
 
 	/**
 	 * Encodes the specified {@link MorphismSet} into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @param set The MorphismSet.
 	 */
 	public static void encode(DataBuffer buffer, MorphismSet set) {
-		buffer.putShort(set.getBitVariable()).putShort(set.getVariable()).putByte(set.getCount() - 1);
+		buffer.putShort(set.getBitVariable()).putShort(set.getParameterVariable()).putByte(set.getCount() - 1);
 		Arrays.stream(set.getMorphisms()).forEach(buffer::putShort);
 	}
 
 	/**
-	 * The morphism bit variable index.
+	 * The morphism variable bit.
 	 */
-	private final int bitVariable;
+	private final int varbit;
 
 	/**
 	 * The morphisms.
@@ -57,37 +57,37 @@ public final class MorphismSet {
 	private final int[] morphisms;
 
 	/**
-	 * The morphism variable index.
+	 * The morphism variable parameter.
 	 */
-	private final int variable;
+	private final int varp;
 
 	/**
 	 * Creates the MorphismSet.
-	 * 
-	 * @param bitVariable The bit variable index.
-	 * @param variable The variable index.
+	 *
+	 * @param varbit The morphism variable bit.
+	 * @param varp The morphism variable parameter.
 	 * @param morphisms The morphisms. Must not be {@code null}.
 	 */
-	public MorphismSet(int bitVariable, int variable, int[] morphisms) {
+	public MorphismSet(int varbit, int varp, int[] morphisms) {
 		Preconditions.checkNotNull(morphisms, "Morphisms array must not be null.");
 
-		this.bitVariable = bitVariable;
-		this.variable = variable;
+		this.varbit = varbit;
+		this.varp = varp;
 		this.morphisms = morphisms;
 	}
 
 	/**
-	 * Gets the morphism bit variable index.
-	 * 
-	 * @return The bit variable index.
+	 * Gets the morphism bit variable id.
+	 *
+	 * @return The bit variable id.
 	 */
 	public int getBitVariable() {
-		return bitVariable;
+		return varbit;
 	}
 
 	/**
 	 * Gets the amount of morphisms.
-	 * 
+	 *
 	 * @return The morphisms count.
 	 */
 	public int getCount() {
@@ -96,7 +96,7 @@ public final class MorphismSet {
 
 	/**
 	 * Gets the morphisms.
-	 * 
+	 *
 	 * @return The morphisms.
 	 */
 	public int[] getMorphisms() {
@@ -104,17 +104,17 @@ public final class MorphismSet {
 	}
 
 	/**
-	 * Gets the morphism variable index.
-	 * 
-	 * @return The variable index.
+	 * Gets the morphism variable parameter id.
+	 *
+	 * @return The variable parameter id.
 	 */
-	public int getVariable() {
-		return variable;
+	public int getParameterVariable() {
+		return varp;
 	}
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(this).add("bit variable", bitVariable).add("variable", variable)
+		return MoreObjects.toStringHelper(this).add("bit variable", varbit).add("parameter variable", varp)
 				.add("morphisms", Arrays.toString(morphisms)).toString();
 	}
 

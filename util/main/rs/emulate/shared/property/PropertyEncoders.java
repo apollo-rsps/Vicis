@@ -7,7 +7,7 @@ import rs.emulate.shared.util.DataBuffer;
 
 /**
  * Contains static {@link BiConsumer}s to encode values.
- * 
+ *
  * @author Major
  */
 public final class PropertyEncoders {
@@ -15,7 +15,8 @@ public final class PropertyEncoders {
 	/**
 	 * A {@link BiConsumer} to encode a String into a byte array, terminated with the byte value 10.
 	 */
-	public static final BiConsumer<DataBuffer, String> ASCII_STRING_ENCODER = (buffer, value) -> buffer.putAsciiString(value);
+	public static final BiConsumer<DataBuffer, String> ASCII_STRING_ENCODER = (buffer, value) -> buffer
+			.putAsciiString(value);
 
 	/**
 	 * A {@link BiConsumer} to encode a {@link ByteBuffer}
@@ -38,6 +39,11 @@ public final class PropertyEncoders {
 	public static final BiConsumer<DataBuffer, Integer> INT_ENCODER = (buffer, value) -> buffer.putInt(value);
 
 	/**
+	 * A {@link BiConsumer} to encode a long.
+	 */
+	public static final BiConsumer<DataBuffer, Long> LONG_ENCODER = (buffer, value) -> buffer.putLong(value);
+
+	/**
 	 * A {@link BiConsumer} to encode a short.
 	 */
 	public static final BiConsumer<DataBuffer, Integer> SHORT_ENCODER = (buffer, value) -> buffer.putShort(value);
@@ -50,11 +56,12 @@ public final class PropertyEncoders {
 	/**
 	 * Gets a {@link BiConsumer} that acts as a disposer, writing the opcode of the property but no data. This is a
 	 * method rather than a constant because type inference is required.
-	 * 
+	 *
 	 * @return The BiConsumer.
 	 */
 	public static <T> BiConsumer<DataBuffer, T> nullEncoder() {
-		return (buffer, value) -> { };
+		return (buffer, value) -> {
+		};
 	}
 
 	/**

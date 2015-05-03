@@ -58,7 +58,7 @@ public abstract class MutableConfigDefinition {
 
 	/**
 	 * Gets the id of this MutableDefinition.
-	 * 
+	 *
 	 * @return The id.
 	 */
 	public final int getId() {
@@ -114,7 +114,7 @@ public abstract class MutableConfigDefinition {
 
 	/**
 	 * Sets the value of the {@link ConfigProperty} with the specified opcode.
-	 * 
+	 *
 	 * @param name The {@link ConfigPropertyType name} of the DefinitionProperty.
 	 * @param value The value.
 	 */
@@ -128,9 +128,11 @@ public abstract class MutableConfigDefinition {
 
 		for (Map.Entry<Integer, ConfigProperty<?>> entry : properties.getProperties()) {
 			ConfigProperty<?> property = entry.getValue();
-			String name = property.getName();
+			if (property.valuePresent()) {
+				String name = property.getName();
 
-			helper.add(name, property);
+				helper.add(name, property);
+			}
 		}
 
 		return helper.toString();

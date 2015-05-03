@@ -9,7 +9,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * A collection of data about frames used in the animation.
- * 
+ *
  * @author Major
  */
 public final class FrameCollection {
@@ -26,7 +26,7 @@ public final class FrameCollection {
 
 	/**
 	 * Gets the size of the specified FrameCollection, in bytes.
-	 * 
+	 *
 	 * @param collection The FrameCollection.
 	 * @return The size, in bytes.
 	 */
@@ -36,7 +36,7 @@ public final class FrameCollection {
 
 	/**
 	 * Decodes a {@link FrameCollection} from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @return The FrameCollection.
 	 */
@@ -56,7 +56,7 @@ public final class FrameCollection {
 
 	/**
 	 * Encodes the specified {@link FrameCollection} into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @param collection The FrameCollection.
 	 */
@@ -124,7 +124,7 @@ public final class FrameCollection {
 
 	/**
 	 * Gets the duration at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The duration.
 	 */
@@ -152,7 +152,7 @@ public final class FrameCollection {
 
 	/**
 	 * Gets the primary frame id at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The primary frame id.
 	 */
@@ -171,7 +171,7 @@ public final class FrameCollection {
 
 	/**
 	 * Gets the secondary frame id at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The secondary frame id.
 	 */

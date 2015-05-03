@@ -6,7 +6,7 @@ import rs.emulate.shared.util.DataBuffer;
 
 /**
  * Contains static {@link Function}s to decode values.
- * 
+ *
  * @author Major
  */
 public final class PropertyDecoders {
@@ -22,9 +22,14 @@ public final class PropertyDecoders {
 	public static final Function<DataBuffer, Boolean> FALSE_DECODER = buffer -> false;
 
 	/**
+	 * A {@link Function} that decodes an {@code int} from the specified {@link DataBuffer}.
+	 */
+	public static final Function<DataBuffer, Integer> SIGNED_INT_DECODER = DataBuffer::getInt;
+
+	/**
 	 * A {@link Function} that decodes an unsigned {@code int} from the specified {@link DataBuffer}.
 	 */
-	public static final Function<DataBuffer, Integer> INT_DECODER = DataBuffer::getInt;
+	public static final Function<DataBuffer, Long> INT_DECODER = DataBuffer::getUnsignedInt;
 
 	/**
 	 * A {@link Function} that decodes an unsigned {@code short} from the specified {@link DataBuffer}.
@@ -54,7 +59,7 @@ public final class PropertyDecoders {
 	/**
 	 * A {@link Function} that decodes an unsigned {@code tri-byte} from the specified {@link DataBuffer}.
 	 */
-	public static final Function<DataBuffer, Integer> TRI_BYTE_DECODER = DataBuffer::getUnsignedTriByte;
+	public static final Function<DataBuffer, Integer> UNSIGNED_TRI_BYTE_DECODER = DataBuffer::getUnsignedTriByte;
 
 	/**
 	 * A {@link Function} that reads no data from the {@link DataBuffer} and simply returns {@code true}.

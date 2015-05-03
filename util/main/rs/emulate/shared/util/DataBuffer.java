@@ -12,14 +12,14 @@ import com.google.common.base.Preconditions;
 /**
  * A wrapper for {@link ByteBuffer} that adds methods to read unsigned data types, and specific string types. All
  * methods read and places values in big-endian format unless otherwise stated.
- * 
+ *
  * @author Major
  */
 public final class DataBuffer {
 
 	/**
 	 * Allocates a new DataBuffer.
-	 * 
+	 *
 	 * @param bytes The capacity of the buffer.
 	 * @return The DataBuffer.
 	 */
@@ -30,7 +30,7 @@ public final class DataBuffer {
 
 	/**
 	 * Wraps the specified byte array in a new DataBuffer.
-	 * 
+	 *
 	 * @param bytes The byte array to wrap.
 	 * @return The DataBuffer.
 	 */
@@ -40,7 +40,7 @@ public final class DataBuffer {
 
 	/**
 	 * Wraps the specified {@link ByteBuffer} in a new DataBuffer.
-	 * 
+	 *
 	 * @param buffer The byte buffer.
 	 * @return The DataBuffer.
 	 */
@@ -55,7 +55,7 @@ public final class DataBuffer {
 
 	/**
 	 * Creates The DataBuffer.
-	 * 
+	 *
 	 * @param bytes The byte array to wrap.
 	 */
 	private DataBuffer(byte[] bytes) {
@@ -64,7 +64,7 @@ public final class DataBuffer {
 
 	/**
 	 * Creates The DataBuffer.
-	 * 
+	 *
 	 * @param buffer The backing {@link ByteBuffer}.
 	 */
 	private DataBuffer(ByteBuffer buffer) {
@@ -73,7 +73,7 @@ public final class DataBuffer {
 
 	/**
 	 * Creates The DataBuffer.
-	 * 
+	 *
 	 * @param bytes The capacity of the buffer.
 	 */
 	private DataBuffer(int bytes) {
@@ -82,7 +82,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the array of bytes backing this DataBuffer.
-	 * 
+	 *
 	 * @return The array of bytes.
 	 */
 	public byte[] array() {
@@ -91,7 +91,7 @@ public final class DataBuffer {
 
 	/**
 	 * Returns a shallow copy of this DataBuffer as a read-only buffer.
-	 * 
+	 *
 	 * @return The read-only buffer.
 	 */
 	public DataBuffer asReadOnlyBuffer() {
@@ -100,7 +100,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the capacity of this DataBuffer.
-	 * 
+	 *
 	 * @return The capacity.
 	 */
 	public int capacity() {
@@ -109,7 +109,7 @@ public final class DataBuffer {
 
 	/**
 	 * Clears this DataBuffer.
-	 * 
+	 *
 	 * @return This DataBuffer, for chaining.
 	 */
 	public DataBuffer clear() {
@@ -119,7 +119,7 @@ public final class DataBuffer {
 
 	/**
 	 * Copies the data in this DataBuffer (see {@link ByteBufferUtils#copy}).
-	 * 
+	 *
 	 * @return The copied buffer.
 	 */
 	public DataBuffer copy() {
@@ -128,7 +128,7 @@ public final class DataBuffer {
 
 	/**
 	 * Duplicates this DataBuffer (see {@link ByteBuffer#duplicate}).
-	 * 
+	 *
 	 * @return The duplicate buffer.
 	 */
 	public DataBuffer duplicate() {
@@ -149,7 +149,7 @@ public final class DataBuffer {
 	 * Fills <strong>this</strong> DataBuffer with data from the specified DataBuffer. This method fills this DataBuffer
 	 * until it is full (i.e. {@code buffer.remaining = 0}) and so the source DataBuffer must have more bytes remaining
 	 * than this Buffer. This method flips this DataBuffer after filling.
-	 * 
+	 *
 	 * @param source The source DataBuffer.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -166,7 +166,7 @@ public final class DataBuffer {
 
 	/**
 	 * Flips this DataBuffer.
-	 * 
+	 *
 	 * @return This DataBuffer, for chaining.
 	 */
 	public DataBuffer flip() {
@@ -176,7 +176,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets {@code bytes.length} bytes and places them in the specified byte array.
-	 * 
+	 *
 	 * @param bytes The byte array.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -212,7 +212,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the value at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The value.
 	 */
@@ -222,7 +222,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets a {@code boolean} from this Buffer, by reading a single {@code byte}.
-	 * 
+	 *
 	 * @return {@code true} if the byte is non-zero, otherwise {@code false}.
 	 */
 	public boolean getBoolean() {
@@ -231,7 +231,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets a byte from this DataBuffer.
-	 * 
+	 *
 	 * @return The byte.
 	 */
 	public int getByte() {
@@ -240,22 +240,11 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the byte buffer backing this DataBuffer.
-	 * 
+	 *
 	 * @return The byte buffer.
 	 */
 	public ByteBuffer getByteBuffer() {
 		return buffer;
-	}
-
-	/**
-	 * Reads the remaining data in this DataBuffer into a byte array, and returns the array.
-	 *
-	 * @return The byte array containing the remaining data.
-	 */
-	public byte[] getRemainingBytes() {
-		byte[] bytes = new byte[buffer.remaining()];
-		buffer.get(bytes);
-		return bytes;
 	}
 
 	/**
@@ -274,7 +263,7 @@ public final class DataBuffer {
 
 	/**
 	 * Reads a C-style String from this DataBuffer.
-	 * 
+	 *
 	 * @return The C-string.
 	 */
 	public String getCString() {
@@ -290,7 +279,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets an {@code int} from this DataBuffer.
-	 * 
+	 *
 	 * @return The {@code int}.
 	 */
 	public int getInt() {
@@ -299,7 +288,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets an {@code int} from the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The {@code int}.
 	 */
@@ -309,7 +298,7 @@ public final class DataBuffer {
 
 	/**
 	 * Reads a Jag string from this DataBuffer.
-	 * 
+	 *
 	 * @return The string.
 	 */
 	public String getJagString() {
@@ -333,7 +322,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets a 'large smart' (either a short or an int).
-	 * 
+	 *
 	 * @return The value.
 	 */
 	public int getLargeSmart() {
@@ -347,7 +336,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets a {@code long} from this DataBuffer.
-	 * 
+	 *
 	 * @return The {@code long}.
 	 */
 	public long getLong() {
@@ -355,8 +344,19 @@ public final class DataBuffer {
 	}
 
 	/**
+	 * Reads the remaining data in this DataBuffer into a byte array, and returns the array.
+	 *
+	 * @return The byte array containing the remaining data.
+	 */
+	public byte[] getRemainingBytes() {
+		byte[] bytes = new byte[buffer.remaining()];
+		buffer.get(bytes);
+		return bytes;
+	}
+
+	/**
 	 * Gets a {@code short} from this DataBuffer.
-	 * 
+	 *
 	 * @return The {@code short}.
 	 */
 	public int getShort() {
@@ -365,7 +365,7 @@ public final class DataBuffer {
 
 	/**
 	 * Reads a 'smart' from this DataBuffer.
-	 * 
+	 *
 	 * @return The smart.
 	 */
 	public int getSmart() {
@@ -379,7 +379,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets a String, terminated with the byte value {@code 10}, from this DataBuffer.
-	 * 
+	 *
 	 * @return The String.
 	 */
 	public String getString() {
@@ -394,7 +394,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets an unsigned byte from this DataBuffer.
-	 * 
+	 *
 	 * @return The unsigned byte.
 	 */
 	public int getUnsignedByte() {
@@ -402,8 +402,17 @@ public final class DataBuffer {
 	}
 
 	/**
+	 * Gets an unsigned int from this DataBuffer.
+	 *
+	 * @return The unsigned int, as a long.
+	 */
+	public long getUnsignedInt() {
+		return buffer.getInt() & 0xFFFF_FFFF;
+	}
+
+	/**
 	 * Gets an unsigned {@code short} from this DataBuffer.
-	 * 
+	 *
 	 * @return The unsigned {@code short}.
 	 */
 	public int getUnsignedShort() {
@@ -412,7 +421,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets a tri-byte from this DataBuffer.
-	 * 
+	 *
 	 * @return The tri-byte.
 	 */
 	public int getUnsignedTriByte() {
@@ -426,7 +435,7 @@ public final class DataBuffer {
 
 	/**
 	 * Returns whether or not this DataBuffer has any bytes remaining.
-	 * 
+	 *
 	 * @return {@code true} if there are any bytes remaining, {@code false} if not.
 	 */
 	public boolean hasRemaining() {
@@ -435,7 +444,7 @@ public final class DataBuffer {
 
 	/**
 	 * Returns whether or not the capacity of this Buffer is 0.
-	 * 
+	 *
 	 * @return {@code true} if the capacity is 0, {@code false} if not.
 	 */
 	public boolean isEmpty() {
@@ -444,7 +453,7 @@ public final class DataBuffer {
 
 	/**
 	 * Returns whether or not this DataBuffer is read only.
-	 * 
+	 *
 	 * @return {@code true} if this DataBuffer is read only, {@code false} if not.
 	 */
 	public boolean isReadOnly() {
@@ -453,7 +462,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the limit of this DataBuffer.
-	 * 
+	 *
 	 * @return The limit.
 	 */
 	public int limit() {
@@ -473,7 +482,7 @@ public final class DataBuffer {
 
 	/**
 	 * Marks this DataBuffer.
-	 * 
+	 *
 	 * @return The DataBuffer..
 	 */
 	public DataBuffer mark() {
@@ -483,7 +492,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the position of this DataBuffer.
-	 * 
+	 *
 	 * @return The position.
 	 */
 	public int position() {
@@ -492,7 +501,7 @@ public final class DataBuffer {
 
 	/**
 	 * Sets the current position of this DataBuffer.
-	 * 
+	 *
 	 * @param position The new position.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -503,7 +512,7 @@ public final class DataBuffer {
 
 	/**
 	 * Places the contents of the specified byte array into this DataBuffer.
-	 * 
+	 *
 	 * @param bytes The byte array.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -515,7 +524,7 @@ public final class DataBuffer {
 	/**
 	 * Places the contents of the specified byte array into this DataBuffer, starting from {@code offset} and reading
 	 * {@code length} bytes.
-	 * 
+	 *
 	 * @param bytes The byte array.
 	 * @param offset The offset.
 	 * @param length The amount of bytes to place.
@@ -528,7 +537,7 @@ public final class DataBuffer {
 
 	/**
 	 * Puts a {@link ByteBuffer} into this DataBuffer (see {@link ByteBuffer#put(ByteBuffer)}).
-	 * 
+	 *
 	 * @param buffer The byte buffer.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -539,7 +548,7 @@ public final class DataBuffer {
 
 	/**
 	 * Places the contents of the specified buffer into this DataBuffer.
-	 * 
+	 *
 	 * @param buffer The DataBuffer..
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -566,7 +575,7 @@ public final class DataBuffer {
 	/**
 	 * Places a {@code boolean} into this Buffer, where a {@code true} value places a {@code byte} of 1, and a
 	 * {@code false} value places a {@code byte} of 0.
-	 * 
+	 *
 	 * @param value The value.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -578,7 +587,7 @@ public final class DataBuffer {
 	/**
 	 * Places an {@code int} into this Buffer, as a {@code boolean}, where a non-zero value places a {@code byte} of 1,
 	 * and a 0 value places a {@code byte} of 0.
-	 * 
+	 *
 	 * @param value The value.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -588,7 +597,7 @@ public final class DataBuffer {
 
 	/**
 	 * Puts a byte into the buffer.
-	 * 
+	 *
 	 * @param value The value.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -614,7 +623,7 @@ public final class DataBuffer {
 
 	/**
 	 * Puts an int into this DataBuffer.
-	 * 
+	 *
 	 * @param value The int.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -625,7 +634,7 @@ public final class DataBuffer {
 
 	/**
 	 * Places an int with the specified value at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @param value The value.
 	 * @return This DataBuffer, for chaining.
@@ -637,7 +646,7 @@ public final class DataBuffer {
 
 	/**
 	 * Puts a long into this DataBuffer.
-	 * 
+	 *
 	 * @param value The long.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -647,7 +656,7 @@ public final class DataBuffer {
 
 	/**
 	 * Puts a short into this DataBuffer.
-	 * 
+	 *
 	 * @param value The short.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -658,7 +667,7 @@ public final class DataBuffer {
 
 	/**
 	 * Puts a tri-byte into this DataBuffer.
-	 * 
+	 *
 	 * @param value The tri-byte.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -671,7 +680,7 @@ public final class DataBuffer {
 
 	/**
 	 * Gets the amount of bytes remaining in this DataBuffer (i.e. {@link #limit} - {@link #position}).
-	 * 
+	 *
 	 * @return The amount of bytes remaining.
 	 */
 	public int remaining() {
@@ -680,7 +689,7 @@ public final class DataBuffer {
 
 	/**
 	 * Resets the mark of this DataBuffer.
-	 * 
+	 *
 	 * @return This DataBuffer, for chaining.
 	 */
 	public DataBuffer reset() {
@@ -690,7 +699,7 @@ public final class DataBuffer {
 
 	/**
 	 * Skips the specified amount of bytes.
-	 * 
+	 *
 	 * @param bytes The amount of bytes to skip.
 	 * @return This DataBuffer, for chaining.
 	 */
@@ -701,7 +710,7 @@ public final class DataBuffer {
 
 	/**
 	 * Slices this DataBuffer.
-	 * 
+	 *
 	 * @return The sliced DataBuffer.
 	 */
 	public DataBuffer slice() {
@@ -710,7 +719,7 @@ public final class DataBuffer {
 
 	/**
 	 * {@link Whirlpool}s the data in this DataBuffer.
-	 * 
+	 *
 	 * @return The whirlpool hash, as a DataBuffer.
 	 */
 	public DataBuffer whirlpool() {

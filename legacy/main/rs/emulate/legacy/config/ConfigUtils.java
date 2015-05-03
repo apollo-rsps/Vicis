@@ -2,6 +2,7 @@ package rs.emulate.legacy.config;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -27,7 +28,9 @@ public final class ConfigUtils {
 
 	/**
 	 * Creates a {@link ConfigProperty} for a {@link Map} of original to replacement colour values.
-	 * 
+	 * <p>
+	 * FIXME This property is too complicated to be done like this.
+	 *
 	 * @param type The {@link ConfigPropertyType} of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
@@ -48,8 +51,12 @@ public final class ConfigUtils {
 			return colours;
 		};
 
+		Function<String, Optional<Map<Integer, Integer>>> parser = input -> {
+			return null; // XXX
+		};
+
 		return new ConfigProperty<>(type, new HashMap<Integer, Integer>(1), encoder, decoder, colours -> colours.size()
-				* Short.BYTES * 2 + Byte.BYTES);
+				* Short.BYTES * 2 + Byte.BYTES, parser);
 	}
 
 	/**
@@ -57,7 +64,7 @@ public final class ConfigUtils {
 	 * <p>
 	 * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
 	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
-	 * 
+	 *
 	 * @param prefix The prefix.
 	 * @param option The option.
 	 * @return The DynamicPropertyType.
@@ -72,7 +79,7 @@ public final class ConfigUtils {
 	 * <p>
 	 * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
 	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
-	 * 
+	 *
 	 * @param slot The colour slot.
 	 * @return The DynamicPropertyType.
 	 */
@@ -86,7 +93,7 @@ public final class ConfigUtils {
 	 * <p>
 	 * The returned DynamicPropertyType may be the same object as a previously created one, as only one
 	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
-	 * 
+	 *
 	 * @param slot The colour slot.
 	 * @return The DynamicPropertyType.
 	 */

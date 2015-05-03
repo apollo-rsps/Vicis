@@ -12,11 +12,9 @@ import rs.emulate.legacy.Cache;
 import rs.emulate.legacy.FileDescriptor;
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.archive.Archive;
-import rs.emulate.legacy.archive.CompressionType;
 import rs.emulate.legacy.config.ConfigDecoder;
-import rs.emulate.legacy.config.ConfigEncoder;
 import rs.emulate.legacy.config.Suppliers;
-import rs.emulate.legacy.config.npc.NpcDefinition;
+import rs.emulate.legacy.config.object.ObjectDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.MoreObjects;
@@ -24,7 +22,7 @@ import com.google.common.primitives.Ints;
 
 /**
  * The core class.
- * 
+ *
  * @author Major
  */
 public final class Editor extends Application {
@@ -48,10 +46,13 @@ public final class Editor extends Application {
 	private IndexedFileSystem fs;
 
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) throws Exception {
 		Application.Parameters parameters = getParameters();
-		String version = MoreObjects.firstNonNull(parameters.getNamed().get("version"), "317");
+		temp(parameters);
+	}
 
+	private void temp(Application.Parameters parameters) {
+		String version = MoreObjects.firstNonNull(parameters.getNamed().get("version"), "317");
 		try {
 			this.fs = new IndexedFileSystem(Paths.get("data/resources/", version), AccessMode.READ);
 
@@ -86,14 +87,16 @@ public final class Editor extends Application {
 	private void test(Cache cache) throws IOException { // temporary
 		FileDescriptor descriptor = new FileDescriptor(0, 2);
 		Archive config = cache.getArchive(descriptor);
-		ConfigDecoder<NpcDefinition> decoder = new ConfigDecoder<>(config, Suppliers.NPC_SUPPLIER);
-		List<NpcDefinition> definitions = decoder.decode();
-		
-		ConfigEncoder<NpcDefinition> encoder = new ConfigEncoder<>(NpcDefinition.ENTRY_NAME, definitions);
-		Archive result = encoder.encodeInto(config);
-		cache.replaceArchive(descriptor, result, CompressionType.ENTRY_COMPRESSION);
-		cache.encode(Paths.get("data/dump/317"));
-		
+
+		ConfigDecoder<ObjectDefinition> decoder = new ConfigDecoder<>(config, Suppliers.OBJECT_SUPPLIER);
+		List<ObjectDefinition> definitions = decoder.decode();
+
+		definitions.stream().filter(def -> def.name().getValue().toLowerCase().contains("patch"))
+				.mapToInt(ObjectDefinition::getId).forEach(System.out::println);
+
+		ObjectDefinition patch = definitions.get(8391);
+		System.out.println(patch);
+
 		System.out.print("Type an id: ");
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {
@@ -106,6 +109,8 @@ public final class Editor extends Application {
 				Integer value = Ints.tryParse(in);
 				if (value != null && value >= 0 && value < definitions.size()) {
 					System.out.println(definitions.get(value));
+				} else {
+					System.out.println("Illegal value, must be [0, " + definitions.size() + ").");
 				}
 			}
 		}

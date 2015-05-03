@@ -3,6 +3,7 @@ package rs.emulate.legacy.config.kit;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -10,14 +11,14 @@ import java.util.function.Supplier;
 import rs.emulate.legacy.config.ConfigProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.legacy.config.ConfigUtils;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.property.Properties;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
  * A default {@link IdentityKitDefinition} used as a base for an actual definition.
- * 
+ *
  * @author Major
  */
 public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
@@ -43,7 +44,8 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 	protected Map<Integer, ConfigProperty<?>> init() {
 		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
 
-		defaults.put(1, new ConfigProperty<>(IdentityKitProperty.PART, Part.NULL, Part::encode, Part::decode, Byte.BYTES));
+		defaults.put(1, new ConfigProperty<>(IdentityKitProperty.PART, Part.NULL, Part::encode, Part::decode,
+				Byte.BYTES, input -> Optional.empty())); // XXX
 
 		BiConsumer<DataBuffer, int[]> modelsEncoder = (buffer, models) -> {
 			buffer.putByte(models.length);
@@ -59,7 +61,7 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 		};
 
 		defaults.put(2, new ConfigProperty<>(IdentityKitProperty.MODELS, null, modelsEncoder, modelDecoder,
-				models -> models.length * Short.SIZE + Byte.SIZE));
+				models -> models.length * Short.SIZE + Byte.SIZE, input -> Optional.empty())); // XXX
 		defaults.put(3, Properties.alwaysTrue(IdentityKitProperty.PLAYER_DESIGN_STYLE, false));
 
 		for (int slot = 1; slot <= IdentityKitDefinition.COLOUR_COUNT; slot++) {

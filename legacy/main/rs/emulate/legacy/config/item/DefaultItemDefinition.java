@@ -1,9 +1,16 @@
 package rs.emulate.legacy.config.item;
 
-import static rs.emulate.shared.property.Properties.*;
+import static rs.emulate.shared.property.Properties.alwaysTrue;
+import static rs.emulate.shared.property.Properties.asciiString;
+import static rs.emulate.shared.property.Properties.signedByte;
+import static rs.emulate.shared.property.Properties.signedShort;
+import static rs.emulate.shared.property.Properties.unsignedByte;
+import static rs.emulate.shared.property.Properties.unsignedInt;
+import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
@@ -16,7 +23,7 @@ import rs.emulate.shared.property.DynamicPropertyType;
 
 /**
  * A default {@link ItemDefinition} used as a base for actual definitions.
- * 
+ *
  * @author Major
  */
 public class DefaultItemDefinition extends DefaultConfigDefinition {
@@ -57,16 +64,17 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 		properties.put(12, unsignedInt(ItemProperty.VALUE, 1));
 		properties.put(16, alwaysTrue(ItemProperty.MEMBERS, false));
 
-		properties.put(23, new ConfigProperty<>(ItemProperty.PRIMARY_MALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
-				PrimaryModel::decode, Short.BYTES + Byte.BYTES));
+		properties.put(23, new ConfigProperty<>(ItemProperty.PRIMARY_MALE_MODEL, PrimaryModel.EMPTY,
+				PrimaryModel::encode, PrimaryModel::decode, Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
 		properties.put(24, unsignedShort(ItemProperty.SECONDARY_MALE_MODEL, 0));
 
-		properties.put(25, new ConfigProperty<>(ItemProperty.PRIMARY_FEMALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
-				PrimaryModel::decode, Short.BYTES + Byte.BYTES));
+		properties.put(25, new ConfigProperty<>(ItemProperty.PRIMARY_FEMALE_MODEL, PrimaryModel.EMPTY,
+				PrimaryModel::encode, PrimaryModel::decode, Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
 		properties.put(26, unsignedShort(ItemProperty.SECONDARY_FEMALE_MODEL, 0));
 
 		for (int action = 1; action <= ItemConstants.MENU_ACTION_COUNT; action++) {
-			ConfigPropertyType type = ConfigUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, action);
+			ConfigPropertyType type = ConfigUtils.createOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX,
+					action);
 			properties.put(action + 29, asciiString(type, "hidden"));
 
 			type = ConfigUtils.createOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, action);
@@ -89,9 +97,10 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 		properties.put(98, unsignedShort(ItemProperty.NOTE_TEMPLATE_ID, 0));
 
 		for (int option = 1; option <= ItemConstants.ITEM_STACK_COUNT; option++) {
-			ConfigPropertyType type = ConfigUtils.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option);
-			properties.put(option + 99, new ConfigProperty<>(type, ItemStack.EMPTY, ItemStack::encode, ItemStack::decode,
-					Short.BYTES * 2));
+			ConfigPropertyType type = ConfigUtils
+					.createOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option);
+			properties.put(option + 99, new ConfigProperty<>(type, ItemStack.EMPTY, ItemStack::encode,
+					ItemStack::decode, Short.BYTES * 2, input -> Optional.empty())); // XXX
 		}
 
 		properties.put(110, unsignedShort(ItemProperty.GROUND_SCALE_X, ConfigConstants.DEFAULT_SCALE));
@@ -99,8 +108,9 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 		properties.put(112, unsignedShort(ItemProperty.GROUND_SCALE_Z, ConfigConstants.DEFAULT_SCALE));
 
 		properties.put(113, signedByte(ItemProperty.AMBIENCE, 0));
-		properties.put(114, new ConfigProperty<>(ItemProperty.CONTRAST, 0, (buffer, contrast) -> buffer.putByte(contrast / 5),
-				buffer -> buffer.getByte() * 5, Byte.BYTES));
+		properties.put(114,
+				new ConfigProperty<>(ItemProperty.CONTRAST, 0, (buffer, contrast) -> buffer.putByte(contrast / 5),
+						buffer -> buffer.getByte() * 5, Byte.BYTES, input -> Optional.empty())); // XXX
 
 		properties.put(115, unsignedByte(ItemProperty.TEAM, 0));
 

@@ -1,9 +1,12 @@
 package rs.emulate.legacy.config.animation;
 
-import static rs.emulate.shared.property.Properties.*;
+import static rs.emulate.shared.property.Properties.alwaysTrue;
+import static rs.emulate.shared.property.Properties.unsignedByte;
+import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -15,7 +18,7 @@ import rs.emulate.shared.util.DataBuffer;
 
 /**
  * A default {@link AnimationDefinition} used as a base for an actual definitions.
- * 
+ *
  * @author Major
  */
 public class DefaultAnimationDefinition extends DefaultConfigDefinition {
@@ -42,7 +45,7 @@ public class DefaultAnimationDefinition extends DefaultConfigDefinition {
 		Map<Integer, ConfigProperty<?>> properties = new HashMap<>(11);
 
 		properties.put(1, new ConfigProperty<>(AnimationProperty.FRAMES, FrameCollection.EMPTY, FrameCollection::encode,
-				FrameCollection::decode, FrameCollection::bytes));
+ FrameCollection::decode, FrameCollection::bytes, input -> Optional.empty())); // XXX
 
 		properties.put(2, unsignedShort(AnimationProperty.LOOP_OFFSET, -1));
 
@@ -58,7 +61,7 @@ public class DefaultAnimationDefinition extends DefaultConfigDefinition {
 				interleave);
 
 		properties.put(3, new ConfigProperty<>(AnimationProperty.INTERLEAVE_ORDER, new byte[0], interleaveEncoder,
-				interleaveDecoder, interleave -> interleave.length + Byte.BYTES));
+				interleaveDecoder, interleave -> interleave.length + Byte.BYTES, input -> Optional.empty())); // XXX
 
 		properties.put(4, alwaysTrue(AnimationProperty.STRETCHES, false));
 		properties.put(5, unsignedByte(AnimationProperty.PRIORITY, 5));
