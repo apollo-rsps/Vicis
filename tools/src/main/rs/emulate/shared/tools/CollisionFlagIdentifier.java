@@ -1,4 +1,4 @@
-package rs.emulate.tools;
+package rs.emulate.shared.tools;
 
 import java.util.Arrays;
 import java.util.List;
