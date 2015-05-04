@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config.item;
 
+import static rs.emulate.legacy.config.Properties.alwaysTrue;
+import static rs.emulate.legacy.config.Properties.asciiString;
+import static rs.emulate.legacy.config.Properties.signedByte;
+import static rs.emulate.legacy.config.Properties.signedShort;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedInt;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.item.ItemProperty.*;
-import static rs.emulate.shared.property.Properties.alwaysTrue;
-import static rs.emulate.shared.property.Properties.asciiString;
-import static rs.emulate.shared.property.Properties.signedByte;
-import static rs.emulate.shared.property.Properties.signedShort;
-import static rs.emulate.shared.property.Properties.unsignedByte;
-import static rs.emulate.shared.property.Properties.unsignedInt;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.property.DynamicPropertyType;
+import rs.emulate.legacy.config.DynamicConfigPropertyType;
 
 /**
  * A default {@link ItemDefinition} used as a base for actual definitions.
@@ -60,7 +60,7 @@ public class DefaultItemDefinition extends DefaultConfigDefinition {
 		properties.put(7, signedShort(SPRITE_TRANSLATE_X, 0));
 		properties.put(8, signedShort(SPRITE_TRANSLATE_Y, 0));
 
-		properties.put(10, unsignedShort(DynamicPropertyType.valueOf("unknown", 10), 0));
+		properties.put(10, unsignedShort(DynamicConfigPropertyType.valueOf("unknown", 10), 0));
 		properties.put(11, alwaysTrue(STACKABLE, false));
 		properties.put(12, unsignedInt(VALUE, 1));
 		properties.put(16, alwaysTrue(MEMBERS, false));

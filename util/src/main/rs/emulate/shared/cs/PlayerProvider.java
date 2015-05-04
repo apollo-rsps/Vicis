@@ -48,7 +48,7 @@ public class PlayerProvider {
 
 		/**
 		 * Builds the contents of this Builder into a {@link PlayerProvider}.
-		 * 
+		 *
 		 * @return The PlayerProvider.
 		 */
 		public PlayerProvider build() {
@@ -59,7 +59,7 @@ public class PlayerProvider {
 
 	/**
 	 * Returns the default {@link PlayerProvider}.
-	 * 
+	 *
 	 * @return The default.
 	 */
 	public static PlayerProvider defaultProvider() {
@@ -68,7 +68,7 @@ public class PlayerProvider {
 
 	/**
 	 * Returns a new {@link Builder}.
-	 * 
+	 *
 	 * @return The Builder.
 	 */
 	public static Builder builder() {
@@ -97,7 +97,7 @@ public class PlayerProvider {
 
 		/**
 		 * Creates the Skill.
-		 * 
+		 *
 		 * @param experience The experience of the Skill.
 		 * @param current The current level of the Skill.
 		 * @param maximum The maximum level of the Skill.
@@ -110,7 +110,7 @@ public class PlayerProvider {
 
 		/**
 		 * Gets the current level of this Skill.
-		 * 
+		 *
 		 * @return The current level.
 		 */
 		public int getCurrentLevel() {
@@ -119,7 +119,7 @@ public class PlayerProvider {
 
 		/**
 		 * Gets the experience of this Skill.
-		 * 
+		 *
 		 * @return The experience.
 		 */
 		public double getExperience() {
@@ -128,7 +128,7 @@ public class PlayerProvider {
 
 		/**
 		 * Gets the maximum level of this Skill.
-		 * 
+		 *
 		 * @return The maximum level.
 		 */
 		public int getMaximumLevel() {
@@ -145,7 +145,7 @@ public class PlayerProvider {
 
 		/**
 		 * Gets the {@link Skill} with the specified id.
-		 * 
+		 *
 		 * @param id The id.
 		 * @return The Skill.
 		 */
@@ -155,12 +155,11 @@ public class PlayerProvider {
 
 		/**
 		 * Gets an array containing each {@link Skill}.
-		 * 
+		 *
+		 * @param count The amount of Skills to get.
 		 * @return The Skills.
 		 */
-		default Skill[] getSkills() {
-			int count = 21;
-			
+		default Skill[] getSkills(int count) {
 			Skill[] skills = new Skill[count];
 			for (int id = 0; id < skills.length; id++) {
 				skills[id] = get(id);
@@ -171,13 +170,13 @@ public class PlayerProvider {
 
 		/**
 		 * Gets the total level of the {@link Skill}s in this SkillProvider.
-		 * 
+		 *
+		 * @param count The amount of Skills to get.
 		 * @return The total.
 		 */
-		default int getTotal() {
-			return Arrays.stream(getSkills()).mapToInt(Skill::getMaximumLevel).sum();
+		default int getTotal(int count) {
+			return Arrays.stream(getSkills(count)).mapToInt(Skill::getMaximumLevel).sum();
 		}
-
 	}
 
 	/**
@@ -214,8 +213,8 @@ public class PlayerProvider {
 	 * @param weights The {@link Supplier} of player weights.
 	 * @param energies The {@link Supplier} of player run energy levels.
 	 */
-	public PlayerProvider(SkillProvider skills, Supplier<Position> positions, IntUnaryOperator settings, IntSupplier weights,
-			IntSupplier energies) {
+	public PlayerProvider(SkillProvider skills, Supplier<Position> positions, IntUnaryOperator settings,
+			IntSupplier weights, IntSupplier energies) {
 		this.skills = skills;
 		this.positions = positions;
 		this.settings = settings;
@@ -225,7 +224,7 @@ public class PlayerProvider {
 
 	/**
 	 * Gets the next {@link Position} from the {@link Supplier} used by this PlayerProvider.
-	 * 
+	 *
 	 * @return The Position.
 	 */
 	public Position getPosition() {
@@ -234,7 +233,7 @@ public class PlayerProvider {
 
 	/**
 	 * Gets the run energy level of the player.
-	 * 
+	 *
 	 * @return The run energy level.
 	 */
 	public int getRunEnergy() {
@@ -243,7 +242,7 @@ public class PlayerProvider {
 
 	/**
 	 * Gets the setting with the specified id.
-	 * 
+	 *
 	 * @param id The id.
 	 * @return The setting value.
 	 */
@@ -253,7 +252,7 @@ public class PlayerProvider {
 
 	/**
 	 * Gets the {@link Skill} with the specified id.
-	 * 
+	 *
 	 * @param id The id of the Skill.
 	 * @return The Skill.
 	 */
@@ -263,11 +262,11 @@ public class PlayerProvider {
 
 	/**
 	 * Gets the combat level from the {@link SkillProvider} used by this PlayerProvider.
-	 * 
+	 *
 	 * @return The combat level.
 	 */
 	public int getCombatLevel() {
-		Skill[] skills = this.skills.getSkills();
+		Skill[] skills = this.skills.getSkills(21);
 		int attack = skills[0].getMaximumLevel();
 		int defence = skills[1].getMaximumLevel();
 		int strength = skills[2].getMaximumLevel();
@@ -284,16 +283,16 @@ public class PlayerProvider {
 
 	/**
 	 * Gets the total level from the {@link SkillProvider} used by this PlayerProvider.
-	 * 
+	 *
 	 * @return The total level.
 	 */
 	public int getTotalLevel() {
-		return skills.getTotal();
+		return skills.getTotal(21);
 	}
 
 	/**
 	 * Gets the weight of the player.
-	 * 
+	 *
 	 * @return The weight.
 	 */
 	public int getWeight() {

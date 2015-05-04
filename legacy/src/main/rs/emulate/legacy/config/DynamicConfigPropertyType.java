@@ -1,10 +1,9 @@
-package rs.emulate.shared.property;
+package rs.emulate.legacy.config;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.util.Assertions;
 
 /**
@@ -14,12 +13,12 @@ import rs.emulate.util.Assertions;
  * 
  * @author Major
  */
-public final class DynamicPropertyType implements ConfigPropertyType {
+public final class DynamicConfigPropertyType implements ConfigPropertyType {
 
 	/**
 	 * The Map (used as a cache) of opcodes to DynamicPropertyTypes.
 	 */
-	private static final Map<Integer, DynamicPropertyType> cache = new HashMap<>();
+	private static final Map<Integer, DynamicConfigPropertyType> cache = new HashMap<>();
 
 	/**
 	 * Creates a new DynamicPropertyType with the specified name and opcode, or returns a previously-created value from
@@ -29,11 +28,11 @@ public final class DynamicPropertyType implements ConfigPropertyType {
 	 * @param opcode The opcode of the DynamicPropertyType. Must be positive (i.e. {@code > 0}).
 	 * @return The DynamicPropertyType.
 	 */
-	public static DynamicPropertyType valueOf(String name, int opcode) {
+	public static DynamicConfigPropertyType valueOf(String name, int opcode) {
 		Assertions.checkPositive(opcode, "Opcode must be positive.");
 		int hash = Objects.hash(name, opcode);
 
-		return cache.computeIfAbsent(hash, key -> new DynamicPropertyType(name, opcode));
+		return cache.computeIfAbsent(hash, key -> new DynamicConfigPropertyType(name, opcode));
 	}
 
 	/**
@@ -52,7 +51,7 @@ public final class DynamicPropertyType implements ConfigPropertyType {
 	 * @param name The name of the DynamicPropertyType.
 	 * @param opcode The opcode of the DynamicPropertyType.
 	 */
-	private DynamicPropertyType(String name, int opcode) {
+	private DynamicConfigPropertyType(String name, int opcode) {
 		Assertions.checkNonEmpty(name, "Name of a property cannot be null or empty.");
 		Assertions.checkPositive(opcode, "Opcode must be positive.");
 

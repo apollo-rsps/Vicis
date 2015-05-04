@@ -1,4 +1,4 @@
-package rs.emulate.legacy.graphics.image;
+package rs.emulate.legacy.tools;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import rs.emulate.legacy.IndexedFileSystem;
+import rs.emulate.legacy.graphics.image.ImageDecoder;
+import rs.emulate.legacy.graphics.image.IndexedImage;
 
 /**
  * Dumps decoded Images into files.

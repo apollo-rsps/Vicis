@@ -1,7 +1,8 @@
-package rs.emulate.shared.property;
+package rs.emulate.legacy.config;
 
-import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.shared.property.PropertyDecoders;
+import rs.emulate.shared.property.PropertyEncoders;
+import rs.emulate.shared.property.PropertyParsers;
 
 /**
  * Contains static utility methods to create {@link ConfigProperty} objects.

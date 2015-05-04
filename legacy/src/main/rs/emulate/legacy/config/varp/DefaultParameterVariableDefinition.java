@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config.varp;
 
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.varp.ParameterVariableProperty.PARAMETER;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;

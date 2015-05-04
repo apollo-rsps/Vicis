@@ -3,8 +3,6 @@ package rs.emulate.legacy.config;
 import java.util.Map;
 
 import rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition;
-import rs.emulate.shared.property.DynamicPropertyType;
-import rs.emulate.shared.property.Properties;
 
 /**
  * A {@link DefaultBitVariableDefinition} that also includes a name.
@@ -16,7 +14,7 @@ public final class NamedDefaultVarbitDefinition extends DefaultBitVariableDefini
 	/**
 	 * The ConfigPropertyType for the name of a BitVariable.
 	 */
-	private static final ConfigPropertyType NAME_PROPERTY_TYPE = DynamicPropertyType.valueOf("name", 2);
+	private static final ConfigPropertyType NAME_PROPERTY_TYPE = DynamicConfigPropertyType.valueOf("name", 2);
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

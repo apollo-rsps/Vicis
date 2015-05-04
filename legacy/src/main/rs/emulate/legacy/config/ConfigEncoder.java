@@ -19,17 +19,6 @@ import rs.emulate.shared.util.DataBuffer;
 public final class ConfigEncoder<T extends MutableConfigDefinition> {
 
 	/**
-	 * Returns whether or not the specified {@link Map} entry contains a {@link ConfigProperty} that should be
-	 * encoded.
-	 * 
-	 * @param entry The Map entry.
-	 * @return {@code true} if the property should be encoded, {@code false} if not.
-	 */
-	private static boolean validProperty(Map.Entry<Integer, ConfigProperty<?>> entry) {
-		return entry.getValue().valuePresent();
-	}
-
-	/**
 	 * The List of definitions to encode.
 	 */
 	protected final List<T> definitions;
@@ -51,22 +40,11 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 	}
 
 	/**
-	 * Encodes the {@link List} of {@code T}s into an {@link ArchiveEntry}, and returns a new {@link Archive} containing
-	 * the entries in the specified Archive, and the newly created one.
-	 *
-	 * @param archive The Archive to use as a base.
-	 * @return The new Archive.
-	 */
-	public Archive encodeInto(Archive archive) {
-		return archive.addEntries(encode());
-	}
-
-	/**
 	 * Encodes the {@link List} of {@code T}s into an {@link ArchiveEntry}.
 	 *
 	 * @return The archive entry.
 	 */
-	private ArchiveEntry[] encode() {
+	public ArchiveEntry[] encode() {
 		ByteArrayOutputStream data = new ByteArrayOutputStream();
 		ByteArrayOutputStream index = new ByteArrayOutputStream();
 
@@ -75,7 +53,7 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 		writeShort(index, size);
 
 		for (T definition : definitions) {
-			definition.getProperties().stream().filter(ConfigEncoder::validProperty).forEach(entry -> write(entry, data));
+			definition.getProperties().stream().filter(this::validProperty).forEach(entry -> write(entry, data));
 			data.write(ConfigConstants.DEFINITION_TERMINATOR);
 
 			int change = data.size() - last;
@@ -90,6 +68,27 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 		ArchiveEntry indexEntry = new ArchiveEntry(hash, DataBuffer.wrap(index.toByteArray()));
 
 		return new ArchiveEntry[] { dataEntry, indexEntry };
+	}
+
+	/**
+	 * Encodes the {@link List} of {@code T}s into an {@link ArchiveEntry}, and returns a new {@link Archive} containing
+	 * the entries in the specified Archive, and the newly created one.
+	 *
+	 * @param archive The Archive to use as a base.
+	 * @return The new Archive.
+	 */
+	public Archive encodeInto(Archive archive) {
+		return archive.addEntries(encode());
+	}
+
+	/**
+	 * Returns whether or not the specified {@link Map} entry contains a {@link ConfigProperty} that should be encoded.
+	 *
+	 * @param entry The Map entry.
+	 * @return {@code true} if the property should be encoded, {@code false} if not.
+	 */
+	private boolean validProperty(Map.Entry<Integer, ConfigProperty<?>> entry) {
+		return entry.getValue().valuePresent();
 	}
 
 	/**
@@ -109,13 +108,13 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 
 	/**
 	 * Writes a {@code short} (i.e. a 16-bit value) to the specified {@link ByteArrayOutputStream}.
-	 * 
+	 *
 	 * @param stream The ByteArrayOutputStream.
 	 * @param value The value to write.
 	 */
-	private void writeShort(ByteArrayOutputStream stream, int value) { // TODO move to utils class
-		byte[] bytes = { (byte) (value >> 8), (byte) value };
-		stream.write(bytes, 0, bytes.length); // write(byte[]) throws IOException unnecessarily
+	private void writeShort(ByteArrayOutputStream stream, int value) {
+		stream.write(value >> 8);
+		stream.write(value);
 	}
 
 }

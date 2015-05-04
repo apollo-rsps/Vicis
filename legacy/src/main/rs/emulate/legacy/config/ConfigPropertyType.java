@@ -1,11 +1,10 @@
 package rs.emulate.legacy.config;
 
-import rs.emulate.shared.property.DynamicPropertyType;
 import rs.emulate.shared.property.PropertyType;
 
 /**
  * A {@link PropertyType} used as part of the {@link ConfigEncoder} and {@link ConfigDecoder}, {@link #opcode()}. Should
- * <strong>only</strong> be implemented by enumerators (excluding the existing {@link DynamicPropertyType} class).
+ * <strong>only</strong> be implemented by enumerators (excluding the existing {@link DynamicConfigPropertyType} class).
  * 
  * @author Major
  */

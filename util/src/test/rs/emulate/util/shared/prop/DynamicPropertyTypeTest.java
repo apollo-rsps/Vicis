@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import rs.emulate.shared.property.DynamicPropertyType;
+import rs.emulate.legacy.config.DynamicConfigPropertyType;
 
 /**
- * Tests the caching used in {@link DynamicPropertyType}s to ensure that properties with the same name and opcode will
+ * Tests the caching used in {@link DynamicConfigPropertyType}s to ensure that properties with the same name and opcode will
  * be the same object.
  * 
  * @author Major
@@ -25,17 +25,17 @@ public final class DynamicPropertyTypeTest {
 	private static final int OPCODE = 1;
 
 	/**
-	 * Tests the {@link DynamicPropertyType} cache.
+	 * Tests the {@link DynamicConfigPropertyType} cache.
 	 */
 	@Test
 	public void testCaching() {
-		DynamicPropertyType first = DynamicPropertyType.valueOf(NAME, OPCODE);
-		DynamicPropertyType second = DynamicPropertyType.valueOf(NAME, OPCODE);
+		DynamicConfigPropertyType first = DynamicConfigPropertyType.valueOf(NAME, OPCODE);
+		DynamicConfigPropertyType second = DynamicConfigPropertyType.valueOf(NAME, OPCODE);
 		assertSame(first, second);
 	}
 
 	/**
-	 * Tests the {@link DynamicPropertyType} constructor to ensure that it does not accept illegal arguments.
+	 * Tests the {@link DynamicConfigPropertyType} constructor to ensure that it does not accept illegal arguments.
 	 */
 	@Test
 	public void testConstructor() {
@@ -45,13 +45,13 @@ public final class DynamicPropertyTypeTest {
 		for (int iteration = 0; iteration < expected; iteration++) {
 			try {
 				if (iteration == 0) {
-					DynamicPropertyType.valueOf(null, OPCODE);
+					DynamicConfigPropertyType.valueOf(null, OPCODE);
 				} else if (iteration == 1) {
-					DynamicPropertyType.valueOf("", OPCODE);
+					DynamicConfigPropertyType.valueOf("", OPCODE);
 				} else if (iteration == 2) {
-					DynamicPropertyType.valueOf(NAME, 0);
+					DynamicConfigPropertyType.valueOf(NAME, 0);
 				} else if (iteration == 3) {
-					DynamicPropertyType.valueOf(NAME, -1);
+					DynamicConfigPropertyType.valueOf(NAME, -1);
 				}
 			} catch (IllegalArgumentException e) {
 				exceptions++;

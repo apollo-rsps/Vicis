@@ -1,7 +1,6 @@
 package rs.emulate.legacy.config;
 
 import rs.emulate.legacy.config.varbit.BitVariableDefinition;
-import rs.emulate.shared.property.DynamicPropertyType;
 
 /**
  * A {@link BitVariableDefinition} with a name.
@@ -13,7 +12,7 @@ public final class NamedVarbitDefinition extends BitVariableDefinition {
 	/**
 	 * The ConfigPropertyType for the name of a BitVariable.
 	 */
-	private static final ConfigPropertyType NAME_PROPERTY_TYPE = DynamicPropertyType.valueOf("name", 2);
+	private static final ConfigPropertyType NAME_PROPERTY_TYPE = DynamicConfigPropertyType.valueOf("name", 2);
 
 	/**
 	 * Creates the NamedVarbitDefinition.

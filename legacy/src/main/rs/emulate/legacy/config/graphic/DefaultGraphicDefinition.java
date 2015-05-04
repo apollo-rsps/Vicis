@@ -1,5 +1,7 @@
 package rs.emulate.legacy.config.graphic;
 
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.graphic.GraphicDefinition.COLOUR_COUNT;
 import static rs.emulate.legacy.config.graphic.GraphicProperty.ANIMATION;
 import static rs.emulate.legacy.config.graphic.GraphicProperty.BREADTH_SCALE;
@@ -8,8 +10,6 @@ import static rs.emulate.legacy.config.graphic.GraphicProperty.DEPTH_SCALE;
 import static rs.emulate.legacy.config.graphic.GraphicProperty.MODEL;
 import static rs.emulate.legacy.config.graphic.GraphicProperty.ROTATION;
 import static rs.emulate.legacy.config.graphic.GraphicProperty.SHADOW;
-import static rs.emulate.shared.property.Properties.unsignedByte;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;

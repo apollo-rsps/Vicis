@@ -1,14 +1,14 @@
 package rs.emulate.legacy.config.floor;
 
+import static rs.emulate.legacy.config.Properties.alwaysFalse;
+import static rs.emulate.legacy.config.Properties.asciiString;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedTribyte;
 import static rs.emulate.legacy.config.floor.FloorProperty.COLOUR;
 import static rs.emulate.legacy.config.floor.FloorProperty.MINIMAP_COLOUR;
 import static rs.emulate.legacy.config.floor.FloorProperty.NAME;
 import static rs.emulate.legacy.config.floor.FloorProperty.SHADOWED;
 import static rs.emulate.legacy.config.floor.FloorProperty.TEXTURE;
-import static rs.emulate.shared.property.Properties.alwaysFalse;
-import static rs.emulate.shared.property.Properties.asciiString;
-import static rs.emulate.shared.property.Properties.unsignedByte;
-import static rs.emulate.shared.property.Properties.unsignedTribyte;
 
 import java.util.HashMap;
 import java.util.Map;

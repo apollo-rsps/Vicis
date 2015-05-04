@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.shared.property.DynamicPropertyType;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -17,12 +16,12 @@ import rs.emulate.shared.util.DataBuffer;
 public final class ConfigUtils {
 
 	/**
-	 * The String prefixed when creating {@link DynamicPropertyType}s for original colours.
+	 * The String prefixed when creating {@link DynamicConfigPropertyType}s for original colours.
 	 */
 	private static final String ORIGINAL_COLOUR_PREFIX = "original-colour";
 
 	/**
-	 * The String prefixed when creating {@link DynamicPropertyType}s for replacement colours.
+	 * The String prefixed when creating {@link DynamicConfigPropertyType}s for replacement colours.
 	 */
 	private static final String REPLACEMENT_COLOUR_PREFIX = "replacement-colour";
 
@@ -60,44 +59,44 @@ public final class ConfigUtils {
 	}
 
 	/**
-	 * Returns a {@link DynamicPropertyType} with the name of the form "{@code [prefix]}-{@code [slot]}".
+	 * Returns a {@link DynamicConfigPropertyType} with the name of the form "{@code [prefix]}-{@code [slot]}".
 	 * <p>
 	 * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
-	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
+	 * DynamicPropertyType may exist per string (see {@link DynamicConfigPropertyType#valueOf}).
 	 *
 	 * @param prefix The prefix.
 	 * @param option The option.
 	 * @return The DynamicPropertyType.
 	 */
-	public static DynamicPropertyType newOptionProperty(String prefix, int option) {
-		return DynamicPropertyType.valueOf(prefix + "-" + option, option);
+	public static DynamicConfigPropertyType newOptionProperty(String prefix, int option) {
+		return DynamicConfigPropertyType.valueOf(prefix + "-" + option, option);
 	}
 
 	/**
-	 * Creates or retrieves a {@link DynamicPropertyType} for original colours, with a name of the form
+	 * Creates or retrieves a {@link DynamicConfigPropertyType} for original colours, with a name of the form
 	 * "original-colour-{@code [slot]}".
 	 * <p>
 	 * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
-	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
+	 * DynamicPropertyType may exist per string (see {@link DynamicConfigPropertyType#valueOf}).
 	 *
 	 * @param slot The colour slot.
 	 * @return The DynamicPropertyType.
 	 */
-	public static DynamicPropertyType getOriginalColourPropertyName(int slot) {
+	public static DynamicConfigPropertyType getOriginalColourPropertyName(int slot) {
 		return newOptionProperty(ORIGINAL_COLOUR_PREFIX, slot);
 	}
 
 	/**
-	 * Creates or retrieves a a {@link DynamicPropertyType} for replacement colours, with a name of the form
+	 * Creates or retrieves a a {@link DynamicConfigPropertyType} for replacement colours, with a name of the form
 	 * "replacement-colour-{@code [slot]}".
 	 * <p>
 	 * The returned DynamicPropertyType may be the same object as a previously created one, as only one
-	 * DynamicPropertyType may exist per string (see {@link DynamicPropertyType#valueOf}).
+	 * DynamicPropertyType may exist per string (see {@link DynamicConfigPropertyType#valueOf}).
 	 *
 	 * @param slot The colour slot.
 	 * @return The DynamicPropertyType.
 	 */
-	public static DynamicPropertyType getReplacementColourPropertyName(int slot) {
+	public static DynamicConfigPropertyType getReplacementColourPropertyName(int slot) {
 		return newOptionProperty(REPLACEMENT_COLOUR_PREFIX, slot);
 	}
 

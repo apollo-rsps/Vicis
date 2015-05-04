@@ -1,12 +1,12 @@
 package rs.emulate.legacy.config.kit;
 
+import static rs.emulate.legacy.config.Properties.alwaysTrue;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.kit.IdentityKitDefinition.COLOUR_COUNT;
 import static rs.emulate.legacy.config.kit.IdentityKitDefinition.HEAD_MODEL_COUNT;
 import static rs.emulate.legacy.config.kit.IdentityKitProperty.MODELS;
 import static rs.emulate.legacy.config.kit.IdentityKitProperty.PART;
 import static rs.emulate.legacy.config.kit.IdentityKitProperty.PLAYER_DESIGN_STYLE;
-import static rs.emulate.shared.property.Properties.alwaysTrue;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.Arrays;
 import java.util.HashMap;

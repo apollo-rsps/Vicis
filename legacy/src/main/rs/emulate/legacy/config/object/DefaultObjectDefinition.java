@@ -1,12 +1,12 @@
 package rs.emulate.legacy.config.object;
 
+import static rs.emulate.legacy.config.Properties.alwaysFalse;
+import static rs.emulate.legacy.config.Properties.alwaysTrue;
+import static rs.emulate.legacy.config.Properties.asciiString;
+import static rs.emulate.legacy.config.Properties.signedByte;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.object.ObjectProperty.*;
-import static rs.emulate.shared.property.Properties.alwaysFalse;
-import static rs.emulate.shared.property.Properties.alwaysTrue;
-import static rs.emulate.shared.property.Properties.asciiString;
-import static rs.emulate.shared.property.Properties.signedByte;
-import static rs.emulate.shared.property.Properties.unsignedByte;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;

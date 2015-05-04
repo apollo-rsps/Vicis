@@ -1,10 +1,11 @@
 package rs.emulate.shared.property;
 
+import rs.emulate.legacy.config.DynamicConfigPropertyType;
 import rs.emulate.util.StringUtils;
 
 /**
  * A type of a property. Should <strong>only</strong> be implemented by enumerators (excluding the existing
- * {@link DynamicPropertyType} class).
+ * {@link DynamicConfigPropertyType} class).
  *
  * @author Major
  */

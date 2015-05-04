@@ -1,5 +1,8 @@
 package rs.emulate.legacy.config.animation;
 
+import static rs.emulate.legacy.config.Properties.alwaysTrue;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.animation.AnimationProperty.ANIMATING_PRECEDENCE;
 import static rs.emulate.legacy.config.animation.AnimationProperty.FRAMES;
 import static rs.emulate.legacy.config.animation.AnimationProperty.INTERLEAVE_ORDER;
@@ -11,9 +14,6 @@ import static rs.emulate.legacy.config.animation.AnimationProperty.PRIORITY;
 import static rs.emulate.legacy.config.animation.AnimationProperty.REPLAY_MODE;
 import static rs.emulate.legacy.config.animation.AnimationProperty.STRETCHES;
 import static rs.emulate.legacy.config.animation.AnimationProperty.WALKING_PRECEDENCE;
-import static rs.emulate.shared.property.Properties.alwaysTrue;
-import static rs.emulate.shared.property.Properties.unsignedByte;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,8 +68,7 @@ public class DefaultAnimationDefinition extends DefaultConfigDefinition {
 			return interleaveOrder;
 		};
 
-		BiConsumer<DataBuffer, byte[]> interleaveEncoder = (buffer, interleave) -> buffer.putByte(interleave.length)
-				.put(interleave);
+		BiConsumer<DataBuffer, byte[]> interleaveEncoder = (buffer, order) -> buffer.putByte(order.length).put(order);
 
 		properties.put(3, new ConfigProperty<>(INTERLEAVE_ORDER, new byte[0], interleaveEncoder, interleaveDecoder,
 				interleave -> interleave.length + Byte.BYTES, input -> Optional.empty())); // XXX

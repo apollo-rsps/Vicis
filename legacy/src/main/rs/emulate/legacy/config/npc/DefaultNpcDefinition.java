@@ -1,11 +1,11 @@
 package rs.emulate.legacy.config.npc;
 
+import static rs.emulate.legacy.config.Properties.alwaysFalse;
+import static rs.emulate.legacy.config.Properties.alwaysTrue;
+import static rs.emulate.legacy.config.Properties.asciiString;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
 import static rs.emulate.legacy.config.npc.NpcProperty.*;
-import static rs.emulate.shared.property.Properties.alwaysFalse;
-import static rs.emulate.shared.property.Properties.alwaysTrue;
-import static rs.emulate.shared.property.Properties.asciiString;
-import static rs.emulate.shared.property.Properties.unsignedByte;
-import static rs.emulate.shared.property.Properties.unsignedShort;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.property.Properties;
+import rs.emulate.legacy.config.Properties;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
