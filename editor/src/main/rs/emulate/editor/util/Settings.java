@@ -1,4 +1,7 @@
-package rs.emulate.editor;
+package rs.emulate.editor.util;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,10 +18,6 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import rs.emulate.util.PathUtils;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 
 /**
  * A table of settings for the editor.
@@ -140,7 +139,7 @@ public final class Settings {
 		settings.put("win-config-path", "$user-home$/AppData/Roaming/Vicis");
 		settings.put("unix-config-path", "$user-home$/.vicis");
 		settings.put("config-path", PathUtils.ON_WINDOWS ? "$win-config-path$" : "$unix-config-path$");
-
+		
 		settings.put("backup-path", "$config-path$/backups");
 		settings.put("data-path", "./data");
 		settings.put("resources-path", "$data-path$/resources");

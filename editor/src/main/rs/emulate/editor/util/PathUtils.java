@@ -1,13 +1,7 @@
-package rs.emulate.util;
+package rs.emulate.editor.util;
 
 import java.io.IOException;
-import java.nio.file.AtomicMoveNotSupportedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
-import rs.emulate.editor.Settings;
+import java.nio.file.*;
 
 /**
  * Contains {@link Path}-related utility methods.
