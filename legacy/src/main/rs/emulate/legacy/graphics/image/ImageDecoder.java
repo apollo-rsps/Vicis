@@ -98,7 +98,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 		ImageFormat format = ImageFormat.valueOf(index.getUnsignedByte());
 		int[] raster = decodeRaster(format, width, height, palette);
 
-		return new IndexedImage(name, raster, palette, format, height, width, offsetX, offsetY, resizeHeight, resizeWidth);
+		return new IndexedImage(name, format, width, height, raster, palette, offsetX, offsetY, resizeWidth, resizeHeight);
 	}
 
 	/**

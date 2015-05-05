@@ -7,7 +7,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * A builder class for an {@link IndexedImage}.
- * 
+ *
  * @author Major
  */
 public final class ImageBuilder {
@@ -64,7 +64,7 @@ public final class ImageBuilder {
 
 	/**
 	 * Creates the ImageBuilder.
-	 * 
+	 *
 	 * @param name The name of the {@link IndexedImage}.
 	 */
 	public ImageBuilder(String name) {
@@ -74,7 +74,7 @@ public final class ImageBuilder {
 
 	/**
 	 * Builds the data contained in this builder into a {@link IndexedImage}.
-	 * 
+	 *
 	 * @return The IndexedImage.
 	 */
 	public IndexedImage build() {
@@ -83,31 +83,33 @@ public final class ImageBuilder {
 		Preconditions.checkArgument(height != 0 && width != 0, "Height and width must not be 0.");
 		Preconditions.checkNotNull(format, "Format must be specified before building.");
 
-		return new IndexedImage(name, raster, palette, format, height, width, offsetX, offsetY, resizeHeight, resizeWidth);
+		return new IndexedImage(name, format, width, height, raster, palette, offsetX, offsetY, resizeWidth,
+				resizeHeight);
 	}
 
 	/**
 	 * Duplicates this ImageBuilder. Every value of the duplicate builder will be the same as this one, although the
 	 * raster will be a deep copy.
-	 * 
+	 *
 	 * @return The duplicate ImageBuilder.
 	 */
 	public ImageBuilder duplicate() {
 		ImageBuilder duplicate = new ImageBuilder(name);
 		duplicate.format = format;
+		duplicate.width = width;
 		duplicate.height = height;
+		duplicate.raster = raster.clone();
+		duplicate.palette = palette.clone();
 		duplicate.offsetX = offsetX;
 		duplicate.offsetY = offsetY;
-		duplicate.raster = raster.clone();
-		duplicate.resizeHeight = resizeHeight;
 		duplicate.resizeWidth = resizeWidth;
-		duplicate.width = width;
+		duplicate.resizeHeight = resizeHeight;
 		return duplicate;
 	}
 
 	/**
 	 * Sets the {@link ImageFormat} of the {@link IndexedImage}.
-	 * 
+	 *
 	 * @param format The ImageFormat. Cannot be {@code null}.
 	 * @return This ImageBuilder, for chaining.
 	 * @throws NullPointerException If the specified format is {@code null}.
@@ -173,7 +175,7 @@ public final class ImageBuilder {
 	/**
 	 * Sets the palette of the {@link IndexedImage}. Further modification of the passed array will not affect the
 	 * palette of this builder.
-	 * 
+	 *
 	 * @param palette The Palette.
 	 * @return This ImageBuilder, for chaining.
 	 * @throws NullPointerException If the specified array is {@code null}.

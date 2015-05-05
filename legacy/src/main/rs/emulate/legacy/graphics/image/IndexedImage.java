@@ -7,14 +7,14 @@ import rs.emulate.legacy.graphics.ImageFormat;
 
 /**
  * A 2-dimensional image that stores its data using indexed colours.
- * 
+ *
  * @author Major
  */
 public final class IndexedImage {
 
 	/**
 	 * Creates a {@link ImageBuilder} with the specified name.
-	 * 
+	 *
 	 * @param name The name of the Image being built.
 	 * @return The ImageBuilder.
 	 */
@@ -74,20 +74,20 @@ public final class IndexedImage {
 
 	/**
 	 * Creates the IndexedImage.
-	 * 
+	 *
 	 * @param name The name of the Image.
+	 * @param format The Image {@link ImageFormat}.
+	 * @param width The width of the Image.
+	 * @param height The height of the Image.
 	 * @param raster The width of the Image.
 	 * @param palette The palette of the Image.
-	 * @param format The Image {@link ImageFormat}.
-	 * @param height The height of the Image.
-	 * @param width The width of the Image.
 	 * @param offsetX The x offset to draw the Image from.
 	 * @param offsetY The y offset to draw the Image from.
-	 * @param resizeHeight The default height to resize the Image to, when requested.
 	 * @param resizeWidth The default width to resize the Image to, when requested.
+	 * @param resizeHeight The default height to resize the Image to, when requested.
 	 */
-	public IndexedImage(String name, int[] raster, int[] palette, ImageFormat format, int height, int width, int offsetX,
-			int offsetY, int resizeHeight, int resizeWidth) {
+	public IndexedImage(String name, ImageFormat format, int width, int height, int[] raster, int[] palette,
+			int offsetX, int offsetY, int resizeWidth, int resizeHeight) {
 		this.format = format;
 		this.name = name;
 		this.height = height;
@@ -118,7 +118,7 @@ public final class IndexedImage {
 
 	/**
 	 * Gets the {@link ImageFormat} of this Image.
-	 * 
+	 *
 	 * @return The format.
 	 */
 	public ImageFormat getFormat() {
@@ -163,7 +163,7 @@ public final class IndexedImage {
 
 	/**
 	 * Gets the palette used by this IndexedImage.
-	 * 
+	 *
 	 * @return The palette.
 	 */
 	public int[] getPalette() {
