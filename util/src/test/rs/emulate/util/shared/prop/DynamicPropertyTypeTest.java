@@ -1,6 +1,7 @@
 package rs.emulate.util.shared.prop;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 

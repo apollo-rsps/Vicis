@@ -14,11 +14,11 @@ import rs.emulate.modern.Container;
 import rs.emulate.modern.Entry;
 import rs.emulate.modern.FileStore;
 import rs.emulate.modern.ReferenceTable;
-import rs.emulate.modern.script.ClientScript530;
+import rs.emulate.modern.script.ClientScript666;
 
 /**
  * Dumps clientscripts.
- * 
+ *
  * @author Graham
  * @author Major
  */
@@ -96,7 +96,7 @@ public final class ClientScriptDumper {
 		opcodes.put(1101, "set_wgt_color"); // sets the colour of the widget
 		opcodes.put(1102, "set_wgt_filled"); // sets the filled flag of the widget (i.e. draw an outline or fill).
 		opcodes.put(1103, "set_wgt_transp"); // sets the transparency flag of the widget
-		
+
 		opcodes.put(1105, "set_wgt_sprite"); // sets the sprite of the widget
 
 		opcodes.put(1108, "set_wgt_model"); // sets the model id of the widget
@@ -299,7 +299,8 @@ public final class ClientScriptDumper {
 		opcodes.put(5003, "push_chatmsg"); // pushes the public chat message text w/ appr. id
 		opcodes.put(5004, "push_chatmsg_typ"); // pushes the public chat message type
 		opcodes.put(5005, "push_priv_cmode"); // push private chat mode
-		opcodes.put(5006, "set_chat_view"); // mgi says this 'sets the view of the chat' (whatever the hell this means - sends some sort of frame anyway)
+		opcodes.put(5006, "set_chat_view"); // mgi says this 'sets the view of the chat' (whatever the hell this means -
+											// sends some sort of frame anyway)
 		opcodes.put(5008, "send_msg"); // sends a message to the server
 		opcodes.put(5009, "send_priv_msg"); // sends a private chat message
 		opcodes.put(5010, "push_chatmsg_name"); // pushes the name of the person who said a chat message
@@ -463,12 +464,12 @@ public final class ClientScriptDumper {
 
 	/**
 	 * The entry point of the application.
-	 * 
+	 *
 	 * @param args The application arguments.
 	 * @throws IOException If there is an error decoding the cached.
 	 */
 	public static void main(String[] args) throws IOException {
-		FileStore store = FileStore.open("./data/resources/574");
+		FileStore store = FileStore.open("./data/resources/666");
 
 		try (Cache cache = new Cache(store)) {
 			ReferenceTable table = ReferenceTable.decode(Container.decode(store.read(255, 12)).getData());
@@ -481,7 +482,7 @@ public final class ClientScriptDumper {
 					continue;
 				}
 
-				ClientScript530 script = ClientScript530.decode(cache.read(12, id).getData());
+				ClientScript666 script = ClientScript666.decode(cache.read(12, id).getData());
 				Path file = output.resolve(id + ".cscript");
 
 				try (BufferedWriter writer = Files.newBufferedWriter(file, StandardOpenOption.CREATE,
@@ -499,9 +500,9 @@ public final class ClientScriptDumper {
 						}
 
 						if (string == null) {
-							// if (number == 0) {
-							// number = script.getLongOperand(op);
-							// }
+							if (number == 0) {
+								number = script.getLongOperand(op);
+							}
 							string = Long.toString(number);
 						} else {
 							string = '"' + string.replace("\"", "\\\"") + '"'; // delimit double quotes

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import rs.emulate.editor.util.Settings;
+
 /**
  * Tests the application {@link Settings}.
  * 

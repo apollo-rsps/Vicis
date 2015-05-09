@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import rs.emulate.modern.script.decomp.instr.Instruction;
 import rs.emulate.modern.script.decomp.instr.impl.BranchInstruction;
 import rs.emulate.modern.script.decomp.instr.impl.IntInstruction;
-import rs.emulate.modern.script.decomp.instr.impl.SimpleInstruction;
+import rs.emulate.modern.script.decomp.instr.impl.GenericInstruction;
 import rs.emulate.modern.script.decomp.instr.impl.StringInstruction;
 
 import com.google.common.collect.ImmutableMap;
@@ -75,8 +75,8 @@ public final class InstructionMap {
 			insert(IntInstruction.create("concat", 37, context -> context.getStrings(context.stringCount() - context.popInt())
 					.collect(Collectors.joining())));
 
-			insert(SimpleInstruction.create("popi", 38, ScriptContext::popInt));
-			insert(SimpleInstruction.create("pops", 39, ScriptContext::popString));
+			insert(GenericInstruction.create("popi", 38, ScriptContext::popInt));
+			insert(GenericInstruction.create("pops", 39, ScriptContext::popString));
 
 			insert(IntInstruction.create("pushl", 54, context -> context.pushLong(context.getLongOperand())));
 			insert(IntInstruction.create("popl", 55, ScriptContext::popLong));

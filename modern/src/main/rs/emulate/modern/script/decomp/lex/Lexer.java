@@ -32,12 +32,12 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * TODO remove.
-	 * 
+	 *
 	 * @param args The program args.
 	 * @throws IOException If x.
 	 */
 	public static void main(String[] args) throws IOException {
-		Path scripts = Paths.get("./data/dump/cs");
+		Path scripts = Paths.get("./data/dump/cs/1750");
 		Path zero = scripts.resolve("0.cscript");
 		Set<String> mnemonics = new HashSet<>(ClientScriptDumper.opcodes.values());
 
@@ -109,7 +109,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Lexes the input in the underlying {@link Reader}, returning the result as a {@link List} of {@link Token}s.
-	 * 
+	 *
 	 * @return The List of Tokens.
 	 * @throws IOException If there is an error reading from the underlying Reader.
 	 */
@@ -137,7 +137,7 @@ public final class Lexer implements AutoCloseable {
 	/**
 	 * Gets the numeric value of the specified character. Assumes that {@code character} is between {@code '0'} and
 	 * {@code '9'}.
-	 * 
+	 *
 	 * @param character The character.
 	 * @return The numeric value.
 	 */
@@ -147,7 +147,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Returns whether or not the specified character is a digit.
-	 * 
+	 *
 	 * @param character The character.
 	 * @return {@code true} if the character is a digit, {@code false} if not.
 	 */
@@ -157,7 +157,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Returns whether or not the specified character is a letter.
-	 * 
+	 *
 	 * @param character The character.
 	 * @return {@code true} if the character is a digit, {@code false} if not.
 	 */
@@ -167,7 +167,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Parses the next {@link Token}, using the {@code first} character is a type hint.
-	 * 
+	 *
 	 * @param first The first character.
 	 * @return The Lexeme.
 	 * @throws IOException If there is an error reading from the {@link Reader}.
@@ -184,7 +184,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Parses an instruction mnemonic {@link Token}.
-	 * 
+	 *
 	 * @param first The first character.
 	 * @return The Lexeme.
 	 * @throws IOException If there is an error reading from the {@link Reader}.
@@ -209,7 +209,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Parses a numerical value into a {@link Token}.
-	 * 
+	 *
 	 * @param first The first character.
 	 * @return The lexeme.
 	 * @throws IOException If there is an error reading from the {@link Reader}.
@@ -233,7 +233,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Parses a String into a {@link Token}.
-	 * 
+	 *
 	 * @return The lexeme.
 	 * @throws IOException If there is an error reading from the {@link Reader}.
 	 */
@@ -256,7 +256,7 @@ public final class Lexer implements AutoCloseable {
 
 	/**
 	 * Returns whether or not the specified character is valid in an instruction mnemonic.
-	 * 
+	 *
 	 * @param character The character.
 	 * @return {@code true} if the character is valid, {@code false} if not.
 	 */

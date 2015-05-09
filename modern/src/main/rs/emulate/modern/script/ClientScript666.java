@@ -177,7 +177,7 @@ public final class ClientScript666 {
 	 * @param index The index.
 	 * @return The string operand.
 	 */
-	public String getStrOperand(int index) {
+	public String getStringOperand(int index) {
 		return stringOperands[index];
 	}
 

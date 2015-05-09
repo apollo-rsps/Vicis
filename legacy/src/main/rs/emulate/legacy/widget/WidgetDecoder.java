@@ -45,7 +45,7 @@ public final class WidgetDecoder {
 
 	/**
 	 * Decodes the {@link Widget}s.
-	 * 
+	 *
 	 * @return The {@link List} of {@link Widget}s.
 	 */
 	public List<Widget> decode() {
@@ -55,7 +55,7 @@ public final class WidgetDecoder {
 			widgets.add(decodeWidget());
 		}
 
-		return null;
+		return widgets;
 	}
 
 	/**
@@ -65,7 +65,7 @@ public final class WidgetDecoder {
 
 	/**
 	 * Decodes a single {@link Widget}.
-	 * 
+	 *
 	 * @return The Widget.
 	 */
 	@SuppressWarnings("unused")
