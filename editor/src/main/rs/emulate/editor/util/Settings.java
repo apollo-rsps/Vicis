@@ -1,4 +1,4 @@
-package rs.emulate.editor;
+package rs.emulate.editor.util;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -15,14 +15,13 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import rs.emulate.util.PathUtils;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 
+
 /**
  * A table of settings for the editor.
- * 
+ *
  * @author Major
  */
 public final class Settings {
@@ -46,7 +45,7 @@ public final class Settings {
 
 	/**
 	 * Gets the setting with the specified name.
-	 * 
+	 *
 	 * @param name The name.
 	 * @return The setting value.
 	 * @throws IllegalArgumentException If the setting does not exist.
@@ -62,7 +61,7 @@ public final class Settings {
 
 	/**
 	 * Parses a boolean value from the settings.
-	 * 
+	 *
 	 * @param name The name of the setting.
 	 * @return {@code true} if the value of the setting is {@code "true"}, otherwise {@code false}.
 	 */
@@ -83,7 +82,7 @@ public final class Settings {
 
 	/**
 	 * Sets the value of a setting.
-	 * 
+	 *
 	 * @param name The name of the setting.
 	 * @param value The value of the setting.
 	 */
@@ -93,7 +92,7 @@ public final class Settings {
 
 	/**
 	 * Writes the data stored in this Set of settings to the specified {@link Path}.
-	 * 
+	 *
 	 * @param path The Path.
 	 * @throws IOException If there is an error writing to the specified path.
 	 */
@@ -120,7 +119,7 @@ public final class Settings {
 
 	/**
 	 * Removes the setting with the specified name from the {@link Map}.
-	 * 
+	 *
 	 * @param name The name of the setting.
 	 */
 	protected void remove(String name) {
@@ -148,7 +147,7 @@ public final class Settings {
 
 	/**
 	 * Finds the indices of the interpolation indicators, '$', in the specified setting.
-	 * 
+	 *
 	 * @param setting The setting.
 	 * @return The {@link List} of indices.
 	 */
@@ -167,7 +166,7 @@ public final class Settings {
 
 	/**
 	 * Gets the setting with the specified name.
-	 * 
+	 *
 	 * @param name The name.
 	 * @return The setting.
 	 * @throws IllegalArgumentException If the setting does not exist.
@@ -179,7 +178,7 @@ public final class Settings {
 
 	/**
 	 * Interpolates the value of a setting.
-	 * 
+	 *
 	 * @param setting The raw value of the setting being retrieved.
 	 * @param indices The {@link List} of indices of the interpolation indicators, '$'.
 	 * @param settings The {@link Set} of settings already interpolated, to prevent infinite recursion.
@@ -215,7 +214,7 @@ public final class Settings {
 
 	/**
 	 * Gets the setting with the specified name, verifying that it is not null.
-	 * 
+	 *
 	 * @param name The name of the setting.
 	 * @return The value of the setting.
 	 * @throws IllegalArgumentException If the setting does not exist.
@@ -228,7 +227,7 @@ public final class Settings {
 
 	/**
 	 * Writes the specified {@link Set} of {@link Map} {@link Entry} objects to the specified {@link Writer}.
-	 * 
+	 *
 	 * @param writer The Writer.
 	 * @param name The name of the encapsulating XML tag.
 	 * @param entries The {@link Set} of {@link Entry} objects to write.
