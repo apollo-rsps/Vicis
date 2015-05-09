@@ -18,7 +18,6 @@ import java.util.Set;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 
-
 /**
  * A table of settings for the editor.
  *
@@ -234,7 +233,8 @@ public final class Settings {
 	 * @param indentation The level of indentation of the written text.
 	 * @throws IOException If there is an error writing to the Writer.
 	 */
-	private <K, V> void writeEntries(Writer writer, String name, Set<Entry<K, V>> entries, int indentation) throws IOException {
+	private <K, V> void writeEntries(Writer writer, String name, Set<Entry<K, V>> entries, int indentation)
+			throws IOException {
 		StringBuilder builder = new StringBuilder(indentation);
 		for (int times = 0; times < indentation; times++) {
 			builder.append('\t');
