@@ -126,12 +126,12 @@ public final class MapFileDecoder {
 				int below = (level == 0) ? 0 : planes[level - 1].get(x, z).getHeight();
 
 				builder.setHeight((height == 1 ? 0 : height) * MapFileConstants.HEIGHT_MULTIPLICAND + below);
-			} else if (type <= MapFileConstants.MINIMUM_UNDERLAY_TYPE) {
+			} else if (type <= MapFileConstants.MINIMUM_OVERLAY_TYPE) {
 				builder.setOverlay(buffer.getByte());
 				builder.setOverlayType((type - LOWEST_CONTINUED_TYPE) / MapFileConstants.ORIENTATION_COUNT);
 				builder.setOverlayOrientation(type - LOWEST_CONTINUED_TYPE % MapFileConstants.ORIENTATION_COUNT);
 			} else if (type <= MapFileConstants.MINIMUM_ATTRIBUTES_TYPE) {
-				builder.setAttributes(type - MapFileConstants.MINIMUM_UNDERLAY_TYPE);
+				builder.setAttributes(type - MapFileConstants.MINIMUM_OVERLAY_TYPE);
 			} else {
 				builder.setUnderlay(type - MapFileConstants.MINIMUM_ATTRIBUTES_TYPE);
 			}

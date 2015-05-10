@@ -14,7 +14,7 @@ final class MapFileConstants {
 	/**
 	 * The minimum type that specifies the Tile underlay id.
 	 */
-	static final int MINIMUM_UNDERLAY_TYPE = 49;
+	static final int MINIMUM_OVERLAY_TYPE = 49;
 	/**
 	 * The amount of possible overlay orientations.
 	 */
