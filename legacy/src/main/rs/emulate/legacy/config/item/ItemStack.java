@@ -5,7 +5,7 @@ import rs.emulate.util.Assertions;
 
 /**
  * A utility class containing an item stack amount and its corresponding model id.
- * 
+ *
  * @author Major
  */
 public final class ItemStack {
@@ -17,11 +17,11 @@ public final class ItemStack {
 
 	/**
 	 * Decodes an ItemStack from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @return The ItemStack.
 	 */
-	static ItemStack decode(DataBuffer buffer) {
+	public static ItemStack decode(DataBuffer buffer) {
 		int amount = buffer.getUnsignedShort();
 		int model = buffer.getUnsignedShort();
 
@@ -30,11 +30,11 @@ public final class ItemStack {
 
 	/**
 	 * Encodes the specified ItemStack into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @param stack The ItemStack.
 	 */
-	static void encode(DataBuffer buffer, ItemStack stack) {
+	public static void encode(DataBuffer buffer, ItemStack stack) {
 		buffer.putShort(stack.getAmount()).putShort(stack.getModel());
 	}
 
@@ -50,13 +50,13 @@ public final class ItemStack {
 
 	/**
 	 * Creates the ItemStack.
-	 * 
+	 *
 	 * @param amount The stack amount.
 	 * @param model The model id.
 	 */
 	public ItemStack(int amount, int model) {
-		Assertions.checkPositive(amount, "Amount must be greater than 0.");
-		Assertions.checkNonNegative(model, "Model id must be greater than or equal to 0.");
+		Assertions.checkPositive(amount, "Amount must be greater than 0, received " + amount + ".");
+		Assertions.checkNonNegative(model, "Model id must be greater than or equal to 0, received " + model + ".");
 		this.amount = amount;
 		this.model = model;
 	}
@@ -71,7 +71,7 @@ public final class ItemStack {
 
 	/**
 	 * Gets the amount of this ItemStack.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int getAmount() {
@@ -80,7 +80,7 @@ public final class ItemStack {
 
 	/**
 	 * Gets the model of this ItemStack.
-	 * 
+	 *
 	 * @return The model.
 	 */
 	public int getModel() {
