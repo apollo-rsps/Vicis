@@ -37,28 +37,38 @@ public final class TileUtils {
 	}
 
 	/**
-	 * Gets the height offset for the specified coordinate pair.
+	 * Calculates the height offset for the specified coordinate pair.
 	 *
-	 * @param x The x coordinate of the tile.
-	 * @param z The y coordinate of the tile.
-	 * @return The tile height offset.
+	 * @param x The x coordinate of the Tile.
+	 * @param z The z coordinate of the Tile.
+	 * @return The height offset.
 	 */
 	public static int calculateHeight(int x, int z) {
-		int total = 0;
+		int regionSize = 8;
+		int regionOffset = 6;
+		int offset = regionOffset * regionSize;
 
-		total += interpolatedNoise(x + 45365, z + 91923, 4) - 128;
+		int baseX = x - offset;
+		int baseZ = z - offset;
+
+		return computeHeight(x + TILE_HEIGHT_X_OFFSET - baseX, z + TILE_HEIGHT_Z_OFFSET - baseZ);
+	}
+
+	/**
+	 * Gets the height offset for the specified coordinate pair.
+	 *
+	 * @param x The offset-x coordinate of the tile.
+	 * @param z The offset-z coordinate of the tile.
+	 * @return The tile height offset.
+	 */
+	private static int computeHeight(int x, int z) {
+		int total = interpolatedNoise(x + 45365, z + 91923, 4) - 128;
+
 		total += (interpolatedNoise(x + 10294, z + 37821, 2) - 128) / 2;
 		total += (interpolatedNoise(x, z, 1) - 128) / 4;
 
-		total = (int) (total * 0.3D) + 35;
-
-		if (total < 10) {
-			return 10;
-		} else if (total > 60) {
-			return 60;
-		}
-
-		return total;
+		total = (int) Math.max(total * 0.3 + 35, 10);
+		return Math.min(total, 60);
 	}
 
 	/**
@@ -129,6 +139,15 @@ public final class TileUtils {
 
 		return corners / 16 + sides / 8 + center / 4;
 	}
+
+	/**
+	 * The x coordinate offset, used for computing the Tile height.
+	 */
+	static final int TILE_HEIGHT_X_OFFSET = 0xe3b7b;
+	/**
+	 * The z coordinate offset, used for computing the Tile height.
+	 */
+	static final int TILE_HEIGHT_Z_OFFSET = 0x87cce;
 
 	/**
 	 * Sole private constructor to prevent instantiation.

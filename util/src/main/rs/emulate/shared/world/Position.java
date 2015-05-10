@@ -2,7 +2,7 @@ package rs.emulate.shared.world;
 
 /**
  * Represents a position in the world.
- * 
+ *
  * @author Graham
  */
 public final class Position {
@@ -28,42 +28,42 @@ public final class Position {
 	private final int x;
 
 	/**
-	 * The y coordinate.
+	 * The z coordinate.
 	 */
-	private final int y;
+	private final int z;
 
 	/**
-	 * Creates a position at the default height.
-	 * 
+	 * Creates the Position with the default height level.
+	 *
 	 * @param x The x coordinate.
-	 * @param y The y coordinate.
+	 * @param z The z coordinate.
 	 */
-	public Position(int x, int y) {
-		this(x, y, 0);
+	public Position(int x, int z) {
+		this(x, z, 0);
 	}
 
 	/**
-	 * Creates a position with the specified height.
-	 * 
+	 * Creates the Position with the specified height level.
+	 *
 	 * @param x The x coordinate.
-	 * @param y The y coordinate.
-	 * @param height The height.
+	 * @param z The z coordinate.
+	 * @param level The level.
 	 */
-	public Position(int x, int y, int height) {
-		if (height < 0 || height >= HEIGHT_LEVELS) {
+	public Position(int x, int z, int level) {
+		if (level < 0 || level >= HEIGHT_LEVELS) {
 			throw new IllegalArgumentException("Height level out of bounds.");
 		}
 
 		this.x = x;
-		this.y = y;
-		this.height = height;
+		this.z = z;
+		this.height = level;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Position) {
 			Position other = (Position) obj;
-			return height == other.height && x == other.x && y == other.y;
+			return height == other.height && x == other.x && z == other.z;
 		}
 
 		return false;
@@ -71,7 +71,7 @@ public final class Position {
 
 	/**
 	 * Gets the x coordinate of the central sector.
-	 * 
+	 *
 	 * @return The x coordinate of the central sector.
 	 */
 	public int getCentralSectorX() {
@@ -79,17 +79,17 @@ public final class Position {
 	}
 
 	/**
-	 * Gets the y coordinate of the central sector.
-	 * 
-	 * @return The y coordinate of the central sector.
+	 * Gets the z coordinate of the central sector.
+	 *
+	 * @return The z coordinate of the central sector.
 	 */
-	public int getCentralSectorY() {
-		return y / 8;
+	public int getCentralSectorZ() {
+		return z / 8;
 	}
 
 	/**
 	 * Gets the height level.
-	 * 
+	 *
 	 * @return The height level.
 	 */
 	public int getHeight() {
@@ -98,7 +98,7 @@ public final class Position {
 
 	/**
 	 * Gets the x coordinate inside the sector of this position.
-	 * 
+	 *
 	 * @return The local x coordinate.
 	 */
 	public int getLocalX() {
@@ -107,7 +107,7 @@ public final class Position {
 
 	/**
 	 * Gets the local x coordinate inside the sector of the {@code base} position.
-	 * 
+	 *
 	 * @param base The base position.
 	 * @return The local x coordinate.
 	 */
@@ -116,27 +116,27 @@ public final class Position {
 	}
 
 	/**
-	 * Gets the y coordinate inside the sector of this position.
-	 * 
-	 * @return The local y coordinate.
+	 * Gets the z coordinate inside the sector of this position.
+	 *
+	 * @return The local z coordinate.
 	 */
-	public int getLocalY() {
-		return getLocalY(this);
+	public int getLocalZ() {
+		return getLocalZ(this);
 	}
 
 	/**
-	 * Gets the local y coordinate inside the sector of the {@code base} position.
-	 * 
+	 * Gets the local z coordinate inside the sector of the {@code base} position.
+	 *
 	 * @param base The base position.
-	 * @return The local y coordinate.
+	 * @return The local z coordinate.
 	 */
-	public int getLocalY(Position base) {
-		return y - base.getTopLeftSectorY() * 8;
+	public int getLocalZ(Position base) {
+		return z - base.getTopLeftSectorZ() * 8;
 	}
 
 	/**
 	 * Gets the x coordinate of the sector this position is in.
-	 * 
+	 *
 	 * @return The sector x coordinate.
 	 */
 	public int getTopLeftSectorX() {
@@ -144,17 +144,17 @@ public final class Position {
 	}
 
 	/**
-	 * Gets the y coordinate of the sector this position is in.
-	 * 
-	 * @return The sector y coordinate.
+	 * Gets the z coordinate of the sector this position is in.
+	 *
+	 * @return The sector z coordinate.
 	 */
-	public int getTopLeftSectorY() {
-		return y / 8 - 6;
+	public int getTopLeftSectorZ() {
+		return z / 8 - 6;
 	}
 
 	/**
 	 * Gets the x coordinate.
-	 * 
+	 *
 	 * @return The x coordinate.
 	 */
 	public int getX() {
@@ -162,22 +162,22 @@ public final class Position {
 	}
 
 	/**
-	 * Gets the y coordinate.
-	 * 
-	 * @return The y coordinate.
+	 * Gets the z coordinate.
+	 *
+	 * @return The z coordinate.
 	 */
-	public int getY() {
-		return y;
+	public int getZ() {
+		return z;
 	}
 
 	@Override
 	public int hashCode() {
-		return height << 30 & 0xC0000000 | y << 15 & 0x3FFF8000 | x & 0x7FFF;
+		return (height & 0x3) << 30 | (z & 0x7FFF) << 15 | x & 0x7FFF;
 	}
 
 	@Override
 	public String toString() {
-		return Position.class.getName() + " [x=" + x + ", y=" + y + ", height=" + height + "]";
+		return Position.class.getName() + " [x=" + x + ", y=" + z + ", height=" + height + "]";
 	}
 
 }

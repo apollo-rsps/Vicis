@@ -27,7 +27,7 @@ public final class GameObject {
 	 * @param orientation The orientation of the object.
 	 */
 	public GameObject(int id, Position position, int type, int orientation) {
-		this.position = position.getHeight() << 30 | position.getX() << 15 | position.getY();
+		this.position = position.getHeight() << 30 | position.getX() << 15 | position.getZ();
 		this.config = (id << 8) + (type << 2) + orientation;
 	}
 

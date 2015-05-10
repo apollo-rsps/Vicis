@@ -11,7 +11,7 @@ import rs.emulate.shared.cs.PlayerProvider;
  *
  * @author Major
  */
-public final class LegacyIntepreter {
+public final class LegacyInterpreter {
 
 	/**
 	 * A {@link BinaryOperator} that applies a math function to two integers.
@@ -80,7 +80,7 @@ public final class LegacyIntepreter {
 	 * @param script The {@link LegacyClientScript} to interpret.
 	 * @param context The {@link ClientScriptContext} for the LegacyClientScript being interpreted.
 	 */
-	public LegacyIntepreter(LegacyClientScript script, ClientScriptContext context) {
+	public LegacyInterpreter(LegacyClientScript script, ClientScriptContext context) {
 		this.script = Objects.requireNonNull(script, "ClientScript must not be null.");
 		this.context = Objects.requireNonNull(context, "ClientScriptContext must not be null.");
 	}
@@ -158,7 +158,7 @@ public final class LegacyIntepreter {
 			case MOVE_ABSOLUTE_X:
 				return provider.getPosition().getX();
 			case MOVE_ABSOLUTE_Y:
-				return provider.getPosition().getY();
+				return provider.getPosition().getZ();
 			case MOVE:
 				return operands[0];
 		}

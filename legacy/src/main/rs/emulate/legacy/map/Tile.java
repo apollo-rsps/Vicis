@@ -1,5 +1,7 @@
 package rs.emulate.legacy.map;
 
+import rs.emulate.shared.world.Position;
+
 /**
  * A single tile on the map.
  *
@@ -13,34 +15,57 @@ public final class Tile {
 	public static final class Builder {
 
 		/**
-		 * The tile attributes.
+		 * The attributes of the Tile.
 		 */
 		private int attributes;
 
 		/**
-		 * The tile height.
+		 * The height of the Tile.
 		 */
 		private int height;
 
 		/**
-		 * The overlay id.
+		 * The overlay id of the Tile.
 		 */
 		private int overlay;
 
 		/**
-		 * The overlay orientation.
+		 * The overlay orientation of the Tile.
 		 */
 		private int overlayOrientation;
 
 		/**
-		 * The overlay type.
+		 * The overlay type of the Tile.
 		 */
 		private int overlayType;
 
 		/**
-		 * The underlay id.
+		 * The underlay id of the Tile.
 		 */
 		private int underlay;
+
+		/**
+		 * The Position of the Tile.
+		 */
+		private Position position;
+
+		/**
+		 * Creates the Builder.
+		 *
+		 * @param position The {@link Position} of the Tile.
+		 */
+		public Builder(Position position) {
+			this.position = position;
+		}
+
+		/**
+		 * Sets the {@link Position} of the Tile.
+		 *
+		 * @param position The Position.
+		 */
+		public void setPosition(Position position) {
+			this.position = position;
+		}
 
 		/**
 		 * Builds the contents of this Builder into a Tile.
@@ -48,7 +73,7 @@ public final class Tile {
 		 * @return The Tile.
 		 */
 		public Tile build() {
-			return new Tile(attributes, height, overlay, overlayType, overlayOrientation, underlay);
+			return new Tile(position, attributes, height, overlay, overlayType, overlayOrientation, underlay);
 		}
 
 		/**
@@ -110,59 +135,77 @@ public final class Tile {
 	/**
 	 * Creates a {@link Builder} for a Tile.
 	 *
+	 * @param position The {@link Position} of the Tile.
 	 * @return The Builder.
 	 */
-	public static Builder builder() {
-		return new Builder();
+	public static Builder builder(Position position) {
+		return new Builder(position);
 	}
 
 	/**
-	 * The tile attributes.
+	 * The attributes of this Tile.
 	 */
 	private final int attributes;
 
 	/**
-	 * The tile height.
+	 * The height of this Tile.
 	 */
 	private final int height;
 
 	/**
-	 * The overlay id.
+	 * The overlay id of this Tile.
 	 */
 	private final int overlay;
 
 	/**
-	 * The overlay orientation.
+	 * The overlay orientation of this Tile.
 	 */
 	private final int overlayOrientation;
 
 	/**
-	 * The overlay type.
+	 * The overlay type of this Tile.
 	 */
 	private final int overlayType;
 
 	/**
-	 * The underlay id.
+	 * The underlay id of this Tile.
 	 */
 	private final int underlay;
 
 	/**
+	 * The position of this Tile.
+	 */
+	private final Position position;
+
+	/**
 	 * Creates the Tile.
 	 *
-	 * @param attributes The tile attributes.
-	 * @param height The tile height.
+	 * @param position The {@link Position}.
+	 * @param attributes The attributes.
+	 * @param height The height.
 	 * @param overlay The overlay id.
 	 * @param overlayType The overlay type.
 	 * @param overlayOrientation The overlay orientation.
 	 * @param underlay The underlay id.
 	 */
-	public Tile(int attributes, int height, int overlay, int overlayType, int overlayOrientation, int underlay) {
+	public Tile(Position position, int attributes, int height, int overlay, int overlayType, int overlayOrientation,
+			int underlay) {
+		this.position = position;
 		this.attributes = attributes;
 		this.height = height;
 		this.overlay = overlay;
 		this.overlayType = overlayType;
 		this.overlayOrientation = overlayOrientation;
 		this.underlay = underlay;
+	}
+
+	/**
+	 * Gets the {@link Position} of this Tile.
+	 *
+	 * @return The Position.
+	 */
+	public Position getPosition() {
+		return position;
 	}
 
 	/**
