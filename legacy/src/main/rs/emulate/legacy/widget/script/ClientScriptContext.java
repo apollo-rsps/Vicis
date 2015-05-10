@@ -1,6 +1,6 @@
 package rs.emulate.legacy.widget.script;
 
-import rs.emulate.legacy.widget.script.LegacyIntepreter.MathOperator;
+import rs.emulate.legacy.widget.script.LegacyInterpreter.MathOperator;
 import rs.emulate.shared.cs.PlayerProvider;
 
 /**
