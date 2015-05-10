@@ -1,5 +1,9 @@
 package rs.emulate.legacy.map;
 
+import java.io.IOException;
+
+import rs.emulate.legacy.IndexedFileSystem;
+import rs.emulate.shared.util.CompressionUtils;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
@@ -10,49 +14,38 @@ import rs.emulate.shared.util.DataBuffer;
 public final class MapFileDecoder {
 
 	/**
-	 * The multiplicand for height values.
+	 * The index containing the map files.
 	 */
-	private static final int HEIGHT_MULTIPLICAND = 8;
+	public static final int MAP_INDEX = 4;
 
 	/**
-	 * The minimum type that specifies the Tile attributes.
+	 * The lowest type value that will result in the decoding of a Tile being continued.
 	 */
-	private static final int MINIMUM_ATTRIBUTES_TYPE = 81;
+	private static final int LOWEST_CONTINUED_TYPE = 2;
 
 	/**
-	 * The minimum type that specifies the Tile underlay id.
-	 */
-	private static final int MINIMUM_UNDERLAY_TYPE = 49;
-
-	/**
-	 * The amount of possible overlay orientations.
-	 */
-	private static final int ORIENTATION_COUNT = 4;
-
-	/**
-	 * The height difference between two planes.
-	 */
-	private static final int PLANE_HEIGHT_DIFFERENCE = 240;
-
-	/**
-	 * The amount of planes in a map file.
-	 */
-	private static final int PLANES = 4;
-
-	/**
-	 * The width of a map file, in tiles.
-	 */
-	private static final int WIDTH = 64;
-
-	/**
-	 * The x coordinate offset, used for computing the tile height.
+	 * The x coordinate offset, used for computing the Tile height.
 	 */
 	private static final int X_OFFSET = 0xe3b7b;
 
 	/**
-	 * The z coordinate offset, used for computing the tile height.
+	 * The z coordinate offset, used for computing the Tile height.
 	 */
 	private static final int Z_OFFSET = 0x87cce;
+
+	/**
+	 * Creates a MapFileDecoder for the specified map file.
+	 * 
+	 * @param fs The {@link IndexedFileSystem} to get the file from.
+	 * @param map The map file id.
+	 * @return The MapFileDecoder.
+	 * @throws IOException If there is an error reading or decompressing the file.
+	 */
+	public static MapFileDecoder create(IndexedFileSystem fs, int map) throws IOException {
+		DataBuffer compressed = fs.getFile(MAP_INDEX, map);
+		DataBuffer decompressed = CompressionUtils.gunzip(compressed);
+		return new MapFileDecoder(decompressed);
+	}
 
 	/**
 	 * The DataBuffer containing the MapFile data.
@@ -61,8 +54,10 @@ public final class MapFileDecoder {
 
 	/**
 	 * Creates the MapFileDecoder.
+	 * <p>
+	 * This constructor expects the {@link DataBuffer} to <strong>not</strong> be compressed.
 	 *
-	 * @param buffer The {@link DataBuffer} containing the MapFile data.
+	 * @param buffer The DataBuffer containing the MapFile data.
 	 */
 	public MapFileDecoder(DataBuffer buffer) {
 		this.buffer = buffer.asReadOnlyBuffer();
@@ -74,9 +69,9 @@ public final class MapFileDecoder {
 	 * @return The MapFile.
 	 */
 	public MapFile decode() {
-		MapPlane[] planes = new MapPlane[PLANES];
+		MapPlane[] planes = new MapPlane[MapFile.PLANES];
 
-		for (int level = 0; level < PLANES; level++) {
+		for (int level = 0; level < MapFile.PLANES; level++) {
 			planes[level] = decodePlane(planes, level);
 		}
 
@@ -91,10 +86,10 @@ public final class MapFileDecoder {
 	 * @return The MapPlane.
 	 */
 	private MapPlane decodePlane(MapPlane[] planes, int level) {
-		Tile[][] tiles = new Tile[WIDTH][WIDTH];
+		Tile[][] tiles = new Tile[MapFile.WIDTH][MapFile.WIDTH];
 
-		for (int x = 0; x < WIDTH; x++) {
-			for (int z = 0; z < WIDTH; z++) {
+		for (int x = 0; x < MapFile.WIDTH; x++) {
+			for (int z = 0; z < MapFile.WIDTH; z++) {
 				tiles[x][z] = decodeTile(planes, level, x, z);
 			}
 		}
@@ -105,7 +100,7 @@ public final class MapFileDecoder {
 	/**
 	 * Decodes the data into a {@link Tile}.
 	 *
-	 * @param planes The previously-decoded {@link MapPlane}s, for calculating the height of the tile.
+	 * @param planes The previously-decoded {@link MapPlane}s, for calculating the height of the Tile.
 	 * @param level The level the Tile is on.
 	 * @param x The x coordinate of the Tile.
 	 * @param z The z coordinate of the Tile.
@@ -120,26 +115,27 @@ public final class MapFileDecoder {
 
 			if (type == 0) {
 				if (level == 0) {
-					builder.setHeight(HEIGHT_MULTIPLICAND * TileUtils.calculateHeight(X_OFFSET + x, Z_OFFSET + z));
+					builder.setHeight(MapFileConstants.HEIGHT_MULTIPLICAND
+							* TileUtils.calculateHeight(X_OFFSET + x, Z_OFFSET + z));
 				} else {
 					Tile below = planes[level - 1].get(x, z);
-					builder.setHeight(below.getHeight() + PLANE_HEIGHT_DIFFERENCE);
+					builder.setHeight(below.getHeight() + MapFileConstants.PLANE_HEIGHT_DIFFERENCE);
 				}
 			} else if (type == 1) {
 				int height = buffer.getUnsignedByte();
 				int below = (level == 0) ? 0 : planes[level - 1].get(x, z).getHeight();
 
-				builder.setHeight((height == 1 ? 0 : height) * HEIGHT_MULTIPLICAND + below);
-			} else if (type <= MINIMUM_UNDERLAY_TYPE) {
-				builder.setOverlay(buffer.getUnsignedByte());
-				builder.setOverlayType((type - 2) / 4);
-				builder.setOverlayOrientation(type - 2 % ORIENTATION_COUNT);
-			} else if (type <= MINIMUM_ATTRIBUTES_TYPE) {
-				builder.setAttributes(type - MINIMUM_UNDERLAY_TYPE);
+				builder.setHeight((height == 1 ? 0 : height) * MapFileConstants.HEIGHT_MULTIPLICAND + below);
+			} else if (type <= MapFileConstants.MINIMUM_UNDERLAY_TYPE) {
+				builder.setOverlay(buffer.getByte());
+				builder.setOverlayType((type - LOWEST_CONTINUED_TYPE) / MapFileConstants.ORIENTATION_COUNT);
+				builder.setOverlayOrientation(type - LOWEST_CONTINUED_TYPE % MapFileConstants.ORIENTATION_COUNT);
+			} else if (type <= MapFileConstants.MINIMUM_ATTRIBUTES_TYPE) {
+				builder.setAttributes(type - MapFileConstants.MINIMUM_UNDERLAY_TYPE);
 			} else {
-				builder.setUnderlay(type - MINIMUM_ATTRIBUTES_TYPE);
+				builder.setUnderlay(type - MapFileConstants.MINIMUM_ATTRIBUTES_TYPE);
 			}
-		} while (type > 1);
+		} while (type >= LOWEST_CONTINUED_TYPE);
 
 		return builder.build();
 	}

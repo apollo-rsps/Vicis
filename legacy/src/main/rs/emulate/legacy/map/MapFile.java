@@ -10,6 +10,16 @@ import com.google.common.base.Preconditions;
 public final class MapFile {
 
 	/**
+	 * The amount of planes in a MapFile.
+	 */
+	public static final int PLANES = 4;
+
+	/**
+	 * The width of a MapFile, in {@link Tile}s.
+	 */
+	public static final int WIDTH = 64;
+
+	/**
 	 * The array of MapPlanes.
 	 */
 	private final MapPlane[] planes;
@@ -34,6 +44,15 @@ public final class MapFile {
 		int length = planes.length;
 		Preconditions.checkElementIndex(plane, length, "Plane index out of bounds, must be [0, " + length + ").");
 		return planes[plane];
+	}
+
+	/**
+	 * Gets all of the {@link MapPlane}s in this MapFile.
+	 *
+	 * @return The MapPlanes.
+	 */
+	public MapPlane[] getPlanes() {
+		return planes.clone();
 	}
 
 }

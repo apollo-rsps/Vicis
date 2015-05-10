@@ -1,63 +1,83 @@
 package rs.emulate.legacy.map;
 
 /**
- * Represents the map_index entry in the versionlist archive, used for mapping region coordinates to landscape and map data files.
+ * Represents the map_index entry in the versionlist archive, used for mapping region coordinates to landscape and map
+ * data files.
+ *
+ * @author sfix
+ * @author Major
  */
 public final class MapIndex {
 
-    private int[] membersArea;
-    private int[] areas;
-    private int[] landscapes;
-    private int[] mapFiles;
+	/**
+	 * The area ids.
+	 */
+	private final int[] areas;
 
-    public MapIndex(int[] areas, int[] landscapes, int[] mapFiles, int[] membersArea) {
-        this.areas = areas;
-        this.landscapes = landscapes;
-        this.mapFiles = mapFiles;
-        this.membersArea = membersArea;
-    }
+	/**
+	 * The landscape file ids.
+	 */
+	private final int[] landscapes;
 
-    public final int resolve(int regionX, int regionY, int type) {
-        int code = (regionX << 8) + regionY;
-        for (int area = 0; area < areas.length; area++) {
-            if (areas[area] == code) {
-                return type == 0 ? mapFiles[area] : landscapes[area];
-            }
-        }
+	/**
+	 * The map file ids.
+	 */
+	private final int[] maps;
 
-        return -1;
-    }
+	/**
+	 * The members only flags.
+	 */
+	private final boolean[] members;
 
-    /**
-     * Lookup the file id for the landscape at coordinates (regionX, regionY)
-     *
-     * @param regionX The X coordinate of the region we want the landscape for.
-     * @param regionY The Y coordinate of the region we want the landscape for.
-     *
-     * @return The file id of the regions landscape.
-     */
-    public final int resolveLandscape(int regionX, int regionY) {
-        return resolve(regionX, regionY, 1);
-    }
+	/**
+	 * Creates the MapIndex.
+	 *
+	 * @param areas The area ids.
+	 * @param landscapes The landscape file ids.
+	 * @param maps The map file ids.
+	 * @param members The members-only flags.
+	 */
+	public MapIndex(int[] areas, int[] landscapes, int[] maps, boolean[] members) {
+		this.areas = areas.clone();
+		this.landscapes = landscapes.clone();
+		this.maps = maps.clone();
+		this.members = members.clone();
+	}
 
-    /**
-     * Lookup the file id for the map data at coordinates (regionX, regionY)
-     *
-     * @param regionX The X coordinate of the region we want the map data for.
-     * @param regionY The Y coordinate of the region we want the map data for.
-     *
-     * @return The file id of the regions map data.
-     */
-    public final int resolveMapFile(int regionX, int regionY) {
-        return resolve(regionX, regionY, 0);
-    }
+	/**
+	 * Gets the area ids. The returned array will be a deep copy.
+	 *
+	 * @return The area ids.
+	 */
+	public int[] getAreas() {
+		return areas.clone();
+	}
 
-    /**
-     * Get all of the file ids which represents a maps terrain.
-     *
-     * @return The array of map terrain file ids.
-     */
-    public final int[] getMapFiles() {
-        return mapFiles;
-    }
+	/**
+	 * Gets the landscape file ids. The returned array will be a deep copy.
+	 *
+	 * @return The landscape file ids.
+	 */
+	public int[] getLandscapes() {
+		return landscapes.clone();
+	}
+
+	/**
+	 * Gets the map file ids. The returned array will be a deep copy.
+	 *
+	 * @return The map file ids.
+	 */
+	public int[] getMaps() {
+		return maps.clone();
+	}
+
+	/**
+	 * Gets the members-only area flags. The returned array will be a deep copy.
+	 *
+	 * @return The members-only flags.
+	 */
+	public boolean[] getMembers() {
+		return members.clone();
+	}
+
 }

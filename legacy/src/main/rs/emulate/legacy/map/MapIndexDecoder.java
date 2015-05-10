@@ -1,41 +1,59 @@
 package rs.emulate.legacy.map;
 
+import java.io.FileNotFoundException;
+
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.shared.util.DataBuffer;
 
-import java.io.FileNotFoundException;
-
 /**
- * Decoder for the version lists map-index entry.
+ * Decoder for the version lists "map_index" entry.
+ *
+ * @author sfix
+ * @author Major
  */
 public class MapIndexDecoder {
-    private final DataBuffer data;
 
-    /**
-     * Construct a new MapIndexDecoder.
-     *
-     * @param versionListArchive The version list archive
-     * @throws FileNotFoundException
-     */
-    public MapIndexDecoder(Archive versionListArchive) throws FileNotFoundException {
-        this.data = versionListArchive.getEntry("map_index").getBuffer().asReadOnlyBuffer();
-    }
+	/**
+	 * The name of the archive entry containing the map index data.
+	 */
+	private static final String ENTRY_NAME = "map_index";
 
-    public MapIndex decode() {
-        int areaCount = data.remaining() / 7;
+	/**
+	 * The DataBuffer containing the data.
+	 */
+	private final DataBuffer data;
 
-        int[] areas = new int[areaCount];
-        int[] landscapes = new int[areaCount];
-        int[] mapFiles = new int[areaCount];
-        int[] membersArea = new int[areaCount];
+	/**
+	 * Creates the MapIndexDecoder.
+	 *
+	 * @param archive The version list {@link Archive}.
+	 * @throws FileNotFoundException If the {@code map_index} entry could not be found.
+	 */
+	public MapIndexDecoder(Archive archive) throws FileNotFoundException {
+		data = archive.getEntry(ENTRY_NAME).getBuffer().asReadOnlyBuffer();
+	}
 
-        for (int area = 0; area < areaCount; area++) {
-            areas[area] = data.getUnsignedShort();
-            mapFiles[area] = data.getUnsignedShort();
-            landscapes[area] = data.getUnsignedShort();
-            membersArea[area] = data.getUnsignedByte();
-        }
+	/**
+	 * Decodes the contents of the {@code map_index} entry into a {@link MapIndex}.
+	 *
+	 * @return The MapIndex.
+	 */
+	public MapIndex decode() {
+		int count = data.remaining() / (3 * Short.BYTES + Byte.BYTES);
 
-        return new MapIndex(areas, landscapes, mapFiles, membersArea);
-    }
+		int[] areas = new int[count];
+		int[] landscapes = new int[count];
+		int[] maps = new int[count];
+		boolean[] members = new boolean[count];
+
+		for (int index = 0; index < count; index++) {
+			areas[index] = data.getUnsignedShort();
+			maps[index] = data.getUnsignedShort();
+			landscapes[index] = data.getUnsignedShort();
+			members[index] = data.getBoolean();
+		}
+
+		return new MapIndex(areas, landscapes, maps, members);
+	}
+
 }
