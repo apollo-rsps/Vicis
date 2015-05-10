@@ -1,14 +1,9 @@
 package rs.emulate.legacy.archive;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
 import com.google.common.collect.ImmutableList;
+
+import java.io.FileNotFoundException;
+import java.util.*;
 
 /**
  * An archive in the RuneScape cache. An archive is a set of files which can be completely compressed, or each
@@ -104,6 +99,19 @@ public final class Archive {
 		Optional<ArchiveEntry> optional = entries.stream().filter(entry -> entry.getIdentifier() == hash).findFirst();
 
 		return optional.orElseThrow(() -> new FileNotFoundException("Could not find entry: " + name + "."));
+	}
+
+	/**
+	 * Gets the {@link ArchiveEntry} with the specified hash.
+	 *
+	 * @param hash The hash of the entry.
+	 * @return The entry.
+	 * @throws FileNotFoundException If the entry could not be found.
+	 */
+	public ArchiveEntry getEntry(int hash) throws FileNotFoundException {
+		Optional<ArchiveEntry> optional = entries.stream().filter(entry -> entry.getIdentifier() == hash).findFirst();
+
+		return optional.orElseThrow(() -> new FileNotFoundException("Could not find entry: " + hash + "."));
 	}
 
 	/**
