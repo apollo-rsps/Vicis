@@ -15,6 +15,9 @@ import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.config.ConfigDecoder;
 import rs.emulate.legacy.config.Suppliers;
 import rs.emulate.legacy.config.object.ObjectDefinition;
+import rs.emulate.legacy.map.MapFileDecoder;
+import rs.emulate.legacy.map.MapIndex;
+import rs.emulate.legacy.map.MapIndexDecoder;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.MoreObjects;
@@ -25,6 +28,7 @@ import com.google.common.primitives.Ints;
  *
  * @author Major
  */
+@SuppressWarnings("unused")
 public final class Editor extends Application {
 
 	/**
@@ -57,10 +61,16 @@ public final class Editor extends Application {
 			this.fs = new IndexedFileSystem(Paths.get("data/resources/", version), AccessMode.READ);
 
 			Cache cache = initCache();
-			test(cache);
+			Archive versions = cache.getArchive(new FileDescriptor(0, 5));
+			MapIndexDecoder decoder = new MapIndexDecoder(versions);
+			MapIndex index = decoder.decode();
+
+			for (int map : index.getMaps()) {
+				MapFileDecoder mapFileDecoder = MapFileDecoder.create(fs, map);
+				mapFileDecoder.decode();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return;
 		}
 		System.exit(0);
 	}
