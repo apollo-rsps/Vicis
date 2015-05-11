@@ -9,8 +9,8 @@ import rs.emulate.legacy.config.graphic.DefaultGraphicDefinition;
 import rs.emulate.legacy.config.graphic.GraphicDefinition;
 import rs.emulate.legacy.config.item.DefaultItemDefinition;
 import rs.emulate.legacy.config.item.ItemDefinition;
-import rs.emulate.legacy.config.kit.DefaultIdentityKitDefinition;
-import rs.emulate.legacy.config.kit.IdentityKitDefinition;
+import rs.emulate.legacy.config.kit.DefaultIdentikitDefinition;
+import rs.emulate.legacy.config.kit.IdentikitDefinition;
 import rs.emulate.legacy.config.npc.DefaultNpcDefinition;
 import rs.emulate.legacy.config.npc.NpcDefinition;
 import rs.emulate.legacy.config.object.DefaultObjectDefinition;
@@ -114,10 +114,10 @@ public final class Suppliers {
 			GraphicDefinition.ENTRY_NAME, DefaultGraphicDefinition.SUPPLIER, GraphicDefinition::new);
 
 	/**
-	 * A {@link DefinitionSupplier} for {@link IdentityKitDefinition}s.
+	 * A {@link DefinitionSupplier} for {@link IdentikitDefinition}s.
 	 */
-	public static final DefinitionSupplier<IdentityKitDefinition> IDENTITY_KIT_SUPPLIER = new DefinitionSupplier<>(
-			IdentityKitDefinition.ENTRY_NAME, DefaultIdentityKitDefinition.SUPPLIER, IdentityKitDefinition::new);
+	public static final DefinitionSupplier<IdentikitDefinition> IDENTIKIT_SUPPLIER = new DefinitionSupplier<>(
+			IdentikitDefinition.ENTRY_NAME, DefaultIdentikitDefinition.SUPPLIER, IdentikitDefinition::new);
 
 	/**
 	 * A {@link DefinitionSupplier} for {@link ItemDefinition}s.

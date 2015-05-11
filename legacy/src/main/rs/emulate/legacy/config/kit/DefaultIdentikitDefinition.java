@@ -2,11 +2,11 @@ package rs.emulate.legacy.config.kit;
 
 import static rs.emulate.legacy.config.Properties.alwaysTrue;
 import static rs.emulate.legacy.config.Properties.unsignedShort;
-import static rs.emulate.legacy.config.kit.IdentityKitDefinition.COLOUR_COUNT;
-import static rs.emulate.legacy.config.kit.IdentityKitDefinition.HEAD_MODEL_COUNT;
-import static rs.emulate.legacy.config.kit.IdentityKitProperty.MODELS;
-import static rs.emulate.legacy.config.kit.IdentityKitProperty.PART;
-import static rs.emulate.legacy.config.kit.IdentityKitProperty.PLAYER_DESIGN_STYLE;
+import static rs.emulate.legacy.config.kit.IdentikitDefinition.COLOUR_COUNT;
+import static rs.emulate.legacy.config.kit.IdentikitDefinition.HEAD_MODEL_COUNT;
+import static rs.emulate.legacy.config.kit.IdentikitProperty.MODELS;
+import static rs.emulate.legacy.config.kit.IdentikitProperty.PART;
+import static rs.emulate.legacy.config.kit.IdentikitProperty.PLAYER_DESIGN_STYLE;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,16 +24,16 @@ import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
 /**
- * A default {@link IdentityKitDefinition} used as a base for an actual definition.
+ * A default {@link IdentikitDefinition} used as a base for an actual definition.
  *
  * @author Major
  */
-public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
+public class DefaultIdentikitDefinition extends DefaultConfigDefinition {
 
 	/**
-	 * The DefaultIdentityKitDefinition.
+	 * The DefaultIdentikitDefinition.
 	 */
-	private static final DefaultIdentityKitDefinition DEFAULT = new DefaultIdentityKitDefinition();
+	private static final DefaultIdentikitDefinition DEFAULT = new DefaultIdentikitDefinition();
 
 	/**
 	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
@@ -41,9 +41,9 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
 
 	/**
-	 * Creates the DefaultIdentityKitDefinition.
+	 * Creates the DefaultIdentikitDefinition.
 	 */
-	private DefaultIdentityKitDefinition() {
+	private DefaultIdentikitDefinition() {
 		super();
 	}
 
@@ -77,7 +77,7 @@ public class DefaultIdentityKitDefinition extends DefaultConfigDefinition {
 		}
 
 		for (int model = 1; model <= HEAD_MODEL_COUNT; model++) {
-			ConfigPropertyType name = ConfigUtils.newOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model);
+			ConfigPropertyType name = ConfigUtils.newOptionProperty(IdentikitDefinition.HEAD_MODEL_PREFIX, model);
 			defaults.put(model + 59, unsignedShort(name, -1));
 		}
 

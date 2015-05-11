@@ -7,7 +7,7 @@ import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.util.Assertions;
 
 /**
- * The body part an {@link IdentityKitDefinition} is for.
+ * The body part an {@link IdentikitDefinition} is for.
  *
  * @author Major
  */
@@ -52,6 +52,11 @@ enum Part {
 	 * The feet Part.
 	 */
 	FEET(6);
+
+	/**
+	 * The id offset for female characters.
+	 */
+	private static final int FEMALE_ID_OFFSET = 7;
 
 	/**
 	 * Decodes a Part from the specified {@link DataBuffer}.
@@ -103,11 +108,20 @@ enum Part {
 	}
 
 	/**
-	 * Gets the id of this Part.
+	 * Gets the id of this Part for female characters.
 	 *
 	 * @return The id.
 	 */
-	public int getId() {
+	public int getFemaleId() {
+		return id + FEMALE_ID_OFFSET;
+	}
+
+	/**
+	 * Gets the id of this Part for male characters.
+	 *
+	 * @return The id.
+	 */
+	public int getMaleId() {
 		return id;
 	}
 

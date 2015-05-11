@@ -9,14 +9,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 /**
- * A definition for an identity kit.
+ * A definition for an identikit.
  *
  * @author Major
  */
-public class IdentityKitDefinition extends MutableConfigDefinition {
+public class IdentikitDefinition extends MutableConfigDefinition {
 
 	/**
-	 * The name of the archive entry containing the encoded IdentityKitDefinitions, without the extension.
+	 * The name of the archive entry containing the encoded IdentikitDefinitions, without the extension.
 	 */
 	public static final String ENTRY_NAME = "idk";
 
@@ -36,26 +36,26 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	protected static final String HEAD_MODEL_PREFIX = "head-model";
 
 	/**
-	 * Creates the IdentityKitDefinition.
-	 * 
+	 * Creates the IdentikitDefinition.
+	 *
 	 * @param id The id of the definition.
 	 * @param properties The {@link ConfigPropertyMap}.
 	 */
-	public IdentityKitDefinition(int id, ConfigPropertyMap properties) {
+	public IdentikitDefinition(int id, ConfigPropertyMap properties) {
 		super(id, properties);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the body model ids of this IdentityKitDefinition.
+	 * Gets the {@link ConfigProperty} containing the body model ids of this IdentikitDefinition.
 	 *
-	 * @return The {@link IdentityKitProperty#MODELS} ConfigProperty.
+	 * @return The {@link IdentikitProperty#MODELS} ConfigProperty.
 	 */
 	public ConfigProperty<int[]> getBodyModels() {
-		return getProperty(IdentityKitProperty.MODELS);
+		return getProperty(IdentikitProperty.MODELS);
 	}
 
 	/**
-	 * Gets an {@link ImmutableMap} containing the original and replacement colour values of this IdentityKitDefinition.
+	 * Gets an {@link ImmutableMap} containing the original and replacement colour values of this IdentikitDefinition.
 	 *
 	 * @return The ImmutableMap.
 	 */
@@ -73,17 +73,17 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the specified head model id of this IdentityKitDefinition.
-	 * 
+	 * Gets the {@link ConfigProperty} containing the specified head model id of this IdentikitDefinition.
+	 *
 	 * @param model The model id.
 	 * @return The head model ConfigProperty.
 	 */
 	public ConfigProperty<Integer> getHeadModel(int model) {
-		return getProperty(ConfigUtils.newOptionProperty(IdentityKitDefinition.HEAD_MODEL_PREFIX, model));
+		return getProperty(ConfigUtils.newOptionProperty(IdentikitDefinition.HEAD_MODEL_PREFIX, model));
 	}
 
 	/**
-	 * Gets an {@link ImmutableList} containing the head model ids of this IdentityKitDefinition.
+	 * Gets an {@link ImmutableList} containing the head model ids of this IdentikitDefinition.
 	 *
 	 * @return The ImmutableList.
 	 */
@@ -98,22 +98,22 @@ public class IdentityKitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the part of this IdentityKitDefinition.
+	 * Gets the {@link ConfigProperty} containing the part of this IdentikitDefinition.
 	 *
-	 * @return The {@link IdentityKitProperty#PART} ConfigProperty.
+	 * @return The {@link IdentikitProperty#PART} ConfigProperty.
 	 */
 	public ConfigProperty<Part> getPart() {
-		return getProperty(IdentityKitProperty.PART);
+		return getProperty(IdentikitProperty.PART);
 	}
 
 	/**
-	 * Returns the {@link ConfigProperty} containing whether or not this IdentityKitDefinition can be used when designing a
-	 * player.
+	 * Returns the {@link ConfigProperty} containing whether or not this IdentikitDefinition can be used when designing
+	 * a player.
 	 *
-	 * @return The {@link IdentityKitProperty#PLAYER_DESIGN_STYLE} ConfigProperty.
+	 * @return The {@link IdentikitProperty#PLAYER_DESIGN_STYLE} ConfigProperty.
 	 */
 	public ConfigProperty<Boolean> isPlayerDesignStyle() {
-		return getProperty(IdentityKitProperty.PLAYER_DESIGN_STYLE);
+		return getProperty(IdentikitProperty.PLAYER_DESIGN_STYLE);
 	}
 
 }
