@@ -16,8 +16,8 @@ import rs.emulate.legacy.config.ConfigDecoder;
 import rs.emulate.legacy.config.Suppliers;
 import rs.emulate.legacy.config.object.ObjectDefinition;
 import rs.emulate.legacy.map.MapFileDecoder;
-import rs.emulate.legacy.map.MapIndex;
-import rs.emulate.legacy.map.MapIndexDecoder;
+import rs.emulate.legacy.version.MapIndex;
+import rs.emulate.legacy.version.MapIndexDecoder;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.MoreObjects;

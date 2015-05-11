@@ -1,4 +1,4 @@
-package rs.emulate.legacy.map;
+package rs.emulate.legacy.version;
 
 import java.io.FileNotFoundException;
 

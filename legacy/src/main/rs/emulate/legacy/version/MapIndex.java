@@ -1,4 +1,4 @@
-package rs.emulate.legacy.map;
+package rs.emulate.legacy.version;
 
 /**
  * Represents the map_index entry in the versionlist archive, used for mapping region coordinates to landscape and map
