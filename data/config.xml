@@ -1,0 +1,17 @@
+<codecs>
+
+  <legacy>
+    <animation name="seq">rs.emulate.legacy.config.animation.DefaultAnimationDefinition</animation>
+    <graphic name="spotanim">rs.emulate.legacy.config.graphic.DefaultGraphicDefinition</graphic>   
+    <item name="obj">rs.emulate.legacy.config.item.DefaultItemDefinition</item>
+    <kit name="kit">rs.emulate.legacy.config.kit.DefaultIdentikitDefinition</kit>
+    <npc name="npc">rs.emulate.legacy.config.npc.DefaultNpcDefinition</npc>
+    <object name="loc">rs.emulate.legacy.config.object.DefaultObjectDefinition</object>
+    <varbit name="varbit">rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition</varbit>
+    <varp name="varp">rs.emulate.legacy.config.varp.DefaultParameterVariableDefinition</varp>
+  </legacy>
+
+  <modern>
+
+  </modern>
+</codecs>
