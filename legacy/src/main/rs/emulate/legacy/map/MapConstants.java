@@ -5,7 +5,7 @@ package rs.emulate.legacy.map;
  *
  * @author Major
  */
-final class MapFileConstants {
+final class MapConstants {
 
 	/**
 	 * The index containing the map files.
@@ -45,7 +45,7 @@ final class MapFileConstants {
 	/**
 	 * Sole private constructor to prevent instantiation.
 	 */
-	private MapFileConstants() {
+	private MapConstants() {
 
 	}
 

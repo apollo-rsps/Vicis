@@ -39,7 +39,7 @@ public final class MapPlane {
 	 * Creates the MapPlane.
 	 *
 	 * @param level The level of the MapPlane.
-	 * @param tiles The 2-dimensional array of {@link Tile}s. Must not be {@code null}.
+	 * @param tiles The 2D array of {@link Tile}s. Must not be {@code null}. Must be square.
 	 */
 	public MapPlane(int level, Tile[][] tiles) {
 		this.level = level;
@@ -64,6 +64,15 @@ public final class MapPlane {
 	 */
 	public int getLevel() {
 		return level;
+	}
+
+	/**
+	 * Gets the amount of tiles in this MapPlane.
+	 *
+	 * @return The amount of tiles.
+	 */
+	public int getSize() {
+		return tiles.length * tiles[0].length;
 	}
 
 	/**

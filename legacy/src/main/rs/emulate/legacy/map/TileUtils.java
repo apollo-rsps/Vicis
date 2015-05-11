@@ -51,7 +51,8 @@ public final class TileUtils {
 		int baseX = x - offset;
 		int baseZ = z - offset;
 
-		return computeHeight(x + TILE_HEIGHT_X_OFFSET - baseX, z + TILE_HEIGHT_Z_OFFSET - baseZ);
+		return computeHeight(x + TILE_HEIGHT_X_OFFSET - baseX, z + TILE_HEIGHT_Z_OFFSET - baseZ)
+				* MapConstants.HEIGHT_MULTIPLICAND;
 	}
 
 	/**

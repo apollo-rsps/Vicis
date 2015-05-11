@@ -23,7 +23,7 @@ public final class MapFileDecoder {
 	 * @throws IOException If there is an error reading or decompressing the file.
 	 */
 	public static MapFileDecoder create(IndexedFileSystem fs, int map) throws IOException {
-		DataBuffer compressed = fs.getFile(MapFileConstants.MAP_INDEX, map);
+		DataBuffer compressed = fs.getFile(MapConstants.MAP_INDEX, map);
 		DataBuffer decompressed = CompressionUtils.gunzip(compressed);
 		return new MapFileDecoder(decompressed);
 	}
@@ -96,28 +96,28 @@ public final class MapFileDecoder {
 
 			if (type == 0) {
 				if (level == 0) {
-					builder.setHeight(MapFileConstants.HEIGHT_MULTIPLICAND * TileUtils.calculateHeight(x, z));
+					builder.setHeight(TileUtils.calculateHeight(x, z));
 				} else {
 					Tile below = planes[level - 1].getTile(x, z);
-					builder.setHeight(below.getHeight() + MapFileConstants.PLANE_HEIGHT_DIFFERENCE);
+					builder.setHeight(below.getHeight() + MapConstants.PLANE_HEIGHT_DIFFERENCE);
 				}
 			} else if (type == 1) {
 				int height = buffer.getUnsignedByte();
 				int below = (level == 0) ? 0 : planes[level - 1].getTile(x, z).getHeight();
 
-				builder.setHeight((height == 1 ? 0 : height) * MapFileConstants.HEIGHT_MULTIPLICAND + below);
-			} else if (type <= MapFileConstants.MINIMUM_OVERLAY_TYPE) {
+				builder.setHeight((height == 1 ? 0 : height) * MapConstants.HEIGHT_MULTIPLICAND + below);
+			} else if (type <= MapConstants.MINIMUM_OVERLAY_TYPE) {
 				builder.setOverlay(buffer.getByte());
-				builder.setOverlayType((type - MapFileConstants.LOWEST_CONTINUED_TYPE)
-						/ MapFileConstants.ORIENTATION_COUNT);
-				builder.setOverlayOrientation(type - MapFileConstants.LOWEST_CONTINUED_TYPE
-						% MapFileConstants.ORIENTATION_COUNT);
-			} else if (type <= MapFileConstants.MINIMUM_ATTRIBUTES_TYPE) {
-				builder.setAttributes(type - MapFileConstants.MINIMUM_OVERLAY_TYPE);
+				builder.setOverlayType((type - MapConstants.LOWEST_CONTINUED_TYPE)
+						/ MapConstants.ORIENTATION_COUNT);
+				builder.setOverlayOrientation(type - MapConstants.LOWEST_CONTINUED_TYPE
+						% MapConstants.ORIENTATION_COUNT);
+			} else if (type <= MapConstants.MINIMUM_ATTRIBUTES_TYPE) {
+				builder.setAttributes(type - MapConstants.MINIMUM_OVERLAY_TYPE);
 			} else {
-				builder.setUnderlay(type - MapFileConstants.MINIMUM_ATTRIBUTES_TYPE);
+				builder.setUnderlay(type - MapConstants.MINIMUM_ATTRIBUTES_TYPE);
 			}
-		} while (type >= MapFileConstants.LOWEST_CONTINUED_TYPE);
+		} while (type >= MapConstants.LOWEST_CONTINUED_TYPE);
 
 		return builder.build();
 	}
