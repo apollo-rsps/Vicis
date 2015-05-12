@@ -11,12 +11,7 @@ import rs.emulate.shared.util.DataBuffer;
  * @author sfix
  * @author Major
  */
-public class MapIndexDecoder {
-
-	/**
-	 * The name of the archive entry containing the map index data.
-	 */
-	private static final String ENTRY_NAME = "map_index";
+public final class MapIndexDecoder {
 
 	/**
 	 * The DataBuffer containing the data.
@@ -30,7 +25,7 @@ public class MapIndexDecoder {
 	 * @throws FileNotFoundException If the {@code map_index} entry could not be found.
 	 */
 	public MapIndexDecoder(Archive archive) throws FileNotFoundException {
-		data = archive.getEntry(ENTRY_NAME).getBuffer().asReadOnlyBuffer();
+		data = archive.getEntry(MapIndex.ENTRY_NAME).getBuffer().asReadOnlyBuffer();
 	}
 
 	/**
@@ -42,18 +37,18 @@ public class MapIndexDecoder {
 		int count = data.remaining() / (3 * Short.BYTES + Byte.BYTES);
 
 		int[] areas = new int[count];
-		int[] landscapes = new int[count];
 		int[] maps = new int[count];
+		int[] objects = new int[count];
 		boolean[] members = new boolean[count];
 
 		for (int index = 0; index < count; index++) {
 			areas[index] = data.getUnsignedShort();
 			maps[index] = data.getUnsignedShort();
-			landscapes[index] = data.getUnsignedShort();
+			objects[index] = data.getUnsignedShort();
 			members[index] = data.getBoolean();
 		}
 
-		return new MapIndex(areas, landscapes, maps, members);
+		return new MapIndex(areas, objects, maps, members);
 	}
 
 }

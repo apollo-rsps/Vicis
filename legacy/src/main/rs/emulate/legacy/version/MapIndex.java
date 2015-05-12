@@ -1,8 +1,11 @@
 package rs.emulate.legacy.version;
 
+import java.util.Objects;
+
+import com.google.common.base.Preconditions;
+
 /**
- * Represents the map_index entry in the versionlist archive, used for mapping region coordinates to landscape and map
- * data files.
+ * Contains data used for mapping region coordinates to object and map files.
  *
  * @author sfix
  * @author Major
@@ -10,14 +13,32 @@ package rs.emulate.legacy.version;
 public final class MapIndex {
 
 	/**
-	 * The area ids.
+	 * Creates a new MapIndex.
+	 *
+	 * @param areas The area ids, of the form {@code region_x << 8 | region_y}. Must not be {@code null}.
+	 * @param objects The object file ids. Must not be {@code null}.
+	 * @param maps The map file ids. Must not be {@code null}.
+	 * @param members The members-only flags. Must not be {@code null}.
+	 * @return The MapIndex.
+	 * @throws NullPointerException If any of the parameters are {@code null}.
 	 */
-	private final int[] areas;
+	public static MapIndex create(int[] areas, int[] objects, int[] maps, boolean[] members) {
+		Objects.requireNonNull(areas, "Area ids must not be null.");
+		Objects.requireNonNull(objects, "Object file ids must not be null.");
+		Objects.requireNonNull(maps, "Map file ids must not be null.");
+		Objects.requireNonNull(members, "Members flags must not be null.");
+
+		int expected = members.length;
+		Preconditions.checkArgument(expected == areas.length && expected == objects.length && expected == maps.length,
+				"MapIndex arrays must be of equal length.");
+
+		return new MapIndex(areas, objects, maps, members);
+	}
 
 	/**
-	 * The landscape file ids.
+	 * The area ids, of the form {@code region_x << 8 | region_y}.
 	 */
-	private final int[] landscapes;
+	private final int[] areas;
 
 	/**
 	 * The map file ids.
@@ -30,36 +51,38 @@ public final class MapIndex {
 	private final boolean[] members;
 
 	/**
+	 * The object file ids.
+	 */
+	private final int[] objects;
+
+	/**
+	 * The name of the archive entry containing the map index data.
+	 */
+	public static final String ENTRY_NAME = "map_index";
+
+	/**
 	 * Creates the MapIndex.
 	 *
-	 * @param areas The area ids.
-	 * @param landscapes The landscape file ids.
-	 * @param maps The map file ids.
-	 * @param members The members-only flags.
+	 * @param areas The area ids, of the form {@code region_x << 8 | region_y}. Must not be {@code null}.
+	 * @param objects The object file ids. Must not be {@code null}.
+	 * @param maps The map file ids. Must not be {@code null}.
+	 * @param members The members-only flags. Must not be {@code null}.
+	 * @throws NullPointerException If any of the parameters are {@code null}.
 	 */
-	public MapIndex(int[] areas, int[] landscapes, int[] maps, boolean[] members) {
+	public MapIndex(int[] areas, int[] objects, int[] maps, boolean[] members) {
 		this.areas = areas.clone();
-		this.landscapes = landscapes.clone();
+		this.objects = objects.clone();
 		this.maps = maps.clone();
 		this.members = members.clone();
 	}
 
 	/**
-	 * Gets the area ids. The returned array will be a deep copy.
+	 * Gets the area ids, of the form {@code region_x << 8 | region_y}. The returned array will be a deep copy.
 	 *
 	 * @return The area ids.
 	 */
 	public int[] getAreas() {
 		return areas.clone();
-	}
-
-	/**
-	 * Gets the landscape file ids. The returned array will be a deep copy.
-	 *
-	 * @return The landscape file ids.
-	 */
-	public int[] getLandscapes() {
-		return landscapes.clone();
 	}
 
 	/**
@@ -78,6 +101,24 @@ public final class MapIndex {
 	 */
 	public boolean[] getMembers() {
 		return members.clone();
+	}
+
+	/**
+	 * Gets the object file ids. The returned array will be a deep copy.
+	 *
+	 * @return The object file ids.
+	 */
+	public int[] getObjects() {
+		return objects.clone();
+	}
+
+	/**
+	 * Gets the amount of elements in this MapIndex
+	 *
+	 * @return The size.
+	 */
+	public int getSize() {
+		return areas.length;
 	}
 
 }
