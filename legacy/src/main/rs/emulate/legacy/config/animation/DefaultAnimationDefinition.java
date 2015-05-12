@@ -33,13 +33,6 @@ import rs.emulate.shared.util.DataBuffer;
  */
 public class DefaultAnimationDefinition<T extends AnimationDefinition> extends DefaultConfigDefinition<T> {
 
-	/**
-	 * Creates the DefaultAnimationDefinition.
-	 */
-	public DefaultAnimationDefinition() {
-		super();
-	}
-
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {
 		Map<Integer, ConfigProperty<?>> properties = new HashMap<>(11);
