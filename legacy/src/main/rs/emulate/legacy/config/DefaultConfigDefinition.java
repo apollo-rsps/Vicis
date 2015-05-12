@@ -6,10 +6,11 @@ import com.google.common.collect.ImmutableMap;
 
 /**
  * A base class for default definitions. All default definitions <strong>must</strong> be <strong>immutable</strong>.
- * 
+ *
  * @author Major
+ * @param <T> The type of definition this default is for.
  */
-public abstract class DefaultConfigDefinition {
+public abstract class DefaultConfigDefinition<T extends MutableConfigDefinition> {
 
 	/**
 	 * The map of opcodes to DefinitionProperty objects.
@@ -25,7 +26,7 @@ public abstract class DefaultConfigDefinition {
 
 	/**
 	 * Gets a {@link ConfigPropertyMap}
-	 * 
+	 *
 	 * @return The PropertyMap.
 	 */
 	public final ConfigPropertyMap toPropertyMap() {
@@ -34,7 +35,7 @@ public abstract class DefaultConfigDefinition {
 
 	/**
 	 * Initialises the DefaultDefinition.
-	 * 
+	 *
 	 * @return The {@link Map} of opcodes to {@link ConfigProperty} objects.
 	 */
 	protected abstract Map<Integer, ConfigProperty<?>> init();

@@ -2,6 +2,7 @@ package rs.emulate.legacy.config;
 
 import java.util.Map;
 
+import rs.emulate.legacy.config.varbit.BitVariableDefinition;
 import rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition;
 
 /**
@@ -9,7 +10,7 @@ import rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition;
  *
  * @author Major
  */
-public final class NamedDefaultVarbitDefinition extends DefaultBitVariableDefinition {
+public final class NamedDefaultVarbitDefinition extends DefaultBitVariableDefinition<BitVariableDefinition> {
 
 	/**
 	 * The ConfigPropertyType for the name of a BitVariable.

@@ -13,11 +13,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
@@ -28,25 +26,9 @@ import rs.emulate.shared.util.DataBuffer;
  * A default {@link NpcDefinition} used as a base.
  *
  * @author Major
+ * @param <T> The type of NpcDefinition this DefaultNpcDefinition is for.
  */
-public class DefaultNpcDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The DefaultNpcDefinition.
-	 */
-	private static final DefaultNpcDefinition DEFAULT = new DefaultNpcDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
-
-	/**
-	 * Creates the DefaultNpcDefinition.
-	 */
-	private DefaultNpcDefinition() {
-		super();
-	}
+public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

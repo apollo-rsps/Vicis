@@ -20,8 +20,9 @@ import rs.emulate.legacy.config.DefaultConfigDefinition;
  * A {@link DefaultConfigDefinition} for {@link FloorDefinition}s.
  *
  * @author Major
+ * @param <T> The type of {@link FloorDefinition} this default is for.
  */
-public class DefaultFloorDefinition extends DefaultConfigDefinition {
+public class DefaultFloorDefinition<T extends FloorDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

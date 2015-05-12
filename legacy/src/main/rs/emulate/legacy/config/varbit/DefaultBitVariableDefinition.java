@@ -7,10 +7,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
@@ -18,18 +16,9 @@ import rs.emulate.shared.util.DataBuffer;
  * A default {@link BitVariableDefinition} used as a base for an actual definition.
  *
  * @author Major
+ * @param <T> The type of {@link BitVariableDefinition} this default is for.
  */
-public class DefaultBitVariableDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The default definition.
-	 */
-	private static final DefaultBitVariableDefinition DEFAULT = new DefaultBitVariableDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+public class DefaultBitVariableDefinition<T extends BitVariableDefinition> extends DefaultConfigDefinition<T> {
 
 	/**
 	 * Creates the DefaultBitVariableDefinition.

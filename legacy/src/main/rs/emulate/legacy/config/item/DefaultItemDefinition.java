@@ -12,11 +12,9 @@ import static rs.emulate.legacy.config.item.ItemProperty.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
@@ -26,25 +24,9 @@ import rs.emulate.legacy.config.DynamicConfigPropertyType;
  * A default {@link ItemDefinition} used as a base for actual definitions.
  *
  * @author Major
+ * @param <T> The type of ItemDefinition this DefaultItemDefinition is for.
  */
-public class DefaultItemDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The DefaultItemDefinition.
-	 */
-	private static final DefaultItemDefinition DEFAULT = new DefaultItemDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
-
-	/**
-	 * Creates the DefaultItemDefinition.
-	 */
-	private DefaultItemDefinition() {
-		super();
-	}
+public class DefaultItemDefinition<T extends ItemDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

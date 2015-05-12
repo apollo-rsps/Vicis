@@ -5,35 +5,18 @@ import static rs.emulate.legacy.config.varp.ParameterVariableProperty.PARAMETER;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 
 /**
  * A default {@link ParameterVariableDefinition} used as a base.
  *
  * @author Major
+ * @param <T> The type of ParameterVariableDefinition this DefaultParameterVariableDefinition is for.
  */
-public class DefaultParameterVariableDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The DefaultParameterVariableDefinition.
-	 */
-	private static final DefaultParameterVariableDefinition DEFAULT = new DefaultParameterVariableDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
-
-	/**
-	 * Creates the DefaultParameterVariableDefinition.
-	 */
-	private DefaultParameterVariableDefinition() {
-		super();
-	}
+public class DefaultParameterVariableDefinition<T extends ParameterVariableDefinition> extends
+		DefaultConfigDefinition<T> {
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

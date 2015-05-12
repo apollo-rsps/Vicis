@@ -14,10 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
@@ -27,25 +25,9 @@ import rs.emulate.shared.util.DataBuffer;
  * A default {@link IdentikitDefinition} used as a base for an actual definition.
  *
  * @author Major
+ * @param <T> The type of IdentikitDefinition this DefaultIdentikitDefinition is for.
  */
-public class DefaultIdentikitDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The DefaultIdentikitDefinition.
-	 */
-	private static final DefaultIdentikitDefinition DEFAULT = new DefaultIdentikitDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
-
-	/**
-	 * Creates the DefaultIdentikitDefinition.
-	 */
-	private DefaultIdentikitDefinition() {
-		super();
-	}
+public class DefaultIdentikitDefinition<T extends IdentikitDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

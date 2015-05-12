@@ -11,11 +11,9 @@ import static rs.emulate.legacy.config.object.ObjectProperty.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigConstants;
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
@@ -26,25 +24,9 @@ import rs.emulate.shared.util.DataBuffer;
  * A default {@link ObjectDefinition} used as a base for actual definitions.
  *
  * @author Major
+ * @param <T> The type of ObjectDefinition this DefaultObjectDefinition is for.
  */
-public class DefaultObjectDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The default definition.
-	 */
-	private static final DefaultObjectDefinition DEFAULT = new DefaultObjectDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
-
-	/**
-	 * Creates the DefaultObjectDefinition.
-	 */
-	private DefaultObjectDefinition() {
-		super();
-	}
+public class DefaultObjectDefinition<T extends ObjectDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
 	protected Map<Integer, ConfigProperty<?>> init() {

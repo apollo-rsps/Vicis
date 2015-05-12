@@ -20,10 +20,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import rs.emulate.legacy.config.ConfigProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
@@ -31,23 +29,14 @@ import rs.emulate.shared.util.DataBuffer;
  * A default {@link AnimationDefinition} used as a base for an actual definitions.
  *
  * @author Major
+ * @param <T> The type of {@link AnimationDefinition} this default is for.
  */
-public class DefaultAnimationDefinition extends DefaultConfigDefinition {
-
-	/**
-	 * The DefaultAnimationDefinition.
-	 */
-	private static final DefaultAnimationDefinition DEFAULT = new DefaultAnimationDefinition();
-
-	/**
-	 * A {@link Supplier} that returns a {@link ConfigPropertyMap} copy of this default definition.
-	 */
-	public static final Supplier<ConfigPropertyMap> SUPPLIER = DEFAULT::toPropertyMap;
+public class DefaultAnimationDefinition<T extends AnimationDefinition> extends DefaultConfigDefinition<T> {
 
 	/**
 	 * Creates the DefaultAnimationDefinition.
 	 */
-	private DefaultAnimationDefinition() {
+	public DefaultAnimationDefinition() {
 		super();
 	}
 

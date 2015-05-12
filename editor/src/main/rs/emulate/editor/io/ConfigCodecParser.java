@@ -82,21 +82,21 @@ public final class ConfigCodecParser {
 	 * @return The {@link Map} of {@link ArchiveUtils#hash archive entry hashes} to {@link DefaultConfigDefinition} s.
 	 * @throws Exception If there is an error parsing the file.
 	 */
-	public Map<Integer, Class<? extends DefaultConfigDefinition>> parse() throws Exception {
+	public Map<Integer, Class<? extends DefaultConfigDefinition<?>>> parse() throws Exception {
 		XmlNode root = parser.parse(input);
 		Preconditions.checkArgument(root.getName().equals("codecs"), "XML root node must be named 'codecs'.");
 
 		XmlNode legacy = root.getChild("legacy").orElseThrow(createSupplier("codecs", "legacy"));
 		Collection<XmlNode> children = legacy.getChildren();
 
-		Map<Integer, Class<? extends DefaultConfigDefinition>> defaults = new HashMap<>(children.size());
+		Map<Integer, Class<? extends DefaultConfigDefinition<?>>> defaults = new HashMap<>(children.size());
 		for (XmlNode child : children) {
 			String name = child.getAttribute("name").orElseThrow(
 					() -> new IllegalArgumentException("<legacy> child nodes must have a 'name' attribute."));
 			int hash = ArchiveUtils.hash(name + ".dat");
 
 			String value = child.getValue();
-			Class<? extends DefaultConfigDefinition> clazz = loadClass(value);
+			Class<? extends DefaultConfigDefinition<?>> clazz = loadClass(value);
 
 			defaults.put(hash, clazz);
 		}
@@ -126,9 +126,10 @@ public final class ConfigCodecParser {
 	 * @throws IOException If there was an error reading from the Class file.
 	 */
 	@SuppressWarnings("unchecked")
-	private Class<? extends DefaultConfigDefinition> loadClass(String name) throws ClassNotFoundException, IOException {
+	private Class<? extends DefaultConfigDefinition<?>> loadClass(String name) throws ClassNotFoundException,
+			IOException {
 		try {
-			return (Class<? extends DefaultConfigDefinition>) Class.forName(name);
+			return (Class<? extends DefaultConfigDefinition<?>>) Class.forName(name);
 		} catch (ClassNotFoundException exception) {
 			URL[] urls = { DEBUG_CLASS_PATH.toUri().toURL(), CUSTOM_CLASS_PATH.toUri().toURL() };
 
@@ -136,7 +137,7 @@ public final class ConfigCodecParser {
 				int index = name.lastIndexOf(".");
 				String file = name.substring(index);
 
-				return (Class<? extends DefaultConfigDefinition>) loader.loadClass(file);
+				return (Class<? extends DefaultConfigDefinition<?>>) loader.loadClass(file);
 			}
 		}
 	}
