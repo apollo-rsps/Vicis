@@ -16,12 +16,7 @@ import com.google.common.collect.ImmutableList;
  *
  * @author Major
  */
-public final class VersionDecoder {
-
-	/**
-	 * The names of ArchiveEntries containing file version data.
-	 */
-	private static final String[] VERSION_ENTRY_NAMES = { "model_version", "anim_version", "midi_version", "map_version" };
+public final class VersionListDecoder {
 
 	/**
 	 * The version Archive.
@@ -29,25 +24,25 @@ public final class VersionDecoder {
 	private final Archive versions;
 
 	/**
-	 * Creates the VersionDecoder.
+	 * Creates the VersionListDecoder.
 	 *
 	 * @param versions The {@link Archive} containing the version data.
 	 */
-	public VersionDecoder(Archive versions) {
+	public VersionListDecoder(Archive versions) {
 		this.versions = versions;
 	}
 
 	/**
 	 * Decodes the file {@link VersionList}s.
-	 * 
+	 *
 	 * @return The {@link List} of file VersionLists.
 	 * @throws FileNotFoundException If any of the {@link ArchiveEntry} names could not be found.
 	 */
 	public List<VersionList> decode() throws FileNotFoundException {
-		List<VersionList> lists = new ArrayList<>(VERSION_ENTRY_NAMES.length);
+		List<VersionList> lists = new ArrayList<>(VersionList.VERSION_ENTRY_NAMES.length);
 
-		for (int type = 0; type < VERSION_ENTRY_NAMES.length; type++) {
-			String name = VERSION_ENTRY_NAMES[type];
+		for (int type = 0; type < VersionList.VERSION_ENTRY_NAMES.length; type++) {
+			String name = VersionList.VERSION_ENTRY_NAMES[type];
 			ArchiveEntry entry = versions.getEntry(name);
 			DataBuffer data = entry.getBuffer();
 

@@ -18,7 +18,7 @@ import com.google.common.base.Preconditions;
 public final class ConfigPropertyMap {
 
 	/**
-	 * Validates the specified {@link ConfigProperty} (i.e. ensures that it is not {@code null}).
+	 * Validates the specified {@link SerializableProperty} (i.e. ensures that it is not {@code null}).
 	 * 
 	 * @param property The ConfigProperty to validate.
 	 * @param key The key used to access the ConfigProperty.
@@ -26,34 +26,34 @@ public final class ConfigPropertyMap {
 	 * @throws IllegalArgumentException If the ConfigProperty is {@code null}.
 	 */
 	@SuppressWarnings("unchecked")
-	private static <T> ConfigProperty<T> validate(ConfigProperty<?> property, Object key) {
-		return (ConfigProperty<T>) Objects.requireNonNull(property, "No property with a key of " + key + " exists.");
+	private static <T> SerializableProperty<T> validate(SerializableProperty<?> property, Object key) {
+		return (SerializableProperty<T>) Objects.requireNonNull(property, "No property with a key of " + key + " exists.");
 	}
 
 	/**
 	 * The Map of opcodes to ConfigProperty objects.
 	 */
-	private final Map<Integer, ConfigProperty<?>> opcodes;
+	private final Map<Integer, SerializableProperty<?>> opcodes;
 
 	/**
 	 * The Map of ConfigPropertyTypes to ConfigProperty objects.
 	 */
-	private final Map<ConfigPropertyType, ConfigProperty<?>> properties;
+	private final Map<ConfigPropertyType, SerializableProperty<?>> properties;
 
 	/**
 	 * Creates the PropertyMap.
 	 *
-	 * @param opcodes The {@link Map} of opcodes to {@link ConfigProperty} objects.
+	 * @param opcodes The {@link Map} of opcodes to {@link SerializableProperty} objects.
 	 * @throws IllegalArgumentException If {@code opcodes} contains a mapping for opcode 0.
 	 */
-	public ConfigPropertyMap(Map<Integer, ConfigProperty<?>> opcodes) {
+	public ConfigPropertyMap(Map<Integer, SerializableProperty<?>> opcodes) {
 		Preconditions.checkArgument(!opcodes.containsKey(0), "Opcode 0 is reserved.");
 		this.opcodes = new HashMap<>(opcodes);
 
-		Map<ConfigPropertyType, ConfigProperty<?>> properties = new HashMap<>(opcodes.size());
+		Map<ConfigPropertyType, SerializableProperty<?>> properties = new HashMap<>(opcodes.size());
 
-		for (Map.Entry<Integer, ConfigProperty<?>> entry : opcodes.entrySet()) {
-			ConfigProperty<?> property = entry.getValue().duplicate();
+		for (Map.Entry<Integer, SerializableProperty<?>> entry : opcodes.entrySet()) {
+			SerializableProperty<?> property = entry.getValue().duplicate();
 			this.opcodes.put(entry.getKey(), property);
 			properties.put(property.getType(), property);
 		}
@@ -71,44 +71,44 @@ public final class ConfigPropertyMap {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} with the specified {@link ConfigPropertyType}.
+	 * Gets the {@link SerializableProperty} with the specified {@link ConfigPropertyType}.
 	 *
 	 * @param name The name of the ConfigProperty.
 	 * @return The ConfigProperty.
 	 * @throws IllegalArgumentException If no ConfigProperty with the specified name exists.
 	 */
-	public <T> ConfigProperty<T> get(ConfigPropertyType name) {
+	public <T> SerializableProperty<T> get(ConfigPropertyType name) {
 		return validate(properties.get(name), name);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} with the specified opcode.
+	 * Gets the {@link SerializableProperty} with the specified opcode.
 	 *
 	 * @param opcode The opcode of the ConfigProperty.
 	 * @return The ConfigProperty.
 	 * @throws IllegalArgumentException If no ConfigProperty with the specified opcode exists.
 	 */
-	public <T> ConfigProperty<T> get(int opcode) {
+	public <T> SerializableProperty<T> get(int opcode) {
 		return validate(opcodes.get(opcode), opcode);
 	}
 
 	/**
-	 * Gets a {@link Set} containing {@link java.util.Map.Entry Map.Entry} objects of opcodes to {@link ConfigProperty}
+	 * Gets a {@link Set} containing {@link java.util.Map.Entry Map.Entry} objects of opcodes to {@link SerializableProperty}
 	 * objects.
 	 * 
 	 * @return The Set of Map Entry objects.
 	 */
-	public Set<Map.Entry<Integer, ConfigProperty<?>>> getProperties() {
+	public Set<Map.Entry<Integer, SerializableProperty<?>>> getProperties() {
 		return opcodes.entrySet();
 	}
 
 	/**
-	 * Adds a {@link ConfigProperty} with the specified opcode.
+	 * Adds a {@link SerializableProperty} with the specified opcode.
 	 *
 	 * @param opcode The opcode.
 	 * @param property The ConfigProperty.
 	 */
-	public void put(int opcode, ConfigProperty<?> property) {
+	public void put(int opcode, SerializableProperty<?> property) {
 		Assertions.checkPositive(opcode, "Error placing property - opcode must be positive.");
 
 		opcodes.put(opcode, property);
@@ -125,11 +125,11 @@ public final class ConfigPropertyMap {
 	}
 
 	/**
-	 * Gets a {@link Collection} containing the values of this ConfigPropertyMap (i.e. the {@link ConfigProperty} objects).
+	 * Gets a {@link Collection} containing the values of this ConfigPropertyMap (i.e. the {@link SerializableProperty} objects).
 	 *
 	 * @return The Collection of values.
 	 */
-	public Collection<ConfigProperty<?>> values() {
+	public Collection<SerializableProperty<?>> values() {
 		return properties.values();
 	}
 

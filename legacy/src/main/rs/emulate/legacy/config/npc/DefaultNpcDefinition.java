@@ -15,7 +15,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import rs.emulate.legacy.config.ConfigConstants;
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
@@ -31,8 +31,8 @@ import rs.emulate.shared.util.DataBuffer;
 public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> properties = new HashMap<>();
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> properties = new HashMap<>();
 
 		Function<DataBuffer, int[]> modelDecoder = buffer -> {
 			int count = buffer.getUnsignedByte();
@@ -47,7 +47,7 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 			Arrays.stream(models).forEach(buffer::putShort);
 		};
 
-		properties.put(1, new ConfigProperty<>(MODELS, null, modelEncoder, modelDecoder, models -> models.length
+		properties.put(1, new SerializableProperty<>(MODELS, null, modelEncoder, modelDecoder, models -> models.length
 				* Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
 
 		properties.put(2, asciiString(NAME, "null"));
@@ -57,7 +57,7 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 		properties.put(14, unsignedShort(WALKING_ANIMATION, -1));
 
 		properties
-				.put(17, new ConfigProperty<>(ANIMATION_SET, MovementAnimationSet.EMPTY, MovementAnimationSet::encode,
+				.put(17, new SerializableProperty<>(ANIMATION_SET, MovementAnimationSet.EMPTY, MovementAnimationSet::encode,
 						MovementAnimationSet::decode, Short.BYTES * 4, input -> Optional.empty())); // XXX
 
 		for (int option = 1; option <= NpcDefinition.INTERACTION_COUNT; option++) {
@@ -67,7 +67,7 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 
 		properties.put(40, ConfigUtils.newColourProperty(COLOURS));
 
-		properties.put(60, new ConfigProperty<>(SECONDARY_MODELS, null, modelEncoder, modelDecoder,
+		properties.put(60, new SerializableProperty<>(SECONDARY_MODELS, null, modelEncoder, modelDecoder,
 				models -> models.length * Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
 
 		for (int option = 1; option <= 3; option++) {
@@ -85,7 +85,7 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 		properties.put(102, unsignedShort(HEAD_ICON, -1));
 		properties.put(103, unsignedShort(ROTATION, 32));
 
-		properties.put(106, new ConfigProperty<>(MORPHISM_SET, MorphismSet.EMPTY, MorphismSet::encode,
+		properties.put(106, new SerializableProperty<>(MORPHISM_SET, MorphismSet.EMPTY, MorphismSet::encode,
 				MorphismSet::decode, morphisms -> Short.BYTES * (2 + morphisms.getCount()) + Byte.BYTES,
 				input -> Optional.empty())); // XXX
 

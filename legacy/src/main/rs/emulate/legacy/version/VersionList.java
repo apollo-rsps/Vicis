@@ -12,6 +12,16 @@ import com.google.common.base.Preconditions;
 public final class VersionList {
 
 	/**
+	 * The names of ArchiveEntries containing file version data.
+	 */
+	public static final String[] VERSION_ENTRY_NAMES = { "model_version", "anim_version", "midi_version", "map_version" };
+
+	/**
+	 * The name suffix of VersionList entries.
+	 */
+	static final String ENTRY_NAME_SUFFIX = "_version";
+
+	/**
 	 * The file versions.
 	 */
 	private final int[] versions;
@@ -19,7 +29,7 @@ public final class VersionList {
 	/**
 	 * Creates the VersionList.
 	 *
-	 * @param versions The file versions. Further changes to this array will not affect this list.
+	 * @param versions The file versions. Changes to this array will not affect this list. Must not be {@code null}.
 	 */
 	public VersionList(int[] versions) {
 		this.versions = versions.clone();
@@ -27,7 +37,7 @@ public final class VersionList {
 
 	/**
 	 * Gets the version number of the specified file.
-	 * 
+	 *
 	 * @param file The file.
 	 * @return The version number.
 	 */
@@ -38,7 +48,7 @@ public final class VersionList {
 
 	/**
 	 * Gets the array of file versions. Changes to this array will not affect this list.
-	 * 
+	 *
 	 * @return The versions.
 	 */
 	public int[] getVersions() {
@@ -47,7 +57,7 @@ public final class VersionList {
 
 	/**
 	 * Gets the amount of file versions.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int size() {

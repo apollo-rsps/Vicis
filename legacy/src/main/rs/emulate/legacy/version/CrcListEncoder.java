@@ -7,55 +7,45 @@ import java.util.List;
 import rs.emulate.legacy.archive.ArchiveEntry;
 import rs.emulate.shared.util.DataBuffer;
 
-import com.google.common.base.Preconditions;
-
 /**
- * Encodes CRC data in the version Archive.
+ * Encodes {@link CrcList}s into {@link ArchiveEntry} objects.
  *
  * @author Major
  */
-public final class CrcEncoder {
+public final class CrcListEncoder {
 
 	/**
 	 * The List of CrcLists.
 	 */
-	private final List<CrcList> crcs;
+	private final List<CrcList> lists;
 
 	/**
-	 * The names of the CRC ArchiveEntries.
-	 */
-	private final List<String> names;
-
-	/**
-	 * Creates the CrcEncoder.
+	 * Creates the CrcListEncoder.
 	 *
 	 * @param crcs The {@link List} of {@link CrcList}s.
-	 * @param names The names of the CRC {@link ArchiveEntry} objects.
 	 */
-	public CrcEncoder(List<CrcList> crcs, List<String> names) {
-		Preconditions.checkArgument(crcs.size() == names.size(), "CrcList count and names count must be equal.");
-
-		this.crcs = new ArrayList<>(crcs);
-		this.names = new ArrayList<>(names);
+	public CrcListEncoder(List<CrcList> crcs) {
+		this.lists = new ArrayList<>(crcs);
 	}
 
 	/**
 	 * Encodes the {@link CrcList}s.
-	 * 
+	 *
 	 * @return The array of {@link ArchiveEntry} objects.
 	 */
 	public ArchiveEntry[] encode() {
-		int size = crcs.size();
+		int size = lists.size();
 		ArchiveEntry[] entries = new ArchiveEntry[size];
 
 		for (int index = 0; index < size; index++) {
-			CrcList list = crcs.get(index);
+			CrcList list = lists.get(index);
+			VersionEntryType type = list.getType();
 			int[] crcs = list.getCrcs();
 
 			DataBuffer buffer = DataBuffer.allocate(crcs.length * Integer.BYTES);
 			Arrays.stream(crcs).forEach(buffer::putInt);
 
-			entries[index] = new ArchiveEntry(names.get(index), buffer);
+			entries[index] = new ArchiveEntry(type.asCrcList(), buffer);
 		}
 
 		return entries;

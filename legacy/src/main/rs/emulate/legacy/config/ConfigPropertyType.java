@@ -18,13 +18,13 @@ public interface ConfigPropertyType extends PropertyType {
 	public int opcode();
 
 	/**
-	 * Gets the {@link ConfigProperty} associated with this ConfigPropertyType from the specified
+	 * Gets the {@link SerializableProperty} associated with this ConfigPropertyType from the specified
 	 * {@link MutableConfigDefinition}.
 	 * 
 	 * @param definition The MutableDefinition.
 	 * @return The DefinitionProperty.
 	 */
-	default public <T> ConfigProperty<T> propertyFrom(MutableConfigDefinition definition) {
+	default public <T> SerializableProperty<T> propertyFrom(MutableConfigDefinition definition) {
 		return definition.getProperty(this);
 	}
 

@@ -1,14 +1,45 @@
 <codecs>
 
   <legacy>
-    <animation name="seq">rs.emulate.legacy.config.animation.DefaultAnimationDefinition</animation>
-    <graphic name="spotanim">rs.emulate.legacy.config.graphic.DefaultGraphicDefinition</graphic>   
-    <item name="obj">rs.emulate.legacy.config.item.DefaultItemDefinition</item>
-    <kit name="kit">rs.emulate.legacy.config.kit.DefaultIdentikitDefinition</kit>
-    <npc name="npc">rs.emulate.legacy.config.npc.DefaultNpcDefinition</npc>
-    <object name="loc">rs.emulate.legacy.config.object.DefaultObjectDefinition</object>
-    <varbit name="varbit">rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition</varbit>
-    <varp name="varp">rs.emulate.legacy.config.varp.DefaultParameterVariableDefinition</varp>
+    <animation name="seq">
+      <definition>rs.emulate.legacy.config.animation.AnimationDefinition</definition>
+      <default>rs.emulate.legacy.config.animation.DefaultAnimationDefinition</default>
+    </animation>
+
+    <graphic name="spotanim">
+      <definition>rs.emulate.legacy.config.graphic.GraphicDefinition</definition>
+      <default>rs.emulate.legacy.config.graphic.DefaultGraphicDefinition</default>
+    </graphic>
+
+    <item name="obj">
+      <definition>rs.emulate.legacy.config.item.ItemDefinition</definition>
+      <default>rs.emulate.legacy.config.item.DefaultItemDefinition</default>
+    </item>
+
+    <kit name="kit">
+      <definition>rs.emulate.legacy.config.kit.IdentikitDefinition</definition>
+      <default>rs.emulate.legacy.config.kit.DefaultIdentikitDefinition</default>
+    </kit>
+
+    <npc name="npc">
+      <definition>rs.emulate.legacy.config.npc.NpcDefinition</definition>
+      <default>rs.emulate.legacy.config.npc.DefaultNpcDefinition</default>
+    </npc>
+
+    <object name="loc">
+      <definition>rs.emulate.legacy.config.object.ObjectDefinition</definition>
+      <default>rs.emulate.legacy.config.object.DefaultObjectDefinition</default>
+    </object>
+
+    <varbit name="varbit">
+      <definition>rs.emulate.legacy.config.varbit.BitVariableDefinition</definition>
+      <default>rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition</default>
+    </varbit>
+
+    <varp name="varp">
+      <definition>rs.emulate.legacy.config.varp.ParameterVariableDefinition</definition>
+      <default>rs.emulate.legacy.config.varp.DefaultParameterVariableDefinition</default>
+    </varp>
   </legacy>
 
   <modern>

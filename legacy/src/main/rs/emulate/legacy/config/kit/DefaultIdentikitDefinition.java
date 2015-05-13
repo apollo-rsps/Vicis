@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyType;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
@@ -30,11 +30,11 @@ import rs.emulate.shared.util.DataBuffer;
 public class DefaultIdentikitDefinition<T extends IdentikitDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> defaults = new HashMap<>(27);
 
 		defaults.put(1,
-				new ConfigProperty<>(PART, Part.NULL, Part::encode, Part::decode, Byte.BYTES, in -> Optional.empty())); // XXX
+				new SerializableProperty<>(PART, Part.NULL, Part::encode, Part::decode, Byte.BYTES, in -> Optional.empty())); // XXX
 
 		BiConsumer<DataBuffer, int[]> modelsEncoder = (buffer, models) -> {
 			buffer.putByte(models.length);
@@ -49,7 +49,7 @@ public class DefaultIdentikitDefinition<T extends IdentikitDefinition> extends D
 			return models;
 		};
 
-		defaults.put(2, new ConfigProperty<>(MODELS, null, modelsEncoder, modelDecoder, models -> models.length
+		defaults.put(2, new SerializableProperty<>(MODELS, null, modelsEncoder, modelDecoder, models -> models.length
 				* Short.SIZE + Byte.SIZE, input -> Optional.empty())); // XXX
 		defaults.put(3, alwaysTrue(PLAYER_DESIGN_STYLE, false));
 

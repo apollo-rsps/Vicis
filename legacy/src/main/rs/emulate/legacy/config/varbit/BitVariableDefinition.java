@@ -3,7 +3,7 @@ package rs.emulate.legacy.config.varbit;
 import java.util.Arrays;
 import java.util.List;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
 
@@ -73,11 +73,11 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the {@link Variable}.
+	 * Gets the {@link SerializableProperty} containing the {@link Variable}.
 	 * 
 	 * @return The variable.
 	 */
-	public ConfigProperty<Variable> getVariable() {
+	public SerializableProperty<Variable> getVariable() {
 		return getProperty(BitVariableProperty.VARIABLE);
 	}
 
@@ -91,7 +91,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the value of the {@link BitVariableProperty#VARIABLE} {@link ConfigProperty}.
+	 * Gets the value of the {@link BitVariableProperty#VARIABLE} {@link SerializableProperty}.
 	 * 
 	 * @return The {@link Variable}.
 	 */

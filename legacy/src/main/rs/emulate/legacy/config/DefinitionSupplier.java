@@ -28,10 +28,9 @@ public final class DefinitionSupplier<T extends MutableConfigDefinition> {
 
 			return new DefinitionSupplier<>(name, definition, constructor, immutable);
 		} catch (ReflectiveOperationException exception) {
-			throw new IllegalStateException("Failed to create an instance of a MutableConfigDefinition."
-					+ "Please ensure that your configuration file is correct, and that your custom "
-					+ "DefaultConfigDefinition(s) have an appropriate (id, ConfigPropertyMap) constructor "
-					+ " (if applicable).", exception);
+			throw new IllegalStateException("Failed to create a DefinitionSupplier. Please ensure that your "
+					+ "configuration file is correct, and that your custom DefaultConfigDefinition(s) have an "
+					+ "appropriate (id, ConfigPropertyMap) constructor (if applicable).", exception);
 		}
 	}
 

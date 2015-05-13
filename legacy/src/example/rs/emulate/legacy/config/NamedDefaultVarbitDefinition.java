@@ -18,8 +18,8 @@ public final class NamedDefaultVarbitDefinition extends DefaultBitVariableDefini
 	private static final ConfigPropertyType NAME_PROPERTY_TYPE = DynamicConfigPropertyType.valueOf("name", 2);
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> properties = super.init();
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> properties = super.init();
 
 		properties.put(2, Properties.asciiString(NAME_PROPERTY_TYPE, "null"));
 

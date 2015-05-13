@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 public abstract class MutableConfigDefinition {
 
 	/**
-	 * The PropertyMap.
+	 * The ConfigPropertyMap.
 	 */
 	protected final ConfigPropertyMap properties;
 
@@ -38,21 +38,21 @@ public abstract class MutableConfigDefinition {
 	}
 
 	/**
-	 * Adds a {@link ConfigProperty} to this MutableDefinition, using the smallest available (positive) opcode.
+	 * Adds a {@link SerializableProperty} to this MutableDefinition, using the smallest available (positive) opcode.
 	 *
 	 * @param property The DefinitionProperty.
 	 */
-	public final void addProperty(ConfigProperty<?> property) {
+	public final void addProperty(SerializableProperty<?> property) {
 		addProperty(properties.size(), property);
 	}
 
 	/**
-	 * Adds a {@link ConfigProperty} with the specified opcode to this MutableDefinition.
+	 * Adds a {@link SerializableProperty} with the specified opcode to this MutableDefinition.
 	 *
 	 * @param opcode The opcode.
 	 * @param property The DefinitionProperty.
 	 */
-	public final void addProperty(int opcode, ConfigProperty<?> property) {
+	public final void addProperty(int opcode, SerializableProperty<?> property) {
 		properties.put(opcode, property);
 	}
 
@@ -66,54 +66,54 @@ public abstract class MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link Set} of {@link Map} {@link Entry} objects containing the opcodes and {@link ConfigProperty}
+	 * Gets the {@link Set} of {@link Map} {@link Entry} objects containing the opcodes and {@link SerializableProperty}
 	 * objects.
 	 *
 	 * @return The Set.
 	 */
-	public final Set<Entry<Integer, ConfigProperty<?>>> getProperties() {
+	public final Set<Entry<Integer, SerializableProperty<?>>> getProperties() {
 		return properties.getProperties();
 	}
 
 	/**
-	 * Gets a {@link ConfigProperty} with the specified opcode.
+	 * Gets a {@link SerializableProperty} with the specified opcode.
 	 *
 	 * @param opcode The opcode of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
-	public final <T> ConfigProperty<T> getProperty(int opcode) {
+	public final <T> SerializableProperty<T> getProperty(int opcode) {
 		@SuppressWarnings("unchecked")
-		ConfigProperty<T> property = (ConfigProperty<T>) properties.get(opcode);
+		SerializableProperty<T> property = (SerializableProperty<T>) properties.get(opcode);
 		Preconditions.checkNotNull(property, "No property with opcode " + opcode + " exists.");
 		return property;
 	}
 
 	/**
-	 * Gets a {@link ConfigProperty} with the specified {@link ConfigPropertyType}.
+	 * Gets a {@link SerializableProperty} with the specified {@link ConfigPropertyType}.
 	 *
 	 * @param name The name of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 * @throws IllegalArgumentException If no DefinitionProperty with the specified name exists.
 	 */
-	public final <T> ConfigProperty<T> getProperty(ConfigPropertyType name) {
+	public final <T> SerializableProperty<T> getProperty(ConfigPropertyType name) {
 		@SuppressWarnings("unchecked")
-		ConfigProperty<T> property = (ConfigProperty<T>) properties.get(name);
+		SerializableProperty<T> property = (SerializableProperty<T>) properties.get(name);
 		Preconditions.checkNotNull(property, "No property called " + name + " exists.");
 		return property;
 	}
 
 	/**
-	 * Sets the {@link ConfigProperty} with the specified name.
+	 * Sets the {@link SerializableProperty} with the specified name.
 	 *
 	 * @param opcode The opcode of the DefinitionProperty.
 	 * @param property The DefinitionProperty.
 	 */
-	public final void setProperty(int opcode, ConfigProperty<?> property) {
+	public final void setProperty(int opcode, SerializableProperty<?> property) {
 		properties.put(opcode, property);
 	}
 
 	/**
-	 * Sets the value of the {@link ConfigProperty} with the specified opcode.
+	 * Sets the value of the {@link SerializableProperty} with the specified opcode.
 	 *
 	 * @param name The {@link ConfigPropertyType name} of the DefinitionProperty.
 	 * @param value The value.
@@ -126,8 +126,8 @@ public abstract class MutableConfigDefinition {
 	public final String toString() {
 		ToStringHelper helper = MoreObjects.toStringHelper(this);
 
-		for (Map.Entry<Integer, ConfigProperty<?>> entry : properties.getProperties()) {
-			ConfigProperty<?> property = entry.getValue();
+		for (Map.Entry<Integer, SerializableProperty<?>> entry : properties.getProperties()) {
+			SerializableProperty<?> property = entry.getValue();
 			if (property.valuePresent()) {
 				String name = property.getName();
 

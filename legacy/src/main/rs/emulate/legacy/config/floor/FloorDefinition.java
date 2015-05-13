@@ -1,6 +1,6 @@
 package rs.emulate.legacy.config.floor;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
 
@@ -22,47 +22,47 @@ public class FloorDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the colour of this FloorDefinition, in rgb form.
+	 * Gets the {@link SerializableProperty} containing the colour of this FloorDefinition, in rgb form.
 	 *
 	 * @return The ConfigProperty containing the rgb colour.
 	 */
-	public ConfigProperty<Integer> colour() {
+	public SerializableProperty<Integer> colour() {
 		return properties.get(FloorProperty.COLOUR);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the minimap colour of this FloorDefinition, in rgb form.
+	 * Gets the {@link SerializableProperty} containing the minimap colour of this FloorDefinition, in rgb form.
 	 *
 	 * @return The ConfigProperty containing the rgb minimap colour.
 	 */
-	public ConfigProperty<Integer> minimapColour() {
+	public SerializableProperty<Integer> minimapColour() {
 		return properties.get(FloorProperty.MINIMAP_COLOUR);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the name of this FloorDefinition.
+	 * Gets the {@link SerializableProperty} containing the name of this FloorDefinition.
 	 *
 	 * @return The ConfigProperty containing the name.
 	 */
-	public ConfigProperty<String> name() {
+	public SerializableProperty<String> name() {
 		return properties.get(FloorProperty.NAME);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the shadowed flag of this FloorDefinition.
+	 * Gets the {@link SerializableProperty} containing the shadowed flag of this FloorDefinition.
 	 *
 	 * @return The ConfigProperty containing the shadowed flag.
 	 */
-	public ConfigProperty<Boolean> shadowed() {
+	public SerializableProperty<Boolean> shadowed() {
 		return properties.get(FloorProperty.SHADOWED);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the texture id of this FloorDefinition.
+	 * Gets the {@link SerializableProperty} containing the texture id of this FloorDefinition.
 	 *
 	 * @return The ConfigProperty containing the texture id.
 	 */
-	public ConfigProperty<Integer> texture() {
+	public SerializableProperty<Integer> texture() {
 		return properties.get(FloorProperty.TEXTURE);
 	}
 

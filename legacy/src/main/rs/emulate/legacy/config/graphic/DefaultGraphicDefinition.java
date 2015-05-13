@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import rs.emulate.legacy.config.ConfigConstants;
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 
@@ -28,8 +28,8 @@ import rs.emulate.legacy.config.DefaultConfigDefinition;
 public class DefaultGraphicDefinition<T extends GraphicDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> defaults = new HashMap<>(27);
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> defaults = new HashMap<>(27);
 
 		defaults.put(1, unsignedShort(MODEL, 0));
 		defaults.put(2, unsignedShort(ANIMATION, -1));

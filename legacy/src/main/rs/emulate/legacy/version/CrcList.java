@@ -12,22 +12,43 @@ import com.google.common.base.Preconditions;
 public final class CrcList {
 
 	/**
+	 * The name suffix of CrcList entries.
+	 */
+	static final String ENTRY_NAME_SUFFIX = "_crc";
+
+	/**
 	 * The file CRCs.
 	 */
 	private final int[] crcs;
 
 	/**
+	 * The type of this CrcList.
+	 */
+	private final VersionEntryType type;
+
+	/**
 	 * Creates the CrcList.
 	 *
+	 * @param type The {@link VersionEntryType} of the CrcList.
 	 * @param crcs The file CRCs. Further changes to this array will not affect this list.
 	 */
-	public CrcList(int[] crcs) {
+	public CrcList(VersionEntryType type, int[] crcs) {
+		this.type = type;
 		this.crcs = crcs.clone();
 	}
 
 	/**
+	 * Gets the {@link VersionEntryType} of this CrcList.
+	 *
+	 * @return The type.
+	 */
+	public VersionEntryType getType() {
+		return type;
+	}
+
+	/**
 	 * Gets the CRC of the specified file.
-	 * 
+	 *
 	 * @param file The file.
 	 * @return The CRC.
 	 */
@@ -38,7 +59,7 @@ public final class CrcList {
 
 	/**
 	 * Gets the array of file CRCs. Changes to this array will not affect this list.
-	 * 
+	 *
 	 * @return The CRCs.
 	 */
 	public int[] getCrcs() {
@@ -47,7 +68,7 @@ public final class CrcList {
 
 	/**
 	 * Gets the amount of file CRCs.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int size() {

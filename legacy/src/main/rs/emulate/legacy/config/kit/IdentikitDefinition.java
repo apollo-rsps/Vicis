@@ -1,6 +1,6 @@
 package rs.emulate.legacy.config.kit;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.MutableConfigDefinition;
@@ -46,11 +46,11 @@ public class IdentikitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the body model ids of this IdentikitDefinition.
+	 * Gets the {@link SerializableProperty} containing the body model ids of this IdentikitDefinition.
 	 *
 	 * @return The {@link IdentikitProperty#MODELS} ConfigProperty.
 	 */
-	public ConfigProperty<int[]> getBodyModels() {
+	public SerializableProperty<int[]> getBodyModels() {
 		return getProperty(IdentikitProperty.MODELS);
 	}
 
@@ -63,8 +63,8 @@ public class IdentikitDefinition extends MutableConfigDefinition {
 		ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
-			ConfigProperty<Integer> original = getProperty(ConfigUtils.getOriginalColourPropertyName(slot));
-			ConfigProperty<Integer> replacement = getProperty(ConfigUtils.getReplacementColourPropertyName(slot));
+			SerializableProperty<Integer> original = getProperty(ConfigUtils.getOriginalColourPropertyName(slot));
+			SerializableProperty<Integer> replacement = getProperty(ConfigUtils.getReplacementColourPropertyName(slot));
 
 			builder.put(original.getValue(), replacement.getValue());
 		}
@@ -73,12 +73,12 @@ public class IdentikitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the specified head model id of this IdentikitDefinition.
+	 * Gets the {@link SerializableProperty} containing the specified head model id of this IdentikitDefinition.
 	 *
 	 * @param model The model id.
 	 * @return The head model ConfigProperty.
 	 */
-	public ConfigProperty<Integer> getHeadModel(int model) {
+	public SerializableProperty<Integer> getHeadModel(int model) {
 		return getProperty(ConfigUtils.newOptionProperty(IdentikitDefinition.HEAD_MODEL_PREFIX, model));
 	}
 
@@ -98,21 +98,21 @@ public class IdentikitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the part of this IdentikitDefinition.
+	 * Gets the {@link SerializableProperty} containing the part of this IdentikitDefinition.
 	 *
 	 * @return The {@link IdentikitProperty#PART} ConfigProperty.
 	 */
-	public ConfigProperty<Part> getPart() {
+	public SerializableProperty<Part> getPart() {
 		return getProperty(IdentikitProperty.PART);
 	}
 
 	/**
-	 * Returns the {@link ConfigProperty} containing whether or not this IdentikitDefinition can be used when designing
+	 * Returns the {@link SerializableProperty} containing whether or not this IdentikitDefinition can be used when designing
 	 * a player.
 	 *
 	 * @return The {@link IdentikitProperty#PLAYER_DESIGN_STYLE} ConfigProperty.
 	 */
-	public ConfigProperty<Boolean> isPlayerDesignStyle() {
+	public SerializableProperty<Boolean> isPlayerDesignStyle() {
 		return getProperty(IdentikitProperty.PLAYER_DESIGN_STYLE);
 	}
 

@@ -2,8 +2,6 @@ package rs.emulate.editor;
 
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,24 +9,15 @@ import rs.emulate.legacy.AccessMode;
 import rs.emulate.legacy.Cache;
 import rs.emulate.legacy.FileDescriptor;
 import rs.emulate.legacy.IndexedFileSystem;
-import rs.emulate.legacy.archive.Archive;
-import rs.emulate.legacy.config.ConfigDecoder;
-import rs.emulate.legacy.config.Suppliers;
-import rs.emulate.legacy.config.object.ObjectDefinition;
-import rs.emulate.legacy.map.MapFileDecoder;
-import rs.emulate.legacy.version.MapIndex;
-import rs.emulate.legacy.version.MapIndexDecoder;
 import rs.emulate.shared.util.DataBuffer;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.primitives.Ints;
 
 /**
  * The core class.
  *
  * @author Major
  */
-@SuppressWarnings("unused")
 public final class Editor extends Application {
 
 	/**
@@ -60,15 +49,8 @@ public final class Editor extends Application {
 		try {
 			this.fs = new IndexedFileSystem(Paths.get("data/resources/", version), AccessMode.READ);
 
+			@SuppressWarnings("unused")
 			Cache cache = initCache();
-			Archive versions = cache.getArchive(new FileDescriptor(0, 5));
-			MapIndexDecoder decoder = new MapIndexDecoder(versions);
-			MapIndex index = decoder.decode();
-
-			for (int map : index.getMaps()) {
-				MapFileDecoder mapFileDecoder = MapFileDecoder.create(fs, map);
-				mapFileDecoder.decode();
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -92,38 +74,6 @@ public final class Editor extends Application {
 		}
 
 		return cache;
-	}
-
-	private void test(Cache cache) throws IOException { // temporary
-		FileDescriptor descriptor = new FileDescriptor(0, 2);
-		Archive config = cache.getArchive(descriptor);
-
-		ConfigDecoder<ObjectDefinition> decoder = new ConfigDecoder<>(config, Suppliers.OBJECT_SUPPLIER);
-		List<ObjectDefinition> definitions = decoder.decode();
-
-		definitions.stream().filter(def -> def.name().getValue().toLowerCase().contains("patch"))
-				.mapToInt(ObjectDefinition::getId).forEach(System.out::println);
-
-		ObjectDefinition patch = definitions.get(8391);
-		System.out.println(patch);
-
-		System.out.print("Type an id: ");
-		try (Scanner scanner = new Scanner(System.in)) {
-			while (true) {
-				String in = scanner.nextLine();
-
-				if (in.equals("q")) {
-					break;
-				}
-
-				Integer value = Ints.tryParse(in);
-				if (value != null && value >= 0 && value < definitions.size()) {
-					System.out.println(definitions.get(value));
-				} else {
-					System.out.println("Illegal value, must be [0, " + definitions.size() + ").");
-				}
-			}
-		}
 	}
 
 }

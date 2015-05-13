@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
@@ -28,8 +28,8 @@ public class DefaultBitVariableDefinition<T extends BitVariableDefinition> exten
 	}
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> properties = new HashMap<>(1);
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> properties = new HashMap<>(1);
 
 		BiConsumer<DataBuffer, Variable> encoder = (buffer, bits) -> buffer.putShort(bits.getVariable())
 				.putByte(bits.getHigh()).putByte(bits.getLow());
@@ -42,7 +42,7 @@ public class DefaultBitVariableDefinition<T extends BitVariableDefinition> exten
 			return new Variable(variable, high, low);
 		};
 
-		properties.put(1, new ConfigProperty<>(VARIABLE, Variable.EMPTY, encoder, decoder,
+		properties.put(1, new SerializableProperty<>(VARIABLE, Variable.EMPTY, encoder, decoder,
 				Short.BYTES + 2 * Byte.BYTES, input -> Optional.empty())); // XXX
 
 		return properties;

@@ -2,7 +2,7 @@ package rs.emulate.legacy.config.npc;
 
 import java.util.Map;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
 
@@ -39,182 +39,182 @@ public class NpcDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the animation set.
+	 * Gets the {@link SerializableProperty} containing the animation set.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<MovementAnimationSet> animationSet() {
+	public final SerializableProperty<MovementAnimationSet> animationSet() {
 		return getProperty(NpcProperty.ANIMATION_SET);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the clickable flag.
+	 * Gets the {@link SerializableProperty} containing the clickable flag.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Boolean> clickable() {
+	public final SerializableProperty<Boolean> clickable() {
 		return getProperty(NpcProperty.CLICKABLE);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the colours.
+	 * Gets the {@link SerializableProperty} containing the colours.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Map<Integer, Integer>> colours() {
+	public final SerializableProperty<Map<Integer, Integer>> colours() {
 		return getProperty(NpcProperty.COLOURS);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the combat level.
+	 * Gets the {@link SerializableProperty} containing the combat level.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> combatLevel() {
+	public final SerializableProperty<Integer> combatLevel() {
 		return getProperty(NpcProperty.COMBAT_LEVEL);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the description.
+	 * Gets the {@link SerializableProperty} containing the description.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<String> description() {
+	public final SerializableProperty<String> description() {
 		return getProperty(NpcProperty.DESCRIPTION);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the flat scale.
+	 * Gets the {@link SerializableProperty} containing the flat scale.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> flatScale() {
+	public final SerializableProperty<Integer> flatScale() {
 		return getProperty(NpcProperty.FLAT_SCALE);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the head icon.
+	 * Gets the {@link SerializableProperty} containing the head icon.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> headIcon() {
+	public final SerializableProperty<Integer> headIcon() {
 		return getProperty(NpcProperty.HEAD_ICON);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the height scale.
+	 * Gets the {@link SerializableProperty} containing the height scale.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> heightScale() {
+	public final SerializableProperty<Integer> heightScale() {
 		return getProperty(NpcProperty.HEIGHT_SCALE);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the idle animation.
+	 * Gets the {@link SerializableProperty} containing the idle animation.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> idleAnimation() {
+	public final SerializableProperty<Integer> idleAnimation() {
 		return getProperty(NpcProperty.IDLE_ANIMATION);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the light modifier.
+	 * Gets the {@link SerializableProperty} containing the light modifier.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> lightModifier() {
+	public final SerializableProperty<Integer> lightModifier() {
 		return getProperty(NpcProperty.LIGHT_MODIFIER);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the minimap visible flag.
+	 * Gets the {@link SerializableProperty} containing the minimap visible flag.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Boolean> minimapVisible() {
+	public final SerializableProperty<Boolean> minimapVisible() {
 		return getProperty(NpcProperty.MINIMAP_VISIBLE);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the models.
+	 * Gets the {@link SerializableProperty} containing the models.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<int[]> models() {
+	public final SerializableProperty<int[]> models() {
 		return getProperty(NpcProperty.MODELS);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the {@link MorphismSet}.
+	 * Gets the {@link SerializableProperty} containing the {@link MorphismSet}.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<MorphismSet> morphismSet() {
+	public final SerializableProperty<MorphismSet> morphismSet() {
 		return getProperty(NpcProperty.MORPHISM_SET);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the name.
+	 * Gets the {@link SerializableProperty} containing the name.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<String> name() {
+	public final SerializableProperty<String> name() {
 		return getProperty(NpcProperty.NAME);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the priority render flag.
+	 * Gets the {@link SerializableProperty} containing the priority render flag.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Boolean> priorityRender() {
+	public final SerializableProperty<Boolean> priorityRender() {
 		return getProperty(NpcProperty.PRIORITY_RENDER);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the rotation.
+	 * Gets the {@link SerializableProperty} containing the rotation.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> rotation() {
+	public final SerializableProperty<Integer> rotation() {
 		return getProperty(NpcProperty.ROTATION);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the secondary models.
+	 * Gets the {@link SerializableProperty} containing the secondary models.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<int[]> secondaryModels() {
+	public final SerializableProperty<int[]> secondaryModels() {
 		return getProperty(NpcProperty.SECONDARY_MODELS);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the shadow modifier.
+	 * Gets the {@link SerializableProperty} containing the shadow modifier.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> shadowModifier() {
+	public final SerializableProperty<Integer> shadowModifier() {
 		return getProperty(NpcProperty.SHADOW_MODIFIER);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the size.
+	 * Gets the {@link SerializableProperty} containing the size.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> size() {
+	public final SerializableProperty<Integer> size() {
 		return getProperty(NpcProperty.SIZE);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the walking animation.
+	 * Gets the {@link SerializableProperty} containing the walking animation.
 	 * 
 	 * @return The property.
 	 */
-	public final ConfigProperty<Integer> walkingAnimation() {
+	public final SerializableProperty<Integer> walkingAnimation() {
 		return getProperty(NpcProperty.WALKING_ANIMATION);
 	}
 

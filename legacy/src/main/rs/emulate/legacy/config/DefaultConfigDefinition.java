@@ -15,7 +15,7 @@ public abstract class DefaultConfigDefinition<T extends MutableConfigDefinition>
 	/**
 	 * The map of opcodes to DefinitionProperty objects.
 	 */
-	private final Map<Integer, ConfigProperty<?>> properties;
+	private final Map<Integer, SerializableProperty<?>> properties;
 
 	/**
 	 * Creates the DefaultDefinition.
@@ -36,8 +36,8 @@ public abstract class DefaultConfigDefinition<T extends MutableConfigDefinition>
 	/**
 	 * Initialises the DefaultDefinition.
 	 *
-	 * @return The {@link Map} of opcodes to {@link ConfigProperty} objects.
+	 * @return The {@link Map} of opcodes to {@link SerializableProperty} objects.
 	 */
-	protected abstract Map<Integer, ConfigProperty<?>> init();
+	protected abstract Map<Integer, SerializableProperty<?>> init();
 
 }

@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 import rs.emulate.shared.util.DataBuffer;
 
@@ -34,10 +34,10 @@ import rs.emulate.shared.util.DataBuffer;
 public class DefaultAnimationDefinition<T extends AnimationDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> properties = new HashMap<>(11);
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> properties = new HashMap<>(11);
 
-		properties.put(1, new ConfigProperty<>(FRAMES, FrameCollection.EMPTY, FrameCollection::encode,
+		properties.put(1, new SerializableProperty<>(FRAMES, FrameCollection.EMPTY, FrameCollection::encode,
 				FrameCollection::decode, FrameCollection::bytes, input -> Optional.empty())); // XXX
 
 		properties.put(2, unsignedShort(LOOP_OFFSET, -1));
@@ -52,7 +52,7 @@ public class DefaultAnimationDefinition<T extends AnimationDefinition> extends D
 
 		BiConsumer<DataBuffer, byte[]> interleaveEncoder = (buffer, order) -> buffer.putByte(order.length).put(order);
 
-		properties.put(3, new ConfigProperty<>(INTERLEAVE_ORDER, new byte[0], interleaveEncoder, interleaveDecoder,
+		properties.put(3, new SerializableProperty<>(INTERLEAVE_ORDER, new byte[0], interleaveEncoder, interleaveDecoder,
 				interleave -> interleave.length + Byte.BYTES, input -> Optional.empty())); // XXX
 
 		properties.put(4, alwaysTrue(STRETCHES, false));

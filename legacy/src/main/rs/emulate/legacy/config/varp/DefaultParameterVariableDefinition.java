@@ -6,7 +6,7 @@ import static rs.emulate.legacy.config.varp.ParameterVariableProperty.PARAMETER;
 import java.util.HashMap;
 import java.util.Map;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 
 /**
@@ -19,8 +19,8 @@ public class DefaultParameterVariableDefinition<T extends ParameterVariableDefin
 		DefaultConfigDefinition<T> {
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> map = new HashMap<>(1);
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> map = new HashMap<>(1);
 
 		map.put(5, unsignedShort(PARAMETER, 0));
 

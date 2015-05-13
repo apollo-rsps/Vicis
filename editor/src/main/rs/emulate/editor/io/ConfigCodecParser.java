@@ -19,7 +19,8 @@ import org.xml.sax.SAXException;
 
 import rs.emulate.editor.util.PathUtils;
 import rs.emulate.legacy.archive.ArchiveUtils;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.DefinitionSupplier;
+import rs.emulate.legacy.config.MutableConfigDefinition;
 
 import com.google.common.base.Preconditions;
 
@@ -79,40 +80,46 @@ public final class ConfigCodecParser {
 	/**
 	 * Parses the backing {@link InputStream}.
 	 *
-	 * @return The {@link Map} of {@link ArchiveUtils#hash archive entry hashes} to {@link DefaultConfigDefinition} s.
+	 * @return The {@link Map} of {@link ArchiveUtils#hash archive entry hashes} to {@link DefinitionSupplier}s.
 	 * @throws Exception If there is an error parsing the file.
 	 */
-	public Map<Integer, Class<? extends DefaultConfigDefinition<?>>> parse() throws Exception {
+	public Map<Integer, DefinitionSupplier<?>> parse() throws Exception {
 		XmlNode root = parser.parse(input);
 		Preconditions.checkArgument(root.getName().equals("codecs"), "XML root node must be named 'codecs'.");
 
-		XmlNode legacy = root.getChild("legacy").orElseThrow(createSupplier("codecs", "legacy"));
+		XmlNode legacy = root.getChild("legacy").orElseThrow(createExceptionSupplier("codecs", "legacy"));
 		Collection<XmlNode> children = legacy.getChildren();
 
-		Map<Integer, Class<? extends DefaultConfigDefinition<?>>> defaults = new HashMap<>(children.size());
+		Map<Integer, DefinitionSupplier<?>> defaults = new HashMap<>(children.size());
 		for (XmlNode child : children) {
 			String name = child.getAttribute("name").orElseThrow(
 					() -> new IllegalArgumentException("<legacy> child nodes must have a 'name' attribute."));
-			int hash = ArchiveUtils.hash(name + ".dat");
 
-			String value = child.getValue();
-			Class<? extends DefaultConfigDefinition<?>> clazz = loadClass(value);
+			XmlNode definition = child.getChild("definition").orElseThrow(createExceptionSupplier(name, "definition"));
+			XmlNode immutable = child.getChild("default").orElseThrow(createExceptionSupplier(name, "default"));
 
-			defaults.put(hash, clazz);
+			Class<? extends MutableConfigDefinition> definitionClass = loadClass(definition.getValue());
+			@SuppressWarnings("rawtypes")
+			Class defaultClass = loadClass(immutable.getValue());
+
+			@SuppressWarnings("unchecked")
+			DefinitionSupplier<?> supplier = DefinitionSupplier.create(name, definitionClass, defaultClass);
+			int hash = ArchiveUtils.hash(name);
+			defaults.put(hash, supplier);
 		}
 
 		return defaults;
 	}
 
 	/**
-	 * Returns a {@link Supplier} for an {@link IllegalArgumentException}, with a message indicating which child
+	 * Creates a {@link Supplier} for an {@link IllegalArgumentException}, with a message indicating which child
 	 * {@link XmlNode} is missing from the appropriate parent node.
 	 *
 	 * @param parent The parent XmlNode.
 	 * @param child The child XmlNode.
 	 * @return The Supplier.
 	 */
-	private Supplier<IllegalArgumentException> createSupplier(String parent, String child) {
+	private Supplier<IllegalArgumentException> createExceptionSupplier(String parent, String child) {
 		return () -> new IllegalArgumentException(parent + " node must contain a child named " + child + ".");
 	}
 
@@ -126,10 +133,9 @@ public final class ConfigCodecParser {
 	 * @throws IOException If there was an error reading from the Class file.
 	 */
 	@SuppressWarnings("unchecked")
-	private Class<? extends DefaultConfigDefinition<?>> loadClass(String name) throws ClassNotFoundException,
-			IOException {
+	private <T> Class<T> loadClass(String name) throws ClassNotFoundException, IOException {
 		try {
-			return (Class<? extends DefaultConfigDefinition<?>>) Class.forName(name);
+			return (Class<T>) Class.forName(name);
 		} catch (ClassNotFoundException exception) {
 			URL[] urls = { DEBUG_CLASS_PATH.toUri().toURL(), CUSTOM_CLASS_PATH.toUri().toURL() };
 
@@ -137,7 +143,7 @@ public final class ConfigCodecParser {
 				int index = name.lastIndexOf(".");
 				String file = name.substring(index);
 
-				return (Class<? extends DefaultConfigDefinition<?>>) loader.loadClass(file);
+				return (Class<T>) loader.loadClass(file);
 			}
 		}
 	}

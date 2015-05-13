@@ -26,14 +26,14 @@ public final class ConfigUtils {
 	private static final String REPLACEMENT_COLOUR_PREFIX = "replacement-colour";
 
 	/**
-	 * Creates a {@link ConfigProperty} for a {@link Map} of original to replacement colour values.
+	 * Creates a {@link SerializableProperty} for a {@link Map} of original to replacement colour values.
 	 * <p>
 	 * FIXME This property is too complicated to be done like this.
 	 *
 	 * @param type The {@link ConfigPropertyType} of the DefinitionProperty.
 	 * @return The DefinitionProperty.
 	 */
-	public static <T extends ConfigPropertyType> ConfigProperty<Map<Integer, Integer>> newColourProperty(T type) {
+	public static <T extends ConfigPropertyType> SerializableProperty<Map<Integer, Integer>> newColourProperty(T type) {
 		BiConsumer<DataBuffer, Map<Integer, Integer>> encoder = (buffer, colours) -> {
 			buffer.putByte(colours.size());
 			colours.entrySet().forEach(colour -> buffer.putShort(colour.getKey()).putShort(colour.getValue()));
@@ -54,7 +54,7 @@ public final class ConfigUtils {
 			return null; // XXX
 		};
 
-		return new ConfigProperty<>(type, new HashMap<Integer, Integer>(1), encoder, decoder, colours -> colours.size()
+		return new SerializableProperty<>(type, new HashMap<Integer, Integer>(1), encoder, decoder, colours -> colours.size()
 				* Short.BYTES * 2 + Byte.BYTES, parser);
 	}
 

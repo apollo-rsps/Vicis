@@ -13,7 +13,7 @@ import static rs.emulate.legacy.config.floor.FloorProperty.TEXTURE;
 import java.util.HashMap;
 import java.util.Map;
 
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.DefaultConfigDefinition;
 
 /**
@@ -25,8 +25,8 @@ import rs.emulate.legacy.config.DefaultConfigDefinition;
 public class DefaultFloorDefinition<T extends FloorDefinition> extends DefaultConfigDefinition<T> {
 
 	@Override
-	protected Map<Integer, ConfigProperty<?>> init() {
-		Map<Integer, ConfigProperty<?>> properties = new HashMap<>();
+	protected Map<Integer, SerializableProperty<?>> init() {
+		Map<Integer, SerializableProperty<?>> properties = new HashMap<>();
 
 		properties.put(1, unsignedTribyte(COLOUR, 0));
 		properties.put(2, unsignedByte(TEXTURE, 0));

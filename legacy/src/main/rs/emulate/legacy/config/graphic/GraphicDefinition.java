@@ -2,7 +2,7 @@ package rs.emulate.legacy.config.graphic;
 
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.legacy.config.ConfigProperty;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
 import rs.emulate.util.Assertions;
 
@@ -46,20 +46,20 @@ public class GraphicDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the animation id of this graphic.
+	 * Gets the {@link SerializableProperty} containing the animation id of this graphic.
 	 *
 	 * @return The animation id.
 	 */
-	public ConfigProperty<Integer> animation() {
+	public SerializableProperty<Integer> animation() {
 		return getProperty(GraphicProperty.ANIMATION);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the model brightness of this graphic.
+	 * Gets the {@link SerializableProperty} containing the model brightness of this graphic.
 	 *
 	 * @return The brightness.
 	 */
-	public ConfigProperty<Integer> brightness() {
+	public SerializableProperty<Integer> brightness() {
 		return getProperty(GraphicProperty.BRIGHTNESS);
 	}
 
@@ -72,8 +72,8 @@ public class GraphicDefinition extends MutableConfigDefinition {
 		ImmutableMap.Builder<Integer, Integer> builder = ImmutableMap.builder();
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {
-			ConfigProperty<Integer> original = originalColour(slot);
-			ConfigProperty<Integer> replacement = replacementColour(slot);
+			SerializableProperty<Integer> original = originalColour(slot);
+			SerializableProperty<Integer> replacement = replacementColour(slot);
 			builder.put(original.getValue(), replacement.getValue());
 		}
 
@@ -81,69 +81,69 @@ public class GraphicDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the depth scale of this graphic.
+	 * Gets the {@link SerializableProperty} containing the depth scale of this graphic.
 	 *
 	 * @return The depth scale.
 	 */
-	public ConfigProperty<Integer> depthScale() {
+	public SerializableProperty<Integer> depthScale() {
 		return getProperty(GraphicProperty.DEPTH_SCALE);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the model id of this graphic.
+	 * Gets the {@link SerializableProperty} containing the model id of this graphic.
 	 *
 	 * @return The model id.
 	 */
-	public ConfigProperty<Integer> modelId() {
+	public SerializableProperty<Integer> modelId() {
 		return getProperty(GraphicProperty.MODEL);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the original colour for the specified slot.
+	 * Gets the {@link SerializableProperty} containing the original colour for the specified slot.
 	 *
 	 * @param slot The slot.
 	 * @return The original colour.
 	 */
-	public ConfigProperty<Integer> originalColour(int slot) {
+	public SerializableProperty<Integer> originalColour(int slot) {
 		checkColourBounds(slot);
 		return getProperty(ConfigUtils.getOriginalColourPropertyName(slot));
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the replacement colour for the specified slot.
+	 * Gets the {@link SerializableProperty} containing the replacement colour for the specified slot.
 	 *
 	 * @param slot The slot.
 	 * @return The replacement colour.
 	 */
-	public ConfigProperty<Integer> replacementColour(int slot) {
+	public SerializableProperty<Integer> replacementColour(int slot) {
 		checkColourBounds(slot);
 		return getProperty(ConfigUtils.getReplacementColourPropertyName(slot));
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the rotation of this graphic.
+	 * Gets the {@link SerializableProperty} containing the rotation of this graphic.
 	 *
 	 * @return The rotation.
 	 */
-	public ConfigProperty<Integer> rotation() {
+	public SerializableProperty<Integer> rotation() {
 		return getProperty(GraphicProperty.ROTATION);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the model shadow of this graphic.
+	 * Gets the {@link SerializableProperty} containing the model shadow of this graphic.
 	 *
 	 * @return The shadow.
 	 */
-	public ConfigProperty<Integer> shadow() {
+	public SerializableProperty<Integer> shadow() {
 		return getProperty(GraphicProperty.SHADOW);
 	}
 
 	/**
-	 * Gets the {@link ConfigProperty} containing the breadth scale of this graphic.
+	 * Gets the {@link SerializableProperty} containing the breadth scale of this graphic.
 	 *
 	 * @return The breadth scale.
 	 */
-	public ConfigProperty<Integer> breadthScale() {
+	public SerializableProperty<Integer> breadthScale() {
 		return getProperty(GraphicProperty.BREADTH_SCALE);
 	}
 

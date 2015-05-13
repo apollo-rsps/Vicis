@@ -82,23 +82,23 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 	}
 
 	/**
-	 * Returns whether or not the specified {@link Map} entry contains a {@link ConfigProperty} that should be encoded.
+	 * Returns whether or not the specified {@link Map} entry contains a {@link SerializableProperty} that should be encoded.
 	 *
 	 * @param entry The Map entry.
 	 * @return {@code true} if the property should be encoded, {@code false} if not.
 	 */
-	private boolean validProperty(Map.Entry<Integer, ConfigProperty<?>> entry) {
+	private boolean validProperty(Map.Entry<Integer, SerializableProperty<?>> entry) {
 		return entry.getValue().valuePresent();
 	}
 
 	/**
-	 * Writes the specified {@link Map} entry containing the opcode and {@link ConfigProperty} to the specified
+	 * Writes the specified {@link Map} entry containing the opcode and {@link SerializableProperty} to the specified
 	 * {@link ByteArrayOutputStream}.
 	 *
 	 * @param entry The map entry.
 	 * @param os The byte array output stream.
 	 */
-	private void write(Map.Entry<Integer, ConfigProperty<?>> entry, ByteArrayOutputStream os) {
+	private void write(Map.Entry<Integer, SerializableProperty<?>> entry, ByteArrayOutputStream os) {
 		DataBuffer buffer = entry.getValue().encode();
 		byte[] bytes = buffer.getRemainingBytes();
 

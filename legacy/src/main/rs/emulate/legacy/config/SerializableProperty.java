@@ -16,7 +16,7 @@ import rs.emulate.util.Assertions;
  *
  * @param <T> The property value type.
  */
-public class ConfigProperty<T> extends Property<T, ConfigPropertyType> {
+public class SerializableProperty<T> extends Property<T, ConfigPropertyType> {
 
 	/**
 	 * A Function that decodes a value from a Buffer.
@@ -43,7 +43,7 @@ public class ConfigProperty<T> extends Property<T, ConfigPropertyType> {
 	 * @param size A Function that returns the size of the value, in bytes.
 	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
-	public ConfigProperty(ConfigPropertyType type, T defaultValue, BiConsumer<DataBuffer, T> encoder,
+	public SerializableProperty(ConfigPropertyType type, T defaultValue, BiConsumer<DataBuffer, T> encoder,
 			Function<DataBuffer, T> decoder, Function<T, Integer> size, Function<String, Optional<T>> parser) {
 		this(type, null, defaultValue, encoder, decoder, size, parser);
 	}
@@ -58,7 +58,7 @@ public class ConfigProperty<T> extends Property<T, ConfigPropertyType> {
 	 * @param size The size of the value, in bytes.
 	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
-	public ConfigProperty(ConfigPropertyType type, T defaultValue, BiConsumer<DataBuffer, T> encoder,
+	public SerializableProperty(ConfigPropertyType type, T defaultValue, BiConsumer<DataBuffer, T> encoder,
 			Function<DataBuffer, T> decoder, int size, Function<String, Optional<T>> parser) {
 		this(type, defaultValue, encoder, decoder, value -> size, parser);
 	}
@@ -74,7 +74,7 @@ public class ConfigProperty<T> extends Property<T, ConfigPropertyType> {
 	 * @param size A Function that returns the size of the value, in bytes.
 	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
-	public ConfigProperty(ConfigPropertyType type, T value, T defaultValue, BiConsumer<DataBuffer, T> encoder,
+	public SerializableProperty(ConfigPropertyType type, T value, T defaultValue, BiConsumer<DataBuffer, T> encoder,
 			Function<DataBuffer, T> decoder, Function<T, Integer> size, Function<String, Optional<T>> parser) {
 		super(type, value, defaultValue, parser);
 		Assertions.checkNonNull("Decoder, encoder, and size lambdas must not be null.", decoder, encoder, size);
@@ -99,8 +99,8 @@ public class ConfigProperty<T> extends Property<T, ConfigPropertyType> {
 	 *
 	 * @return The definition property.
 	 */
-	public ConfigProperty<T> duplicate() {
-		return new ConfigProperty<>(type, value.orElse(null), defaultValue, encoder, decoder, size, parser);
+	public SerializableProperty<T> duplicate() {
+		return new SerializableProperty<>(type, value.orElse(null), defaultValue, encoder, decoder, size, parser);
 	}
 
 	/**
