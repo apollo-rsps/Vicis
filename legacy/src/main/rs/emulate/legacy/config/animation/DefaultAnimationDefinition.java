@@ -1,19 +1,8 @@
 package rs.emulate.legacy.config.animation;
 
-import static rs.emulate.legacy.config.Properties.alwaysTrue;
-import static rs.emulate.legacy.config.Properties.unsignedByte;
-import static rs.emulate.legacy.config.Properties.unsignedShort;
-import static rs.emulate.legacy.config.animation.AnimationProperty.ANIMATING_PRECEDENCE;
-import static rs.emulate.legacy.config.animation.AnimationProperty.FRAMES;
-import static rs.emulate.legacy.config.animation.AnimationProperty.INTERLEAVE_ORDER;
-import static rs.emulate.legacy.config.animation.AnimationProperty.LOOP_OFFSET;
-import static rs.emulate.legacy.config.animation.AnimationProperty.MAXIMUM_LOOPS;
-import static rs.emulate.legacy.config.animation.AnimationProperty.PLAYER_MAINHAND;
-import static rs.emulate.legacy.config.animation.AnimationProperty.PLAYER_OFFHAND;
-import static rs.emulate.legacy.config.animation.AnimationProperty.PRIORITY;
-import static rs.emulate.legacy.config.animation.AnimationProperty.REPLAY_MODE;
-import static rs.emulate.legacy.config.animation.AnimationProperty.STRETCHES;
-import static rs.emulate.legacy.config.animation.AnimationProperty.WALKING_PRECEDENCE;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
+import rs.emulate.shared.util.DataBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +10,10 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.util.DataBuffer;
+import static rs.emulate.legacy.config.Properties.alwaysTrue;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
+import static rs.emulate.legacy.config.animation.AnimationProperty.*;
 
 /**
  * A default {@link AnimationDefinition} used as a base for an actual definitions.
@@ -38,7 +28,7 @@ public class DefaultAnimationDefinition<T extends AnimationDefinition> extends D
 		Map<Integer, SerializableProperty<?>> properties = new HashMap<>(11);
 
 		properties.put(1, new SerializableProperty<>(FRAMES, FrameCollection.EMPTY, FrameCollection::encode,
-				FrameCollection::decode, FrameCollection::bytes, input -> Optional.empty())); // XXX
+				FrameCollection::decode, FrameCollection::bytes, input -> Optional.empty())); // FIXME parser
 
 		properties.put(2, unsignedShort(LOOP_OFFSET, -1));
 
@@ -53,7 +43,7 @@ public class DefaultAnimationDefinition<T extends AnimationDefinition> extends D
 		BiConsumer<DataBuffer, byte[]> interleaveEncoder = (buffer, order) -> buffer.putByte(order.length).put(order);
 
 		properties.put(3, new SerializableProperty<>(INTERLEAVE_ORDER, new byte[0], interleaveEncoder, interleaveDecoder,
-				interleave -> interleave.length + Byte.BYTES, input -> Optional.empty())); // XXX
+				interleave -> interleave.length + Byte.BYTES, input -> Optional.empty())); // FIXME parser
 
 		properties.put(4, alwaysTrue(STRETCHES, false));
 		properties.put(5, unsignedByte(PRIORITY, 5));

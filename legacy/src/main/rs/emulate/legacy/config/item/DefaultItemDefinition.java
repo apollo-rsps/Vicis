@@ -1,24 +1,18 @@
 package rs.emulate.legacy.config.item;
 
-import static rs.emulate.legacy.config.Properties.alwaysTrue;
-import static rs.emulate.legacy.config.Properties.asciiString;
-import static rs.emulate.legacy.config.Properties.signedByte;
-import static rs.emulate.legacy.config.Properties.signedShort;
-import static rs.emulate.legacy.config.Properties.unsignedByte;
-import static rs.emulate.legacy.config.Properties.unsignedInt;
-import static rs.emulate.legacy.config.Properties.unsignedShort;
-import static rs.emulate.legacy.config.item.ItemProperty.*;
+import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.legacy.config.ConfigUtils;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.DynamicConfigPropertyType;
+import rs.emulate.legacy.config.SerializableProperty;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import rs.emulate.legacy.config.ConfigConstants;
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.ConfigPropertyType;
-import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.legacy.config.DynamicConfigPropertyType;
+import static rs.emulate.legacy.config.Properties.*;
+import static rs.emulate.legacy.config.item.ItemProperty.*;
 
 /**
  * A default {@link ItemDefinition} used as a base for actual definitions.
@@ -48,11 +42,11 @@ public class DefaultItemDefinition<T extends ItemDefinition> extends DefaultConf
 		properties.put(16, alwaysTrue(MEMBERS, false));
 
 		properties.put(23, new SerializableProperty<>(PRIMARY_MALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
-				PrimaryModel::decode, Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
+				PrimaryModel::decode, Short.BYTES + Byte.BYTES, input -> Optional.empty())); // FIXME parser
 		properties.put(24, unsignedShort(SECONDARY_MALE_MODEL, 0));
 
 		properties.put(25, new SerializableProperty<>(PRIMARY_FEMALE_MODEL, PrimaryModel.EMPTY, PrimaryModel::encode,
-				PrimaryModel::decode, Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
+				PrimaryModel::decode, Short.BYTES + Byte.BYTES, input -> Optional.empty())); // FIXME parser
 		properties.put(26, unsignedShort(SECONDARY_FEMALE_MODEL, 0));
 
 		for (int action = 1; action <= ItemConstants.MENU_ACTION_COUNT; action++) {
@@ -82,7 +76,7 @@ public class DefaultItemDefinition<T extends ItemDefinition> extends DefaultConf
 		for (int option = 1; option <= ItemConstants.ITEM_STACK_COUNT; option++) {
 			ConfigPropertyType type = ConfigUtils.newOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option);
 			properties.put(option + 99, new SerializableProperty<>(type, ItemStack.EMPTY, ItemStack::encode,
-					ItemStack::decode, Short.BYTES * 2, input -> Optional.empty())); // XXX
+					ItemStack::decode, Short.BYTES * 2, input -> Optional.empty())); // FIXME parser
 		}
 
 		properties.put(110, unsignedShort(GROUND_SCALE_X, ConfigConstants.DEFAULT_SCALE));
@@ -91,7 +85,7 @@ public class DefaultItemDefinition<T extends ItemDefinition> extends DefaultConf
 
 		properties.put(113, signedByte(AMBIENCE, 0));
 		properties.put(114, new SerializableProperty<>(CONTRAST, 0, (buffer1, contrast) -> buffer1.putByte(contrast / 5),
-				buffer -> buffer.getByte() * 5, Byte.BYTES, input -> Optional.empty())); // XXX
+				buffer -> buffer.getByte() * 5, Byte.BYTES, input -> Optional.empty())); // FIXME parser
 
 		properties.put(115, unsignedByte(TEAM, 0));
 

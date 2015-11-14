@@ -1,13 +1,12 @@
 package rs.emulate.legacy.map;
 
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import rs.emulate.shared.world.Position;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Test;
-
-import rs.emulate.shared.world.Position;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Contains tests for the {@link MapPlane} class.
@@ -24,8 +23,8 @@ public final class MapPlaneTest {
 		int count = 3;
 		Tile[][] tiles = new Tile[count][count];
 
-		for (int x = 0; x < 3; x++) {
-			for (int z = 0; z < 3; z++) {
+		for (int x = 0; x < count; x++) {
+			for (int z = 0; z < count; z++) {
 				tiles[x][z] = new Tile(new Position(x, z), 0, 0, 0, 0, 0, 0);
 			}
 		}
@@ -42,8 +41,8 @@ public final class MapPlaneTest {
 				int actualX = position.getX();
 				int actualZ = position.getZ();
 
-				assertTrue("X coordinates are not equal (expected=" + x + ", actual=" + actualX + ").", x == actualX);
-				assertTrue("Z coordinates are not equal (expected=" + z + ", actual=" + actualZ + ").", z == actualZ);
+				assertEquals(x, actualX);
+				assertEquals(z, actualZ);
 			}
 		}
 	}

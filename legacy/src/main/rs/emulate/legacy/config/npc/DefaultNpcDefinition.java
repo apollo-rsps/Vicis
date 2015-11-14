@@ -1,32 +1,27 @@
 package rs.emulate.legacy.config.npc;
 
-import static rs.emulate.legacy.config.Properties.alwaysFalse;
-import static rs.emulate.legacy.config.Properties.alwaysTrue;
-import static rs.emulate.legacy.config.Properties.asciiString;
-import static rs.emulate.legacy.config.Properties.unsignedByte;
-import static rs.emulate.legacy.config.Properties.unsignedShort;
-import static rs.emulate.legacy.config.npc.NpcProperty.*;
+import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigPropertyType;
+import rs.emulate.legacy.config.ConfigUtils;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.Properties;
+import rs.emulate.legacy.config.SerializableProperty;
+import rs.emulate.shared.util.DataBuffer;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
-import rs.emulate.legacy.config.ConfigConstants;
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.ConfigPropertyType;
-import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.legacy.config.Properties;
-import rs.emulate.shared.util.DataBuffer;
+import static rs.emulate.legacy.config.Properties.*;
+import static rs.emulate.legacy.config.npc.NpcProperty.*;
 
 /**
  * A default {@link NpcDefinition} used as a base.
  *
- * @author Major
  * @param <T> The type of NpcDefinition this DefaultNpcDefinition is for.
+ * @author Major
  */
 public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfigDefinition<T> {
 
@@ -34,21 +29,13 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 	protected Map<Integer, SerializableProperty<?>> init() {
 		Map<Integer, SerializableProperty<?>> properties = new HashMap<>();
 
-		Function<DataBuffer, int[]> modelDecoder = buffer -> {
-			int count = buffer.getUnsignedByte();
-			int[] models = new int[count];
-
-			Arrays.setAll(models, index -> buffer.getUnsignedShort());
-			return models;
-		};
-
 		BiConsumer<DataBuffer, int[]> modelEncoder = (buffer, models) -> {
 			buffer.putByte(models.length);
 			Arrays.stream(models).forEach(buffer::putShort);
 		};
 
-		properties.put(1, new SerializableProperty<>(MODELS, null, modelEncoder, modelDecoder, models -> models.length
-				* Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
+		properties.put(1, new SerializableProperty<>(MODELS, null, modelEncoder, ConfigUtils.MODEL_DECODER,
+				models -> models.length * Short.BYTES + Byte.BYTES, input -> Optional.empty())); // FIXME parser
 
 		properties.put(2, asciiString(NAME, "null"));
 		properties.put(3, asciiString(DESCRIPTION, "null"));
@@ -56,9 +43,9 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 		properties.put(13, unsignedShort(IDLE_ANIMATION, -1));
 		properties.put(14, unsignedShort(WALKING_ANIMATION, -1));
 
-		properties
-				.put(17, new SerializableProperty<>(ANIMATION_SET, MovementAnimationSet.EMPTY, MovementAnimationSet::encode,
-						MovementAnimationSet::decode, Short.BYTES * 4, input -> Optional.empty())); // XXX
+		properties.put(17,
+				new SerializableProperty<>(ANIMATION_SET, MovementAnimationSet.EMPTY, MovementAnimationSet::encode,
+						MovementAnimationSet::decode, Short.BYTES * 4, input -> Optional.empty())); // FIXME parser
 
 		for (int option = 1; option <= NpcDefinition.INTERACTION_COUNT; option++) {
 			ConfigPropertyType name = ConfigUtils.newOptionProperty(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option);
@@ -67,8 +54,8 @@ public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfig
 
 		properties.put(40, ConfigUtils.newColourProperty(COLOURS));
 
-		properties.put(60, new SerializableProperty<>(SECONDARY_MODELS, null, modelEncoder, modelDecoder,
-				models -> models.length * Short.BYTES + Byte.BYTES, input -> Optional.empty())); // XXX
+		properties.put(60, new SerializableProperty<>(SECONDARY_MODELS, null, modelEncoder, ConfigUtils.MODEL_DECODER,
+				models -> models.length * Short.BYTES + Byte.BYTES, input -> Optional.empty())); // FIXME parser
 
 		for (int option = 1; option <= 3; option++) {
 			properties.put(option + 89, Properties.unsignedShort(ConfigUtils.newOptionProperty("unused", option), 0));

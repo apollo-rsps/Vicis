@@ -1,19 +1,19 @@
 package rs.emulate.legacy.config.varp;
 
-import static rs.emulate.legacy.config.Properties.unsignedShort;
-import static rs.emulate.legacy.config.varp.ParameterVariableProperty.PARAMETER;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
+import static rs.emulate.legacy.config.varp.ParameterVariableProperty.PARAMETER;
 
 /**
  * A default {@link ParameterVariableDefinition} used as a base.
  *
- * @author Major
  * @param <T> The type of ParameterVariableDefinition this DefaultParameterVariableDefinition is for.
+ * @author Major
  */
 public class DefaultParameterVariableDefinition<T extends ParameterVariableDefinition> extends
 		DefaultConfigDefinition<T> {

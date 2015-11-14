@@ -1,10 +1,12 @@
 package rs.emulate.legacy.config.kit;
 
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.util.Assertions;
+
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * The body part an {@link IdentikitDefinition} is for.
@@ -76,6 +78,15 @@ enum Part {
 	 */
 	public static void encode(DataBuffer buffer, Part part) {
 		buffer.putByte(part.id);
+	}
+
+	/**
+	 * Creates a String parser for a Part.
+	 *
+	 * @return The {@link Function} that parses a String into an {@link Optional} possibly containing a Part.
+	 */
+	public static Function<String, Optional<Part>> parser() {
+		return input -> Arrays.stream(values()).filter(part -> part.name().equals(input.toUpperCase())).findAny();
 	}
 
 	/**

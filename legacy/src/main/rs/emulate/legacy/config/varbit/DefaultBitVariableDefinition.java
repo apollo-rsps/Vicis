@@ -1,6 +1,8 @@
 package rs.emulate.legacy.config.varbit;
 
-import static rs.emulate.legacy.config.varbit.BitVariableProperty.VARIABLE;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
+import rs.emulate.shared.util.DataBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,24 +10,15 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
-import rs.emulate.shared.util.DataBuffer;
+import static rs.emulate.legacy.config.varbit.BitVariableProperty.VARIABLE;
 
 /**
  * A default {@link BitVariableDefinition} used as a base for an actual definition.
  *
- * @author Major
  * @param <T> The type of {@link BitVariableDefinition} this default is for.
+ * @author Major
  */
 public class DefaultBitVariableDefinition<T extends BitVariableDefinition> extends DefaultConfigDefinition<T> {
-
-	/**
-	 * Creates the DefaultBitVariableDefinition.
-	 */
-	public DefaultBitVariableDefinition() {
-		super();
-	}
 
 	@Override
 	protected Map<Integer, SerializableProperty<?>> init() {
@@ -43,7 +36,7 @@ public class DefaultBitVariableDefinition<T extends BitVariableDefinition> exten
 		};
 
 		properties.put(1, new SerializableProperty<>(VARIABLE, Variable.EMPTY, encoder, decoder,
-				Short.BYTES + 2 * Byte.BYTES, input -> Optional.empty())); // XXX
+				Short.BYTES + 2 * Byte.BYTES, input -> Optional.empty())); // FIXME parser
 
 		return properties;
 	}
