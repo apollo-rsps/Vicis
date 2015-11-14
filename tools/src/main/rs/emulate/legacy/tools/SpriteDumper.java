@@ -20,21 +20,25 @@ import java.util.List;
  */
 public final class SpriteDumper {
 
+	/**
+	 * The {@link Path} to the resources directory containing the caches.
+	 */
 	private static final Path RESOURCES_PATH = Paths.get("data/resources");
 
 	/**
 	 * Creates a {@link SpriteDumper} for the {@link Sprite}(s) with the specified name.
 	 *
 	 * @param fs The {@link IndexedFileSystem} containing the Sprite(s).
+	 * @param version The version of the cache.
 	 * @param name The name of the Sprite(s).
 	 * @return The SpriteDumper.
 	 * @throws IOException If there is an error decoding the Sprite(s).
 	 */
-	public static SpriteDumper create(IndexedFileSystem fs, String name) throws IOException {
-		SpriteDecoder decoder = SpriteDecoder.create(fs, name);
-		Path output = Paths.get("./data/dump/sprites/" + name);
+	public static SpriteDumper create(IndexedFileSystem fs, String version, String name) throws IOException {
+		Path output = Paths.get("./data/dump/sprites/" + version);
 		Files.createDirectories(output);
 
+		SpriteDecoder decoder = SpriteDecoder.create(fs, name);
 		return new SpriteDumper(decoder, output);
 	}
 
@@ -44,12 +48,18 @@ public final class SpriteDumper {
 	 * @param args The application arguments.
 	 */
 	public static void main(String[] args) {
-		String version = (args.length == 0) ? "377" : args[0];
+		if (args.length != 2) {
+			System.err.println("SpriteDumper must have two arguments: cache version and sprite name.");
+			System.exit(1);
+		}
+
+		String version = args[0];
+		String name = args[1];
 
 		try {
 			IndexedFileSystem fs = new IndexedFileSystem(RESOURCES_PATH.resolve(version), AccessMode.READ);
-			SpriteDumper dumper = SpriteDumper.create(fs, version);
-			dumper.dump("PNG");
+			SpriteDumper dumper = SpriteDumper.create(fs, version, name);
+			dumper.dump("png");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -99,7 +109,7 @@ public final class SpriteDumper {
 				}
 			}
 
-			ImageIO.write(image, format, output.resolve(Paths.get(index + "." + format.toLowerCase())).toFile());
+			ImageIO.write(image, format, output.resolve(Paths.get(index + "." + format)).toFile());
 		}
 	}
 

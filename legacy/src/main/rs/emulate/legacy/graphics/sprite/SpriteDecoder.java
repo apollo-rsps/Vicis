@@ -29,7 +29,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 	 * @return The SpriteDecoder.
 	 * @throws IOException If there is an error decoding the graphics {@link Archive}.
 	 */
-	public static final SpriteDecoder create(IndexedFileSystem fs, String name) throws IOException {
+	public static SpriteDecoder create(IndexedFileSystem fs, String name) throws IOException {
 		return new SpriteDecoder(fs.getArchive(0, GraphicsConstants.GRAPHICS_FILE_ID), name);
 	}
 

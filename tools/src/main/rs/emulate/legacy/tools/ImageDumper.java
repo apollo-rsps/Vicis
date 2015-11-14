@@ -1,5 +1,6 @@
 package rs.emulate.legacy.tools;
 
+import rs.emulate.legacy.AccessMode;
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.graphics.image.ImageDecoder;
 import rs.emulate.legacy.graphics.image.IndexedImage;
@@ -20,19 +21,48 @@ import java.util.List;
 public final class ImageDumper {
 
 	/**
+	 * The {@link Path} to the resources directory containing the caches.
+	 */
+	private static final Path RESOURCES_PATH = Paths.get("data/resources");
+
+	/**
 	 * Creates a {@link ImageDumper} for the {@link IndexedImage}(s) with the specified name.
 	 *
 	 * @param fs The {@link IndexedFileSystem} containing the Image(s).
+	 * @param version The version of the cache.
 	 * @param name The name of the Image(s).
 	 * @return The ImageDumper.
 	 * @throws IOException If there is an error decoding the Image(s).
 	 */
-	public static ImageDumper create(IndexedFileSystem fs, String name) throws IOException {
-		ImageDecoder decoder = ImageDecoder.create(fs, name);
-		Path output = Paths.get("./data/dump/images");
+	public static ImageDumper create(IndexedFileSystem fs, String version, String name) throws IOException {
+		Path output = Paths.get("./data/dump/images/" + version);
 		Files.createDirectories(output);
 
+		ImageDecoder decoder = ImageDecoder.create(fs, name);
 		return new ImageDumper(decoder, output, name);
+	}
+
+	/**
+	 * The main entry point of the application.
+	 *
+	 * @param args The application arguments.
+	 */
+	public static void main(String[] args) {
+		if (args.length != 2) {
+			System.err.println("SpriteDumper must have two arguments: cache version and sprite name.");
+			System.exit(1);
+		}
+
+		String version = args[0];
+		String name = args[1];
+
+		try {
+			IndexedFileSystem fs = new IndexedFileSystem(RESOURCES_PATH.resolve(version), AccessMode.READ);
+			ImageDumper dumper = ImageDumper.create(fs, version, name);
+			dumper.dump("png");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -86,7 +116,7 @@ public final class ImageDumper {
 				}
 			}
 
-			ImageIO.write(buffered, format, output.resolve(Paths.get(name + "." + format.toLowerCase())).toFile());
+			ImageIO.write(buffered, format, output.resolve(Paths.get(name + "_" + index + "." + format)).toFile());
 		}
 	}
 
