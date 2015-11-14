@@ -7,9 +7,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 /**
- * Tests the caching used in {@link DynamicConfigPropertyType}s to ensure that properties with the same name and opcode will
- * be the same object.
- * 
+ * Tests the caching used in {@link DynamicConfigPropertyType}s to ensure that properties with the same name and opcode
+ * will be the same object.
+ *
  * @author Major
  */
 public final class DynamicPropertyTypeTest {
@@ -39,7 +39,7 @@ public final class DynamicPropertyTypeTest {
 	 */
 	@Test
 	public void testConstructor() {
-		int expected = 4;
+		final int expected = 4;
 		int exceptions = 0;
 
 		for (int iteration = 0; iteration < expected; iteration++) {
@@ -55,7 +55,6 @@ public final class DynamicPropertyTypeTest {
 				}
 			} catch (IllegalArgumentException e) {
 				exceptions++;
-				continue;
 			}
 		}
 
