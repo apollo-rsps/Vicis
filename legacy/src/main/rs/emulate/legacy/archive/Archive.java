@@ -3,13 +3,18 @@ package rs.emulate.legacy.archive;
 import com.google.common.collect.ImmutableList;
 
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * An archive in the RuneScape cache. An archive is a set of files which can be completely compressed, or each
  * individual file can be compressed. This implementation is immutable (i.e. calling any of the
  * {@code add/replace/remove} methods will return a new archive with the specified modification performed on it).
- * 
+ *
  * @author Graham
  * @author Major
  */
@@ -32,7 +37,7 @@ public final class Archive {
 
 	/**
 	 * Creates a new archive.
-	 * 
+	 *
 	 * @param entries The entries in this archive.
 	 */
 	public Archive(List<ArchiveEntry> entries) {
@@ -43,7 +48,7 @@ public final class Archive {
 	/**
 	 * Returns a new archive consisting of the current {@link ArchiveEntry} objects, and the specified entries. This
 	 * will replace any entries with the same identifier as any of the specified ones, if present.
-	 * 
+	 *
 	 * @param entries The entries.
 	 * @return The new archive.
 	 */
@@ -60,7 +65,7 @@ public final class Archive {
 	/**
 	 * Returns a new archive consisting of the current {@link ArchiveEntry} objects, and the added one. This will
 	 * replace the entry with the same identifier as the specified one, if it exists.
-	 * 
+	 *
 	 * @param entry The entry to add.
 	 * @return The new archive.
 	 */
@@ -80,7 +85,7 @@ public final class Archive {
 
 	/**
 	 * Gets a shallow copy of the {@link List} of {@link ArchiveEntry} objects.
-	 * 
+	 *
 	 * @return The list of entries.
 	 */
 	public List<ArchiveEntry> getEntries() {
@@ -89,7 +94,7 @@ public final class Archive {
 
 	/**
 	 * Gets the {@link ArchiveEntry} with the specified name.
-	 * 
+	 *
 	 * @param name The name of the entry.
 	 * @return The entry.
 	 * @throws FileNotFoundException If the entry could not be found.
@@ -116,7 +121,7 @@ public final class Archive {
 
 	/**
 	 * Gets the size of this archive, in bytes.
-	 * 
+	 *
 	 * @return The size.
 	 */
 	public int getSize() {
@@ -130,18 +135,18 @@ public final class Archive {
 
 	/**
 	 * Removes the {@link ArchiveEntry} with the specified name.
-	 * 
+	 *
 	 * @param name The name of the entry.
 	 * @return An archive containing all of the entries in this archive, except for the one removed.
 	 * @throws FileNotFoundException If the entry could not be found.
 	 */
 	public Archive removeEntry(String name) throws FileNotFoundException {
 		int hash = ArchiveUtils.hash(name);
-
 		List<ArchiveEntry> entries = new ArrayList<>(this.entries);
-		Iterator<ArchiveEntry> iterator = entries.iterator();
 
-		for (ArchiveEntry entry = null; iterator.hasNext(); entry = iterator.next()) {
+		for (Iterator<ArchiveEntry> iterator = entries.iterator(); iterator.hasNext(); ) {
+			ArchiveEntry entry = iterator.next();
+
 			if (entry.getIdentifier() == hash) {
 				iterator.remove();
 				return new Archive(entries);
@@ -154,14 +159,14 @@ public final class Archive {
 	/**
 	 * Replaces the {@link ArchiveEntry} with the specified name (shorthand for {@link #removeEntry} and then
 	 * {@link #addEntry}.
-	 * 
+	 *
 	 * @param name The name of the entry to replace.
 	 * @param entry The entry.
 	 * @return The archive with the replaced entry.
 	 * @throws FileNotFoundException If the entry with the specified name is not part of this archive.
 	 */
 	public Archive replaceEntry(String name, ArchiveEntry entry) throws FileNotFoundException {
-		return removeEntry(name).addEntry(entry);
+		return removeEntry(name).addEntry(entry); // TODO rewrite to avoid needless copying
 	}
 
 }
