@@ -141,6 +141,7 @@ public final class CollisionFlagIdentifier {
 			return;
 		}
 
+		System.out.println("Starting in interactive mode. Input values to decode, or 'q' to quit.");
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {
 				String in = scanner.nextLine();
@@ -202,12 +203,8 @@ public final class CollisionFlagIdentifier {
 	 * Prints the {@link CollisionFlag}s stored in each of the values.
 	 */
 	private void print() {
-		values.forEach(value -> {
-			String message = Integer.toString(value) + " contains: ";
-			message += getFlags(value).map(CollisionFlag::name).collect(Collectors.joining(", "));
-
-			System.out.println(message);
-		});
+		values.mapToObj(value -> Integer.toString(value) + " contains: " + getFlags(value).collect(Collectors.toSet()))
+				.forEach(System.out::println);
 	}
 
 }
