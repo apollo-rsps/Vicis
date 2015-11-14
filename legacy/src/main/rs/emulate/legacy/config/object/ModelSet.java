@@ -1,16 +1,15 @@
 package rs.emulate.legacy.config.object;
 
-import java.util.Arrays;
-
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.util.Assertions;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Preconditions;
+import java.util.Arrays;
 
 /**
  * A set of an object's possible model ids and positions. This class is immutable.
- * 
+ *
  * @author Major
  */
 public final class ModelSet {
@@ -21,8 +20,25 @@ public final class ModelSet {
 	public static final ModelSet EMPTY = new ModelSet(new int[0], new int[0]);
 
 	/**
+	 * Decodes a ModelSet with no model positions from the specified {@link DataBuffer}.
+	 *
+	 * @param buffer The Buffer. Must not be {@code null}.
+	 * @return The ModelSet.
+	 */
+	public static ModelSet decode(DataBuffer buffer) {
+		int count = buffer.getUnsignedByte();
+		int[] models = new int[count];
+
+		for (int index = 0; index < count; index++) {
+			models[index] = buffer.getUnsignedShort();
+		}
+
+		return new ModelSet(models);
+	}
+
+	/**
 	 * Decodes a ModelSet with model positions from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer. Must not be {@code null}.
 	 * @return The ModelSet.
 	 */
@@ -39,25 +55,8 @@ public final class ModelSet {
 	}
 
 	/**
-	 * Decodes a ModelSet with no model positions from the specified {@link DataBuffer}.
-	 * 
-	 * @param buffer The Buffer. Must not be {@code null}.
-	 * @return The ModelSet.
-	 */
-	public static ModelSet decode(DataBuffer buffer) {
-		int count = buffer.getUnsignedByte();
-		int[] models = new int[count];
-
-		for (int index = 0; index < count; index++) {
-			models[index] = buffer.getUnsignedShort();
-		}
-
-		return new ModelSet(models);
-	}
-
-	/**
 	 * Encodes the specified {@link ModelSet} into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer. Must not be {@code null}.
 	 * @param models The ModelSet. Must not be {@code null}.
 	 */
@@ -89,7 +88,7 @@ public final class ModelSet {
 
 	/**
 	 * Creates the ModelSet, with an empty array for the types.
-	 * 
+	 *
 	 * @param models The array of model ids. Cannot be null.
 	 * @throws NullPointerException If the {@code models} array array is null.
 	 */
@@ -101,7 +100,7 @@ public final class ModelSet {
 
 	/**
 	 * Creates the ModelSet. The length of the {@code models} and {@code types} arrays must be equal.
-	 * 
+	 *
 	 * @param models The array of model ids. Cannot be null.
 	 * @param types The array of model types. Cannot be null.
 	 * @throws IllegalArgumentException If the {@code models} and {@code types} arrays are not of equal length.
@@ -117,7 +116,7 @@ public final class ModelSet {
 
 	/**
 	 * Gets the amount of models in this ModelSet.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int getCount() {
@@ -126,7 +125,7 @@ public final class ModelSet {
 
 	/**
 	 * Gets the model id at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The model id.
 	 */
@@ -136,7 +135,7 @@ public final class ModelSet {
 
 	/**
 	 * Gets the model ids.
-	 * 
+	 *
 	 * @return The model ids.
 	 */
 	public int[] getModels() {
@@ -145,7 +144,7 @@ public final class ModelSet {
 
 	/**
 	 * Gets the type at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The type.
 	 */
@@ -155,7 +154,7 @@ public final class ModelSet {
 
 	/**
 	 * Gets the model types.
-	 * 
+	 *
 	 * @return The model types.
 	 */
 	public int[] getType() {

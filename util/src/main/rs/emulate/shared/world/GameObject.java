@@ -2,7 +2,7 @@ package rs.emulate.shared.world;
 
 /**
  * Represents an object in the game world.
- * 
+ *
  * @author Chris Fletcher
  * @author Major
  */
@@ -20,7 +20,7 @@ public final class GameObject {
 
 	/**
 	 * Creates a game object.
-	 * 
+	 *
 	 * @param id The object's id.
 	 * @param position The position.
 	 * @param type The type code of the object.
@@ -33,7 +33,7 @@ public final class GameObject {
 
 	/**
 	 * Gets this object's id.
-	 * 
+	 *
 	 * @return The id.
 	 */
 	public int getId() {
@@ -42,7 +42,7 @@ public final class GameObject {
 
 	/**
 	 * Gets the {@link Position} of this object.
-	 * 
+	 *
 	 * @return The position.
 	 */
 	public Position getPosition() {
@@ -51,7 +51,7 @@ public final class GameObject {
 
 	/**
 	 * Gets this object's orientation.
-	 * 
+	 *
 	 * @return The orientation.
 	 */
 	public int getRotation() {
@@ -60,7 +60,7 @@ public final class GameObject {
 
 	/**
 	 * Gets this object's type.
-	 * 
+	 *
 	 * @return The type.
 	 */
 	public int getType() {

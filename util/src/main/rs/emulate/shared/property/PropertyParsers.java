@@ -1,11 +1,11 @@
 package rs.emulate.shared.property;
 
-import java.util.Optional;
-import java.util.function.Function;
-
 import com.google.common.base.CharMatcher;
 import com.google.common.primitives.Ints;
 import com.google.common.primitives.Longs;
+
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Contains parser {@link Function}s for {@link Property} values.

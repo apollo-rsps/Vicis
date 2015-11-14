@@ -1,15 +1,14 @@
 package rs.emulate.util.crypto;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import org.junit.Test;
-
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.crypto.Xtea;
 
+import static org.junit.Assert.assertArrayEquals;
+
 /**
  * A unit test to validate the XTEA code.
- * 
+ *
  * @author Graham
  */
 public final class XteaTest {

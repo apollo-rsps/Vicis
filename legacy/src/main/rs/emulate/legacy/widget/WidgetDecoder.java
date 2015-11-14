@@ -1,14 +1,14 @@
 package rs.emulate.legacy.widget;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.OptionalInt;
-
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec;
 import rs.emulate.shared.util.DataBuffer;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.OptionalInt;
 
 /**
  * Decodes data into {@link Widget}s.
@@ -18,15 +18,20 @@ import rs.emulate.shared.util.DataBuffer;
 public final class WidgetDecoder {
 
 	/**
-	 * The amount of sprites used by an {@link WidgetGroup#INVENTORY} Widget.
+	 * The identifier that indicates that a Widget has a parent.
 	 */
-	@SuppressWarnings("unused")
-	private static final int SPRITE_COUNT = 20;
+	private static final int CHILD_WIDGET_IDENTIFIER = 65_535;
 
 	/**
 	 * The name of the file containing the Widget data.
 	 */
 	private static final String DATA_FILE_NAME = "data";
+
+	/**
+	 * The amount of sprites used by an {@link WidgetGroup#INVENTORY} Widget.
+	 */
+	@SuppressWarnings("unused")
+	private static final int SPRITE_COUNT = 20;
 
 	/**
 	 * The Archive containing the Widgets.
@@ -57,11 +62,6 @@ public final class WidgetDecoder {
 
 		return widgets;
 	}
-
-	/**
-	 * The identifier that indicates that a Widget has a parent.
-	 */
-	private static final int CHILD_WIDGET_IDENTIFIER = 65_535;
 
 	/**
 	 * Decodes a single {@link Widget}.

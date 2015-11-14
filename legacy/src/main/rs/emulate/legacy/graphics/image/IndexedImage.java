@@ -1,9 +1,9 @@
 package rs.emulate.legacy.graphics.image;
 
+import rs.emulate.legacy.graphics.ImageFormat;
+
 import java.util.Arrays;
 import java.util.Objects;
-
-import rs.emulate.legacy.graphics.ImageFormat;
 
 /**
  * A 2-dimensional image that stores its data using indexed colours.
@@ -87,7 +87,7 @@ public final class IndexedImage {
 	 * @param resizeHeight The default height to resize the Image to, when requested.
 	 */
 	public IndexedImage(String name, ImageFormat format, int width, int height, int[] raster, int[] palette,
-			int offsetX, int offsetY, int resizeWidth, int resizeHeight) {
+	                    int offsetX, int offsetY, int resizeWidth, int resizeHeight) {
 		this.format = format;
 		this.name = name;
 		this.height = height;

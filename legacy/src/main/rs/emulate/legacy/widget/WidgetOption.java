@@ -6,7 +6,7 @@ import java.util.Arrays;
  * The type of option a Widget may have.
  * <p>
  * Thanks to Dane for providing information about some of the enumerators.
- * 
+ *
  * @author Major
  */
 public enum WidgetOption {
@@ -50,7 +50,7 @@ public enum WidgetOption {
 
 	/**
 	 * Gets the WidgetOption with the specified integer value.
-	 * 
+	 *
 	 * @param value The integer value.
 	 * @return The WidgetOption.
 	 * @throws IllegalArgumentException If there is no WidgetOption with the specified integer value.
@@ -76,7 +76,7 @@ public enum WidgetOption {
 
 	/**
 	 * Gets the integer value of this WidgetOption.
-	 * 
+	 *
 	 * @return The integer value.
 	 */
 	public int toInteger() {

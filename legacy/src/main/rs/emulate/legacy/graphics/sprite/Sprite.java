@@ -1,20 +1,20 @@
 package rs.emulate.legacy.graphics.sprite;
 
+import rs.emulate.legacy.graphics.ImageFormat;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-import rs.emulate.legacy.graphics.ImageFormat;
-
 /**
  * A 2-dimensional sprite in the cache.
- * 
+ *
  * @author Major
  */
 public final class Sprite {
 
 	/**
 	 * Creates a {@link SpriteBuilder} with the specified name.
-	 * 
+	 *
 	 * @param name The name of the Sprite being built.
 	 * @return The SpriteBuilder.
 	 */
@@ -69,7 +69,7 @@ public final class Sprite {
 
 	/**
 	 * Creates the Sprite.
-	 * 
+	 *
 	 * @param name The name of this sprite.
 	 * @param raster The width of this sprite.
 	 * @param format The sprite {@link ImageFormat}.
@@ -81,7 +81,7 @@ public final class Sprite {
 	 * @param resizeWidth The default width to resize this sprite to, when requested.
 	 */
 	public Sprite(String name, int[] raster, ImageFormat format, int height, int width, int offsetX, int offsetY,
-			int resizeHeight, int resizeWidth) {
+	              int resizeHeight, int resizeWidth) {
 		this.format = format;
 		this.name = name;
 		this.height = height;
@@ -111,7 +111,7 @@ public final class Sprite {
 
 	/**
 	 * Gets the {@link ImageFormat} of this sprite.
-	 * 
+	 *
 	 * @return The format.
 	 */
 	public ImageFormat getFormat() {

@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 
 /**
  * Contains file-related constants.
- * 
+ *
  * @author Major
  */
 public final class FileConstants {
@@ -38,7 +38,6 @@ public final class FileConstants {
 				throw new UncheckedIOException("Failed to create directories.", e);
 			}
 		}
-
 	}
 
 	/**

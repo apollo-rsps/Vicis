@@ -1,10 +1,10 @@
 package rs.emulate.modern.script.decomp.instr.impl;
 
-import java.util.function.Consumer;
-
 import rs.emulate.modern.script.decomp.instr.Instruction;
 import rs.emulate.modern.script.decomp.instr.OperandType;
 import rs.emulate.modern.script.interp.ScriptContext;
+
+import java.util.function.Consumer;
 
 /**
  * An {@link Instruction} that takes only a single {@code long} operand.
@@ -15,7 +15,7 @@ public final class LongInstruction extends Instruction {
 
 	/**
 	 * Creates a LongInstruction.
-	 * 
+	 *
 	 * @param name The name of the LongInstruction.
 	 * @param opcode The opcode of the instruction.
 	 * @param action The {@link ScriptContext} {@link Consumer} that performs the side effect of the LongInstruction.
@@ -32,7 +32,7 @@ public final class LongInstruction extends Instruction {
 
 	/**
 	 * Creates the LongInstruction.
-	 * 
+	 *
 	 * @param name The name of this LongInstruction.
 	 * @param opcode The opcode of this LongInstruction.
 	 * @param action The {@link ScriptContext} {@link Consumer} that performs the side effect of this LongInstruction.

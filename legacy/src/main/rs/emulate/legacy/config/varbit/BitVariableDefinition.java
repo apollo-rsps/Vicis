@@ -1,18 +1,17 @@
 package rs.emulate.legacy.config.varbit;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.primitives.Ints;
+import rs.emulate.legacy.config.ConfigPropertyMap;
+import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
+
 import java.util.Arrays;
 import java.util.List;
 
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.ConfigPropertyMap;
-import rs.emulate.legacy.config.MutableConfigDefinition;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.primitives.Ints;
-
 /**
  * A definition for bit variables (a 'varbit').
- * 
+ *
  * @author Major
  */
 public class BitVariableDefinition extends MutableConfigDefinition {
@@ -37,7 +36,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Creates the BitVariableDefinition.
-	 * 
+	 *
 	 * @param id The id.
 	 * @param properties The {@link ConfigPropertyMap}.
 	 */
@@ -47,7 +46,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the bit mask used by this variable.
-	 * 
+	 *
 	 * @return The bit mask.
 	 */
 	public int getBitmask() {
@@ -56,7 +55,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the high bit mask index of this definition.
-	 * 
+	 *
 	 * @return The high index.
 	 */
 	public int getHigh() {
@@ -65,7 +64,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the low bit mask index of this definition.
-	 * 
+	 *
 	 * @return The low index.
 	 */
 	public int getLow() {
@@ -74,7 +73,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the {@link Variable}.
-	 * 
+	 *
 	 * @return The variable.
 	 */
 	public SerializableProperty<Variable> getVariable() {
@@ -83,7 +82,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the variable id of this definition.
-	 * 
+	 *
 	 * @return The variable id.
 	 */
 	public int getVariableId() {
@@ -92,7 +91,7 @@ public class BitVariableDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the value of the {@link BitVariableProperty#VARIABLE} {@link SerializableProperty}.
-	 * 
+	 *
 	 * @return The {@link Variable}.
 	 */
 	private Variable getVariableValue() {

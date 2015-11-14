@@ -1,8 +1,8 @@
 package rs.emulate.legacy.config.floor;
 
-import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 
 /**
  * A definition for a Floor.

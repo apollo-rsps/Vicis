@@ -1,14 +1,14 @@
 package rs.emulate.legacy.config;
 
-import java.lang.reflect.Constructor;
-
 import rs.emulate.legacy.archive.ArchiveUtils;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Supplies {@link MutableConfigDefinition}s and {@link DefaultConfigDefinition}s.
  *
- * @author Major
  * @param <T> The MutableConfigDefinition type.
+ * @author Major
  */
 public final class DefinitionSupplier<T extends MutableConfigDefinition> {
 
@@ -21,7 +21,7 @@ public final class DefinitionSupplier<T extends MutableConfigDefinition> {
 	 * @return The MutableConfigDefinition of type {@code T}.
 	 */
 	public static <T extends MutableConfigDefinition> DefinitionSupplier<T> create(String name, Class<T> definition,
-			Class<? extends DefaultConfigDefinition<T>> defaultClass) {
+	                                                                               Class<? extends DefaultConfigDefinition<T>> defaultClass) {
 		try {
 			Constructor<T> constructor = definition.getConstructor(int.class, ConfigPropertyMap.class);
 			DefaultConfigDefinition<T> immutable = defaultClass.newInstance();
@@ -63,7 +63,7 @@ public final class DefinitionSupplier<T extends MutableConfigDefinition> {
 	 * @param immutable The {@link DefaultConfigDefinition} used as a base for new MutableConfigDefinitions.
 	 */
 	private DefinitionSupplier(String name, Class<T> type, Constructor<T> constructor,
-			DefaultConfigDefinition<T> immutable) {
+	                           DefaultConfigDefinition<T> immutable) {
 		this.name = name;
 		this.type = type;
 		this.constructor = constructor;

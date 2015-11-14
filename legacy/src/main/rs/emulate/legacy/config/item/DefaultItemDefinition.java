@@ -17,8 +17,8 @@ import static rs.emulate.legacy.config.item.ItemProperty.*;
 /**
  * A default {@link ItemDefinition} used as a base for actual definitions.
  *
- * @author Major
  * @param <T> The type of ItemDefinition this DefaultItemDefinition is for.
+ * @author Major
  */
 public class DefaultItemDefinition<T extends ItemDefinition> extends DefaultConfigDefinition<T> {
 

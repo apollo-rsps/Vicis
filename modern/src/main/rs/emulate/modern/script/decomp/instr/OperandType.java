@@ -38,7 +38,7 @@ public enum OperandType {
 
 	/**
 	 * Gets the Java {@link Class} representing this OperandType.
-	 * 
+	 *
 	 * @return The Java Class.
 	 */
 	public Class<?> getRepresentingClass() {

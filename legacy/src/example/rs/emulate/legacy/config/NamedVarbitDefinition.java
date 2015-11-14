@@ -26,7 +26,7 @@ public final class NamedVarbitDefinition extends BitVariableDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the name of this BitVariableDefinition.
-	 * 
+	 *
 	 * @return The name ConfigProperty.
 	 */
 	public SerializableProperty<String> getName() {

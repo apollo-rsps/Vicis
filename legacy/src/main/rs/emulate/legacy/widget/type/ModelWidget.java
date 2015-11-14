@@ -1,15 +1,15 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * A {@link WidgetGroup#MODEL} {@link Widget}.
@@ -110,8 +110,8 @@ public final class ModelWidget extends Widget {
 	 * @param roll The roll of the model.
 	 */
 	public ModelWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			Model defaultModel, Model secondaryModel, int scale, int pitch, int roll) {
+	                   OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                   Model defaultModel, Model secondaryModel, int scale, int pitch, int roll) {
 		super(id, parent, WidgetGroup.MODEL, optionType, content, width, height, alpha, hover, scripts, option, hoverText);
 
 		this.primary = defaultModel;

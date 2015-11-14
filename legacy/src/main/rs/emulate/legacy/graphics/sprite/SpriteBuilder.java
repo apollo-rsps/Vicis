@@ -1,13 +1,12 @@
 package rs.emulate.legacy.graphics.sprite;
 
+import com.google.common.base.Preconditions;
 import rs.emulate.legacy.graphics.ImageFormat;
 import rs.emulate.util.Assertions;
 
-import com.google.common.base.Preconditions;
-
 /**
  * A builder class for a {@link Sprite}.
- * 
+ *
  * @author Major
  */
 public final class SpriteBuilder {
@@ -59,7 +58,7 @@ public final class SpriteBuilder {
 
 	/**
 	 * Creates the SpriteBuilder.
-	 * 
+	 *
 	 * @param name The name of the Sprite.
 	 */
 	public SpriteBuilder(String name) {
@@ -69,7 +68,7 @@ public final class SpriteBuilder {
 
 	/**
 	 * Builds the data contained in this builder into a {@link Sprite}.
-	 * 
+	 *
 	 * @return The Sprite.
 	 */
 	public Sprite build() {
@@ -83,7 +82,7 @@ public final class SpriteBuilder {
 	/**
 	 * Duplicates this SpriteBuilder. Every value of the duplicate builder will be the same as this one, although the
 	 * raster will be a deep copy.
-	 * 
+	 *
 	 * @return The duplicate Sprite builder.
 	 */
 	public SpriteBuilder duplicate() {
@@ -101,7 +100,7 @@ public final class SpriteBuilder {
 
 	/**
 	 * Sets the {@link ImageFormat} of the Sprite.
-	 * 
+	 *
 	 * @param format The ImageFormat. Cannot be {@code null}.
 	 * @return This SpriteBuilder, for chaining.
 	 * @throws NullPointerException If the specified format is {@code null}.

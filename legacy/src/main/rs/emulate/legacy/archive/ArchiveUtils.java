@@ -5,14 +5,14 @@ import java.util.stream.Collectors;
 
 /**
  * Contains archive-related utility methods.
- * 
+ *
  * @author Major
  */
 public final class ArchiveUtils {
 
 	/**
 	 * Hashes the specified string into an integer used to identify an {@link ArchiveEntry}.
-	 * 
+	 *
 	 * @param name The name of the entry.
 	 * @return The hash.
 	 */
@@ -22,7 +22,7 @@ public final class ArchiveUtils {
 
 	/**
 	 * Gets the size of the data contained in the specified {@link ArchiveEntry} objects.
-	 * 
+	 *
 	 * @param entries The archive entries.
 	 * @return The size.
 	 */

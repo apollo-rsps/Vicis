@@ -1,10 +1,10 @@
 package rs.emulate.modern.script.decomp.instr.impl;
 
-import java.util.function.Consumer;
-
 import rs.emulate.modern.script.decomp.instr.Instruction;
 import rs.emulate.modern.script.decomp.instr.OperandType;
 import rs.emulate.modern.script.interp.ScriptContext;
+
+import java.util.function.Consumer;
 
 /**
  * A simple type of {@link Instruction} that does not take a single {@code int}/{@code long}/String operand.
@@ -23,7 +23,7 @@ public final class GenericInstruction extends Instruction {
 	 * @return The GenericInstruction.
 	 */
 	public static GenericInstruction create(String name, int opcode, Consumer<ScriptContext> action,
-			OperandType... types) {
+	                                        OperandType... types) {
 		return new GenericInstruction(name, opcode, action, types);
 	}
 

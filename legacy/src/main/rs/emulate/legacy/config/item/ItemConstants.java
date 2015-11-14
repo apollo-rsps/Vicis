@@ -2,7 +2,7 @@ package rs.emulate.legacy.config.item;
 
 /**
  * Contains constants related to item definitions.
- * 
+ *
  * @author Major
  */
 final class ItemConstants {

@@ -44,6 +44,15 @@ public final class Entry {
 	}
 
 	/**
+	 * Gets the {@link ChildEntry} objects of this Entry.
+	 *
+	 * @return The ChildEntry objects.
+	 */
+	public Collection<ChildEntry> getChildren() {
+		return entries.values();
+	}
+
+	/**
 	 * Gets the CRC32 checksum of this entry.
 	 *
 	 * @return The CRC32 checksum.
@@ -60,15 +69,6 @@ public final class Entry {
 	 */
 	public ChildEntry getEntry(int id) {
 		return entries.get(id);
-	}
-
-	/**
-	 * Gets the {@link ChildEntry} objects of this Entry.
-	 * 
-	 * @return The ChildEntry objects.
-	 */
-	public Collection<ChildEntry> getChildren() {
-		return entries.values();
 	}
 
 	/**
@@ -100,7 +100,7 @@ public final class Entry {
 
 	/**
 	 * Returns whether or not this Entry has a {@link ChildEntry} with the specified id.
-	 * 
+	 *
 	 * @param id The id.
 	 * @return {@code true} if this Entry has a ChildEntry with the specified id, {@code false} if not.
 	 */

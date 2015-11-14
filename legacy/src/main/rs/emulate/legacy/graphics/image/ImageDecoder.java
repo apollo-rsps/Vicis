@@ -1,22 +1,21 @@
 package rs.emulate.legacy.graphics.image;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.graphics.GraphicsConstants;
 import rs.emulate.legacy.graphics.GraphicsDecoder;
 import rs.emulate.legacy.graphics.ImageFormat;
 
-import com.google.common.collect.ImmutableList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Decodes an {@link IndexedImage} from the 2D-graphics archive.
- * 
+ *
  * @author Major
  */
 public final class ImageDecoder extends GraphicsDecoder {
@@ -24,7 +23,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 	/**
 	 * Creates a new ImageDecoder to decode a Image (or Images) with the specified name, using the specified
 	 * {@link IndexedFileSystem}.
-	 * 
+	 *
 	 * @param fs The IndexedFileSystem.
 	 * @param name The name of the Image.
 	 * @return The ImageDecoder.
@@ -41,7 +40,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 
 	/**
 	 * Creates the ImageDecoder.
-	 * 
+	 *
 	 * @param archive The {@link Archive}.
 	 * @param name The name of the {@link IndexedImage}(s) to decode.
 	 * @throws FileNotFoundException If the data or index ArchiveEntry could not be found.
@@ -53,7 +52,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes all {@link IndexedImage}s, returning the decoded Images as an {@link ImmutableList}.
-	 * 
+	 *
 	 * @return The list of Images.
 	 * @throws IOException If there is an error decoding a Image.
 	 */
@@ -81,7 +80,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes data into a {@link IndexedImage}.
-	 * 
+	 *
 	 * @param palette The color palette of the Image.
 	 * @param resizeHeight The resize height of the Image.
 	 * @param resizeWidth The resize width of the Image.
@@ -103,7 +102,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes the raster of a single {@link IndexedImage}.
-	 * 
+	 *
 	 * @param format The {@link ImageFormat}.
 	 * @param width The width of the Image.
 	 * @param height The height of the Image.
@@ -130,7 +129,7 @@ public final class ImageDecoder extends GraphicsDecoder {
 
 	/**
 	 * Gets the ARGB colour of a pixel of the {@link IndexedImage}.
-	 * 
+	 *
 	 * @param palette The colour palette.
 	 * @param index The index in the palette.
 	 * @return The ARGB colour.

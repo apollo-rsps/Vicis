@@ -1,12 +1,11 @@
 package rs.emulate.legacy;
 
-import rs.emulate.shared.util.DataBuffer;
-
 import com.google.common.base.Preconditions;
+import rs.emulate.shared.util.DataBuffer;
 
 /**
  * Contains methods for encoding and decoding {@link Index} objects.
- * 
+ *
  * @author Major
  * @author Graham
  */
@@ -14,7 +13,7 @@ final class IndexCodec {
 
 	/**
 	 * Decodes the {@link DataBuffer} into an index.
-	 * 
+	 *
 	 * @param buffer The buffer.
 	 * @return The index.
 	 * @throws IllegalArgumentException If the buffer length is invalid.
@@ -30,7 +29,7 @@ final class IndexCodec {
 
 	/**
 	 * Encodes the index into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The byte buffer.
 	 */

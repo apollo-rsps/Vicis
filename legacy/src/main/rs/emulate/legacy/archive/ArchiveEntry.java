@@ -1,11 +1,11 @@
 package rs.emulate.legacy.archive;
 
-import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.ByteBufferUtils;
+import rs.emulate.shared.util.DataBuffer;
 
 /**
  * A single entry in an {@link Archive}. This class is immutable.
- * 
+ *
  * @author Graham
  * @author Major
  */
@@ -23,7 +23,7 @@ public final class ArchiveEntry {
 
 	/**
 	 * Creates the archive entry.
-	 * 
+	 *
 	 * @param identifier The identifier.
 	 * @param buffer The buffer containing this entry's data.
 	 */
@@ -55,7 +55,7 @@ public final class ArchiveEntry {
 	/**
 	 * Gets a deep copy of the buffer of this entry. The returned buffer will not be read-only (see
 	 * {@link ByteBufferUtils#copy}.
-	 * 
+	 *
 	 * @return The buffer of this entry.
 	 */
 	public DataBuffer getBuffer() {
@@ -64,7 +64,7 @@ public final class ArchiveEntry {
 
 	/**
 	 * Gets the identifier of this entry.
-	 * 
+	 *
 	 * @return The identifier of this entry.
 	 */
 	public int getIdentifier() {
@@ -73,7 +73,7 @@ public final class ArchiveEntry {
 
 	/**
 	 * Gets the size of this entry (i.e. the capacity of the {@link DataBuffer} backing it), in bytes.
-	 * 
+	 *
 	 * @return The size of this entry.
 	 */
 	public int getSize() {
@@ -87,7 +87,7 @@ public final class ArchiveEntry {
 
 	/**
 	 * Returns a new archive entry with this entry's identifier, but the contents as the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The byte buffer.
 	 * @return The new archive entry.
 	 */

@@ -4,7 +4,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
  * A {@link ConfigPropertyType} implementation for {@link ItemDefinition}s.
- * 
+ *
  * @author Major
  */
 enum ItemProperty implements ConfigPropertyType {
@@ -171,7 +171,7 @@ enum ItemProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the ItemProperty.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 */
 	private ItemProperty(int opcode) {

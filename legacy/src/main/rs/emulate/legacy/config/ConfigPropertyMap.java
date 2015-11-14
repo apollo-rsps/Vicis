@@ -1,14 +1,13 @@
 package rs.emulate.legacy.config;
 
+import com.google.common.base.Preconditions;
+import rs.emulate.util.Assertions;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import rs.emulate.util.Assertions;
-
-import com.google.common.base.Preconditions;
 
 /**
  * A {@link Map} wrapper containing methods to get properties using their opcode or name.
@@ -19,7 +18,7 @@ public final class ConfigPropertyMap {
 
 	/**
 	 * Validates the specified {@link SerializableProperty} (i.e. ensures that it is not {@code null}).
-	 * 
+	 *
 	 * @param property The ConfigProperty to validate.
 	 * @param key The key used to access the ConfigProperty.
 	 * @return The ConfigProperty.
@@ -63,7 +62,7 @@ public final class ConfigPropertyMap {
 
 	/**
 	 * Creates the ConfigPropertyMap, using an existing one as the base.
-	 * 
+	 *
 	 * @param map The base ConfigPropertyMap.
 	 */
 	public ConfigPropertyMap(ConfigPropertyMap map) {
@@ -93,9 +92,10 @@ public final class ConfigPropertyMap {
 	}
 
 	/**
-	 * Gets a {@link Set} containing {@link java.util.Map.Entry Map.Entry} objects of opcodes to {@link SerializableProperty}
+	 * Gets a {@link Set} containing {@link java.util.Map.Entry Map.Entry} objects of opcodes to {@link
+	 * SerializableProperty}
 	 * objects.
-	 * 
+	 *
 	 * @return The Set of Map Entry objects.
 	 */
 	public Set<Map.Entry<Integer, SerializableProperty<?>>> getProperties() {
@@ -117,7 +117,7 @@ public final class ConfigPropertyMap {
 
 	/**
 	 * Gets the size of this PropertyMap.
-	 * 
+	 *
 	 * @return The size.
 	 */
 	public int size() {
@@ -125,7 +125,8 @@ public final class ConfigPropertyMap {
 	}
 
 	/**
-	 * Gets a {@link Collection} containing the values of this ConfigPropertyMap (i.e. the {@link SerializableProperty} objects).
+	 * Gets a {@link Collection} containing the values of this ConfigPropertyMap (i.e. the {@link SerializableProperty}
+	 * objects).
 	 *
 	 * @return The Collection of values.
 	 */

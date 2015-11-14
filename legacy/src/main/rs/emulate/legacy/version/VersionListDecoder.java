@@ -1,15 +1,14 @@
 package rs.emulate.legacy.version;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.archive.ArchiveEntry;
 import rs.emulate.shared.util.DataBuffer;
 
-import com.google.common.collect.ImmutableList;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Decodes ArchiveEntry objects from the version {@link Archive} containing file version data.

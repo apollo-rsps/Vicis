@@ -1,16 +1,17 @@
 package rs.emulate.legacy.config;
 
+import rs.emulate.util.Assertions;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import rs.emulate.util.Assertions;
-
 /**
- * A {@link ConfigPropertyType} that can be created at any point during runtime (rather than during the linking process,
+ * A {@link ConfigPropertyType} that can be created at any point during runtime (rather than during the linking
+ * process,
  * as part of an enumerated type). Useful when there are lots of similar properties that would result in a huge amount
  * of enumerators (such as original and replacement colours). This class is immutable.
- * 
+ *
  * @author Major
  */
 public final class DynamicConfigPropertyType implements ConfigPropertyType {
@@ -23,7 +24,7 @@ public final class DynamicConfigPropertyType implements ConfigPropertyType {
 	/**
 	 * Creates a new DynamicPropertyType with the specified name and opcode, or returns a previously-created value from
 	 * the cache.
-	 * 
+	 *
 	 * @param name The name of the DynamicPropertyType. Must not be {@code null}.
 	 * @param opcode The opcode of the DynamicPropertyType. Must be positive (i.e. {@code > 0}).
 	 * @return The DynamicPropertyType.
@@ -47,7 +48,7 @@ public final class DynamicConfigPropertyType implements ConfigPropertyType {
 
 	/**
 	 * Creates the DynamicPropertyType.
-	 * 
+	 *
 	 * @param name The name of the DynamicPropertyType.
 	 * @param opcode The opcode of the DynamicPropertyType.
 	 */

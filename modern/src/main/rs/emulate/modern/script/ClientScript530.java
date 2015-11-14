@@ -1,22 +1,22 @@
 package rs.emulate.modern.script;
 
+import rs.emulate.shared.util.DataBuffer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import rs.emulate.shared.util.DataBuffer;
-
 /**
  * A 'ClientScript' used by the client to provide functionality.
- * 
+ *
  * @author Graham
  */
 public final class ClientScript530 {
 
 	/**
 	 * Decodes a {@link ClientScript530} from a {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The buffer.
 	 * @return The client script.
 	 */
@@ -71,14 +71,18 @@ public final class ClientScript530 {
 	}
 
 	private int intArgsCount, stringArgsCount, intStackDepth, stringStackDepth;
+
 	private String name;
+
 	private int[] opcodes, intOperands;
+
 	private String[] stringOperands;
+
 	private List<Map<Integer, Integer>> switchTables;
 
 	/**
 	 * Gets the integer argument count.
-	 * 
+	 *
 	 * @return The integer argument count.
 	 */
 	public int getIntArgsCount() {
@@ -87,7 +91,7 @@ public final class ClientScript530 {
 
 	/**
 	 * Gets the integer operand at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The integer operand.
 	 */
@@ -97,7 +101,7 @@ public final class ClientScript530 {
 
 	/**
 	 * Gets the integer stack depth.
-	 * 
+	 *
 	 * @return The integer stack depth.
 	 */
 	public int getIntStackDepth() {
@@ -106,7 +110,7 @@ public final class ClientScript530 {
 
 	/**
 	 * Gets the amount of opcodes in this script.
-	 * 
+	 *
 	 * @return The amount of opcodes.
 	 */
 	public int getLength() {
@@ -115,7 +119,7 @@ public final class ClientScript530 {
 
 	/**
 	 * Gets the name of the client script.
-	 * 
+	 *
 	 * @return The name.
 	 */
 	public String getName() {
@@ -124,7 +128,7 @@ public final class ClientScript530 {
 
 	/**
 	 * Gets the opcode at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The opcode.
 	 */
@@ -134,7 +138,7 @@ public final class ClientScript530 {
 
 	/**
 	 * Gets the string argument count.
-	 * 
+	 *
 	 * @return The string argument count.
 	 */
 	public int getStrArgsCount() {
@@ -142,8 +146,17 @@ public final class ClientScript530 {
 	}
 
 	/**
+	 * Gets the string stack depth.
+	 *
+	 * @return The string stack depth.
+	 */
+	public int getStrStackDepth() {
+		return stringStackDepth;
+	}
+
+	/**
 	 * Gets the string operand at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The string operand.
 	 */
@@ -152,17 +165,8 @@ public final class ClientScript530 {
 	}
 
 	/**
-	 * Gets the string stack depth.
-	 * 
-	 * @return The string stack depth.
-	 */
-	public int getStrStackDepth() {
-		return stringStackDepth;
-	}
-
-	/**
 	 * Gets the {@link List} of switch tables.
-	 * 
+	 *
 	 * @return The list of switch tables.
 	 */
 	public List<Map<Integer, Integer>> getSwitchTables() {

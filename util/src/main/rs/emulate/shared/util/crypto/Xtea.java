@@ -21,7 +21,7 @@ public final class Xtea {
 
 	/**
 	 * Deciphers the data in the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The buffer.
 	 * @param start The start value.
 	 * @param end The end value.
@@ -38,13 +38,13 @@ public final class Xtea {
 			int sum = GOLDEN_RATIO * ROUNDS;
 			int v0 = buffer.getInt(start + index * 8);
 			int v1 = buffer.getInt(start + index * 8 + 4);
-			
+
 			for (int j = 0; j < ROUNDS; j++) {
 				v1 -= (v0 << 4 ^ v0 >>> 5) + v0 ^ sum + key[sum >>> 11 & 3];
 				sum -= GOLDEN_RATIO;
 				v0 -= (v1 << 4 ^ v1 >>> 5) + v1 ^ sum + key[sum & 3];
 			}
-			
+
 			buffer.putInt(start + index * 8, v0);
 			buffer.putInt(start + index * 8 + 4, v1);
 		}
@@ -69,13 +69,13 @@ public final class Xtea {
 			int sum = 0;
 			int v0 = buffer.getInt(start + index * 8);
 			int v1 = buffer.getInt(start + index * 8 + 4);
-			
+
 			for (int j = 0; j < ROUNDS; j++) {
 				v0 += (v1 << 4 ^ v1 >>> 5) + v1 ^ sum + key[sum & 3];
 				sum += GOLDEN_RATIO;
 				v1 += (v0 << 4 ^ v0 >>> 5) + v0 ^ sum + key[sum >>> 11 & 3];
 			}
-			
+
 			buffer.putInt(start + index * 8, v0);
 			buffer.putInt(start + index * 8 + 4, v1);
 		}

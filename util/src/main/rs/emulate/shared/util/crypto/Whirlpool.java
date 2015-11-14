@@ -18,7 +18,6 @@ import java.util.Arrays;
  *
  * @author Paulo S.L.M. Barreto
  * @author Vincent Rijmen.
- *
  * @version 3.0 (2003.03.12)
  *
  *          =============================================================================
@@ -32,7 +31,8 @@ import java.util.Arrays;
  *          Differences from version 2.0:
  *
  *          - Generation of ISO/IEC 10118-3 test vectors. - Bug fix: nonzero carry was ignored when tallying the data
- *          length (this bug apparently only manifested itself when feeding data in pieces rather than in a single chunk
+ *          length (this bug apparently only manifested itself when feeding data in pieces rather than in a single
+ *          chunk
  *          at once).
  *
  *          Differences from version 1.0:
@@ -41,16 +41,18 @@ import java.util.Arrays;
  *
  *          =============================================================================
  *
- *          THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *          THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+ *          NOT
  *          LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
  *          IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  *          EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  *          SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- *          LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
+ *          LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ *          ANY
  *          WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  *          =============================================================================
- * 
+ *
  *          Name changes made by Major.
  */
 public class Whirlpool {
@@ -140,7 +142,7 @@ public class Whirlpool {
 
 	/**
 	 * Whirlpools the specified data, with an offset of 0 and a length of {@code data.length}.
-	 * 
+	 *
 	 * @param data The data.
 	 * @return The hash.
 	 */
@@ -150,7 +152,7 @@ public class Whirlpool {
 
 	/**
 	 * Whirlpools the specified data.
-	 * 
+	 *
 	 * @param data The data.
 	 * @param offset The offset.
 	 * @param length The length.
@@ -173,8 +175,9 @@ public class Whirlpool {
 	}
 
 	/**
-	 * Whirlpools the data in the specified {@link ByteBuffer}, reading from the current position to the buffer's limit.
-	 * 
+	 * Whirlpools the data in the specified {@link ByteBuffer}, reading from the current position to the buffer's
+	 * limit.
+	 *
 	 * @param data The data.
 	 * @return The hash, as a {@link ByteBuffer}.
 	 */
@@ -183,6 +186,11 @@ public class Whirlpool {
 		data.get(bytes);
 		return ByteBuffer.wrap(whirlpool(bytes));
 	}
+
+	/**
+	 * The temporary buffer for round transformations.
+	 */
+	protected long[] L = new long[8];
 
 	/**
 	 * Global number of hashed bits (256-bit counter).
@@ -218,11 +226,6 @@ public class Whirlpool {
 	 * The round key.
 	 */
 	protected long[] key = new long[8];
-
-	/**
-	 * The temporary buffer for round transformations.
-	 */
-	protected long[] L = new long[8];
 
 	/**
 	 * The cipher state.
@@ -317,7 +320,7 @@ public class Whirlpool {
 
 	/**
 	 * Get the hash value from the hashing state. This method uses the invariant: {@code bufferBits < 512}.
-	 * 
+	 *
 	 * @param digest The digest.
 	 */
 	public void finalize(byte[] digest) {

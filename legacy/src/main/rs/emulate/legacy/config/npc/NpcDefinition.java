@@ -1,14 +1,14 @@
 package rs.emulate.legacy.config.npc;
 
-import java.util.Map;
-
-import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
+
+import java.util.Map;
 
 /**
  * A {@link MutableConfigDefinition} for an npc.
- * 
+ *
  * @author Major
  */
 public class NpcDefinition extends MutableConfigDefinition {
@@ -30,7 +30,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Creates the NpcDefinition.
-	 * 
+	 *
 	 * @param id The id of the npc.
 	 * @param properties The {@link ConfigPropertyMap}.
 	 */
@@ -40,7 +40,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the animation set.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<MovementAnimationSet> animationSet() {
@@ -49,7 +49,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the clickable flag.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Boolean> clickable() {
@@ -58,7 +58,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the colours.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Map<Integer, Integer>> colours() {
@@ -67,7 +67,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the combat level.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> combatLevel() {
@@ -76,7 +76,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the description.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<String> description() {
@@ -85,7 +85,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the flat scale.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> flatScale() {
@@ -94,7 +94,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the head icon.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> headIcon() {
@@ -103,7 +103,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the height scale.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> heightScale() {
@@ -112,7 +112,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the idle animation.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> idleAnimation() {
@@ -121,7 +121,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the light modifier.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> lightModifier() {
@@ -130,7 +130,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the minimap visible flag.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Boolean> minimapVisible() {
@@ -139,7 +139,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the models.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<int[]> models() {
@@ -148,7 +148,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the {@link MorphismSet}.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<MorphismSet> morphismSet() {
@@ -157,7 +157,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the name.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<String> name() {
@@ -166,7 +166,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the priority render flag.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Boolean> priorityRender() {
@@ -175,7 +175,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the rotation.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> rotation() {
@@ -184,7 +184,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the secondary models.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<int[]> secondaryModels() {
@@ -193,7 +193,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the shadow modifier.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> shadowModifier() {
@@ -202,7 +202,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the size.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> size() {
@@ -211,7 +211,7 @@ public class NpcDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the walking animation.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public final SerializableProperty<Integer> walkingAnimation() {

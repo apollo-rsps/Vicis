@@ -1,14 +1,13 @@
 package rs.emulate.editor;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import rs.emulate.editor.util.Settings;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the application {@link Settings}.
- * 
+ *
  * @author Major
  */
 public final class SettingsTest {

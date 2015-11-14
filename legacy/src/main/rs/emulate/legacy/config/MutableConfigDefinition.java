@@ -1,12 +1,12 @@
 package rs.emulate.legacy.config;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
 import com.google.common.base.Preconditions;
+
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * A base class for a definition with properties that can be mutated.
@@ -66,7 +66,8 @@ public abstract class MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link Set} of {@link Map} {@link Entry} objects containing the opcodes and {@link SerializableProperty}
+	 * Gets the {@link Set} of {@link Map} {@link Entry} objects containing the opcodes and {@link
+	 * SerializableProperty}
 	 * objects.
 	 *
 	 * @return The Set.

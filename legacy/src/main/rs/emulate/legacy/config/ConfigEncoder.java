@@ -1,20 +1,19 @@
 package rs.emulate.legacy.config;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-import java.util.Map;
-
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.archive.ArchiveEntry;
 import rs.emulate.legacy.archive.ArchiveUtils;
 import rs.emulate.shared.util.DataBuffer;
 
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Encodes data from {@link ArchiveEntry} objects in the {@code config} {@link Archive}.
  *
- * @author Major
- *
  * @param <T> The type the data is encoded from.
+ * @author Major
  */
 public final class ConfigEncoder<T extends MutableConfigDefinition> {
 
@@ -67,11 +66,12 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 		hash = ArchiveUtils.hash(name + ConfigConstants.INDEX_EXTENSION);
 		ArchiveEntry indexEntry = new ArchiveEntry(hash, DataBuffer.wrap(index.toByteArray()));
 
-		return new ArchiveEntry[] { dataEntry, indexEntry };
+		return new ArchiveEntry[]{ dataEntry, indexEntry };
 	}
 
 	/**
-	 * Encodes the {@link List} of {@code T}s into an {@link ArchiveEntry}, and returns a new {@link Archive} containing
+	 * Encodes the {@link List} of {@code T}s into an {@link ArchiveEntry}, and returns a new {@link Archive}
+	 * containing
 	 * the entries in the specified Archive, and the newly created one.
 	 *
 	 * @param archive The Archive to use as a base.
@@ -82,7 +82,8 @@ public final class ConfigEncoder<T extends MutableConfigDefinition> {
 	}
 
 	/**
-	 * Returns whether or not the specified {@link Map} entry contains a {@link SerializableProperty} that should be encoded.
+	 * Returns whether or not the specified {@link Map} entry contains a {@link SerializableProperty} that should be
+	 * encoded.
 	 *
 	 * @param entry The Map entry.
 	 * @return {@code true} if the property should be encoded, {@code false} if not.

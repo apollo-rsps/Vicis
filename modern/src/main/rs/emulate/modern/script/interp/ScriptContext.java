@@ -1,12 +1,12 @@
 package rs.emulate.modern.script.interp;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.stream.Stream;
-
 import rs.emulate.modern.script.decomp.instr.OperandTable;
 import rs.emulate.modern.script.interp.stack.IntStack;
 import rs.emulate.modern.script.interp.stack.LongStack;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.stream.Stream;
 
 /**
  * A context for a ClientScript.
@@ -14,11 +14,6 @@ import rs.emulate.modern.script.interp.stack.LongStack;
  * @author Major
  */
 public final class ScriptContext {
-
-	/**
-	 * The program counter for this script.
-	 */
-	private int counter;
 
 	/**
 	 * The stack of {@code int}s.
@@ -41,6 +36,11 @@ public final class ScriptContext {
 	private final Deque<String> strings = new ArrayDeque<>();
 
 	/**
+	 * The program counter for this script.
+	 */
+	private int counter;
+
+	/**
 	 * Creates the ScriptContext.
 	 *
 	 * @param operands The {@link OperandTable}.
@@ -60,7 +60,7 @@ public final class ScriptContext {
 	 * Executes a branch if the specified {@code condition} is {@code true}.
 	 * <p>
 	 * This is a utility method for the variety of branching statements used by ClientScripts.
-	 * 
+	 *
 	 * @param condition Whether or not to execute the branch.
 	 */
 	public void branchIf(boolean condition) {
@@ -71,7 +71,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the program counter.
-	 * 
+	 *
 	 * @return The program counter.
 	 */
 	public int getCounter() {
@@ -80,7 +80,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the {@code int} operand at the current {@code counter} index.
-	 * 
+	 *
 	 * @return The {@code int} operand.
 	 */
 	public int getIntOperand() {
@@ -89,7 +89,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the {@code int} operand at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The {@code int} operand.
 	 */
@@ -99,7 +99,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the {@code long} operand at the current {@code counter} index.
-	 * 
+	 *
 	 * @return The {@code long} operand.
 	 */
 	public long getLongOperand() {
@@ -108,7 +108,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the {@code long} operand at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The {@code long} operand.
 	 */
@@ -118,7 +118,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the String operand at the current {@code counter} index.
-	 * 
+	 *
 	 * @return The String operand.
 	 */
 	public String getStringOperand() {
@@ -127,7 +127,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the String operand at the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The String operand.
 	 */
@@ -144,7 +144,7 @@ public final class ScriptContext {
 
 	/**
 	 * Increments the program counter by the specified amount.
-	 * 
+	 *
 	 * @param amount The amount.
 	 */
 	public void incrementCounter(int amount) {
@@ -153,7 +153,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the amount of {@code int}s in the stack.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int intCount() {
@@ -162,7 +162,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the amount of {@code long}s in the stack.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int longCount() {
@@ -171,7 +171,7 @@ public final class ScriptContext {
 
 	/**
 	 * Pops an {@code int} from the stack.
-	 * 
+	 *
 	 * @return The {@code int}.
 	 */
 	public int popInt() {
@@ -180,7 +180,7 @@ public final class ScriptContext {
 
 	/**
 	 * Pops a {@code long} from the stack.
-	 * 
+	 *
 	 * @return The {@code long}.
 	 */
 	public long popLong() {
@@ -189,7 +189,7 @@ public final class ScriptContext {
 
 	/**
 	 * Pops a String from the stack.
-	 * 
+	 *
 	 * @return The String.
 	 */
 	public String popString() {
@@ -198,7 +198,7 @@ public final class ScriptContext {
 
 	/**
 	 * Pushes an {@code int} onto the stack.
-	 * 
+	 *
 	 * @param value The {@code int}.
 	 */
 	public void pushInt(int value) {
@@ -207,7 +207,7 @@ public final class ScriptContext {
 
 	/**
 	 * Pushes a {@code long} onto the stack.
-	 * 
+	 *
 	 * @param value The {@code long}.
 	 */
 	public void pushLong(long value) {
@@ -216,7 +216,7 @@ public final class ScriptContext {
 
 	/**
 	 * Pushes a String onto the stack.
-	 * 
+	 *
 	 * @param value The String.
 	 */
 	public void pushString(String value) {
@@ -225,7 +225,7 @@ public final class ScriptContext {
 
 	/**
 	 * Sets the value of the program counter.
-	 * 
+	 *
 	 * @param counter The new value.
 	 */
 	public void setCounter(int counter) {
@@ -234,7 +234,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets the amount of Strings in the stack.
-	 * 
+	 *
 	 * @return The amount.
 	 */
 	public int stringCount() {
@@ -246,7 +246,7 @@ public final class ScriptContext {
 	 * <p>
 	 * This method does <strong>not</strong> create a copy of the stack, and is intended only for use by
 	 * {@link InstructionMap}.
-	 * 
+	 *
 	 * @return The IntStack.
 	 */
 	IntStack getInts() {
@@ -279,7 +279,7 @@ public final class ScriptContext {
 
 	/**
 	 * Gets a section of the stack of Strings, as a {@link Stream}.
-	 * 
+	 *
 	 * @param amount The amount of Strings to skip.
 	 * @return The Stream of Strings.
 	 */

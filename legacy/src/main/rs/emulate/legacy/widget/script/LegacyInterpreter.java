@@ -1,10 +1,10 @@
 package rs.emulate.legacy.widget.script;
 
+import rs.emulate.shared.cs.PlayerProvider;
+
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
-
-import rs.emulate.shared.cs.PlayerProvider;
 
 /**
  * An interpreter for {@link LegacyClientScript}s.
@@ -60,6 +60,11 @@ public final class LegacyInterpreter {
 	}
 
 	/**
+	 * The ClientScriptContext for the LegacyClientScript being interpreted.
+	 */
+	private final ClientScriptContext context;
+
+	/**
 	 * The LegacyClientScript being interpreted.
 	 */
 	private final LegacyClientScript script;
@@ -68,11 +73,6 @@ public final class LegacyInterpreter {
 	 * The MathOperator that will be used to evaluate the next instruction.
 	 */
 	private MathOperator operator = MathOperator.ADD;
-
-	/**
-	 * The ClientScriptContext for the LegacyClientScript being interpreted.
-	 */
-	private final ClientScriptContext context;
 
 	/**
 	 * Creates the LegacyInterpreter.
@@ -87,9 +87,10 @@ public final class LegacyInterpreter {
 
 	/**
 	 * Interprets the {@link LegacyClientScript} stored in this interpreter.
-	 * 
+	 *
 	 * @return The result of the interpretation.
-	 * @throws IllegalStateException If the script does not end with a {@link LegacyInstructionType#RETURN} instruction.
+	 * @throws IllegalStateException If the script does not end with a {@link LegacyInstructionType#RETURN}
+	 * instruction.
 	 */
 	public int interpret() {
 		for (LegacyInstruction instruction : script.getInstructions()) {
@@ -106,7 +107,7 @@ public final class LegacyInterpreter {
 
 	/**
 	 * Evaluates the specified {@link LegacyInstruction}.
-	 * 
+	 *
 	 * @param instruction The instruction to evaluate.
 	 * @return The result of the evaluation.
 	 */

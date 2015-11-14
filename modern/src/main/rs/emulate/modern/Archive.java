@@ -1,11 +1,11 @@
 package rs.emulate.modern;
 
+import rs.emulate.shared.util.DataBuffer;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-
-import rs.emulate.shared.util.DataBuffer;
 
 /**
  * An {@link Archive} is a file within the cache that can have multiple member files inside it.

@@ -1,20 +1,19 @@
 package rs.emulate.legacy.config;
 
+import rs.emulate.shared.property.Property;
+import rs.emulate.shared.util.DataBuffer;
+import rs.emulate.util.Assertions;
+
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-import rs.emulate.shared.property.Property;
-import rs.emulate.shared.util.DataBuffer;
-import rs.emulate.util.Assertions;
-
 /**
  * A property belonging to a definition in the config archive..
  *
- * @author Major
- *
  * @param <T> The property value type.
+ * @author Major
  */
 public class SerializableProperty<T> extends Property<T, ConfigPropertyType> {
 
@@ -44,7 +43,7 @@ public class SerializableProperty<T> extends Property<T, ConfigPropertyType> {
 	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
 	public SerializableProperty(ConfigPropertyType type, T defaultValue, BiConsumer<DataBuffer, T> encoder,
-			Function<DataBuffer, T> decoder, Function<T, Integer> size, Function<String, Optional<T>> parser) {
+	                            Function<DataBuffer, T> decoder, Function<T, Integer> size, Function<String, Optional<T>> parser) {
 		this(type, null, defaultValue, encoder, decoder, size, parser);
 	}
 
@@ -59,7 +58,7 @@ public class SerializableProperty<T> extends Property<T, ConfigPropertyType> {
 	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
 	public SerializableProperty(ConfigPropertyType type, T defaultValue, BiConsumer<DataBuffer, T> encoder,
-			Function<DataBuffer, T> decoder, int size, Function<String, Optional<T>> parser) {
+	                            Function<DataBuffer, T> decoder, int size, Function<String, Optional<T>> parser) {
 		this(type, defaultValue, encoder, decoder, value -> size, parser);
 	}
 
@@ -75,7 +74,7 @@ public class SerializableProperty<T> extends Property<T, ConfigPropertyType> {
 	 * @param parser The {@link Function} that parses a value from a String. Must not be {@code null}.
 	 */
 	public SerializableProperty(ConfigPropertyType type, T value, T defaultValue, BiConsumer<DataBuffer, T> encoder,
-			Function<DataBuffer, T> decoder, Function<T, Integer> size, Function<String, Optional<T>> parser) {
+	                            Function<DataBuffer, T> decoder, Function<T, Integer> size, Function<String, Optional<T>> parser) {
 		super(type, value, defaultValue, parser);
 		Assertions.checkNonNull("Decoder, encoder, and size lambdas must not be null.", decoder, encoder, size);
 

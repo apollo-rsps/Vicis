@@ -1,14 +1,14 @@
 package rs.emulate.modern;
 
+import rs.emulate.shared.util.CacheStringUtils;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import rs.emulate.shared.util.CacheStringUtils;
-import rs.emulate.shared.util.DataBuffer;
 
 /**
  * A {@link ReferenceTable} holds details for all the files with a single type, such as checksums, versions and archive
@@ -19,14 +19,14 @@ import rs.emulate.shared.util.DataBuffer;
 public final class ReferenceTable {
 
 	/**
-	 * A flag which indicates this {@link ReferenceTable} contains {@link CacheStringUtils} hashed identifiers.
-	 */
-	public static final int HAS_IDENTIFIERS = 0x01;
-
-	/**
 	 * A flag which indicates this {@link ReferenceTable} contains whirlpool digests for its entries.
 	 */
 	public static final int HAS_HASHES = 0x02;
+
+	/**
+	 * A flag which indicates this {@link ReferenceTable} contains {@link CacheStringUtils} hashed identifiers.
+	 */
+	public static final int HAS_IDENTIFIERS = 0x01;
 
 	private static final int HAS_UNKNOWN_4 = 0x4;
 
@@ -134,7 +134,7 @@ public final class ReferenceTable {
 
 	/**
 	 * Decodes the specified {@link Container} into a reference table.
-	 * 
+	 *
 	 * @param container The container.
 	 * @return The reference table.
 	 */

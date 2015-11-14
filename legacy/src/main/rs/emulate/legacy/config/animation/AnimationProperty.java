@@ -4,7 +4,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
  * A {@link ConfigPropertyType} implementation for AnimationDefinitions.
- * 
+ *
  * @author Major
  */
 enum AnimationProperty implements ConfigPropertyType {
@@ -70,7 +70,7 @@ enum AnimationProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the property.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 */
 	private AnimationProperty(int opcode) {

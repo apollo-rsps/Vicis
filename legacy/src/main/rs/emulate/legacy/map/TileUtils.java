@@ -26,6 +26,16 @@ package rs.emulate.legacy.map;
 public final class TileUtils {
 
 	/**
+	 * The x coordinate offset, used for computing the Tile height.
+	 */
+	static final int TILE_HEIGHT_X_OFFSET = 0xe3b7b;
+
+	/**
+	 * The z coordinate offset, used for computing the Tile height.
+	 */
+	static final int TILE_HEIGHT_Z_OFFSET = 0x87cce;
+
+	/**
 	 * The cosine table used for interpolation.
 	 */
 	private static final int[] COSINE = new int[2048];
@@ -140,15 +150,6 @@ public final class TileUtils {
 
 		return corners / 16 + sides / 8 + center / 4;
 	}
-
-	/**
-	 * The x coordinate offset, used for computing the Tile height.
-	 */
-	static final int TILE_HEIGHT_X_OFFSET = 0xe3b7b;
-	/**
-	 * The z coordinate offset, used for computing the Tile height.
-	 */
-	static final int TILE_HEIGHT_Z_OFFSET = 0x87cce;
 
 	/**
 	 * Sole private constructor to prevent instantiation.

@@ -1,10 +1,9 @@
 package rs.emulate.modern;
 
-import java.nio.ByteBuffer;
-
+import com.google.common.base.Preconditions;
 import rs.emulate.shared.util.DataBuffer;
 
-import com.google.common.base.Preconditions;
+import java.nio.ByteBuffer;
 
 /**
  * A {@link Sector} contains a header and data. The header contains information used to verify the integrity of the

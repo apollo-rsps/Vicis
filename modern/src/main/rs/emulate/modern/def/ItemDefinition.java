@@ -1,12 +1,12 @@
 package rs.emulate.modern.def;
 
-import java.nio.ByteBuffer;
-
 import rs.emulate.shared.util.DataBuffer;
+
+import java.nio.ByteBuffer;
 
 /**
  * A class that loads item/model information from the cache. TODO Get rid of this crap.
- * 
+ *
  * @author Graham
  * @author `Discardedx2
  */
@@ -15,15 +15,15 @@ public final class ItemDefinition {
 
 	/**
 	 * Decodes an item definition from the specified {@link ByteBuffer}.
-	 * 
+	 *
 	 * @param buffer The buffer.
 	 * @return The item definition.
 	 */
 	@SuppressWarnings("unused")
 	public static ItemDefinition decode(DataBuffer buffer) {
 		ItemDefinition def = new ItemDefinition();
-		def.groundOptions = new String[] { null, null, "take", null, null };
-		def.inventoryOptions = new String[] { null, null, null, null, "drop" };
+		def.groundOptions = new String[]{ null, null, "take", null, null };
+		def.inventoryOptions = new String[]{ null, null, null, null, "drop" };
 		while (true) {
 			int opcode = buffer.getByte() & 0xFF;
 			if (opcode == 0) {
@@ -176,38 +176,61 @@ public final class ItemDefinition {
 	}
 
 	private int colourEquip1;
+
 	private int colourEquip2;
+
 	private int femaleWearModel1;
+
 	private int femaleWearModel2;
+
 	private String[] groundOptions;
+
 	private int inventoryModelId;
 
 	private String[] inventoryOptions;
+
 	private int lendId;
+
 	private int lendTemplateId;
 
 	private int maleWearModel1 = -1;
+
 	private int maleWearModel2;
+
 	private boolean membersOnly;
+
 	private int modelOffset1;
 
 	private int modelOffset2;
+
 	private int modelRotation1;
 
 	private int modelRotation2;
+
 	private int modelZoom;
+
 	private short[] modifiedModelColors;
+
 	private String name;
+
 	private int notedId;
 
 	private int notedTemplateId;
+
 	private short[] originalModelColors;
+
 	private boolean stackable;
+
 	private int[] stackableAmounts;
+
 	private int[] stackableIds;
+
 	private int teamId;
+
 	private short[] textureColour1;
+
 	private short[] textureColour2;
+
 	private boolean unnoted;
 
 	private int value;

@@ -4,7 +4,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
  * A {@link ConfigPropertyType} implementation for bit variables.
- * 
+ *
  * @author Major
  */
 public enum BitVariableProperty implements ConfigPropertyType {
@@ -21,7 +21,7 @@ public enum BitVariableProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the bit variable property.
-	 * 
+	 *
 	 * @param opcode The opcode of the property.
 	 */
 	private BitVariableProperty(int opcode) {

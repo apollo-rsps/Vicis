@@ -5,14 +5,14 @@ import com.google.common.base.MoreObjects;
 /**
  * A disassembled ClientScript Token.
  *
- * @author Major
  * @param <T> The type of the lexeme.
+ * @author Major
  */
 public final class Token<T> {
 
 	/**
 	 * Creates a Token for an instruction.
-	 * 
+	 *
 	 * @param mnemonic The instruction mnemonic.
 	 * @return The Token.
 	 */
@@ -22,7 +22,7 @@ public final class Token<T> {
 
 	/**
 	 * Creates a Token for an {@code int}.
-	 * 
+	 *
 	 * @param lexeme The lexeme.
 	 * @return The Token.
 	 */
@@ -32,7 +32,7 @@ public final class Token<T> {
 
 	/**
 	 * Creates a Token for a {@code long}.
-	 * 
+	 *
 	 * @param lexeme The lexeme.
 	 * @return The Token.
 	 */
@@ -42,7 +42,7 @@ public final class Token<T> {
 
 	/**
 	 * Creates a Token for a String constant.
-	 * 
+	 *
 	 * @param lexeme The lexeme.
 	 * @return The Token.
 	 */
@@ -73,7 +73,7 @@ public final class Token<T> {
 
 	/**
 	 * Gets the lexeme of this Token.
-	 * 
+	 *
 	 * @return The lexeme.
 	 */
 	public T getLexeme() {
@@ -82,7 +82,7 @@ public final class Token<T> {
 
 	/**
 	 * Gets the {@link TokenType}.
-	 * 
+	 *
 	 * @return The type.
 	 */
 	public TokenType getType() {

@@ -1,5 +1,7 @@
 package rs.emulate.modern.def;
 
+import rs.emulate.shared.util.DataBuffer;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -7,8 +9,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
-import rs.emulate.shared.util.DataBuffer;
 
 /**
  * Represents a sprite which may contain one or more frames.

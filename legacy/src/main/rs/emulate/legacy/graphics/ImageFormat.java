@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * A format an image may be encoded in.
- * 
+ *
  * @author Major
  */
 public enum ImageFormat {
@@ -21,7 +21,7 @@ public enum ImageFormat {
 
 	/**
 	 * Returns the {@link ImageFormat} with the specified integer value.
-	 * 
+	 *
 	 * @param value The integer value.
 	 * @return The ImageFormat.
 	 * @throws IllegalArgumentException If no ImageFormat with the specified integer value exists.
@@ -38,7 +38,7 @@ public enum ImageFormat {
 
 	/**
 	 * Creates the ImageFormat.
-	 * 
+	 *
 	 * @param value The integer value of the ImageFormat.
 	 */
 	private ImageFormat(int value) {
@@ -47,7 +47,7 @@ public enum ImageFormat {
 
 	/**
 	 * Gets the integer value of this ImageFormat.
-	 * 
+	 *
 	 * @return The integer value.
 	 */
 	public int toInteger() {

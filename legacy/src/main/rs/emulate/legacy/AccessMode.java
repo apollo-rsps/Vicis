@@ -2,7 +2,7 @@ package rs.emulate.legacy;
 
 /**
  * A mode to open an {@link IndexedFileSystem} with.
- * 
+ *
  * @author Major
  */
 public enum AccessMode {
@@ -29,7 +29,7 @@ public enum AccessMode {
 
 	/**
 	 * Creates the access mode.
-	 * 
+	 *
 	 * @param unix The UNIX-style file system permission string of this access mode.
 	 */
 	private AccessMode(String unix) {
@@ -38,7 +38,7 @@ public enum AccessMode {
 
 	/**
 	 * Returns the UNIX-style file system permission string of this access mode.
-	 * 
+	 *
 	 * @return The UNIX-style string.
 	 */
 	public String asUnix() {

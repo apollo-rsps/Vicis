@@ -4,7 +4,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
  * Contains {@link ConfigPropertyType} implementations for {@link NpcDefinition}s.
- * 
+ *
  * @author Major
  */
 enum NpcProperty implements ConfigPropertyType {
@@ -116,7 +116,7 @@ enum NpcProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the NpcProperty.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 */
 	private NpcProperty(int opcode) {

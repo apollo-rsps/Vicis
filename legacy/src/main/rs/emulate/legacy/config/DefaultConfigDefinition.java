@@ -1,14 +1,14 @@
 package rs.emulate.legacy.config;
 
-import java.util.Map;
-
 import com.google.common.collect.ImmutableMap;
+
+import java.util.Map;
 
 /**
  * A base class for default definitions. All default definitions <strong>must</strong> be <strong>immutable</strong>.
  *
- * @author Major
  * @param <T> The type of definition this default is for.
+ * @author Major
  */
 public abstract class DefaultConfigDefinition<T extends MutableConfigDefinition> {
 

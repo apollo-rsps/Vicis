@@ -1,11 +1,11 @@
 package rs.emulate.legacy.widget;
 
+import rs.emulate.legacy.widget.script.LegacyClientScript;
+import rs.emulate.legacy.widget.type.Option;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
-
-import rs.emulate.legacy.widget.script.LegacyClientScript;
-import rs.emulate.legacy.widget.type.Option;
 
 /**
  * A builder for a {@link Widget}.

@@ -47,17 +47,6 @@ public final class MapPlane {
 	}
 
 	/**
-	 * Gets the {@link Tile} at the specified (x, z) coordinate.
-	 *
-	 * @param x The x coordinate.
-	 * @param z The z coordinate.
-	 * @return The Tile.
-	 */
-	public Tile getTile(int x, int z) {
-		return tiles[x][z];
-	}
-
-	/**
 	 * Gets the level of this MapPlane.
 	 *
 	 * @return The level.
@@ -73,6 +62,17 @@ public final class MapPlane {
 	 */
 	public int getSize() {
 		return tiles.length * tiles[0].length;
+	}
+
+	/**
+	 * Gets the {@link Tile} at the specified (x, z) coordinate.
+	 *
+	 * @param x The x coordinate.
+	 * @param z The z coordinate.
+	 * @return The Tile.
+	 */
+	public Tile getTile(int x, int z) {
+		return tiles[x][z];
 	}
 
 	/**

@@ -5,7 +5,7 @@ import rs.emulate.util.Assertions;
 
 /**
  * A utility class containing a model-id/translation pair.
- * 
+ *
  * @author Major
  */
 public final class PrimaryModel {
@@ -17,7 +17,7 @@ public final class PrimaryModel {
 
 	/**
 	 * Decodes a PrimaryModel from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @return The PrimaryModel.
 	 */
@@ -29,7 +29,7 @@ public final class PrimaryModel {
 
 	/**
 	 * Encodes the specified PrimaryModel into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @param model The PrimaryModel.
 	 */
@@ -50,7 +50,7 @@ public final class PrimaryModel {
 
 	/**
 	 * Creates the PrimaryModel with the specified id and translation.
-	 * 
+	 *
 	 * @param id The id of the model.
 	 * @param translation The vertical translation applied to the model.
 	 */
@@ -72,7 +72,7 @@ public final class PrimaryModel {
 
 	/**
 	 * Gets the id of this model.
-	 * 
+	 *
 	 * @return The id.
 	 */
 	public int getId() {
@@ -81,7 +81,7 @@ public final class PrimaryModel {
 
 	/**
 	 * Gets the vertical translation of this model.
-	 * 
+	 *
 	 * @return The translation.
 	 */
 	public int getTranslation() {

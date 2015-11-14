@@ -142,7 +142,7 @@ public enum LegacyInstructionType { // TODO these doc comments suck
 
 	/**
 	 * Gets the LegacyInstructionType with the specified integer value.
-	 * 
+	 *
 	 * @param mnemonic The mnemonic of the LegacyInstructionType.
 	 * @return The LegacyInstructionType.
 	 * @throws IllegalArgumentException If no LegacyInstructionType with the specified integer value exists.
@@ -154,7 +154,7 @@ public enum LegacyInstructionType { // TODO these doc comments suck
 
 	/**
 	 * Gets the LegacyInstructionType with the specified integer value.
-	 * 
+	 *
 	 * @param value The integer value of the LegacyInstructionType.
 	 * @return The LegacyInstructionType.
 	 * @throws IllegalArgumentException If no LegacyInstructionType with the specified integer value exists.

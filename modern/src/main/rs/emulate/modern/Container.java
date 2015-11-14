@@ -1,10 +1,10 @@
 package rs.emulate.modern;
 
-import java.io.IOException;
-
-import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.CompressionUtils;
+import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.crypto.Xtea;
+
+import java.io.IOException;
 
 /**
  * A {@link Container} holds an optionally compressed file. This class can be used to decompress and compress
@@ -47,7 +47,7 @@ public final class Container {
 
 	/**
 	 * Decodes and decompresses the container, applying the XTEA cipher with the specified key..
-	 * 
+	 *
 	 * @param buffer The buffer.
 	 * @param key The key.
 	 * @return The decoded container.

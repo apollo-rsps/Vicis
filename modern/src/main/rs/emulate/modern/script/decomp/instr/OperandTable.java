@@ -1,8 +1,8 @@
 package rs.emulate.modern.script.decomp.instr;
 
-import java.util.Optional;
-
 import com.google.common.base.Preconditions;
+
+import java.util.Optional;
 
 /**
  * A table of operands of a script.
@@ -122,7 +122,7 @@ public final class OperandTable {
 
 	/**
 	 * Gets an {@code int} operand at the specified index.
-	 * 
+	 *
 	 * @param index The index of the operand.
 	 * @return The operand.
 	 */
@@ -139,7 +139,7 @@ public final class OperandTable {
 
 	/**
 	 * Gets a {@code long} operand at the specified index.
-	 * 
+	 *
 	 * @param index The index of the operand.
 	 * @return The operand.
 	 */
@@ -156,7 +156,7 @@ public final class OperandTable {
 
 	/**
 	 * Gets a String operand at the specified index.
-	 * 
+	 *
 	 * @param index The index of the operand.
 	 * @return The operand.
 	 */

@@ -1,16 +1,16 @@
 package rs.emulate.legacy.archive;
 
+import rs.emulate.shared.util.CompressionUtils;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import rs.emulate.shared.util.CompressionUtils;
-import rs.emulate.shared.util.DataBuffer;
-
 /**
  * Contains methods for encoding and decoding {@link Archive}s.
- * 
+ *
  * @author Major
  * @author Graham
  */
@@ -18,7 +18,7 @@ public final class ArchiveCodec {
 
 	/**
 	 * Decodes the {@link Archive} in the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The buffer.
 	 * @return The archive.
 	 * @throws IOException If there is an error decompressing the data.
@@ -59,12 +59,12 @@ public final class ArchiveCodec {
 
 		return new Archive(entries);
 	}
-	
+
 	// TODO theres a bug with archive compression...
 
 	/**
 	 * Encodes the specified {@link Archive} into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @param archive The archive.
 	 * @param compression The compression type (see {@link CompressionType}).
 	 * @return The buffer.

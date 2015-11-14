@@ -1,8 +1,8 @@
 package rs.emulate.legacy.version;
 
-import java.util.Objects;
-
 import com.google.common.base.Preconditions;
+
+import java.util.Objects;
 
 /**
  * Contains data used for mapping region coordinates to object and map files.
@@ -11,6 +11,11 @@ import com.google.common.base.Preconditions;
  * @author Major
  */
 public final class MapIndex {
+
+	/**
+	 * The name of the archive entry containing the map index data.
+	 */
+	public static final String ENTRY_NAME = "map_index";
 
 	/**
 	 * Creates a new MapIndex.
@@ -54,11 +59,6 @@ public final class MapIndex {
 	 * The object file ids.
 	 */
 	private final int[] objects;
-
-	/**
-	 * The name of the archive entry containing the map index data.
-	 */
-	public static final String ENTRY_NAME = "map_index";
 
 	/**
 	 * Creates the MapIndex.

@@ -1,8 +1,8 @@
 package rs.emulate.legacy.version;
 
-import java.util.Arrays;
-
 import rs.emulate.shared.util.DataBuffer;
+
+import java.util.Arrays;
 
 /**
  * An encoder for a {@link MapIndex}.
@@ -27,7 +27,7 @@ public final class MapIndexEncoder {
 
 	/**
 	 * Encodes the {@link MapIndex} into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @return The DataBuffer.
 	 */
 	public DataBuffer encode() {

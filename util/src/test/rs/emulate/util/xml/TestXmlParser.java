@@ -19,14 +19,14 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * A test for the {@link XmlParser} class.
- * 
+ *
  * @author Graham
  */
 public final class TestXmlParser {
 
 	/**
 	 * A test for the {@link XmlParser#parse(java.io.InputStream)} method.
-	 * 
+	 *
 	 * @throws SAXException if a SAX error occurs.
 	 * @throws IOException if an I/O error occurs.
 	 */
@@ -70,7 +70,7 @@ public final class TestXmlParser {
 
 	/**
 	 * A test for the {@link XmlParser#parse(java.io.Reader)} method.
-	 * 
+	 *
 	 * @throws SAXException if a SAX error occurs.
 	 * @throws IOException if an I/O error occurs.
 	 */

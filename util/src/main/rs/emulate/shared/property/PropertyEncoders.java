@@ -1,9 +1,9 @@
 package rs.emulate.shared.property;
 
+import rs.emulate.shared.util.DataBuffer;
+
 import java.nio.ByteBuffer;
 import java.util.function.BiConsumer;
-
-import rs.emulate.shared.util.DataBuffer;
 
 /**
  * Contains static {@link BiConsumer}s to encode values.

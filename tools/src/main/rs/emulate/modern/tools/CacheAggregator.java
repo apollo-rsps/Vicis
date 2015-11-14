@@ -1,24 +1,24 @@
 package rs.emulate.modern.tools;
 
-import java.io.IOException;
-import java.util.zip.CRC32;
-
 import rs.emulate.modern.Container;
 import rs.emulate.modern.Entry;
 import rs.emulate.modern.FileStore;
 import rs.emulate.modern.ReferenceTable;
 import rs.emulate.shared.util.DataBuffer;
 
+import java.io.IOException;
+import java.util.zip.CRC32;
+
 /**
  * A utility to aggregate multiple caches into one, to fill missing entries.
- * 
+ *
  * @author Graham
  */
 public final class CacheAggregator {
 
 	/**
 	 * The entry point for the application.
-	 * 
+	 *
 	 * @param args The program arguments.
 	 * @throws IOException If there is an error aggregating the cache.
 	 */
@@ -52,7 +52,7 @@ public final class CacheAggregator {
 
 	/**
 	 * Returns whether or not cache repacking is required.
-	 * 
+	 *
 	 * @param store The {@link FileStore}.
 	 * @param entry The {@link Entry}.
 	 * @param type The type.

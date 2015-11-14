@@ -1,9 +1,9 @@
 package rs.emulate.shared.util.crypto;
 
+import rs.emulate.shared.util.DataBuffer;
+
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
-
-import rs.emulate.shared.util.DataBuffer;
 
 /**
  * An implementation of the RSA algorithm.

@@ -2,7 +2,7 @@ package rs.emulate.shared.world;
 
 /**
  * Contains the two biological sexes used in Runescape.
- * 
+ *
  * @author Major
  */
 public enum Sex {
@@ -19,7 +19,7 @@ public enum Sex {
 
 	/**
 	 * Returns whether or not this sex is the {@link #MALE} sex.
-	 * 
+	 *
 	 * @return {@code true} if this sex is male, {@code false} if it's female.
 	 */
 	public boolean isMale() {

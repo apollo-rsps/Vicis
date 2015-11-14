@@ -1,5 +1,14 @@
 package rs.emulate.editor.io;
 
+import com.google.common.base.Preconditions;
+import org.apollo.util.xml.XmlNode;
+import org.apollo.util.xml.XmlParser;
+import org.xml.sax.SAXException;
+import rs.emulate.editor.util.PathUtils;
+import rs.emulate.legacy.archive.ArchiveUtils;
+import rs.emulate.legacy.config.DefinitionSupplier;
+import rs.emulate.legacy.config.MutableConfigDefinition;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,17 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-
-import org.apollo.util.xml.XmlNode;
-import org.apollo.util.xml.XmlParser;
-import org.xml.sax.SAXException;
-
-import rs.emulate.editor.util.PathUtils;
-import rs.emulate.legacy.archive.ArchiveUtils;
-import rs.emulate.legacy.config.DefinitionSupplier;
-import rs.emulate.legacy.config.MutableConfigDefinition;
-
-import com.google.common.base.Preconditions;
 
 /**
  * Parses an {@code XML} file containing the types of

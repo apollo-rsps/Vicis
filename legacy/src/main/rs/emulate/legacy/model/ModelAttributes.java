@@ -1,8 +1,8 @@
 package rs.emulate.legacy.model;
 
-import java.util.BitSet;
-
 import com.google.common.primitives.Ints;
+
+import java.util.BitSet;
 
 /**
  * A bit-packed set of attributes a Model may have.
@@ -39,7 +39,7 @@ public final class ModelAttributes {
 
 	/**
 	 * Gets the value of the attribute stored in the specified bit, (where the first bit is 0), as a boolean.
-	 * 
+	 *
 	 * @param bit The bit of the attribute to get. Must be positive.
 	 * @return {@code true} if the specified bit has a value of 1, {@code false} if not.
 	 */
@@ -50,7 +50,7 @@ public final class ModelAttributes {
 	/**
 	 * Returns whether or not the Model this set of attributes belongs to is a mandatory file (i.e. must be present
 	 * before the client will fully load).
-	 * 
+	 *
 	 * @return {@code true} if the Model is mandatory, {@code false} if not.
 	 */
 	public boolean mandatory() {
@@ -63,7 +63,7 @@ public final class ModelAttributes {
 	 * Despite bit 0 having the lowest priority, if it is set the Model must be present before the client can continue
 	 * loading (i.e. it is a mandatory file). The rest of the bits indicate the priority used when requesting the
 	 * "extra" (non-mandatory) files, which range from 0 (lowest) to 10 (highest).
-	 * 
+	 *
 	 * @return The request priority.
 	 */
 	public int priority() {
@@ -94,7 +94,7 @@ public final class ModelAttributes {
 
 	/**
 	 * Sets the value of the attribute stored in the specified bit.
-	 * 
+	 *
 	 * @param bit The bit of the attribute to set. Must be positive.
 	 * @param value The value to set, where {@code true} sets a value of 1, and {@code false} sets a value of 0.
 	 */

@@ -1,14 +1,14 @@
 package rs.emulate.legacy.graphics.sprite;
 
-import java.util.Arrays;
-import java.util.List;
-
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.graphics.GraphicsEncoder;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Encodes a {@link Sprite} into an archive entry. TODO
- * 
+ *
  * @author Major
  */
 public final class SpriteEncoder extends GraphicsEncoder {
@@ -21,7 +21,7 @@ public final class SpriteEncoder extends GraphicsEncoder {
 
 	/**
 	 * Creates the SpriteEncoder.
-	 * 
+	 *
 	 * @param name The name of the {@link Sprite}.
 	 * @param sprites The Sprites to encode.
 	 */

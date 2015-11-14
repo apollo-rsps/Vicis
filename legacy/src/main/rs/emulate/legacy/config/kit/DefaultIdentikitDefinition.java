@@ -41,7 +41,7 @@ public class DefaultIdentikitDefinition<T extends IdentikitDefinition> extends D
 
 		defaults.put(2, new SerializableProperty<>(MODELS, null, modelsEncoder, ConfigUtils.MODEL_DECODER,
 				models -> models.length * Short.SIZE + Byte.SIZE, input -> Optional.empty())); // FIXME parser
-		
+
 		defaults.put(3, alwaysTrue(PLAYER_DESIGN_STYLE, false));
 
 		for (int slot = 1; slot <= COLOUR_COUNT; slot++) {

@@ -1,10 +1,10 @@
 package rs.emulate.legacy.widget.script;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * A ClientScript from legacy client builds (widely known as CS1).
@@ -14,10 +14,11 @@ import com.google.common.collect.ImmutableList;
  * <li>The register holding the program counter, which points to the next instruction to interpret.</li>
  * <li>The operator register, containing the type of operator that should be evaluated by the next instruction.</li>
  * <li>The value register, containing the current value of the ClientScript.</li>
- * <li>The accumulator register, which contains the result of the evaluation of the current instruction, and will modify
+ * <li>The accumulator register, which contains the result of the evaluation of the current instruction, and will
+ * modify
  * the current value stored in the value register using the operator type held in the operator register.</li>
  * </ul>
- * 
+ *
  * @author Major
  */
 public final class LegacyClientScript {
@@ -52,7 +53,7 @@ public final class LegacyClientScript {
 
 	/**
 	 * Gets the default value of this LegacyClientScript.
-	 * 
+	 *
 	 * @return The default value.
 	 */
 	public int getDefault() {
@@ -61,7 +62,7 @@ public final class LegacyClientScript {
 
 	/**
 	 * Gets the {@link List} of {@link LegacyInstruction}s that make up this LegacyClientScript.
-	 * 
+	 *
 	 * @return The List of LegacyInstructions.
 	 */
 	public List<LegacyInstruction> getInstructions() {
@@ -70,7 +71,7 @@ public final class LegacyClientScript {
 
 	/**
 	 * Gets the {@link RelationalOperator} used to evaluate if the script state has changed.
-	 * 
+	 *
 	 * @return The RelationalOperator.
 	 */
 	public RelationalOperator getRelationalOperator() {

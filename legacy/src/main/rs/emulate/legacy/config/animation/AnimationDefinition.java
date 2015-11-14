@@ -1,12 +1,12 @@
 package rs.emulate.legacy.config.animation;
 
-import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 
 /**
  * A {@link MutableConfigDefinition} for an animation.
- * 
+ *
  * @author Major
  */
 public class AnimationDefinition extends MutableConfigDefinition {
@@ -18,7 +18,7 @@ public class AnimationDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Creates the AnimationDefinition.
-	 * 
+	 *
 	 * @param id The id of the definition.
 	 * @param properties The {@link ConfigPropertyMap}.
 	 */
@@ -36,21 +36,21 @@ public class AnimationDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link SerializableProperty} containing the interleave order of this animation.
-	 * 
-	 * @return The DefinitionProperty.
-	 */
-	public final SerializableProperty<int[]> getInterleaveOrder() {
-		return getProperty(AnimationProperty.INTERLEAVE_ORDER);
-	}
-
-	/**
 	 * Gets the {@link SerializableProperty} containing the {@link FrameCollection} of this animation.
 	 *
 	 * @return The DefinitionProperty.
 	 */
 	public final SerializableProperty<FrameCollection> frameCollection() {
 		return getProperty(AnimationProperty.FRAMES);
+	}
+
+	/**
+	 * Gets the {@link SerializableProperty} containing the interleave order of this animation.
+	 *
+	 * @return The DefinitionProperty.
+	 */
+	public final SerializableProperty<int[]> getInterleaveOrder() {
+		return getProperty(AnimationProperty.INTERLEAVE_ORDER);
 	}
 
 	/**

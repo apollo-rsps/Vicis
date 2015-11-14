@@ -1,12 +1,11 @@
 package rs.emulate.legacy.config.kit;
 
-import rs.emulate.legacy.config.SerializableProperty;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigUtils;
 import rs.emulate.legacy.config.MutableConfigDefinition;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
+import rs.emulate.legacy.config.SerializableProperty;
 
 /**
  * A definition for an identikit.
@@ -107,7 +106,8 @@ public class IdentikitDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Returns the {@link SerializableProperty} containing whether or not this IdentikitDefinition can be used when designing
+	 * Returns the {@link SerializableProperty} containing whether or not this IdentikitDefinition can be used when
+	 * designing
 	 * a player.
 	 *
 	 * @return The {@link IdentikitProperty#PLAYER_DESIGN_STYLE} ConfigProperty.

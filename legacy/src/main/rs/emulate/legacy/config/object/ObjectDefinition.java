@@ -1,15 +1,15 @@
 package rs.emulate.legacy.config.object;
 
-import java.util.Map;
-
-import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.npc.MorphismSet;
+
+import java.util.Map;
 
 /**
  * A {@link MutableConfigDefinition} for an object.
- * 
+ *
  * @author Major
  */
 public class ObjectDefinition extends MutableConfigDefinition {
@@ -31,7 +31,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Creates the ObjectDefinition.
-	 * 
+	 *
 	 * @param id The id.
 	 * @param properties The {@link ConfigPropertyMap}.
 	 */
@@ -41,7 +41,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the ambient lighting factor.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> ambientLighting() {
@@ -50,7 +50,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the animation id.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> animation() {
@@ -59,7 +59,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the casts shadow flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> castShadow() {
@@ -68,7 +68,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the {@link Map} of original to replacement colours.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Map<Integer, Integer>> colours() {
@@ -77,7 +77,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the contour ground flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> contourGround() {
@@ -86,7 +86,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the decor displacement value.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> decorDisplacement() {
@@ -95,7 +95,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the delay shading flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> delayShading() {
@@ -104,7 +104,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the description.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<String> description() {
@@ -113,7 +113,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the hollow flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> hollow() {
@@ -122,7 +122,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the impenetrable flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> impenetrable() {
@@ -131,7 +131,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the interactive flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> interactive() {
@@ -140,7 +140,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the inverted flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> inverted() {
@@ -149,7 +149,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the length.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> length() {
@@ -158,7 +158,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the light diffusion factor.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> lightDiffusion() {
@@ -169,7 +169,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 	 * Gets the {@link SerializableProperty} containing the mapscene id.
 	 * <p>
 	 * This refers to the "mapscene" image displayed beneath the object when it is drawn on the map.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> mapscene() {
@@ -178,7 +178,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the minimap function.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> minimapFunction() {
@@ -187,7 +187,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the unpositioned {@link ModelSet}.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<ModelSet> models() {
@@ -196,7 +196,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the {@link MorphismSet}.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<MorphismSet> morphismSet() {
@@ -205,7 +205,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the name.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<String> name() {
@@ -214,7 +214,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the obstructive ground flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> obstructiveGround() {
@@ -223,7 +223,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the occlusion flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> occlude() {
@@ -232,7 +232,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the positioned {@link ModelSet}.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<ModelSet> positionedModels() {
@@ -241,7 +241,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the width scaling factor.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> scaleX() {
@@ -250,7 +250,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the length scaling factor.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> scaleY() {
@@ -259,7 +259,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the height scaling factor.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> scaleZ() {
@@ -268,7 +268,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the solid flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> solid() {
@@ -278,7 +278,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 	/**
 	 * Gets the {@link SerializableProperty} containing the supports items flag, indicating whether or not the object
 	 * allows items to be placed on it.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Boolean> supportsItems() {
@@ -287,7 +287,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the surroundings flag.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> surroundings() {
@@ -296,7 +296,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the width translation.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> translationX() {
@@ -305,7 +305,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the length translation.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> translationY() {
@@ -314,7 +314,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the height translation.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> translationZ() {
@@ -323,7 +323,7 @@ public class ObjectDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the width.
-	 * 
+	 *
 	 * @return The DefinitionProperty.
 	 */
 	public SerializableProperty<Integer> width() {

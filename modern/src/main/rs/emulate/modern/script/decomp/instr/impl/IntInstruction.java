@@ -1,10 +1,10 @@
 package rs.emulate.modern.script.decomp.instr.impl;
 
-import java.util.function.Consumer;
-
 import rs.emulate.modern.script.decomp.instr.Instruction;
 import rs.emulate.modern.script.decomp.instr.OperandType;
 import rs.emulate.modern.script.interp.ScriptContext;
+
+import java.util.function.Consumer;
 
 /**
  * An {@link Instruction} that takes only a single {@code int} operand.
@@ -15,7 +15,7 @@ public final class IntInstruction extends Instruction {
 
 	/**
 	 * Creates a IntInstruction.
-	 * 
+	 *
 	 * @param name The name of the IntInstruction.
 	 * @param opcode The opcode of the instruction.
 	 * @param action The {@link ScriptContext} {@link Consumer} that performs the side effect of the IntInstruction.
@@ -32,7 +32,7 @@ public final class IntInstruction extends Instruction {
 
 	/**
 	 * Creates the IntInstruction.
-	 * 
+	 *
 	 * @param name The name of this IntInstruction.
 	 * @param opcode The opcode of this IntInstruction.
 	 * @param action The {@link ScriptContext} {@link Consumer} that performs the side effect of this IntInstruction.

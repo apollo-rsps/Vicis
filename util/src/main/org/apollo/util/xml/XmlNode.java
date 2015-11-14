@@ -11,7 +11,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * A class which represents a single node in the DOM tree, maintaining information about its children, attributes, value
+ * A class which represents a single node in the DOM tree, maintaining information about its children, attributes,
+ * value
  * and name.
  *
  * @author Graham

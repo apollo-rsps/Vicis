@@ -1,5 +1,12 @@
 package rs.emulate.modern.script.disasm;
 
+import rs.emulate.modern.Cache;
+import rs.emulate.modern.Container;
+import rs.emulate.modern.Entry;
+import rs.emulate.modern.FileStore;
+import rs.emulate.modern.ReferenceTable;
+import rs.emulate.modern.script.ClientScript666;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,13 +15,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
-
-import rs.emulate.modern.Cache;
-import rs.emulate.modern.Container;
-import rs.emulate.modern.Entry;
-import rs.emulate.modern.FileStore;
-import rs.emulate.modern.ReferenceTable;
-import rs.emulate.modern.script.ClientScript666;
 
 /**
  * Dumps clientscripts.
@@ -300,7 +300,7 @@ public final class ClientScriptDumper {
 		opcodes.put(5004, "push_chatmsg_typ"); // pushes the public chat message type
 		opcodes.put(5005, "push_priv_cmode"); // push private chat mode
 		opcodes.put(5006, "set_chat_view"); // mgi says this 'sets the view of the chat' (whatever the hell this means -
-											// sends some sort of frame anyway)
+		// sends some sort of frame anyway)
 		opcodes.put(5008, "send_msg"); // sends a message to the server
 		opcodes.put(5009, "send_priv_msg"); // sends a private chat message
 		opcodes.put(5010, "push_chatmsg_name"); // pushes the name of the person who said a chat message

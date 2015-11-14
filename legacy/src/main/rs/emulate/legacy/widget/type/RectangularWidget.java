@@ -1,15 +1,15 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * A {@link WidgetGroup#RECTANGULAR RECTANGULAR} {@link Widget}.
@@ -52,8 +52,8 @@ public final class RectangularWidget extends Widget {
 	 * @param hover The ColourPair containing the default and secondary hover colours.
 	 */
 	public RectangularWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hoverId, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			boolean filled, ColourPair colour, ColourPair hover) {
+	                         OptionalInt hoverId, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                         boolean filled, ColourPair colour, ColourPair hover) {
 		super(id, parent, WidgetGroup.RECTANGULAR, optionType, content, width, height, alpha, hoverId, scripts, option, hoverText);
 
 		this.filled = filled;

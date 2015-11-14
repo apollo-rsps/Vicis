@@ -1,11 +1,10 @@
 package rs.emulate.legacy.config.animation;
 
-import java.util.Arrays;
-
-import rs.emulate.shared.util.DataBuffer;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import rs.emulate.shared.util.DataBuffer;
+
+import java.util.Arrays;
 
 /**
  * A collection of data about frames used in the animation.

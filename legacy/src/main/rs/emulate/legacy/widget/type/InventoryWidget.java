@@ -1,10 +1,7 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
-
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
@@ -12,8 +9,10 @@ import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.Point;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Contains properties used by {@link WidgetGroup#INVENTORY}.
@@ -23,14 +22,19 @@ import com.google.common.collect.ImmutableList;
 public final class InventoryWidget extends Widget {
 
 	/**
-	 * Whether or not items in the inventory are replaced (instead of swapped).
+	 * The List of menu actions.
 	 */
-	private final boolean replace;
+	private final List<String> actions;
 
 	/**
 	 * The Point containing the padding for the sprites.
 	 */
 	private final Point padding;
+
+	/**
+	 * Whether or not items in the inventory are replaced (instead of swapped).
+	 */
+	private final boolean replace;
 
 	/**
 	 * The List of Points for the sprites.
@@ -53,13 +57,8 @@ public final class InventoryWidget extends Widget {
 	private final boolean usable;
 
 	/**
-	 * The List of menu actions.
-	 */
-	private final List<String> actions;
-
-	/**
 	 * Creates the InventoryProperties.
-	 * 
+	 *
 	 * @param id The id of the TextWidget.
 	 * @param parent The parent id of the TextWidget, as an {@link OptionalInt}. Must not be {@code null}.
 	 * @param optionType The {@link WidgetOption} of the TextWidget. Must not be {@code null}.
@@ -80,9 +79,9 @@ public final class InventoryWidget extends Widget {
 	 * @param actions The List of menu actions.
 	 */
 	public InventoryWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			boolean swappable, boolean usable, boolean replace, Point padding, List<Optional<String>> sprites,
-			List<Point> spritePoints, List<String> actions) {
+	                       OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                       boolean swappable, boolean usable, boolean replace, Point padding, List<Optional<String>> sprites,
+	                       List<Point> spritePoints, List<String> actions) {
 		super(id, parent, WidgetGroup.INVENTORY, optionType, content, width, height, alpha, hover, scripts, option, hoverText);
 
 		this.swappable = swappable;

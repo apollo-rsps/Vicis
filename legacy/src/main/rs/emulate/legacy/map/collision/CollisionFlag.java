@@ -63,7 +63,7 @@ public enum CollisionFlag {
 
 	/**
 	 * Gets this CollisionFlag, as a {@code byte}.
-	 * 
+	 *
 	 * @return The value, as a {@code byte}.
 	 */
 	public byte asByte() {
@@ -72,7 +72,7 @@ public enum CollisionFlag {
 
 	/**
 	 * Gets the index of the bit this flag is stored in.
-	 * 
+	 *
 	 * @return The index of the bit.
 	 */
 	public int getBit() {

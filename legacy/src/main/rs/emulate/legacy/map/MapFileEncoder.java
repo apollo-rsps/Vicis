@@ -1,13 +1,13 @@
 package rs.emulate.legacy.map;
 
+import rs.emulate.shared.util.DataBuffer;
+import rs.emulate.shared.world.Position;
+import rs.emulate.util.Assertions;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import rs.emulate.shared.util.DataBuffer;
-import rs.emulate.shared.world.Position;
-import rs.emulate.util.Assertions;
 
 /**
  * An encoder for {@link MapFile}s.

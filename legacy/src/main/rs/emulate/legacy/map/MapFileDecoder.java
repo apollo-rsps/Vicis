@@ -1,11 +1,11 @@
 package rs.emulate.legacy.map;
 
-import java.io.IOException;
-
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.shared.util.CompressionUtils;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.world.Position;
+
+import java.io.IOException;
 
 /**
  * A decoder for a {@link MapFile}.

@@ -1,13 +1,12 @@
 package rs.emulate.shared.util;
 
-import java.nio.ByteBuffer;
-import java.util.zip.CRC32;
-import java.util.zip.Checksum;
-
+import com.google.common.base.Preconditions;
 import rs.emulate.shared.util.crypto.Whirlpool;
 import rs.emulate.util.Assertions;
 
-import com.google.common.base.Preconditions;
+import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
+import java.util.zip.Checksum;
 
 /**
  * A wrapper for {@link ByteBuffer} that adds methods to read unsigned data types, and specific string types. All
@@ -146,7 +145,8 @@ public final class DataBuffer {
 	}
 
 	/**
-	 * Fills <strong>this</strong> DataBuffer with data from the specified DataBuffer. This method fills this DataBuffer
+	 * Fills <strong>this</strong> DataBuffer with data from the specified DataBuffer. This method fills this
+	 * DataBuffer
 	 * until it is full (i.e. {@code buffer.remaining = 0}) and so the source DataBuffer must have more bytes remaining
 	 * than this Buffer. This method flips this DataBuffer after filling.
 	 *
@@ -248,20 +248,6 @@ public final class DataBuffer {
 	}
 
 	/**
-	 * Calculates the CRC32 checksum of this DataBuffer.
-	 *
-	 * @return The CRC32 checksum.
-	 */
-	public int getCrcChecksum() {
-		Checksum crc = new CRC32();
-		for (int i = 0; i < buffer.limit(); i++) {
-			crc.update(buffer.get(i));
-		}
-
-		return (int) crc.getValue();
-	}
-
-	/**
 	 * Reads a C-style String from this DataBuffer.
 	 *
 	 * @return The C-string.
@@ -275,6 +261,20 @@ public final class DataBuffer {
 		}
 
 		return builder.toString();
+	}
+
+	/**
+	 * Calculates the CRC32 checksum of this DataBuffer.
+	 *
+	 * @return The CRC32 checksum.
+	 */
+	public int getCrcChecksum() {
+		Checksum crc = new CRC32();
+		for (int i = 0; i < buffer.limit(); i++) {
+			crc.update(buffer.get(i));
+		}
+
+		return (int) crc.getValue();
 	}
 
 	/**
@@ -428,11 +428,6 @@ public final class DataBuffer {
 		return getUnsignedByte() << 16 | getUnsignedByte() << 8 | getUnsignedByte();
 	}
 
-	@Override
-	public int hashCode() {
-		return 31 * buffer.hashCode();
-	}
-
 	/**
 	 * Returns whether or not this DataBuffer has any bytes remaining.
 	 *
@@ -440,6 +435,11 @@ public final class DataBuffer {
 	 */
 	public boolean hasRemaining() {
 		return buffer.hasRemaining();
+	}
+
+	@Override
+	public int hashCode() {
+		return 31 * buffer.hashCode();
 	}
 
 	/**

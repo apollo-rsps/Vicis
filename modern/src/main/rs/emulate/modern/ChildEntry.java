@@ -1,6 +1,5 @@
 package rs.emulate.modern;
 
-
 /**
  * Represents a child entry within an {@link Entry} in the {@link ReferenceTable}.
  */

@@ -30,7 +30,7 @@ public final class Point {
 
 	/**
 	 * Gets the x coordinate of this Point.
-	 * 
+	 *
 	 * @return The x coordinate.
 	 */
 	public int getX() {
@@ -39,7 +39,7 @@ public final class Point {
 
 	/**
 	 * Gets the y coordinate of this Point.
-	 * 
+	 *
 	 * @return The y coordinate.
 	 */
 	public int getY() {

@@ -1,10 +1,5 @@
 package org.apollo.util.xml;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Stack;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -12,16 +7,21 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.Stack;
+
 /**
  * A simple XML parser that uses the internal {@link org.xml.sax} API to create a tree of {@link XmlNode} objects.
- * 
+ *
  * @author Graham
  */
 public final class XmlParser {
 
 	/**
 	 * A class which handles SAX events.
-	 * 
+	 *
 	 * @author Graham
 	 */
 	private final class XmlHandler extends DefaultHandler {
@@ -62,14 +62,19 @@ public final class XmlParser {
 	}
 
 	/**
-	 * The current node.
-	 */
-	private XmlNode currentNode;
-
-	/**
 	 * The SAX event handler.
 	 */
 	private final XmlHandler eventHandler = new XmlHandler();
+
+	/**
+	 * The {@link XMLReader} backing this {@link XmlParser}.
+	 */
+	private final XMLReader xmlReader;
+
+	/**
+	 * The current node.
+	 */
+	private XmlNode currentNode;
 
 	/**
 	 * The stack of nodes, used when traversing the document and going through child nodes.
@@ -82,18 +87,41 @@ public final class XmlParser {
 	private XmlNode rootNode;
 
 	/**
-	 * The {@link XMLReader} backing this {@link XmlParser}.
-	 */
-	private final XMLReader xmlReader;
-
-	/**
 	 * Creates the XML parser.
-	 * 
+	 *
 	 * @throws SAXException If a SAX error occurs.
 	 */
 	public XmlParser() throws SAXException {
 		xmlReader = XMLReaderFactory.createXMLReader();
 		init();
+	}
+
+	/**
+	 * Parses XML data from the given {@link InputStream}.
+	 *
+	 * @param is The {@link InputStream}.
+	 * @return The root {@link XmlNode}.
+	 * @throws IOException If an I/O error occurs.
+	 * @throws SAXException If a SAX error occurs.
+	 */
+	public XmlNode parse(InputStream is) throws IOException, SAXException {
+		synchronized (this) {
+			return parse(new InputSource(is));
+		}
+	}
+
+	/**
+	 * Parses XML data from the given {@link Reader}.
+	 *
+	 * @param reader The {@link Reader}.
+	 * @return The root {@link XmlNode}.
+	 * @throws IOException If an I/O error occurs.
+	 * @throws SAXException If a SAX error occurs.
+	 */
+	public XmlNode parse(Reader reader) throws IOException, SAXException {
+		synchronized (this) {
+			return parse(new InputSource(reader));
+		}
 	}
 
 	/**
@@ -108,7 +136,7 @@ public final class XmlParser {
 
 	/**
 	 * Parses XML data from the {@link InputSource}.
-	 * 
+	 *
 	 * @param source The {@link InputSource}.
 	 * @return The root {@link XmlNode}.
 	 * @throws IOException If an I/O error occurs.
@@ -117,40 +145,12 @@ public final class XmlParser {
 	private XmlNode parse(InputSource source) throws IOException, SAXException {
 		rootNode = null;
 		xmlReader.parse(source);
-		
+
 		if (rootNode == null) {
 			throw new SAXException("No root element.");
 		}
-		
+
 		return rootNode;
-	}
-
-	/**
-	 * Parses XML data from the given {@link InputStream}.
-	 * 
-	 * @param is The {@link InputStream}.
-	 * @return The root {@link XmlNode}.
-	 * @throws IOException If an I/O error occurs.
-	 * @throws SAXException If a SAX error occurs.
-	 */
-	public XmlNode parse(InputStream is) throws IOException, SAXException {
-		synchronized (this) {
-			return parse(new InputSource(is));
-		}
-	}
-
-	/**
-	 * Parses XML data from the given {@link Reader}.
-	 * 
-	 * @param reader The {@link Reader}.
-	 * @return The root {@link XmlNode}.
-	 * @throws IOException If an I/O error occurs.
-	 * @throws SAXException If a SAX error occurs.
-	 */
-	public XmlNode parse(Reader reader) throws IOException, SAXException {
-		synchronized (this) {
-			return parse(new InputSource(reader));
-		}
 	}
 
 }

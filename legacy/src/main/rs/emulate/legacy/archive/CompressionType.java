@@ -2,7 +2,7 @@ package rs.emulate.legacy.archive;
 
 /**
  * The two types of archive compression support by the client.
- * 
+ *
  * @author Major
  */
 public enum CompressionType {

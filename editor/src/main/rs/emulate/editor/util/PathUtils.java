@@ -36,9 +36,18 @@ public final class PathUtils {
 			Files.createDirectories(storage);
 		} catch (IOException e) {
 			throw new UncheckedIOException(
-					"Failed to create storage directories. Please ensure this program has read and write access to the following path: "
-							+ storage.toAbsolutePath().toString(), e);
+					"Failed to create storage directories. Please ensure vicis has read and write access to the " +
+							"following path: " + storage.toAbsolutePath(), e);
 		}
+	}
+
+	/**
+	 * Gets the data storage {@link Path} in use.
+	 *
+	 * @return The Path.
+	 */
+	public static Path getStoragePath() {
+		return ON_WINDOWS ? WINDOWS_PATH : OTHER_PATH;
 	}
 
 	/**
@@ -56,15 +65,6 @@ public final class PathUtils {
 		} catch (AtomicMoveNotSupportedException e) {
 			Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
 		}
-	}
-
-	/**
-	 * Gets the data storage {@link Path} in use.
-	 *
-	 * @return The Path.
-	 */
-	public static Path getStoragePath() {
-		return ON_WINDOWS ? WINDOWS_PATH : OTHER_PATH;
 	}
 
 }

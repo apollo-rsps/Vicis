@@ -1,21 +1,18 @@
 package rs.emulate.legacy.widget;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
-
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec;
 import rs.emulate.legacy.widget.type.Option;
 import rs.emulate.shared.util.DataBuffer;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
- * 
- *
  * @author Major
  */
 public abstract class Widget {
@@ -56,11 +53,6 @@ public abstract class Widget {
 	private final OptionalInt hover;
 
 	/**
-	 * The hover text of this Widget.
-	 */
-	private Optional<String> hoverText;
-
-	/**
 	 * The id of the Widget.
 	 */
 	private final int id;
@@ -91,6 +83,11 @@ public abstract class Widget {
 	private final int width;
 
 	/**
+	 * The hover text of this Widget.
+	 */
+	private Optional<String> hoverText;
+
+	/**
 	 * Creates the GenericWidgetProperties.
 	 *
 	 * @param id The id of the Widget.
@@ -107,7 +104,7 @@ public abstract class Widget {
 	 * @param hoverText The hover text of the Widget, wrapped in an Optional.
 	 */
 	public Widget(int id, OptionalInt parent, WidgetGroup group, WidgetOption optionType, int content, int width, int height,
-			int alpha, OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText) {
+	              int alpha, OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText) {
 		this.id = id;
 		this.parent = Objects.requireNonNull(parent, "Parent id must not be null.");
 		this.group = Objects.requireNonNull(group, "WidgetGroup must not be null.");
@@ -124,7 +121,7 @@ public abstract class Widget {
 
 	/**
 	 * Encodes this Widget into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @return The DataBuffer.
 	 */
 	public final DataBuffer encode() {
@@ -266,14 +263,14 @@ public abstract class Widget {
 
 	/**
 	 * Encodes the bespoke data belonging to this Widget into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @return The DataBuffer.
 	 */
 	protected abstract DataBuffer encodeBespoke();
 
 	/**
 	 * Encodes the hover text of this Widget into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @return The DataBuffer.
 	 */
 	private DataBuffer encodeHoverText() {
@@ -290,7 +287,7 @@ public abstract class Widget {
 
 	/**
 	 * Encodes the {@link Option} of this Widget into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @return The DataBuffer.
 	 */
 	private DataBuffer encodeOption() {

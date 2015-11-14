@@ -1,18 +1,17 @@
 package rs.emulate.legacy.config;
 
+import rs.emulate.legacy.archive.Archive;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import rs.emulate.legacy.archive.Archive;
-import rs.emulate.shared.util.DataBuffer;
-
 /**
  * Decodes data from ArchiveEntry objects in the {@code config} {@link Archive}.
- * 
- * @author Major
  *
  * @param <T> The type the data is decoded into.
+ * @author Major
  */
 public final class ConfigDecoder<T extends MutableConfigDefinition> {
 
@@ -33,7 +32,7 @@ public final class ConfigDecoder<T extends MutableConfigDefinition> {
 
 	/**
 	 * Creates the ConfigDecoder.
-	 * 
+	 *
 	 * @param config The config {@link Archive}.
 	 * @param supplier The {@link DefinitionSupplier}.
 	 * @throws FileNotFoundException If either the data or the index ArchiveEntry could not be found.
@@ -46,7 +45,7 @@ public final class ConfigDecoder<T extends MutableConfigDefinition> {
 
 	/**
 	 * Decodes the data into a {@link List} of definitions.
-	 * 
+	 *
 	 * @return The List of definitions.
 	 */
 	public List<T> decode() {

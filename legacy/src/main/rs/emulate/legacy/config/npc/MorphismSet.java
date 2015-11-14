@@ -1,11 +1,10 @@
 package rs.emulate.legacy.config.npc;
 
-import java.util.Arrays;
-
-import rs.emulate.shared.util.DataBuffer;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import rs.emulate.shared.util.DataBuffer;
+
+import java.util.Arrays;
 
 /**
  * A set of morphisms for an npc or object.
@@ -47,14 +46,14 @@ public final class MorphismSet {
 	}
 
 	/**
-	 * The morphism variable bit.
-	 */
-	private final int varbit;
-
-	/**
 	 * The morphisms.
 	 */
 	private final int[] morphisms;
+
+	/**
+	 * The morphism variable bit.
+	 */
+	private final int varbit;
 
 	/**
 	 * The morphism variable parameter.

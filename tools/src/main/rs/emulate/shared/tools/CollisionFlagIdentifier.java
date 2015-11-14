@@ -1,13 +1,13 @@
 package rs.emulate.shared.tools;
 
+import com.google.common.collect.ImmutableList;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * A simple command line utility to print the flags contained in a single value in a CollisionMap.
@@ -108,7 +108,7 @@ public final class CollisionFlagIdentifier {
 
 		/**
 		 * Creates the CollisionFlag.
-		 * 
+		 *
 		 * @param value The value.
 		 */
 		CollisionFlag(int value) {
@@ -117,7 +117,7 @@ public final class CollisionFlagIdentifier {
 
 		/**
 		 * Returns whether or not this CollisionFlag is set in the specified integer value.
-		 * 
+		 *
 		 * @param value The integer value.
 		 * @return {@code true} if this CollisionFlag is set, {@code false} if not.
 		 */
@@ -129,7 +129,7 @@ public final class CollisionFlagIdentifier {
 
 	/**
 	 * The entry point for the printer.
-	 * 
+	 *
 	 * @param args The application arguments.
 	 */
 	public static void main(String[] args) {
@@ -165,7 +165,7 @@ public final class CollisionFlagIdentifier {
 
 	/**
 	 * Parses the specified Strings, returning the parsed values in an {@link IntStream}.
-	 * 
+	 *
 	 * @param strings The String array.
 	 * @return The IntStream.
 	 */
@@ -190,7 +190,7 @@ public final class CollisionFlagIdentifier {
 
 	/**
 	 * Gets a {@link Stream} of {@link CollisionFlag} values the specified value contains.
-	 * 
+	 *
 	 * @param value The value.
 	 * @return The Stream of CollisionFlags.
 	 */

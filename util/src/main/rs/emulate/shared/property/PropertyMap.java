@@ -7,14 +7,14 @@ import java.util.Objects;
 /**
  * A {@link Map} wrapper containing methods to get properties using their opcode or name.
  *
- * @author Major
  * @param <T> The {@link PropertyType type} of properties in this Map.
+ * @author Major
  */
 public final class PropertyMap<T extends PropertyType> {
 
 	/**
 	 * Validates that the specified property is valid (i.e. is not {@code null}).
-	 * 
+	 *
 	 * @param property The {@link Property} to validate.
 	 * @param key The key used to access the invalid property.
 	 * @return The property, if it is valid.
@@ -40,7 +40,7 @@ public final class PropertyMap<T extends PropertyType> {
 
 	/**
 	 * Creates the PropertyMap, using an existing one as the base.
-	 * 
+	 *
 	 * @param map The base PropertyMap.
 	 */
 	public PropertyMap(PropertyMap<T> map) {
@@ -61,7 +61,7 @@ public final class PropertyMap<T extends PropertyType> {
 
 	/**
 	 * Adds a {@link Property} to this PropertyMap.
-	 * 
+	 *
 	 * @param property The Property.
 	 */
 	public void put(Property<?, T> property) {
@@ -70,7 +70,7 @@ public final class PropertyMap<T extends PropertyType> {
 
 	/**
 	 * Gets the size of this PropertyMap.
-	 * 
+	 *
 	 * @return The size.
 	 */
 	public int size() {

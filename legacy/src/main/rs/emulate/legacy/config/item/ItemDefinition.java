@@ -1,17 +1,17 @@
 package rs.emulate.legacy.config.item;
 
-import java.util.Map;
-
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.shared.world.Sex;
 import rs.emulate.util.Assertions;
 
+import java.util.Map;
+
 /**
  * A definition for an item (an 'obj' in the cache).
- * 
+ *
  * @author Major
  */
 public class ItemDefinition extends MutableConfigDefinition {
@@ -23,7 +23,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Checks that the specified index is between 0 and {@code upper}, inclusive.
-	 * 
+	 *
 	 * @param upper The upper bound, inclusive.
 	 * @param index The index.
 	 * @throws IllegalArgumentException If the specified index is not between 0 and {@code upper}.
@@ -34,7 +34,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Creates the ItemDefinition.
-	 * 
+	 *
 	 * @param id The id.
 	 * @param properties The {@link ConfigPropertyMap}.
 	 */
@@ -44,7 +44,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the {@link Map} of original to replacement colours.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public SerializableProperty<Map<Integer, Integer>> getColours() {
@@ -62,7 +62,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the ground action for the specified index.
-	 * 
+	 *
 	 * @param index The action index.
 	 * @return The property.
 	 */
@@ -72,9 +72,10 @@ public class ItemDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link SerializableProperty} containing the scale, in the x-direction, of this item's model when displayed
+	 * Gets the {@link SerializableProperty} containing the scale, in the x-direction, of this item's model when
+	 * displayed
 	 * on the ground.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public SerializableProperty<Integer> getGroundScaleX() {
@@ -82,9 +83,10 @@ public class ItemDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link SerializableProperty} containing the scale, in the y-direction, of this item's model when displayed
+	 * Gets the {@link SerializableProperty} containing the scale, in the y-direction, of this item's model when
+	 * displayed
 	 * on the ground.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public SerializableProperty<Integer> getGroundScaleY() {
@@ -92,9 +94,10 @@ public class ItemDefinition extends MutableConfigDefinition {
 	}
 
 	/**
-	 * Gets the {@link SerializableProperty} containing the scale, in the z-direction, of this item's model when displayed
+	 * Gets the {@link SerializableProperty} containing the scale, in the z-direction, of this item's model when
+	 * displayed
 	 * on the ground.
-	 * 
+	 *
 	 * @return The property.
 	 */
 	public SerializableProperty<Integer> getGroundScaleZ() {
@@ -103,7 +106,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the inventory action for the specified index.
-	 * 
+	 *
 	 * @param index The action index.
 	 * @return The property.
 	 */
@@ -114,7 +117,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the item stack of the specified index.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return The property.
 	 */
@@ -179,7 +182,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the head model id for the specified {@link Sex}.
-	 * 
+	 *
 	 * @param sex The sex.
 	 * @return The property.
 	 */
@@ -189,7 +192,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the {@link PrimaryModel} for the specified {@link Sex}.
-	 * 
+	 *
 	 * @param sex The sex.
 	 * @return The property.
 	 */
@@ -199,7 +202,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the head model id for the specified {@link Sex}.
-	 * 
+	 *
 	 * @param sex The sex.
 	 * @return The property.
 	 */
@@ -209,7 +212,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the secondary model id for the specified {@link Sex}.
-	 * 
+	 *
 	 * @param sex The sex.
 	 * @return The property.
 	 */
@@ -282,7 +285,7 @@ public class ItemDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Gets the {@link SerializableProperty} containing the tertiary model id for the specified {@link Sex}.
-	 * 
+	 *
 	 * @param sex The sex.
 	 * @return The property.
 	 */

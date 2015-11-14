@@ -1,5 +1,11 @@
 package rs.emulate.legacy;
 
+import com.google.common.base.Preconditions;
+import rs.emulate.legacy.archive.Archive;
+import rs.emulate.legacy.archive.ArchiveCodec;
+import rs.emulate.legacy.archive.CompressionType;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -11,13 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import rs.emulate.legacy.archive.Archive;
-import rs.emulate.legacy.archive.ArchiveCodec;
-import rs.emulate.legacy.archive.CompressionType;
-import rs.emulate.shared.util.DataBuffer;
-
-import com.google.common.base.Preconditions;
 
 /**
  * A container for a set of {@link Archive}s.
@@ -43,7 +42,7 @@ public final class Cache {
 
 	/**
 	 * Encodes this Cache, writing the output to files in the specified {@link Path}.
-	 * 
+	 *
 	 * @param base The base Path.
 	 * @throws IOException If there is an error writing the data in this Cache to disk.
 	 */
@@ -53,7 +52,7 @@ public final class Cache {
 
 	/**
 	 * Encodes this cache, writing the output to the specified files in the specified {@link Path}.
-	 * 
+	 *
 	 * @param base The directory to place the output files in.
 	 * @param dataFile The name of the data file.
 	 * @param indexPrefix The prefix of the index files.
@@ -126,7 +125,7 @@ public final class Cache {
 
 	/**
 	 * Gets the {@link Archive} with the specified {@link FileDescriptor}.
-	 * 
+	 *
 	 * @param descriptor The descriptor.
 	 * @return The Archive.
 	 */
@@ -146,7 +145,7 @@ public final class Cache {
 
 	/**
 	 * Gets the file data with the specified {@link FileDescriptor}.
-	 * 
+	 *
 	 * @param descriptor The FileDescriptor.
 	 * @return The file data, in a {@link DataBuffer}.
 	 */
@@ -156,7 +155,7 @@ public final class Cache {
 
 	/**
 	 * Places an {@link Archive} with the specified {@link FileDescriptor} into this Cache.
-	 * 
+	 *
 	 * @param descriptor The FileDescriptor of the Archive. Must not be {@code null}.
 	 * @param archive The Archive. Must not be {@code null}.
 	 * @param type The {@link CompressionType} to apply to the Archive. Must not be {@code null}.
@@ -171,7 +170,7 @@ public final class Cache {
 
 	/**
 	 * Places the file with the specified {@link FileDescriptor} into this Cache.
-	 * 
+	 *
 	 * @param descriptor The FileDescriptor.
 	 * @param file The file data.
 	 */
@@ -181,7 +180,7 @@ public final class Cache {
 
 	/**
 	 * Replaces the {@link Archive} represented by the specified {@link FileDescriptor} with the specified Archive.
-	 * 
+	 *
 	 * @param descriptor The FileDescriptor of the Archive. Must not be {@code null}.
 	 * @param archive The Archive to replace the existing one with. Must not be {@code null}.
 	 * @param type The {@link CompressionType} to apply to the new Archive. Must not be {@code null}.
@@ -196,7 +195,7 @@ public final class Cache {
 
 	/**
 	 * Gets the {@link List} of files to encode, in ascending order.
-	 * 
+	 *
 	 * @return The List of {@link Map} entries.
 	 */
 	private List<Map.Entry<FileDescriptor, DataBuffer>> sortedFileList() {

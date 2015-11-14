@@ -1,11 +1,10 @@
 package rs.emulate.modern.script.decomp.instr;
 
-import java.util.Arrays;
-import java.util.Set;
-
+import com.google.common.collect.ImmutableSet;
 import rs.emulate.modern.script.interp.ScriptContext;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Arrays;
+import java.util.Set;
 
 /**
  * A base class for a ClientScript instruction.
@@ -31,7 +30,7 @@ public abstract class Instruction {
 
 	/**
 	 * Creates the Instruction.
-	 * 
+	 *
 	 * @param name The name of the Instruction.
 	 * @param opcode The opcode of the Instruction.
 	 * @param types The {@link OperandType}s.
@@ -44,7 +43,7 @@ public abstract class Instruction {
 
 	/**
 	 * Gets the {@link OperandType} at the specified index.
-	 * 
+	 *
 	 * @param type The OperandType.
 	 * @return The OperandType.
 	 * @throws IndexOutOfBoundsException If the index is out of bounds.
@@ -54,15 +53,8 @@ public abstract class Instruction {
 	}
 
 	/**
-	 * Evaluates this Instruction.
-	 * 
-	 * @param context The {@link ScriptContext} of the script currently being executed.
-	 */
-	public abstract void evaluate(ScriptContext context);
-
-	/**
 	 * Gets the name of this Instruction.
-	 * 
+	 *
 	 * @return The name.
 	 */
 	public final String getName() {
@@ -71,7 +63,7 @@ public abstract class Instruction {
 
 	/**
 	 * Gets the opcode of this Instruction.
-	 * 
+	 *
 	 * @return The opcode.
 	 */
 	public final int getOpcode() {
@@ -80,7 +72,7 @@ public abstract class Instruction {
 
 	/**
 	 * Gets the operand count of this Instruction.
-	 * 
+	 *
 	 * @return The operand count.
 	 */
 	public final int getOperandCount() {
@@ -89,12 +81,19 @@ public abstract class Instruction {
 
 	/**
 	 * Returns whether or not the specified {@link OperandType}s match the expected OperandTypes of this Instruction.
-	 * 
+	 *
 	 * @param types The OperandTypes.
 	 * @return {@code true} if the OperandTypes are valid, {@code false} if not.
 	 */
 	public final boolean validOperandTypes(OperandType... types) {
 		return types.equals(Arrays.asList(types));
 	}
+
+	/**
+	 * Evaluates this Instruction.
+	 *
+	 * @param context The {@link ScriptContext} of the script currently being executed.
+	 */
+	public abstract void evaluate(ScriptContext context);
 
 }

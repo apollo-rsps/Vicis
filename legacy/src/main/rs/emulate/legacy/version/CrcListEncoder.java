@@ -1,11 +1,11 @@
 package rs.emulate.legacy.version;
 
+import rs.emulate.legacy.archive.ArchiveEntry;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import rs.emulate.legacy.archive.ArchiveEntry;
-import rs.emulate.shared.util.DataBuffer;
 
 /**
  * Encodes {@link CrcList}s into {@link ArchiveEntry} objects.

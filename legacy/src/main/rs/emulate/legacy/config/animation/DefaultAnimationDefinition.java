@@ -18,8 +18,8 @@ import static rs.emulate.legacy.config.animation.AnimationProperty.*;
 /**
  * A default {@link AnimationDefinition} used as a base for an actual definitions.
  *
- * @author Major
  * @param <T> The type of {@link AnimationDefinition} this default is for.
+ * @author Major
  */
 public class DefaultAnimationDefinition<T extends AnimationDefinition> extends DefaultConfigDefinition<T> {
 

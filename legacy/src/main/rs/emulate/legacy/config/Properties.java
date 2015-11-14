@@ -12,19 +12,8 @@ import rs.emulate.shared.property.PropertyParsers;
 public final class Properties {
 
 	/**
-	 * Creates a byte {@link SerializableProperty} with no value.
-	 *
-	 * @param name The name of the property.
-	 * @param defaultValue The default value of the property.
-	 * @return The DefinitionProperty.
-	 */
-	public static SerializableProperty<Integer> unsignedByte(ConfigPropertyType name, int defaultValue) {
-		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER,
-				Byte.BYTES, PropertyParsers.unsignedByte());
-	}
-
-	/**
-	 * Creates a boolean {@link SerializableProperty} that encodes and decodes no data, and simply returns {@code false}.
+	 * Creates a boolean {@link SerializableProperty} that encodes and decodes no data, and simply returns {@code
+	 * false}.
 	 *
 	 * @param name The name of the property.
 	 * @param defaultValue The default value of the property.
@@ -36,27 +25,29 @@ public final class Properties {
 	}
 
 	/**
-	 * Creates an integer {@link SerializableProperty} with no value.
+	 * Creates a boolean {@link SerializableProperty} that encodes and decodes no data, and simply returns {@code
+	 * true}.
 	 *
 	 * @param name The name of the property.
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static SerializableProperty<Long> unsignedInt(ConfigPropertyType name, long defaultValue) {
-		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.LONG_ENCODER, PropertyDecoders.INT_DECODER,
-				Integer.BYTES, PropertyParsers.unsignedInt());
+	public static SerializableProperty<Boolean> alwaysTrue(ConfigPropertyType name, boolean defaultValue) {
+		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.TRUE_DECODER,
+				0, PropertyParsers.forBoolean());
 	}
 
 	/**
-	 * Creates a short {@link SerializableProperty} with no value.
+	 * Creates a string {@link SerializableProperty} with no value.
 	 *
 	 * @param name The name of the property.
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static SerializableProperty<Integer> unsignedShort(ConfigPropertyType name, int defaultValue) {
-		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SHORT_DECODER,
-				Short.BYTES, PropertyParsers.unsignedShort());
+	public static SerializableProperty<String> asciiString(ConfigPropertyType name, String defaultValue) {
+		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.ASCII_STRING_ENCODER,
+				PropertyDecoders.ASCII_STRING_DECODER, string -> string.length() + Byte.BYTES, // terminator byte
+				PropertyParsers.forAsciiString());
 	}
 
 	/**
@@ -84,16 +75,39 @@ public final class Properties {
 	}
 
 	/**
-	 * Creates a string {@link SerializableProperty} with no value.
+	 * Creates a byte {@link SerializableProperty} with no value.
 	 *
 	 * @param name The name of the property.
 	 * @param defaultValue The default value of the property.
 	 * @return The DefinitionProperty.
 	 */
-	public static SerializableProperty<String> asciiString(ConfigPropertyType name, String defaultValue) {
-		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.ASCII_STRING_ENCODER,
-				PropertyDecoders.ASCII_STRING_DECODER, string -> string.length() + Byte.BYTES, // terminator byte
-				PropertyParsers.forAsciiString());
+	public static SerializableProperty<Integer> unsignedByte(ConfigPropertyType name, int defaultValue) {
+		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER,
+				Byte.BYTES, PropertyParsers.unsignedByte());
+	}
+
+	/**
+	 * Creates an integer {@link SerializableProperty} with no value.
+	 *
+	 * @param name The name of the property.
+	 * @param defaultValue The default value of the property.
+	 * @return The DefinitionProperty.
+	 */
+	public static SerializableProperty<Long> unsignedInt(ConfigPropertyType name, long defaultValue) {
+		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.LONG_ENCODER, PropertyDecoders.INT_DECODER,
+				Integer.BYTES, PropertyParsers.unsignedInt());
+	}
+
+	/**
+	 * Creates a short {@link SerializableProperty} with no value.
+	 *
+	 * @param name The name of the property.
+	 * @param defaultValue The default value of the property.
+	 * @return The DefinitionProperty.
+	 */
+	public static SerializableProperty<Integer> unsignedShort(ConfigPropertyType name, int defaultValue) {
+		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SHORT_DECODER,
+				Short.BYTES, PropertyParsers.unsignedShort());
 	}
 
 	/**
@@ -106,18 +120,6 @@ public final class Properties {
 	public static SerializableProperty<Integer> unsignedTribyte(ConfigPropertyType name, int defaultValue) {
 		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.TRI_BYTE_ENCODER,
 				PropertyDecoders.UNSIGNED_TRI_BYTE_DECODER, 3 * Byte.BYTES, PropertyParsers.unsignedTriByte());
-	}
-
-	/**
-	 * Creates a boolean {@link SerializableProperty} that encodes and decodes no data, and simply returns {@code true}.
-	 *
-	 * @param name The name of the property.
-	 * @param defaultValue The default value of the property.
-	 * @return The DefinitionProperty.
-	 */
-	public static SerializableProperty<Boolean> alwaysTrue(ConfigPropertyType name, boolean defaultValue) {
-		return new SerializableProperty<>(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.TRUE_DECODER,
-				0, PropertyParsers.forBoolean());
 	}
 
 	/**

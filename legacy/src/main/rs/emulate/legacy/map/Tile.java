@@ -40,14 +40,14 @@ public final class Tile {
 		private int overlayType;
 
 		/**
-		 * The underlay id of the Tile.
-		 */
-		private int underlay;
-
-		/**
 		 * The Position of the Tile.
 		 */
 		private Position position;
+
+		/**
+		 * The underlay id of the Tile.
+		 */
+		private int underlay;
 
 		/**
 		 * Creates the Builder.
@@ -55,15 +55,6 @@ public final class Tile {
 		 * @param position The {@link Position} of the Tile.
 		 */
 		public Builder(Position position) {
-			this.position = position;
-		}
-
-		/**
-		 * Sets the {@link Position} of the Tile.
-		 *
-		 * @param position The Position.
-		 */
-		public void setPosition(Position position) {
 			this.position = position;
 		}
 
@@ -122,6 +113,15 @@ public final class Tile {
 		}
 
 		/**
+		 * Sets the {@link Position} of the Tile.
+		 *
+		 * @param position The Position.
+		 */
+		public void setPosition(Position position) {
+			this.position = position;
+		}
+
+		/**
 		 * Sets the underlay id of the Tile.
 		 *
 		 * @param underlay The underlay.
@@ -168,14 +168,14 @@ public final class Tile {
 	private final int overlayType;
 
 	/**
-	 * The underlay id of this Tile.
-	 */
-	private final int underlay;
-
-	/**
 	 * The position of this Tile.
 	 */
 	private final Position position;
+
+	/**
+	 * The underlay id of this Tile.
+	 */
+	private final int underlay;
 
 	/**
 	 * Creates the Tile.
@@ -189,7 +189,7 @@ public final class Tile {
 	 * @param underlay The underlay id.
 	 */
 	public Tile(Position position, int attributes, int height, int overlay, int overlayType, int overlayOrientation,
-			int underlay) {
+	            int underlay) {
 		this.position = position;
 		this.attributes = attributes;
 		this.height = height;
@@ -197,15 +197,6 @@ public final class Tile {
 		this.overlayType = overlayType;
 		this.overlayOrientation = overlayOrientation;
 		this.underlay = underlay;
-	}
-
-	/**
-	 * Gets the {@link Position} of this Tile.
-	 *
-	 * @return The Position.
-	 */
-	public Position getPosition() {
-		return position;
 	}
 
 	/**
@@ -251,6 +242,15 @@ public final class Tile {
 	 */
 	public int getOverlayType() {
 		return overlayType;
+	}
+
+	/**
+	 * Gets the {@link Position} of this Tile.
+	 *
+	 * @return The Position.
+	 */
+	public Position getPosition() {
+		return position;
 	}
 
 	/**

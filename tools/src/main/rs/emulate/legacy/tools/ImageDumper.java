@@ -1,17 +1,16 @@
 package rs.emulate.legacy.tools;
 
+import rs.emulate.legacy.IndexedFileSystem;
+import rs.emulate.legacy.graphics.image.ImageDecoder;
+import rs.emulate.legacy.graphics.image.IndexedImage;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-import javax.imageio.ImageIO;
-
-import rs.emulate.legacy.IndexedFileSystem;
-import rs.emulate.legacy.graphics.image.ImageDecoder;
-import rs.emulate.legacy.graphics.image.IndexedImage;
 
 /**
  * Dumps decoded Images into files.
@@ -22,7 +21,7 @@ public final class ImageDumper {
 
 	/**
 	 * Creates a {@link ImageDumper} for the {@link IndexedImage}(s) with the specified name.
-	 * 
+	 *
 	 * @param fs The {@link IndexedFileSystem} containing the Image(s).
 	 * @param name The name of the Image(s).
 	 * @return The ImageDumper.
@@ -66,7 +65,7 @@ public final class ImageDumper {
 
 	/**
 	 * Dumps all of the {@link IndexedImage}s into the pre-specified directory.
-	 * 
+	 *
 	 * @param format The name of the image format.
 	 * @throws IOException If there is an error decoding the Images.
 	 */

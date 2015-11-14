@@ -1,20 +1,20 @@
 package rs.emulate.util;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Arrays;
 import java.util.Objects;
 
-import com.google.common.base.Preconditions;
-
 /**
  * Contains utility methods similar to (and utilising) Guava's {@link Preconditions}.
- * 
+ *
  * @author Major
  */
 public final class Assertions {
 
 	/**
 	 * Verifies that the value of the specified long can be stored in a byte.
-	 * 
+	 *
 	 * @param value The integer value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the value cannot be stored in a byte.
@@ -25,7 +25,7 @@ public final class Assertions {
 
 	/**
 	 * Verifies that the value of the specified long can be stored in an int.
-	 * 
+	 *
 	 * @param value The long value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the value cannot be stored in an int.
@@ -36,7 +36,7 @@ public final class Assertions {
 
 	/**
 	 * Checks that the specified value is negative (i.e. {@code < 0}).
-	 * 
+	 *
 	 * @param value The value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the specified value is not negative.
@@ -47,7 +47,7 @@ public final class Assertions {
 
 	/**
 	 * Checks that the specified string is neither {@code null} nor {@link String#isEmpty() empty}.
-	 * 
+	 *
 	 * @param string The string to check.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the string is {@code null} or {@link String#isEmpty() empty}.
@@ -58,7 +58,7 @@ public final class Assertions {
 
 	/**
 	 * Checks that the specified value is non-negative (i.e. {@code >= 0}).
-	 * 
+	 *
 	 * @param value The value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the specified value is negative.
@@ -69,7 +69,7 @@ public final class Assertions {
 
 	/**
 	 * Checks that each of the specified objects is non-null.
-	 * 
+	 *
 	 * @param message The message of the exception thrown if the check fails.
 	 * @param objects The objects to check.
 	 * @throws NullPointerException If any of the specified objects are null.
@@ -82,7 +82,7 @@ public final class Assertions {
 
 	/**
 	 * Checks that the specified value is non-positive (i.e. {@code <= 0}).
-	 * 
+	 *
 	 * @param value The value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the specified value is positive.
@@ -93,7 +93,7 @@ public final class Assertions {
 
 	/**
 	 * Checks that the specified value is positive (i.e. {@code > 0}).
-	 * 
+	 *
 	 * @param value The value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the specified value is not positive.
@@ -104,7 +104,7 @@ public final class Assertions {
 
 	/**
 	 * Verifies that the value of the specified long can be stored in a short.
-	 * 
+	 *
 	 * @param value The long value.
 	 * @param message The message of the exception thrown if the check fails.
 	 * @throws IllegalArgumentException If the value cannot be stored in a short.
@@ -116,7 +116,7 @@ public final class Assertions {
 	/**
 	 * Checks that the specified value is between the {@code start} and {@code end} values, inclusive (i.e.
 	 * {@code start <= value <= end}.
-	 * 
+	 *
 	 * @param start The start value.
 	 * @param end The end value.
 	 * @param value The value to check.

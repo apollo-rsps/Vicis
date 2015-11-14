@@ -1,16 +1,15 @@
 package rs.emulate.legacy.config.graphic;
 
+import com.google.common.collect.ImmutableMap;
 import rs.emulate.legacy.config.ConfigPropertyMap;
 import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.legacy.config.MutableConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 import rs.emulate.util.Assertions;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
  * A definition for a graphic (a 'spotanim').
- * 
+ *
  * @author Major
  */
 public class GraphicDefinition extends MutableConfigDefinition {
@@ -27,7 +26,7 @@ public class GraphicDefinition extends MutableConfigDefinition {
 
 	/**
 	 * Checks that the specified slot for a colour is valid (i.e. {@code 1 <= slot <=} {@link #COLOUR_COUNT}).
-	 * 
+	 *
 	 * @param slot The slot.
 	 * @throws IllegalArgumentException If the slot is invalid.
 	 */
@@ -52,6 +51,15 @@ public class GraphicDefinition extends MutableConfigDefinition {
 	 */
 	public SerializableProperty<Integer> animation() {
 		return getProperty(GraphicProperty.ANIMATION);
+	}
+
+	/**
+	 * Gets the {@link SerializableProperty} containing the breadth scale of this graphic.
+	 *
+	 * @return The breadth scale.
+	 */
+	public SerializableProperty<Integer> breadthScale() {
+		return getProperty(GraphicProperty.BREADTH_SCALE);
 	}
 
 	/**
@@ -136,15 +144,6 @@ public class GraphicDefinition extends MutableConfigDefinition {
 	 */
 	public SerializableProperty<Integer> shadow() {
 		return getProperty(GraphicProperty.SHADOW);
-	}
-
-	/**
-	 * Gets the {@link SerializableProperty} containing the breadth scale of this graphic.
-	 *
-	 * @return The breadth scale.
-	 */
-	public SerializableProperty<Integer> breadthScale() {
-		return getProperty(GraphicProperty.BREADTH_SCALE);
 	}
 
 }

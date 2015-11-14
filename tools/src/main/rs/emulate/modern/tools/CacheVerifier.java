@@ -1,24 +1,24 @@
 package rs.emulate.modern.tools;
 
-import java.io.IOException;
-import java.util.zip.CRC32;
-
 import rs.emulate.modern.Container;
 import rs.emulate.modern.Entry;
 import rs.emulate.modern.FileStore;
 import rs.emulate.modern.ReferenceTable;
 import rs.emulate.shared.util.DataBuffer;
 
+import java.io.IOException;
+import java.util.zip.CRC32;
+
 /**
  * A utility to verify an existing cache is complete.
- * 
+ *
  * @author Graham
  */
 public final class CacheVerifier {
 
 	/**
 	 * The entry point for the application.
-	 * 
+	 *
 	 * @param args The program arguments.
 	 * @throws IOException If there is an error verifying the cache.
 	 */

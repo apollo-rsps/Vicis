@@ -1,5 +1,11 @@
 package rs.emulate.legacy;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import rs.emulate.legacy.archive.Archive;
+import rs.emulate.legacy.archive.ArchiveCodec;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,17 +17,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.zip.CRC32;
 
-import rs.emulate.legacy.archive.Archive;
-import rs.emulate.legacy.archive.ArchiveCodec;
-import rs.emulate.shared.util.DataBuffer;
-
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-
 /**
  * A file system based on top of the operating system's file system. It consists of a data file and multiple index
  * files. Index files point to blocks in the data file, which contain the actual data.
- * 
+ *
  * @author Graham
  * @author Major
  */
@@ -31,11 +30,6 @@ public final class IndexedFileSystem implements Closeable {
 	 * The maximum amount of indices.
 	 */
 	private static final int INDEX_COUNT = 256;
-
-	/**
-	 * The cached CRC table.
-	 */
-	private Optional<DataBuffer> crcs;
 
 	/**
 	 * The data file.
@@ -53,8 +47,13 @@ public final class IndexedFileSystem implements Closeable {
 	private final AccessMode mode;
 
 	/**
+	 * The cached CRC table.
+	 */
+	private Optional<DataBuffer> crcs;
+
+	/**
 	 * Creates the file system with the specified base directory.
-	 * 
+	 *
 	 * @param base The base directory.
 	 * @param mode The {@link AccessMode}.
 	 * @throws FileNotFoundException If the data files could not be found.
@@ -85,7 +84,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Decodes a file into an {@link Archive}.
-	 * 
+	 *
 	 * @param type The file type.
 	 * @param file The file id.
 	 * @return The archive.
@@ -97,7 +96,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets the CRC table.
-	 * 
+	 *
 	 * @return The CRC table.
 	 * @throws IOException If there is an error getting any of the files.
 	 */
@@ -139,7 +138,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets a file.
-	 * 
+	 *
 	 * @param descriptor The {@link FileDescriptor} which points to the file.
 	 * @return A {@link DataBuffer} which contains the contents of the file.
 	 * @throws IOException If an I/O error occurs.
@@ -196,7 +195,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets a file.
-	 * 
+	 *
 	 * @param type The file type.
 	 * @param file The file id.
 	 * @return A {@link DataBuffer} containing the contents of the file.
@@ -208,7 +207,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets the number of files with the specified type.
-	 * 
+	 *
 	 * @param type The type.
 	 * @return The number of files.
 	 * @throws IOException If there is an error getting the length of the index file.
@@ -225,7 +224,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets the index of a file.
-	 * 
+	 *
 	 * @param descriptor The {@link FileDescriptor} which points to the file.
 	 * @return The {@link Index}.
 	 * @throws IOException If there is an error seeking the index file.
@@ -249,7 +248,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets the amount of indices in this IndexedFileSystem.
-	 * 
+	 *
 	 * @return The amount of indices.
 	 */
 	public int getIndexCount() {
@@ -258,7 +257,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Checks if this {@link IndexedFileSystem} is read only.
-	 * 
+	 *
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean isReadOnly() {
@@ -267,7 +266,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets the data file ({@code main_file_cache.dat}), as a {@link RandomAccessFile}.
-	 * 
+	 *
 	 * @param base The base directory.
 	 * @return The data file.
 	 * @throws FileNotFoundException If the data file could not be found.
@@ -284,7 +283,7 @@ public final class IndexedFileSystem implements Closeable {
 
 	/**
 	 * Gets the index files, as a {@link List} of {@link RandomAccessFile}s.
-	 * 
+	 *
 	 * @param base The base {@link Path}.
 	 * @return The list of indices.
 	 * @throws FileNotFoundException If there are no index files present.

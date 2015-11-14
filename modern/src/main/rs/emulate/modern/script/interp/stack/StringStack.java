@@ -5,7 +5,8 @@ import java.util.NoSuchElementException;
 
 /**
  * A simple stack of Strings. This is used instead of the existing Stack class in the Java API because synchronization
- * is not required, and instead of an ArrayDeque as that supplies unwanted functionality (such as insertion at the head)
+ * is not required, and instead of an ArrayDeque as that supplies unwanted functionality (such as insertion at the
+ * head)
  * which ClientScripts do not support.
  *
  * @author Major
@@ -49,7 +50,7 @@ public final class StringStack {
 
 	/**
 	 * Returns whether or not the specified StringStack is equal to this StringStack.
-	 * 
+	 *
 	 * @param other The StringStack to compare with.
 	 * @return {@code true} if the specified StringStack is equal to this, {@code false} if not.
 	 */
@@ -69,7 +70,7 @@ public final class StringStack {
 
 	/**
 	 * Pops an element from the stack.
-	 * 
+	 *
 	 * @return The popped element.
 	 * @throws NoSuchElementException If the stack is empty.
 	 */
@@ -87,7 +88,7 @@ public final class StringStack {
 
 	/**
 	 * Pushes a value onto this stack.
-	 * 
+	 *
 	 * @param value The value.
 	 */
 	public void push(String value) {
@@ -100,7 +101,7 @@ public final class StringStack {
 
 	/**
 	 * Gets the size of this StringStack.
-	 * 
+	 *
 	 * @return The size.
 	 */
 	public int size() {

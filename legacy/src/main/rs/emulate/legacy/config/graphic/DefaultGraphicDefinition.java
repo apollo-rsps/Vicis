@@ -1,29 +1,23 @@
 package rs.emulate.legacy.config.graphic;
 
-import static rs.emulate.legacy.config.Properties.unsignedByte;
-import static rs.emulate.legacy.config.Properties.unsignedShort;
-import static rs.emulate.legacy.config.graphic.GraphicDefinition.COLOUR_COUNT;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.ANIMATION;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.BREADTH_SCALE;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.BRIGHTNESS;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.DEPTH_SCALE;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.MODEL;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.ROTATION;
-import static rs.emulate.legacy.config.graphic.GraphicProperty.SHADOW;
+import rs.emulate.legacy.config.ConfigConstants;
+import rs.emulate.legacy.config.ConfigUtils;
+import rs.emulate.legacy.config.DefaultConfigDefinition;
+import rs.emulate.legacy.config.SerializableProperty;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import rs.emulate.legacy.config.ConfigConstants;
-import rs.emulate.legacy.config.SerializableProperty;
-import rs.emulate.legacy.config.ConfigUtils;
-import rs.emulate.legacy.config.DefaultConfigDefinition;
+import static rs.emulate.legacy.config.Properties.unsignedByte;
+import static rs.emulate.legacy.config.Properties.unsignedShort;
+import static rs.emulate.legacy.config.graphic.GraphicDefinition.COLOUR_COUNT;
+import static rs.emulate.legacy.config.graphic.GraphicProperty.*;
 
 /**
  * A default {@link GraphicDefinition} used as a base for an actual definition.
  *
- * @author Major
  * @param <T> The type of GraphicDefinition this DefaultGraphicDefinition is for.
+ * @author Major
  */
 public class DefaultGraphicDefinition<T extends GraphicDefinition> extends DefaultConfigDefinition<T> {
 

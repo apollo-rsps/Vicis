@@ -1,5 +1,8 @@
 package rs.emulate.modern;
 
+import rs.emulate.shared.util.DataBuffer;
+import rs.emulate.shared.util.FileChannelUtils;
+
 import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,9 +15,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-import rs.emulate.shared.util.DataBuffer;
-import rs.emulate.shared.util.FileChannelUtils;
-
 /**
  * A file store holds multiple files inside a "virtual" file system made up of several index files and a single data
  * file.
@@ -25,7 +25,7 @@ public final class FileStore implements Closeable {
 
 	/**
 	 * Creates a new file store.
-	 * 
+	 *
 	 * @param root The root directory.
 	 * @param indices The number of indices.
 	 * @return The file store.
@@ -54,7 +54,7 @@ public final class FileStore implements Closeable {
 
 	/**
 	 * Creates a new file store.
-	 * 
+	 *
 	 * @param root The root path.
 	 * @param indices The indices.
 	 * @return The file store.
@@ -239,7 +239,7 @@ public final class FileStore implements Closeable {
 
 	/**
 	 * Writes a file.
-	 * 
+	 *
 	 * @param type The type of the file.
 	 * @param id The id of the file.
 	 * @param buffer A {@link ByteBuffer} containing the contents of the file.

@@ -1,10 +1,7 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
-
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
@@ -12,8 +9,10 @@ import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.Point;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * Contains properties used by {@link WidgetGroup#CONTAINER} {@link Widget}s.
@@ -44,7 +43,7 @@ public final class ContainerWidget extends Widget {
 
 	/**
 	 * Creates the ContainerWidget.
-	 * 
+	 *
 	 * @param id The id of the ContainerWidget.
 	 * @param parent The parent id of the ContainerWidget, as an {@link OptionalInt}. Must not be {@code null}.
 	 * @param optionType The {@link WidgetOption} of the ContainerWidget. Must not be {@code null}.
@@ -62,8 +61,8 @@ public final class ContainerWidget extends Widget {
 	 * @param childPoints The {@link Point}s of the child ContainerWidgets.
 	 */
 	public ContainerWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			int scrollLimit, boolean hidden, int[] children, List<Point> childPoints) {
+	                       OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                       int scrollLimit, boolean hidden, int[] children, List<Point> childPoints) {
 		super(id, parent, WidgetGroup.CONTAINER, optionType, content, width, height, alpha, hover, scripts, option, hoverText);
 
 		this.scrollLimit = scrollLimit;

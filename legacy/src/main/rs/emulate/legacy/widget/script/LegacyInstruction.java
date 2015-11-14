@@ -1,9 +1,9 @@
 package rs.emulate.legacy.widget.script;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import com.google.common.base.Preconditions;
 
 /**
  * An instruction used as part of a {@link LegacyClientScript}.
@@ -14,7 +14,7 @@ public final class LegacyInstruction {
 
 	/**
 	 * Creates a LegacyInstruction.
-	 * 
+	 *
 	 * @param type The {@link LegacyInstructionType}. Must not be {@code null}.
 	 * @param operands The instruction operands. Must not be {@code null}.
 	 * @return The LegacyInstruction.
@@ -49,7 +49,7 @@ public final class LegacyInstruction {
 
 	/**
 	 * Gets the operands of this LegacyInstruction.
-	 * 
+	 *
 	 * @return The instruction operands. Will not be {@code null}, but may have a length of 0.
 	 */
 	public int[] getOperands() {
@@ -58,7 +58,7 @@ public final class LegacyInstruction {
 
 	/**
 	 * Gets the {@link LegacyInstructionType} of this LegacyInstruction.
-	 * 
+	 *
 	 * @return The LegacyInstructionType.
 	 */
 	public LegacyInstructionType getType() {

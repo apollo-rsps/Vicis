@@ -15,7 +15,8 @@ public enum WidgetGroup {
 	CONTAINER(0),
 
 	/**
-	 * The model list group, specifying that the Widget contains a list of models. Despite being present since RS2 beta,
+	 * The model list group, specifying that the Widget contains a list of models. Despite being present since RS2
+	 * beta,
 	 * even the 377 client did not have full support for this group, and no widgets use it.
 	 */
 	MODEL_LIST(1),
@@ -55,7 +56,7 @@ public enum WidgetGroup {
 
 	/**
 	 * Gets the WidgetGroup with the specified integer value.
-	 * 
+	 *
 	 * @param value The integer value.
 	 * @return The WidgetGroup.
 	 * @throws IllegalArgumentException If no WidgetGroup with the specified integer value exists.
@@ -81,7 +82,7 @@ public enum WidgetGroup {
 
 	/**
 	 * Gets the integer value of this WidgetGroup.
-	 * 
+	 *
 	 * @return The integer value.
 	 */
 	public int toInteger() {

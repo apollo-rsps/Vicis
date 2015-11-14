@@ -1,13 +1,13 @@
 package rs.emulate.modern;
 
+import rs.emulate.shared.util.DataBuffer;
+import rs.emulate.shared.util.crypto.Whirlpool;
+
 import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
-
-import rs.emulate.shared.util.DataBuffer;
-import rs.emulate.shared.util.crypto.Whirlpool;
 
 /**
  * The {@link Cache} class provides a unified, high-level API for modifying the cache of a Jagex game.

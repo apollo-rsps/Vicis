@@ -30,7 +30,7 @@ public final class ColourPair {
 
 	/**
 	 * Gets the default colour of this ColourPair.
-	 * 
+	 *
 	 * @return The default colour.
 	 */
 	public int getDefault() {
@@ -39,7 +39,7 @@ public final class ColourPair {
 
 	/**
 	 * Gets the secondary colour of this ColourPair.
-	 * 
+	 *
 	 * @return The secondary colour.
 	 */
 	public int getSecondary() {

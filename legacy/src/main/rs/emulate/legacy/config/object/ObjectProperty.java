@@ -5,7 +5,7 @@ import rs.emulate.legacy.config.npc.MorphismSet;
 
 /**
  * Contains {@link ConfigPropertyType} implementations for {@link ObjectDefinition}s.
- * 
+ *
  * @author Major
  */
 enum ObjectProperty implements ConfigPropertyType {
@@ -177,7 +177,7 @@ enum ObjectProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the ObjectProperty.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 */
 	private ObjectProperty(int opcode) {

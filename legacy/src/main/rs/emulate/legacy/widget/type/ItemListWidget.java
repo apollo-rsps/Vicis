@@ -1,15 +1,15 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
 import rs.emulate.shared.util.Point;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * A {@link WidgetGroup#ITEM_LIST} {@link Widget}.
@@ -70,8 +70,8 @@ public final class ItemListWidget extends Widget {
 	 * @param padding The sprite padding.
 	 */
 	public ItemListWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			boolean centered, int colour, int font, boolean shadowed, List<String> actions, Point padding) {
+	                      OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                      boolean centered, int colour, int font, boolean shadowed, List<String> actions, Point padding) {
 		super(id, parent, WidgetGroup.ITEM_LIST, optionType, content, width, height, alpha, hover, scripts, option, hoverText);
 
 		this.centered = centered;

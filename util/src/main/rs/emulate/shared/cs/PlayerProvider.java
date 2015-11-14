@@ -1,5 +1,7 @@
 package rs.emulate.shared.cs;
 
+import rs.emulate.shared.world.Position;
+
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.IntFunction;
@@ -7,14 +9,54 @@ import java.util.function.IntSupplier;
 import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 
-import rs.emulate.shared.world.Position;
-
 /**
  * Provides player-related values used during the interpretation of a ClientScript.
  *
  * @author Major
  */
 public class PlayerProvider {
+
+	/**
+	 * Provides {@link Skill}s used during the execution of a ClientScript.
+	 */
+	@FunctionalInterface
+	public interface SkillProvider extends Function<Integer, Skill> {
+
+		/**
+		 * Gets the {@link Skill} with the specified id.
+		 *
+		 * @param id The id.
+		 * @return The Skill.
+		 */
+		default Skill get(int id) {
+			return apply(id);
+		}
+
+		/**
+		 * Gets an array containing each {@link Skill}.
+		 *
+		 * @param count The amount of Skills to get.
+		 * @return The Skills.
+		 */
+		default Skill[] getSkills(int count) {
+			Skill[] skills = new Skill[count];
+			for (int id = 0; id < skills.length; id++) {
+				skills[id] = get(id);
+			}
+
+			return skills;
+		}
+
+		/**
+		 * Gets the total level of the {@link Skill}s in this SkillProvider.
+		 *
+		 * @param count The amount of Skills to get.
+		 * @return The total.
+		 */
+		default int getTotal(int count) {
+			return Arrays.stream(getSkills(count)).mapToInt(Skill::getMaximumLevel).sum();
+		}
+	}
 
 	/**
 	 * A builder class for {@link PlayerProvider}s.
@@ -55,24 +97,6 @@ public class PlayerProvider {
 			return new PlayerProvider(skills, positions, settings, weights, energies);
 		}
 
-	}
-
-	/**
-	 * Returns the default {@link PlayerProvider}.
-	 *
-	 * @return The default.
-	 */
-	public static PlayerProvider defaultProvider() {
-		return new Builder().build();
-	}
-
-	/**
-	 * Returns a new {@link Builder}.
-	 *
-	 * @return The Builder.
-	 */
-	public static Builder builder() {
-		return new Builder();
 	}
 
 	/**
@@ -138,45 +162,21 @@ public class PlayerProvider {
 	}
 
 	/**
-	 * Provides {@link Skill}s used during the execution of a ClientScript.
+	 * Returns a new {@link Builder}.
+	 *
+	 * @return The Builder.
 	 */
-	@FunctionalInterface
-	public interface SkillProvider extends Function<Integer, Skill> {
+	public static Builder builder() {
+		return new Builder();
+	}
 
-		/**
-		 * Gets the {@link Skill} with the specified id.
-		 *
-		 * @param id The id.
-		 * @return The Skill.
-		 */
-		default Skill get(int id) {
-			return apply(id);
-		}
-
-		/**
-		 * Gets an array containing each {@link Skill}.
-		 *
-		 * @param count The amount of Skills to get.
-		 * @return The Skills.
-		 */
-		default Skill[] getSkills(int count) {
-			Skill[] skills = new Skill[count];
-			for (int id = 0; id < skills.length; id++) {
-				skills[id] = get(id);
-			}
-
-			return skills;
-		}
-
-		/**
-		 * Gets the total level of the {@link Skill}s in this SkillProvider.
-		 *
-		 * @param count The amount of Skills to get.
-		 * @return The total.
-		 */
-		default int getTotal(int count) {
-			return Arrays.stream(getSkills(count)).mapToInt(Skill::getMaximumLevel).sum();
-		}
+	/**
+	 * Returns the default {@link PlayerProvider}.
+	 *
+	 * @return The default.
+	 */
+	public static PlayerProvider defaultProvider() {
+		return new Builder().build();
 	}
 
 	/**
@@ -214,12 +214,33 @@ public class PlayerProvider {
 	 * @param energies The {@link Supplier} of player run energy levels.
 	 */
 	public PlayerProvider(SkillProvider skills, Supplier<Position> positions, IntUnaryOperator settings,
-			IntSupplier weights, IntSupplier energies) {
+	                      IntSupplier weights, IntSupplier energies) {
 		this.skills = skills;
 		this.positions = positions;
 		this.settings = settings;
 		this.weights = weights;
 		this.energies = energies;
+	}
+
+	/**
+	 * Gets the combat level from the {@link SkillProvider} used by this PlayerProvider.
+	 *
+	 * @return The combat level.
+	 */
+	public int getCombatLevel() {
+		Skill[] skills = this.skills.getSkills(21);
+		int attack = skills[0].getMaximumLevel();
+		int defence = skills[1].getMaximumLevel();
+		int strength = skills[2].getMaximumLevel();
+		int hitpoints = skills[3].getMaximumLevel();
+		int prayer = skills[4].getMaximumLevel();
+		int ranged = skills[5].getMaximumLevel();
+		int magic = skills[6].getMaximumLevel();
+
+		double base = (defence + hitpoints + Math.floor(prayer / 2)) * 0.25;
+		double melee = (attack + strength) * 0.325;
+
+		return (int) (base + Math.max(melee, Math.max(ranged, magic) * 0.4875));
 	}
 
 	/**
@@ -258,27 +279,6 @@ public class PlayerProvider {
 	 */
 	public Skill getSkill(int id) {
 		return skills.get(id);
-	}
-
-	/**
-	 * Gets the combat level from the {@link SkillProvider} used by this PlayerProvider.
-	 *
-	 * @return The combat level.
-	 */
-	public int getCombatLevel() {
-		Skill[] skills = this.skills.getSkills(21);
-		int attack = skills[0].getMaximumLevel();
-		int defence = skills[1].getMaximumLevel();
-		int strength = skills[2].getMaximumLevel();
-		int hitpoints = skills[3].getMaximumLevel();
-		int prayer = skills[4].getMaximumLevel();
-		int ranged = skills[5].getMaximumLevel();
-		int magic = skills[6].getMaximumLevel();
-
-		double base = (defence + hitpoints + Math.floor(prayer / 2)) * 0.25;
-		double melee = (attack + strength) * 0.325;
-
-		return (int) (base + Math.max(melee, Math.max(ranged, magic) * 0.4875));
 	}
 
 	/**

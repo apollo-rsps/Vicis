@@ -1,5 +1,9 @@
 package rs.emulate.shared.util;
 
+import com.google.common.io.ByteStreams;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,11 +12,6 @@ import java.nio.ByteBuffer;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
-import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
-
-import com.google.common.io.ByteStreams;
 
 /**
  * A class that contains methods to compress and decompress BZIP2 and GZIP byte arrays.
@@ -25,7 +24,7 @@ public final class CompressionUtils {
 
 	/**
 	 * Decompresses the BZIP2 data stored in the specified {@link ByteBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @return A DataBuffer containing the decompressed data.
 	 * @throws IOException If there is an error decompressing the data.
@@ -36,7 +35,7 @@ public final class CompressionUtils {
 
 	/**
 	 * Decompresses a BZIP2 file.
-	 * 
+	 *
 	 * @param bytes The compressed bytes without the header.
 	 * @return The decompressed bytes.
 	 * @throws IOException if an I/O error occurs.
@@ -54,7 +53,7 @@ public final class CompressionUtils {
 
 	/**
 	 * BZIP2s the data stored in the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @return A DataBuffer containing the compressed data, without the BZIP2 header.
 	 * @throws IOException If there is an error compressing the data.
@@ -85,7 +84,7 @@ public final class CompressionUtils {
 
 	/**
 	 * Decompresses the GZIP data stored in the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @return A DataBuffer containing the decompressed data.
 	 * @throws IOException If there is an error decompressing the data.
@@ -95,14 +94,14 @@ public final class CompressionUtils {
 		buffer.get(data);
 
 		try (InputStream decompressor = new GZIPInputStream(new ByteArrayInputStream(data));
-				ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+		     ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 			while (true) {
 				byte[] buf = new byte[1024];
 				int read = decompressor.read(buf, 0, buf.length);
 				if (read == -1) {
 					break;
 				}
-				
+
 				out.write(buf, 0, read);
 			}
 
@@ -112,7 +111,7 @@ public final class CompressionUtils {
 
 	/**
 	 * Gzips the data stored in the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @return A DataBuffer containing the compressed data.
 	 * @throws IOException If there is an error compressing the data.

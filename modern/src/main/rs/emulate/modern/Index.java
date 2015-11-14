@@ -1,8 +1,8 @@
 package rs.emulate.modern;
 
-import java.nio.ByteBuffer;
-
 import rs.emulate.shared.util.DataBuffer;
+
+import java.nio.ByteBuffer;
 
 /**
  * An {@link Index} points to a file inside a {@link FileStore}.

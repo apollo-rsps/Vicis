@@ -4,7 +4,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
 
 /**
  * Contains {@link ConfigPropertyType} implementations for {@link ParameterVariableDefinition}s.
- * 
+ *
  * @author Major
  */
 enum ParameterVariableProperty implements ConfigPropertyType {
@@ -21,7 +21,7 @@ enum ParameterVariableProperty implements ConfigPropertyType {
 
 	/**
 	 * Creates the ParameterVariableProperty.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 */
 	private ParameterVariableProperty(int opcode) {

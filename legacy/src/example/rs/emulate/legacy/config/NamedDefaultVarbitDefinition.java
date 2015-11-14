@@ -1,9 +1,9 @@
 package rs.emulate.legacy.config;
 
-import java.util.Map;
-
 import rs.emulate.legacy.config.varbit.BitVariableDefinition;
 import rs.emulate.legacy.config.varbit.DefaultBitVariableDefinition;
+
+import java.util.Map;
 
 /**
  * A {@link DefaultBitVariableDefinition} that also includes a name.

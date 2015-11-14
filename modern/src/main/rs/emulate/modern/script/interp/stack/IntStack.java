@@ -38,7 +38,7 @@ public final class IntStack {
 
 	/**
 	 * Returns whether or not the specified IntStack is equal to this IntStack.
-	 * 
+	 *
 	 * @param other The IntStack to compare with.
 	 * @return {@code true} if the specified IntStack is equal to this, {@code false} if not.
 	 */
@@ -67,7 +67,7 @@ public final class IntStack {
 
 	/**
 	 * Pops an element from the stack.
-	 * 
+	 *
 	 * @return The popped element.
 	 * @throws NoSuchElementException If the stack is empty.
 	 */
@@ -75,13 +75,13 @@ public final class IntStack {
 		if (pointer == 0) {
 			throw new NoSuchElementException("Cannot pop from an empty stack.");
 		}
-		
+
 		return stack[--pointer];
 	}
 
 	/**
 	 * Pushes a value onto this stack.
-	 * 
+	 *
 	 * @param value The value.
 	 */
 	public void push(int value) {
@@ -94,7 +94,7 @@ public final class IntStack {
 
 	/**
 	 * Gets the size of this IntStack.
-	 * 
+	 *
 	 * @return The size.
 	 */
 	public int size() {

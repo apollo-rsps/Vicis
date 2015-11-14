@@ -2,7 +2,7 @@ package rs.emulate.legacy.config;
 
 /**
  * Contains constants related to entries in the config archive.
- * 
+ *
  * @author Major
  */
 public final class ConfigConstants {

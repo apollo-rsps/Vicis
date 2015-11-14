@@ -31,7 +31,7 @@ enum RelationalOperator {
 
 	/**
 	 * Gets the RelationalOperator with the specified integer value.
-	 * 
+	 *
 	 * @param value The integer value.
 	 * @return The RelationalOperator.
 	 * @throws IllegalArgumentException If no RelationalOperator with the specified integer value exists.
@@ -42,14 +42,14 @@ enum RelationalOperator {
 	}
 
 	/**
-	 * The integer value of this RelationalOperator.
-	 */
-	private final int value;
-
-	/**
 	 * The token of this RelationalOperator.
 	 */
 	private final String token;
+
+	/**
+	 * The integer value of this RelationalOperator.
+	 */
+	private final int value;
 
 	/**
 	 * Creates the RelationalOperator.
@@ -64,7 +64,7 @@ enum RelationalOperator {
 
 	/**
 	 * Gets the String token of this RelationalOperator.
-	 * 
+	 *
 	 * @return The token.
 	 */
 	public String getToken() {
@@ -73,7 +73,7 @@ enum RelationalOperator {
 
 	/**
 	 * Gets the integer value of this RelationalOperator.
-	 * 
+	 *
 	 * @return The integer value.
 	 */
 	public int getValue() {

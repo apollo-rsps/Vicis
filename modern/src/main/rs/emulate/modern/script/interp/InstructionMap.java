@@ -1,17 +1,16 @@
 package rs.emulate.modern.script.interp;
 
+import com.google.common.collect.ImmutableMap;
+import rs.emulate.modern.script.decomp.instr.Instruction;
+import rs.emulate.modern.script.decomp.instr.impl.BranchInstruction;
+import rs.emulate.modern.script.decomp.instr.impl.GenericInstruction;
+import rs.emulate.modern.script.decomp.instr.impl.IntInstruction;
+import rs.emulate.modern.script.decomp.instr.impl.StringInstruction;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
-
-import rs.emulate.modern.script.decomp.instr.Instruction;
-import rs.emulate.modern.script.decomp.instr.impl.BranchInstruction;
-import rs.emulate.modern.script.decomp.instr.impl.IntInstruction;
-import rs.emulate.modern.script.decomp.instr.impl.GenericInstruction;
-import rs.emulate.modern.script.decomp.instr.impl.StringInstruction;
-
-import com.google.common.collect.ImmutableMap;
 
 /**
  * A Map of opcodes to {@link Instruction}s.
@@ -19,31 +18,6 @@ import com.google.common.collect.ImmutableMap;
  * @author Major
  */
 public final class InstructionMap {
-
-	/**
-	 * The map of opcodes to Consumers which perform functionality.
-	 */
-	private final Map<Integer, Instruction> instructions;
-
-	/**
-	 * Creates the InstructionMap.
-	 */
-	public InstructionMap() {
-		InstructionMapCreator creator = new InstructionMapCreator();
-		creator.fill();
-		instructions = creator.create();
-	}
-
-	/**
-	 * Executes the specified opcode for the specified {@link ScriptContext}.
-	 * 
-	 * @param opcode The opcode.
-	 * @param script The script.
-	 */
-	public void execute(int opcode, ScriptContext script) {
-		Instruction function = instructions.get(opcode);
-		function.evaluate(script);
-	}
 
 	/**
 	 * A creator for a {@link Map} of instruction opcodes to {@link Consumer}s, which modify a {@link ScriptContext}
@@ -55,6 +29,15 @@ public final class InstructionMap {
 		 * The Map of opcodes to ScriptContext Consumers.
 		 */
 		private final Map<Integer, Instruction> instructions = new HashMap<>(100);
+
+		/**
+		 * Creates the {@link Map} of opcodes to {@link Consumer}s.
+		 *
+		 * @return The Map.
+		 */
+		public Map<Integer, Instruction> create() {
+			return ImmutableMap.copyOf(instructions);
+		}
 
 		/**
 		 * Fills the instruction Map.
@@ -95,22 +78,38 @@ public final class InstructionMap {
 
 		/**
 		 * Inserts the specified {@link Instruction} into the {@link Map}.
-		 * 
+		 *
 		 * @param instruction The Instruction.
 		 */
 		private void insert(Instruction instruction) {
 			instructions.put(instruction.getOpcode(), instruction);
 		}
 
-		/**
-		 * Creates the {@link Map} of opcodes to {@link Consumer}s.
-		 * 
-		 * @return The Map.
-		 */
-		public Map<Integer, Instruction> create() {
-			return ImmutableMap.copyOf(instructions);
-		}
+	}
 
+	/**
+	 * The map of opcodes to Consumers which perform functionality.
+	 */
+	private final Map<Integer, Instruction> instructions;
+
+	/**
+	 * Creates the InstructionMap.
+	 */
+	public InstructionMap() {
+		InstructionMapCreator creator = new InstructionMapCreator();
+		creator.fill();
+		instructions = creator.create();
+	}
+
+	/**
+	 * Executes the specified opcode for the specified {@link ScriptContext}.
+	 *
+	 * @param opcode The opcode.
+	 * @param script The script.
+	 */
+	public void execute(int opcode, ScriptContext script) {
+		Instruction function = instructions.get(opcode);
+		function.evaluate(script);
 	}
 
 }

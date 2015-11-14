@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * A variable used in a definition, with a variable id, a high bit mask index, and a low bit mask index.
- * 
+ *
  * @author Major
  */
 public final class Variable {
@@ -17,7 +17,7 @@ public final class Variable {
 
 	/**
 	 * Returns whether or not the specified index is valid for a mask.
-	 * 
+	 *
 	 * @param index The index.
 	 * @return {@code true} if {@code 0 <= index <= 32}, {@code false} if not.
 	 */
@@ -42,7 +42,7 @@ public final class Variable {
 
 	/**
 	 * Creates the Variable.
-	 * 
+	 *
 	 * @param variable The variable id.
 	 * @param high The high bit mask index.
 	 * @param low The low bit mask index.
@@ -76,7 +76,7 @@ public final class Variable {
 
 	/**
 	 * Gets the high bit mask index.
-	 * 
+	 *
 	 * @return The high bit mask index.
 	 */
 	public int getHigh() {
@@ -85,7 +85,7 @@ public final class Variable {
 
 	/**
 	 * Gets the low bit mask index.
-	 * 
+	 *
 	 * @return The low bit mask index.
 	 */
 	public int getLow() {
@@ -94,7 +94,7 @@ public final class Variable {
 
 	/**
 	 * Gets the variable id.
-	 * 
+	 *
 	 * @return The variable id.
 	 */
 	public int getVariable() {

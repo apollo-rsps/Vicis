@@ -1,19 +1,19 @@
 package rs.emulate.modern;
 
+import com.google.common.base.Preconditions;
+import rs.emulate.shared.util.DataBuffer;
+import rs.emulate.shared.util.crypto.Rsa;
+import rs.emulate.shared.util.crypto.Whirlpool;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 
-import rs.emulate.shared.util.DataBuffer;
-import rs.emulate.shared.util.crypto.Rsa;
-import rs.emulate.shared.util.crypto.Whirlpool;
-
-import com.google.common.base.Preconditions;
-
 /**
- * A {@link ChecksumTable} stores checksums and versions of {@link ReferenceTable}s. When encoded in a {@link Container}
+ * A {@link ChecksumTable} stores checksums and versions of {@link ReferenceTable}s. When encoded in a {@link
+ * Container}
  * and prepended with the file type and id it is more commonly known as the client's "update keys".
  *
  * @author Graham

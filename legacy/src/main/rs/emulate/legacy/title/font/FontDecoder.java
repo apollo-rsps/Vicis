@@ -1,17 +1,17 @@
 package rs.emulate.legacy.title.font;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Arrays;
-
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.graphics.GraphicsDecoder;
 import rs.emulate.legacy.graphics.ImageFormat;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Arrays;
+
 /**
  * A {@link GraphicsDecoder} for {@link Font}s.
- * 
+ *
  * @author Major
  */
 public final class FontDecoder extends GraphicsDecoder {
@@ -33,7 +33,7 @@ public final class FontDecoder extends GraphicsDecoder {
 
 	/**
 	 * Creates a new FontDecoder for the Font with the specified name, using the specified {@link IndexedFileSystem}..
-	 * 
+	 *
 	 * @param fs The {@link IndexedFileSystem}.
 	 * @param name The name of the {@link Font}.
 	 * @return The FontDecoder.
@@ -50,7 +50,7 @@ public final class FontDecoder extends GraphicsDecoder {
 
 	/**
 	 * Creates the FontDecoder.
-	 * 
+	 *
 	 * @param graphics The graphics {@link Archive}.
 	 * @param name The name of the font.
 	 * @throws FileNotFoundException If the data archive entry or the index archive entry could not be found.
@@ -62,7 +62,7 @@ public final class FontDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes the {@link Font}.
-	 * 
+	 *
 	 * @return The Font.
 	 */
 	public Font decode() {
@@ -81,7 +81,7 @@ public final class FontDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes a single {@link Glyph}.
-	 * 
+	 *
 	 * @return The Glyph.
 	 */
 	private Glyph decodeGlyph() {
@@ -114,7 +114,7 @@ public final class FontDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes the raster of a single {@link Glyph}.
-	 * 
+	 *
 	 * @param width The width of the Glyph.
 	 * @param height The height of the Glyph.
 	 * @param format The {@link ImageFormat}.

@@ -1,10 +1,9 @@
 package rs.emulate.modern.script.decomp.parse;
 
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import rs.emulate.modern.script.decomp.lex.Token;
 
-import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 /**
  * A Parser for tokenized disassembled clientscripts.

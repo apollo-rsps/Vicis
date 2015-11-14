@@ -2,7 +2,7 @@ package rs.emulate.shared.util;
 
 /**
  * Contains String-related utility methods.
- * 
+ *
  * @author Graham
  */
 public final class CacheStringUtils {
@@ -16,7 +16,7 @@ public final class CacheStringUtils {
 
 	/**
 	 * Hashes the specified string.
-	 * 
+	 *
 	 * @param string The string.
 	 * @return The hash.
 	 */

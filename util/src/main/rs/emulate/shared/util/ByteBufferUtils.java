@@ -18,7 +18,7 @@ public final class ByteBufferUtils {
 	 * <p>
 	 * This method uses {@link ByteBuffer#put(ByteBuffer)} and so will write from the specified byte buffers current
 	 * position.
-	 * 
+	 *
 	 * @param buffer The byte buffer.
 	 * @return The copied byte buffer.
 	 */
@@ -30,7 +30,8 @@ public final class ByteBufferUtils {
 	}
 
 	/**
-	 * Converts the contents of the specified {@link ByteBuffer} to a string, which is formatted similarly to the output
+	 * Converts the contents of the specified {@link ByteBuffer} to a string, which is formatted similarly to the
+	 * output
 	 * of the {@link Arrays#toString()} method.
 	 *
 	 * @param buffer The buffer.

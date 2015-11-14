@@ -1,22 +1,21 @@
 package rs.emulate.legacy.graphics.sprite;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import com.google.common.collect.ImmutableList;
 import rs.emulate.legacy.IndexedFileSystem;
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.legacy.graphics.GraphicsConstants;
 import rs.emulate.legacy.graphics.GraphicsDecoder;
 import rs.emulate.legacy.graphics.ImageFormat;
 
-import com.google.common.collect.ImmutableList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Decodes a {@link Sprite} from the 2D-graphics archive.
- * 
+ *
  * @author Major
  */
 public final class SpriteDecoder extends GraphicsDecoder {
@@ -24,7 +23,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 	/**
 	 * Creates a new SpriteDecoder to decode a Sprite (or Sprites) with the specified name, using the specified
 	 * {@link IndexedFileSystem}.
-	 * 
+	 *
 	 * @param fs The IndexedFileSystem.
 	 * @param name The name of the Sprite.
 	 * @return The SpriteDecoder.
@@ -41,7 +40,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 
 	/**
 	 * Creates the SpriteDecoder.
-	 * 
+	 *
 	 * @param graphics The graphics {@link Archive}.
 	 * @param name The name of the {@link Sprite}(s) to decode.
 	 * @throws FileNotFoundException If the data or index ArchiveEntry could not be found.
@@ -53,7 +52,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes all {@link Sprite}s, returning the decoded Sprites as an {@link ImmutableList}.
-	 * 
+	 *
 	 * @return The list of Sprites.
 	 * @throws IOException If there is an error decoding a Sprite.
 	 */
@@ -82,7 +81,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes data into a {@link Sprite}.
-	 * 
+	 *
 	 * @param palette The colour palette of the Sprite.
 	 * @param resizeHeight The resize height of the Sprite.
 	 * @param resizeWidth The resize width of the Sprite.
@@ -104,7 +103,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 
 	/**
 	 * Decodes the raster of a single {@link Sprite}.
-	 * 
+	 *
 	 * @param format The {@link ImageFormat}.
 	 * @param width The width of the Sprite.
 	 * @param height The height of the Sprite.
@@ -131,7 +130,7 @@ public final class SpriteDecoder extends GraphicsDecoder {
 
 	/**
 	 * Gets the ARGB colour of a pixel of the {@link Sprite}.
-	 * 
+	 *
 	 * @param palette The colour palette.
 	 * @param index The index in the palette.
 	 * @return The ARGB colour.

@@ -1,9 +1,9 @@
 package rs.emulate.legacy.version;
 
-import java.io.FileNotFoundException;
-
 import rs.emulate.legacy.archive.Archive;
 import rs.emulate.shared.util.DataBuffer;
+
+import java.io.FileNotFoundException;
 
 /**
  * Decoder for the version lists "map_index" entry.

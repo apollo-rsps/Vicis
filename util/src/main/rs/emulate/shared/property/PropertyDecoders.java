@@ -1,8 +1,8 @@
 package rs.emulate.shared.property;
 
-import java.util.function.Function;
-
 import rs.emulate.shared.util.DataBuffer;
+
+import java.util.function.Function;
 
 /**
  * Contains static {@link Function}s to decode values.
@@ -10,6 +10,11 @@ import rs.emulate.shared.util.DataBuffer;
  * @author Major
  */
 public final class PropertyDecoders {
+
+	/**
+	 * A {@link Function} that decodes an old-style (10-terminated) String from the specified {@link DataBuffer}.
+	 */
+	public static final Function<DataBuffer, String> ASCII_STRING_DECODER = DataBuffer::getString;
 
 	/**
 	 * A {@link Function} that decodes an unsigned {@code byte} from the specified {@link DataBuffer}.
@@ -20,11 +25,6 @@ public final class PropertyDecoders {
 	 * A {@link Function} that reads no data from the {@link DataBuffer} and simply returns {@code false}.
 	 */
 	public static final Function<DataBuffer, Boolean> FALSE_DECODER = buffer -> false;
-
-	/**
-	 * A {@link Function} that decodes an {@code int} from the specified {@link DataBuffer}.
-	 */
-	public static final Function<DataBuffer, Integer> SIGNED_INT_DECODER = DataBuffer::getInt;
 
 	/**
 	 * A {@link Function} that decodes an unsigned {@code int} from the specified {@link DataBuffer}.
@@ -42,6 +42,11 @@ public final class PropertyDecoders {
 	public static final Function<DataBuffer, Integer> SIGNED_BYTE_DECODER = DataBuffer::getByte;
 
 	/**
+	 * A {@link Function} that decodes an {@code int} from the specified {@link DataBuffer}.
+	 */
+	public static final Function<DataBuffer, Integer> SIGNED_INT_DECODER = DataBuffer::getInt;
+
+	/**
 	 * A {@link Function} that decodes a signed {@code short} from the specified {@link DataBuffer}.
 	 */
 	public static final Function<DataBuffer, Integer> SIGNED_SHORT_DECODER = DataBuffer::getShort;
@@ -52,19 +57,14 @@ public final class PropertyDecoders {
 	public static final Function<DataBuffer, Integer> SMART_DECODER = DataBuffer::getSmart;
 
 	/**
-	 * A {@link Function} that decodes an old-style (10-terminated) String from the specified {@link DataBuffer}.
+	 * A {@link Function} that reads no data from the {@link DataBuffer} and simply returns {@code true}.
 	 */
-	public static final Function<DataBuffer, String> ASCII_STRING_DECODER = DataBuffer::getString;
+	public static final Function<DataBuffer, Boolean> TRUE_DECODER = buffer -> true;
 
 	/**
 	 * A {@link Function} that decodes an unsigned {@code tri-byte} from the specified {@link DataBuffer}.
 	 */
 	public static final Function<DataBuffer, Integer> UNSIGNED_TRI_BYTE_DECODER = DataBuffer::getUnsignedTriByte;
-
-	/**
-	 * A {@link Function} that reads no data from the {@link DataBuffer} and simply returns {@code true}.
-	 */
-	public static final Function<DataBuffer, Boolean> TRUE_DECODER = buffer -> true;
 
 	/**
 	 * Sole private constructor to prevent instantiation.

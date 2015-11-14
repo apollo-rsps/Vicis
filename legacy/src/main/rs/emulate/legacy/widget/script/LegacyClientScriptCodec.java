@@ -1,12 +1,11 @@
 package rs.emulate.legacy.widget.script;
 
+import com.google.common.collect.ImmutableList;
+import rs.emulate.shared.util.DataBuffer;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import rs.emulate.shared.util.DataBuffer;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * Encodes and decodes {@link LegacyClientScript}s stored in binary form.
@@ -17,7 +16,7 @@ public final class LegacyClientScriptCodec {
 
 	/**
 	 * Decodes a {@link List} of {@link LegacyClientScript}s from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The DataBuffer.
 	 * @return The List of LegacyClientScripts.
 	 */
@@ -58,7 +57,7 @@ public final class LegacyClientScriptCodec {
 
 	/**
 	 * Encodes the {@link List} of {@link LegacyClientScript}s into a {@link DataBuffer}.
-	 * 
+	 *
 	 * @param scripts The List of LegacyClientScripts.
 	 * @return The DataBuffer.
 	 */

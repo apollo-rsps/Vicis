@@ -4,7 +4,7 @@ import java.util.StringJoiner;
 
 /**
  * Contains String-related utility methods.
- * 
+ *
  * @author Major
  */
 public final class StringUtils {

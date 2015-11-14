@@ -2,7 +2,7 @@ package rs.emulate.legacy;
 
 /**
  * Holds file system related constants.
- * 
+ *
  * @author Graham
  */
 final class FileSystemConstants {

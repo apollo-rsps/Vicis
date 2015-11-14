@@ -1,13 +1,12 @@
 package rs.emulate.legacy.config.npc;
 
-import rs.emulate.shared.util.DataBuffer;
-
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import rs.emulate.shared.util.DataBuffer;
 
 /**
  * A wrapper class containing four movement animations used by an npc.
- * 
+ *
  * @author Major
  */
 public final class MovementAnimationSet {
@@ -19,7 +18,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Decodes a MovementAnimationSet from the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @return The MovementAnimationSet.
 	 */
@@ -34,7 +33,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Encodes the specified {@link MovementAnimationSet} into the specified {@link DataBuffer}.
-	 * 
+	 *
 	 * @param buffer The Buffer.
 	 * @param set The MovementAnimationSet.
 	 */
@@ -65,7 +64,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Creates the MovementAnimationSet.
-	 * 
+	 *
 	 * @param walking The walking animation id.
 	 * @param halfTurn The half turn animation id.
 	 * @param clockwiseQuarterTurn The clockwise quarter turn animation id.
@@ -83,7 +82,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Gets the anticlockwise quarter turn animation id.
-	 * 
+	 *
 	 * @return The anticlockwise quarter turn animation id.
 	 */
 	public int getAnticlockwiseQuarterTurnId() {
@@ -92,7 +91,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Gets the clockwise quarter turn animation id.
-	 * 
+	 *
 	 * @return The clockwise quarter turn animation id.
 	 */
 	public int getClockwiseQuarterTurnId() {
@@ -101,7 +100,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Gets the half turn animation id.
-	 * 
+	 *
 	 * @return The half turn animation id.
 	 */
 	public int getHalfTurnId() {
@@ -110,7 +109,7 @@ public final class MovementAnimationSet {
 
 	/**
 	 * Gets the walking animation id.
-	 * 
+	 *
 	 * @return The walking animation id.
 	 */
 	public int getWalkingId() {

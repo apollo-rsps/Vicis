@@ -38,15 +38,6 @@ public final class CrcList {
 	}
 
 	/**
-	 * Gets the {@link VersionEntryType} of this CrcList.
-	 *
-	 * @return The type.
-	 */
-	public VersionEntryType getType() {
-		return type;
-	}
-
-	/**
 	 * Gets the CRC of the specified file.
 	 *
 	 * @param file The file.
@@ -64,6 +55,15 @@ public final class CrcList {
 	 */
 	public int[] getCrcs() {
 		return crcs.clone();
+	}
+
+	/**
+	 * Gets the {@link VersionEntryType} of this CrcList.
+	 *
+	 * @return The type.
+	 */
+	public VersionEntryType getType() {
+		return type;
 	}
 
 	/**

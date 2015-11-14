@@ -1,8 +1,8 @@
 package rs.emulate.modern.script.decomp.instr;
 
-import java.util.List;
-
 import com.google.common.collect.ImmutableList;
+
+import java.util.List;
 
 /**
  * A modern ClientScript (i.e. CS2).
@@ -35,7 +35,7 @@ public final class ClientScript {
 	/**
 	 * Gets the {@link List} of {@link Instruction}s. No guarantees about the mutability of the returned List are made
 	 * (i.e. if modification is required, the List should be duplicated).
-	 * 
+	 *
 	 * @return The List.
 	 */
 	public List<Instruction> getInstructions() {
@@ -44,7 +44,7 @@ public final class ClientScript {
 
 	/**
 	 * Gets the {@link OperandTable} of this ClientScript.
-	 * 
+	 *
 	 * @return The OperandTable.
 	 */
 	public OperandTable getOperands() {

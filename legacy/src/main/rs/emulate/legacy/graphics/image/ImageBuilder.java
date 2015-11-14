@@ -1,9 +1,8 @@
 package rs.emulate.legacy.graphics.image;
 
+import com.google.common.base.Preconditions;
 import rs.emulate.legacy.graphics.ImageFormat;
 import rs.emulate.util.Assertions;
-
-import com.google.common.base.Preconditions;
 
 /**
  * A builder class for an {@link IndexedImage}.
@@ -38,6 +37,11 @@ public final class ImageBuilder {
 	private int offsetY;
 
 	/**
+	 * The palette of the IndexedImage.
+	 */
+	private int[] palette;
+
+	/**
 	 * The raster of the IndexedImage.
 	 */
 	private int[] raster;
@@ -56,11 +60,6 @@ public final class ImageBuilder {
 	 * The width of the IndexedImage.
 	 */
 	private int width;
-
-	/**
-	 * The palette of the IndexedImage.
-	 */
-	private int[] palette;
 
 	/**
 	 * Creates the ImageBuilder.

@@ -1,5 +1,8 @@
 package rs.emulate.modern.script.decomp.lex;
 
+import com.google.common.collect.ImmutableSet;
+import rs.emulate.modern.script.disasm.ClientScriptDumper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,10 +16,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import rs.emulate.modern.script.disasm.ClientScriptDumper;
-
-import com.google.common.collect.ImmutableSet;
 
 /**
  * A lexer for disassembled ClientScripts.
@@ -47,11 +46,6 @@ public final class Lexer implements AutoCloseable {
 	}
 
 	/**
-	 * The current line number.
-	 */
-	private int line;
-
-	/**
 	 * The Set of instruction mnemonics.
 	 */
 	private final Set<String> mnemonics;
@@ -60,6 +54,11 @@ public final class Lexer implements AutoCloseable {
 	 * The Reader to read input from.
 	 */
 	private final Reader reader;
+
+	/**
+	 * The current line number.
+	 */
+	private int line;
 
 	/**
 	 * Creates the Lexer.

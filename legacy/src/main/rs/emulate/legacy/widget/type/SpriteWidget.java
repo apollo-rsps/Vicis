@@ -1,15 +1,15 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * A {@link WidgetGroup#SPRITE} {@link Widget}.
@@ -46,8 +46,8 @@ public final class SpriteWidget extends Widget {
 	 * @param secondarySprite The name of the secondary Sprite. Must not be {@code null}.
 	 */
 	public SpriteWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			String defaultSprite, String secondarySprite) {
+	                    OptionalInt hover, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                    String defaultSprite, String secondarySprite) {
 		super(id, parent, WidgetGroup.SPRITE, optionType, content, width, height, alpha, hover, scripts, option, hoverText);
 
 		this.primary = Objects.requireNonNull(defaultSprite, "Default sprite name must not be null.");

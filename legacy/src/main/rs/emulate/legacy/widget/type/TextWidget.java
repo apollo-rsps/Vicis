@@ -1,15 +1,15 @@
 package rs.emulate.legacy.widget.type;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import rs.emulate.legacy.widget.Widget;
 import rs.emulate.legacy.widget.WidgetGroup;
 import rs.emulate.legacy.widget.WidgetOption;
 import rs.emulate.legacy.widget.script.LegacyClientScript;
 import rs.emulate.shared.util.DataBuffer;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * A {@link WidgetGroup#TEXT} {@link Widget}.
@@ -76,9 +76,9 @@ public final class TextWidget extends Widget {
 	 * @param shadowed Whether or not text is drawn with shadowing.
 	 */
 	public TextWidget(int id, OptionalInt parent, WidgetOption optionType, int content, int width, int height, int alpha,
-			OptionalInt hoverId, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
-			boolean centered, ColourPair colour, String defaultText, int font, ColourPair hover, String secondaryText,
-			boolean shadowed) {
+	                  OptionalInt hoverId, List<LegacyClientScript> scripts, Optional<Option> option, Optional<String> hoverText,
+	                  boolean centered, ColourPair colour, String defaultText, int font, ColourPair hover, String secondaryText,
+	                  boolean shadowed) {
 		super(id, parent, WidgetGroup.TEXT, optionType, content, width, height, alpha, hoverId, scripts, option, hoverText);
 
 		this.centered = centered;

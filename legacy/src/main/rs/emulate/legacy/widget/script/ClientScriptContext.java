@@ -11,14 +11,14 @@ import rs.emulate.shared.cs.PlayerProvider;
 public final class ClientScriptContext {
 
 	/**
-	 * Whether or not the script this ClientScriptContext is for has finished execution.
-	 */
-	private boolean finished;
-
-	/**
 	 * The default PlayerProvider.
 	 */
 	private final PlayerProvider provider;
+
+	/**
+	 * Whether or not the script this ClientScriptContext is for has finished execution.
+	 */
+	private boolean finished;
 
 	/**
 	 * The current value of the ClientScript.
@@ -34,7 +34,7 @@ public final class ClientScriptContext {
 
 	/**
 	 * Creates the ClientScriptContext using the specified PlayerProvider.
-	 * 
+	 *
 	 * @param provider The PlayerProvider.
 	 */
 	public ClientScriptContext(PlayerProvider provider) {
@@ -44,7 +44,7 @@ public final class ClientScriptContext {
 	/**
 	 * Applies the specified {@link MathOperator} to the current value in this ClientScriptContext, using the
 	 * {@code value} parameter as the second operand of the MathOperator.
-	 * 
+	 *
 	 * @param operator The MathOperator to apply.
 	 * @param value The value to use as the second operand.
 	 */
@@ -61,7 +61,7 @@ public final class ClientScriptContext {
 
 	/**
 	 * Gets the {@link PlayerProvider}.
-	 * 
+	 *
 	 * @return The PlayerProvider.
 	 */
 	public PlayerProvider getProvider() {
@@ -70,7 +70,7 @@ public final class ClientScriptContext {
 
 	/**
 	 * Gets the result of this ClientScriptContext.
-	 * 
+	 *
 	 * @return The result.
 	 * @throws IllegalStateException If this ClientScriptContext has not finished execution.
 	 */
@@ -84,7 +84,7 @@ public final class ClientScriptContext {
 
 	/**
 	 * Gets the current value of this ClientScriptContext.
-	 * 
+	 *
 	 * @return The value.
 	 */
 	public int getValue() {
@@ -93,7 +93,7 @@ public final class ClientScriptContext {
 
 	/**
 	 * Returns whether or not the script this ClientScriptContext is for has finished execution.
-	 * 
+	 *
 	 * @return {@code true} if the script has finished execution, otherwise {@code false}.
 	 */
 	public boolean hasFinished() {

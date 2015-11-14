@@ -1,18 +1,18 @@
 package rs.emulate.shared.property;
 
+import com.google.common.base.Preconditions;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
-import com.google.common.base.Preconditions;
-
 /**
  * A mutable property belonging to some sort of definition.
  *
- * @author Major
  * @param <V> The type of the value.
  * @param <T> The type of {@link PropertyType}.
+ * @author Major
  */
 public class Property<V, T extends PropertyType> {
 
@@ -80,49 +80,6 @@ public class Property<V, T extends PropertyType> {
 	 */
 	public final V getDefault() {
 		return defaultValue;
-	}
-
-	/**
-	 * Gets the {@code toString} message for the value of this DefinitionProperty.
-	 *
-	 * @return The message.
-	 */
-	private String getMessage() {
-		V value = getValue();
-		if (value == null) {
-			return "null";
-		}
-
-		@SuppressWarnings("unchecked")
-		Class<V> type = (Class<V>) value.getClass();
-
-		if (!type.isArray()) {
-			return value.toString();
-		}
-
-		Class<?> component = type.getComponentType();
-
-		// This code is awful, but there's no alternative...
-
-		if (component.equals(Boolean.TYPE)) {
-			return Arrays.toString((boolean[]) value);
-		} else if (component.equals(Character.TYPE)) {
-			return Arrays.toString((char[]) value);
-		} else if (component.equals(Byte.TYPE)) {
-			return Arrays.toString((byte[]) value);
-		} else if (component.equals((Short.TYPE))) {
-			return Arrays.toString((short[]) value);
-		} else if (component.equals(Integer.TYPE)) {
-			return Arrays.toString((int[]) value);
-		} else if (component.equals(Long.TYPE)) {
-			return Arrays.toString((long[]) value);
-		} else if (component.equals(Float.TYPE)) {
-			return Arrays.toString((float[]) value);
-		} else if (component.equals(Double.TYPE)) {
-			return Arrays.toString((double[]) value);
-		}
-
-		return Arrays.toString((Object[]) value);
 	}
 
 	/**
@@ -202,6 +159,49 @@ public class Property<V, T extends PropertyType> {
 	 */
 	public final boolean valuePresent() {
 		return value.isPresent();
+	}
+
+	/**
+	 * Gets the {@code toString} message for the value of this DefinitionProperty.
+	 *
+	 * @return The message.
+	 */
+	private String getMessage() {
+		V value = getValue();
+		if (value == null) {
+			return "null";
+		}
+
+		@SuppressWarnings("unchecked")
+		Class<V> type = (Class<V>) value.getClass();
+
+		if (!type.isArray()) {
+			return value.toString();
+		}
+
+		Class<?> component = type.getComponentType();
+
+		// This code is awful, but there's no alternative...
+
+		if (component.equals(Boolean.TYPE)) {
+			return Arrays.toString((boolean[]) value);
+		} else if (component.equals(Character.TYPE)) {
+			return Arrays.toString((char[]) value);
+		} else if (component.equals(Byte.TYPE)) {
+			return Arrays.toString((byte[]) value);
+		} else if (component.equals((Short.TYPE))) {
+			return Arrays.toString((short[]) value);
+		} else if (component.equals(Integer.TYPE)) {
+			return Arrays.toString((int[]) value);
+		} else if (component.equals(Long.TYPE)) {
+			return Arrays.toString((long[]) value);
+		} else if (component.equals(Float.TYPE)) {
+			return Arrays.toString((float[]) value);
+		} else if (component.equals(Double.TYPE)) {
+			return Arrays.toString((double[]) value);
+		}
+
+		return Arrays.toString((Object[]) value);
 	}
 
 }

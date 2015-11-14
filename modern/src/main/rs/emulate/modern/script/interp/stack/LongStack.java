@@ -38,7 +38,7 @@ public final class LongStack {
 
 	/**
 	 * Returns whether or not the specified LongStack is equal to this LongStack.
-	 * 
+	 *
 	 * @param other The LongStack to compare with.
 	 * @return {@code true} if the specified LongStack is equal to this, {@code false} if not.
 	 */
@@ -67,7 +67,7 @@ public final class LongStack {
 
 	/**
 	 * Pops an element from the stack.
-	 * 
+	 *
 	 * @return The popped element.
 	 * @throws NoSuchElementException If the stack is empty.
 	 */
@@ -81,7 +81,7 @@ public final class LongStack {
 
 	/**
 	 * Pushes a value onto this stack.
-	 * 
+	 *
 	 * @param value The value.
 	 */
 	public void push(long value) {
@@ -94,7 +94,7 @@ public final class LongStack {
 
 	/**
 	 * Gets the size of this LongStack.
-	 * 
+	 *
 	 * @return The size.
 	 */
 	public int size() {

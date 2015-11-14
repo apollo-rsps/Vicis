@@ -4,7 +4,7 @@ import rs.emulate.legacy.graphics.ImageFormat;
 
 /**
  * A glyph of a single character in a {@link Font}.
- * 
+ *
  * @author Major
  */
 public final class Glyph {
@@ -46,7 +46,7 @@ public final class Glyph {
 
 	/**
 	 * Creates the glyph.
-	 * 
+	 *
 	 * @param format The {@link ImageFormat}.
 	 * @param raster The raster.
 	 * @param height The glyph height.
@@ -67,7 +67,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the {@link ImageFormat} of this glyph.
-	 * 
+	 *
 	 * @return The image format.
 	 */
 	public ImageFormat getFormat() {
@@ -76,7 +76,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the height of this glyph.
-	 * 
+	 *
 	 * @return The height.
 	 */
 	public int getHeight() {
@@ -85,7 +85,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the horizontal draw offset of this glyph.
-	 * 
+	 *
 	 * @return The horizontal draw offset.
 	 */
 	public int getHorizontalOffset() {
@@ -94,7 +94,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the raster of this glyph.
-	 * 
+	 *
 	 * @return The raster.
 	 */
 	public byte[] getRaster() {
@@ -103,7 +103,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the spacing of this glyph.
-	 * 
+	 *
 	 * @return The spacing.
 	 */
 	public int getSpacing() {
@@ -112,7 +112,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the vertical draw offset of this glyph.
-	 * 
+	 *
 	 * @return The vertical draw offset.
 	 */
 	public int getVerticalOffset() {
@@ -121,7 +121,7 @@ public final class Glyph {
 
 	/**
 	 * Gets the width of this glyph.
-	 * 
+	 *
 	 * @return The width.
 	 */
 	public int getWidth() {
