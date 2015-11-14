@@ -1,18 +1,21 @@
 package rs.emulate.util.xml;
 
-import static org.junit.Assert.*;
+import org.apollo.util.xml.XmlNode;
+import org.apollo.util.xml.XmlParser;
+import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Optional;
 import java.util.Set;
 
-import org.apollo.util.xml.XmlNode;
-import org.apollo.util.xml.XmlParser;
-import org.junit.Test;
-import org.xml.sax.SAXException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * A test for the {@link XmlParser} class.
@@ -46,13 +49,9 @@ public final class TestXmlParser {
 		assertFalse(names.contains("y"));
 		assertFalse(names.contains("x"));
 
-		assertEquals("1", root.getAttribute("a"));
-		assertEquals("2", root.getAttribute("b"));
-		assertEquals("3", root.getAttribute("c"));
-
-		assertNull(root.getAttribute("z"));
-		assertNull(root.getAttribute("y"));
-		assertNull(root.getAttribute("x"));
+		assertEquals(Optional.of("1"), root.getAttribute("a"));
+		assertEquals(Optional.of("2"), root.getAttribute("b"));
+		assertEquals(Optional.of("3"), root.getAttribute("c"));
 
 		XmlNode[] first = root.getChildren().toArray(new XmlNode[1]);
 		assertEquals(1, first.length);

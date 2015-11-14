@@ -1,11 +1,10 @@
-package rs.emulate.util.shared.prop;
+package rs.emulate.legacy.prop;
+
+import org.junit.Test;
+import rs.emulate.legacy.config.DynamicConfigPropertyType;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-
-import org.junit.Test;
-
-import rs.emulate.legacy.config.DynamicConfigPropertyType;
 
 /**
  * Tests the caching used in {@link DynamicConfigPropertyType}s to ensure that properties with the same name and opcode will

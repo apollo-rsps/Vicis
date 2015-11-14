@@ -1,5 +1,8 @@
 package rs.emulate.editor.util;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -15,15 +18,12 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
-
 /**
  * A table of settings for the editor.
  *
  * @author Major
  */
-public final class Settings {
+public final class Settings { // TODO is this stuff still necessary?
 
 	/**
 	 * The map of constant names to values.
