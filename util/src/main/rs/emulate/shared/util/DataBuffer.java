@@ -726,4 +726,12 @@ public final class DataBuffer {
 		return new DataBuffer(Whirlpool.whirlpool(buffer));
 	}
 
+	public int getSignedSmart() {
+		int peek = buffer.get(buffer.position()) & 0xFF;
+		if (peek < 128) {
+			return getUnsignedByte() - 64;
+		} else {
+			return getUnsignedShort() - 49152;
+		}
+	}
 }

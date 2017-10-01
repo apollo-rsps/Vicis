@@ -116,4 +116,8 @@ public class SerializableProperty<T> extends Property<T, ConfigPropertyType> {
 		return buffer.flip();
 	}
 
+	public ConfigPropertyType type() {
+		return type;
+	}
+
 }

@@ -1,0 +1,50 @@
+buildscript {
+    ext {
+        kotlin_version = '1.1.50'
+        jmonkeyengine_version = '3.1.0-stable'
+        controlsfx_version = '8.40.14'
+        spring_version = '4.0.5.RELEASE'
+        tornadofx_version = '1.7.11'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'org.jetbrains.kotlin', name: 'kotlin-gradle-plugin', version: "$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+
+repositories {
+    maven { url "https://dl.bintray.com/jmonkeyengine/org.jmonkeyengine" }
+    maven { url "https://dl.bintray.com/jmonkeyengine/contrib" }
+}
+
+dependencies {
+    compile project(':legacy')
+    compile project(':modern')
+    compile project(':util')
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre8', version: "$kotlin_version"
+    compile group: 'org.jmonkeyengine', name: 'jme3-core', version: "$jmonkeyengine_version"
+    compile group: 'org.jmonkeyengine', name: 'jme3-desktop', version: "$jmonkeyengine_version"
+    compile group: 'org.jmonkeyengine', name: 'jme3-lwjgl', version: "$jmonkeyengine_version"
+    compile group: 'org.springframework', name: 'spring-beans', version: "$spring_version"
+    compile group: 'org.springframework', name: 'spring-context', version: "$spring_version"
+    compile group: 'no.tornado', name: 'tornadofx', version: "$tornadofx_version"
+    compile group: 'org.controlsfx', name: 'controlsfx', version: "$controlsfx_version"
+    compile 'com.jme3x:jfx:2.184.2016-04-30_145140-ccbd413'
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
