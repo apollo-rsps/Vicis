@@ -8,6 +8,7 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.model.ModelDecoder
 import rs.emulate.shared.util.DataBuffer
 import java.io.ByteArrayInputStream
+import java.io.IOException
 import java.util.zip.GZIPInputStream
 
 
@@ -27,13 +28,16 @@ class ModelResourceProvider() : ResourceProvider<ModelResource> {
     override fun provide(identifier: ResourceIdentifier): ResourceProviderResult<ModelResource> {
         when (identifier) {
             is ResourceIdentifier.FileDescriptor -> {
-                val compressedData = cache.getFile(identifier.index, identifier.file).array()
-                val decompressor = GZIPInputStream(ByteArrayInputStream(compressedData))
-                val decompressedData = DataBuffer.wrap(decompressor.readBytes())
-                val decoder = ModelDecoder(decompressedData)
-                val model = decoder.decode()
-
-                return ResourceProviderResult.Found(ModelResource("Model: ${identifier.index}", identifier, model))
+                try {
+                    val compressedData = cache.getFile(identifier.index, identifier.file).array()
+                    val decompressor = GZIPInputStream(ByteArrayInputStream(compressedData))
+                    val decompressedData = DataBuffer.wrap(decompressor.readBytes())
+                    val decoder = ModelDecoder(decompressedData)
+                    val model = decoder.decode()
+                    return ResourceProviderResult.Found(ModelResource("Model: ${identifier.index}", identifier, model))
+                } catch (exception: IOException) {
+                    return ResourceProviderResult.NotFound()
+                }
             }
             else -> return ResourceProviderResult.NotSupported()
         }
