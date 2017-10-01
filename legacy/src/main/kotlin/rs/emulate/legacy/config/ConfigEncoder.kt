@@ -73,7 +73,7 @@ class ConfigEncoder<out T : MutableConfigDefinition>(private val name: String, p
      */
     private fun write(entry: Entry<Int, SerializableProperty<*>>, os: ByteArrayOutputStream) {
         val buffer = entry.value.encode()
-        val bytes = buffer.remainingBytes
+        val bytes = buffer.getRemainingBytes()
 
         os.write(entry.key)
         os.write(bytes)

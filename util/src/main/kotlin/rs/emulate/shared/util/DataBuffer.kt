@@ -4,6 +4,7 @@ import rs.emulate.shared.util.crypto.Whirlpool
 import java.nio.ByteBuffer
 import java.util.zip.CRC32
 
+
 /**
  * A wrapper for [ByteBuffer] that adds methods to read unsigned data types, and specific string types. All
  * methods read and places values in big-endian format unless otherwise stated.
@@ -79,15 +80,14 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
     /**
      * Gets a 'large smart' (either a short or an int).
      */
-    val largeSmart: Int
-        get() {
-            val value = byteBuffer.get(byteBuffer.position())
-            return if (value >= 0) {
-                byteBuffer.short.toInt() and 0xFFFF
-            } else {
-                byteBuffer.int and 0x7FFFFFFF
-            }
+    fun getLargeSmart(): Int {
+        val value = byteBuffer.get(byteBuffer.position())
+        return if (value >= 0) {
+            byteBuffer.short.toInt() and 0xFFFF
+        } else {
+            byteBuffer.int and 0x7FFFFFFF
         }
+    }
 
     /**
      * Gets a `long` from this DataBuffer.
@@ -97,12 +97,11 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
     /**
      * Reads the remaining data in this DataBuffer into a byte array, and returns the array.
      */
-    val remainingBytes: ByteArray
-        get() {
-            val bytes = ByteArray(byteBuffer.remaining())
-            byteBuffer.get(bytes)
-            return bytes
-        }
+    fun getRemainingBytes(): ByteArray {
+        val bytes = ByteArray(byteBuffer.remaining())
+        byteBuffer.get(bytes)
+        return bytes
+    }
 
     /**
      * Gets a `short` from this DataBuffer.
@@ -118,6 +117,18 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
             getUnsignedByte()
         } else {
             getUnsignedShort() - 32768
+        }
+    }
+
+    /**
+     * Reads a signed 'smart' from this DataBuffer.
+     */
+    fun getSignedSmart(): Int {
+        val peek = byteBuffer.get(byteBuffer.position()).toInt() and 0xFF
+        return if (peek < 128) {
+            getUnsignedByte() - 64
+        } else {
+            getUnsignedShort() - 49152
         }
     }
 

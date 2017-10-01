@@ -79,8 +79,8 @@ object ArchiveCodec {
 
                 when (compression) {
                     CompressionType.ARCHIVE_COMPRESSION, CompressionType.NO_COMPRESSION -> bos.write(
-                        uncompressed.remainingBytes)
-                    CompressionType.ENTRY_COMPRESSION -> bos.write(compressed.remainingBytes)
+                        uncompressed.getRemainingBytes())
+                    CompressionType.ENTRY_COMPRESSION -> bos.write(compressed.getRemainingBytes())
                 }
             }
 

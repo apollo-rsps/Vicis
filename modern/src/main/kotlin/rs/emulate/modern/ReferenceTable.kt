@@ -170,14 +170,14 @@ class ReferenceTable {
 
             table.flags = buffer.getUnsignedByte()
 
-            val entryCount = if (table.format >= 7) buffer.largeSmart else buffer.getUnsignedShort()
+            val entryCount = if (table.format >= 7) buffer.getLargeSmart() else buffer.getUnsignedShort()
 
             val ids = IntArray(entryCount)
             var accumulator = 0
             var size = -1
 
             for (i in ids.indices) {
-                val delta = if (table.format >= 7) buffer.largeSmart else buffer.getUnsignedShort()
+                val delta = if (table.format >= 7) buffer.getLargeSmart() else buffer.getUnsignedShort()
                 accumulator += delta
                 ids[i] = accumulator
 

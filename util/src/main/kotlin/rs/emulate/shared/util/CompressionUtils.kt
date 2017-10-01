@@ -23,7 +23,7 @@ object CompressionUtils {
      * @throws IOException If there is an error decompressing the data.
      */
     fun bunzip2(buffer: DataBuffer): DataBuffer {
-        return DataBuffer.wrap(bunzip2(buffer.remainingBytes))
+        return DataBuffer.wrap(bunzip2(buffer.getRemainingBytes()))
     }
 
     /**
@@ -52,7 +52,7 @@ object CompressionUtils {
      * @throws IOException If there is an error compressing the data.
      */
     fun bzip2(buffer: DataBuffer): DataBuffer {
-        return DataBuffer.wrap(bzip2(buffer.remainingBytes))
+        return DataBuffer.wrap(bzip2(buffer.getRemainingBytes()))
     }
 
     /**
@@ -111,7 +111,7 @@ object CompressionUtils {
      * @throws IOException If there is an error compressing the data.
      */
     fun gzip(buffer: DataBuffer): DataBuffer {
-        val data = buffer.remainingBytes
+        val data = buffer.getRemainingBytes()
 
         val out = ByteArrayOutputStream()
         GZIPOutputStream(out).use { compressor ->

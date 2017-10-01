@@ -56,7 +56,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
                 val crc = CRC32()
 
                 for (file in 1 until archives) {
-                    val bytes = getFile(0, file).remainingBytes
+                    val bytes = getFile(0, file).getRemainingBytes()
                     crc.update(bytes)
 
                     val value = crc.value.toInt()
