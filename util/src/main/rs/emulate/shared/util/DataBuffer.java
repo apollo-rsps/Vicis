@@ -407,7 +407,7 @@ public final class DataBuffer {
 	 * @return The unsigned int, as a long.
 	 */
 	public long getUnsignedInt() {
-		return buffer.getInt() & 0xFFFF_FFFF;
+		return buffer.getInt() & 0xFFFF_FFFFL;
 	}
 
 	/**
