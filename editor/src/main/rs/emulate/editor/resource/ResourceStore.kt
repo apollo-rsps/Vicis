@@ -14,7 +14,7 @@ class ResourceStore {
     fun <T : Resource> find(id: ResourceIdentifier): T {
         cache[id]?.let { return it as T }
 
-        val result = resourceProviders.first { it.provide(id) !is ResourceProviderResult.NotSupported }
+        val result = resourceProviders.map { it.provide(id) }.first { it !is ResourceProviderResult.NotSupported }
 
         when (result) {
             is ResourceProviderResult.NotFound<*> -> throw IllegalArgumentException("Invalid resource identifier")
@@ -22,7 +22,7 @@ class ResourceStore {
                 cache[id] = result.resource
                 return result.resource as T
             }
-            else -> throw IllegalStateException("Invalid branch")
+            else -> throw IllegalStateException("Invalid branch $result")
         }
     }
 }

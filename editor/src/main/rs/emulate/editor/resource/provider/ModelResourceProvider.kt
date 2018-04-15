@@ -13,7 +13,7 @@ import java.util.zip.GZIPInputStream
 
 
 @Component
-class ModelResourceProvider() : ResourceProvider<ModelResource> {
+class ModelResourceProvider : ResourceProvider<ModelResource> {
     override val lazyLoads = true
 
     @Autowired lateinit var cache: IndexedFileSystem
@@ -26,7 +26,7 @@ class ModelResourceProvider() : ResourceProvider<ModelResource> {
     override fun resourceName() = RESOURCE_NAME
 
     override fun provide(identifier: ResourceIdentifier): ResourceProviderResult<ModelResource> {
-        when (identifier) {
+        return when (identifier) {
             is ResourceIdentifier.FileDescriptor -> {
                 try {
                     val compressedData = cache.getFile(identifier.index, identifier.file).array()
@@ -34,12 +34,12 @@ class ModelResourceProvider() : ResourceProvider<ModelResource> {
                     val decompressedData = DataBuffer.wrap(decompressor.readBytes())
                     val decoder = ModelDecoder(decompressedData)
                     val model = decoder.decode()
-                    return ResourceProviderResult.Found(ModelResource("Model: ${identifier.index}", identifier, model))
+                    ResourceProviderResult.Found(ModelResource("Model: ${identifier.index}", identifier, model))
                 } catch (exception: IOException) {
-                    return ResourceProviderResult.NotFound()
+                    ResourceProviderResult.NotFound<ModelResource>()
                 }
             }
-            else -> return ResourceProviderResult.NotSupported()
+            else -> ResourceProviderResult.NotSupported()
         }
     }
 

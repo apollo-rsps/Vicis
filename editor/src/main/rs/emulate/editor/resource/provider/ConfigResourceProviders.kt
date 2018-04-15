@@ -12,12 +12,11 @@ import rs.emulate.legacy.config.MutableConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
 import rs.emulate.legacy.config.item.DefaultItemDefinition
 import rs.emulate.legacy.config.item.ItemDefinition
-import rs.emulate.legacy.config.item.ItemProperty
 import rs.emulate.legacy.config.npc.DefaultNpcDefinition
 import rs.emulate.legacy.config.npc.NpcDefinition
 import rs.emulate.legacy.config.npc.NpcProperty
 
-typealias ConfigResourcePropertyMapper = (SerializableProperty<*>) -> ConfigurationResourceProperty<*>?;
+typealias ConfigResourcePropertyMapper = (SerializableProperty<*>) -> ConfigurationResourceProperty<*>?
 
 abstract class ConfigResourceProvider<out T : MutableConfigDefinition> : ResourceProvider<ConfigurationResource<T>> {
     companion object {
@@ -33,15 +32,18 @@ abstract class ConfigResourceProvider<out T : MutableConfigDefinition> : Resourc
     private val definitionCache = mutableListOf<T>()
     private val nameMapper: (T) -> String
     private val propertyMapper: ConfigResourcePropertyMapper
+    private val modelProvider: ((T) -> List<Int>?)?
 
     constructor(
         definitionSupplier: DefinitionSupplier<T>,
         nameMapper: (T) -> String = { it.id.toString() },
-        propertyMapper: ConfigResourcePropertyMapper = { null }
+        propertyMapper: ConfigResourcePropertyMapper = { null },
+        modelProvider: ((T) -> List<Int>?)? = null
     ) {
         this.definitionSupplier = definitionSupplier
         this.nameMapper = nameMapper
         this.propertyMapper = propertyMapper
+        this.modelProvider = modelProvider
     }
 
     private fun ensureCache() {
@@ -61,14 +63,15 @@ abstract class ConfigResourceProvider<out T : MutableConfigDefinition> : Resourc
                 val definition = definitionCache.getOrNull(identifier.id) ?: return ResourceProviderResult.NotFound()
 
                 val name = nameMapper(definition)
-                val properties = definition.properties.mapNotNull { propertyMapper(it.value) }
+                val properties = definition.properties.sortedBy { it.key }.mapNotNull { propertyMapper(it.value) }
 
                 return ResourceProviderResult.Found(
-                    ConfigurationResource<T>(
+                    ConfigurationResource(
                         "${resourceName().removeSuffix("s")}: $name [${identifier.id}]",
                         identifier,
                         definitionCache[identifier.id],
-                        properties
+                        properties,
+                        modelProvider
                     )
                 )
             }
@@ -94,7 +97,7 @@ fun <T : Any> property(
     name: String,
     category: String
 ): ConfigurationResourceProperty<T> {
-    return ConfigurationResourceProperty<T>(name, property.type(), property.value as T, category)
+    return ConfigurationResourceProperty(name, property.type(), property.value as T, category)
 }
 
 fun npcNameMapper(): (NpcDefinition) -> String = { it.name().value }
@@ -119,7 +122,8 @@ fun npcDefinitionSuppler() = DefinitionSupplier.create<NpcDefinition>(
 class NpcConfigResourceProvider : ConfigResourceProvider<NpcDefinition>(
     npcDefinitionSuppler(),
     npcNameMapper(),
-    npcPropertyMapper()
+    npcPropertyMapper(),
+    { it.models().value?.toList() }
 ) {
     override fun resourceName(): String {
         return RESOURCE_NAME
@@ -133,10 +137,7 @@ class NpcConfigResourceProvider : ConfigResourceProvider<NpcDefinition>(
 fun itemNameMapper(): (ItemDefinition) -> String = { it.name.value }
 
 fun itemPropertyMapper(): ConfigResourcePropertyMapper = {
-    when (it.type()) {
-        ItemProperty.NAME -> ConfigurationResourceProperty<String>("Name", it.type(), it.value as String)
-        else -> null
-    }
+    ConfigurationResourceProperty(it.name, it.type(), it.value.toString())
 }
 
 fun itemDefinitionSupplier() = DefinitionSupplier.create<ItemDefinition>(
@@ -149,7 +150,8 @@ fun itemDefinitionSupplier() = DefinitionSupplier.create<ItemDefinition>(
 class ItemConfigResourceProvider : ConfigResourceProvider<ItemDefinition>(
     itemDefinitionSupplier(),
     itemNameMapper(),
-    itemPropertyMapper()
+    itemPropertyMapper(),
+    { listOf(it.modelId.value) }
 ) {
     override fun resourceName(): String {
         return RESOURCE_NAME

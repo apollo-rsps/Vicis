@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
-import java.util.*
+import java.util.HashMap
 
 //@todo - big hack from JME3-JFX docs
 class Scene3dCameraInputListener {

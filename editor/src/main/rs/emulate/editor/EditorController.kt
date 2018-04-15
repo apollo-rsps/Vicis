@@ -4,11 +4,15 @@ import javafx.collections.FXCollections
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import rs.emulate.editor.event.ResourceLoadedEvent
+import rs.emulate.editor.resource.NullContentModel
 import rs.emulate.editor.resource.Resource
 import rs.emulate.editor.resource.ResourceStore
 import rs.emulate.editor.ui.ResourceContentModelViewer
 import rs.emulate.editor.ui.ResourceContentViewerFactory
-import tornadofx.*
+import tornadofx.Controller
+import tornadofx.getProperty
+import tornadofx.onChange
+import tornadofx.property
 
 data class TabData(val view: ResourceContentModelViewer<*>, val resource: Resource)
 
@@ -31,7 +35,13 @@ class EditorController : Controller() {
             if (openTab != null) {
                 tabContainer.selectionModel.select(openTab)
             } else {
-                val contentModel = it.resource.createContentModel(resourceStore)
+                val contentModel = try {
+                    it.resource.createContentModel(resourceStore)
+                } catch (e: Exception) {
+                    System.err.println("Error creating a content model for $resource.")
+                    NullContentModel()
+                }
+
                 val contentViewerFactory = resourceContentViewerFactories.first { it.supports(contentModel::class) }
                 val contentViewer = contentViewerFactory.create(contentModel)
                 workspace.dock(contentViewer)
