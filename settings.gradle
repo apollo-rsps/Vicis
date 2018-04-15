@@ -1,0 +1,12 @@
+rootProject.name = 'vicis'
+include ':editor'
+include ':legacy'
+include ':modern'
+include ':util'
+include ':tools'
+
+project(':editor').projectDir = "$rootDir/editor" as File
+project(':legacy').projectDir = "$rootDir/legacy" as File
+project(':modern').projectDir = "$rootDir/modern" as File
+project(':util').projectDir = "$rootDir/util" as File
+project(':tools').projectDir = "$rootDir/tools" as File

@@ -23,7 +23,7 @@ import static rs.emulate.legacy.config.npc.NpcProperty.*;
  * @param <T> The type of NpcDefinition this DefaultNpcDefinition is for.
  * @author Major
  */
-public class DefaultNpcDefinition<T extends NpcDefinition> extends DefaultConfigDefinition<T> {
+public class DefaultNpcDefinition extends DefaultConfigDefinition<NpcDefinition> {
 
 	@Override
 	protected Map<Integer, SerializableProperty<?>> init() {

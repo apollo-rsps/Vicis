@@ -1,0 +1,5 @@
+
+description = 'Vicis Legacy'
+dependencies {
+  compile project(':util')
+}

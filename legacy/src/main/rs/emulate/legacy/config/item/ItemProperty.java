@@ -7,7 +7,7 @@ import rs.emulate.legacy.config.ConfigPropertyType;
  *
  * @author Major
  */
-enum ItemProperty implements ConfigPropertyType {
+public enum ItemProperty implements ConfigPropertyType {
 
 	/**
 	 * The model id property.
