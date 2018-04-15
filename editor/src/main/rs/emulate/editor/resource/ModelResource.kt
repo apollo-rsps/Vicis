@@ -21,8 +21,10 @@ fun Collection<ModelResource>.compoundContentModel(): ResourceContentModel {
     val faces = mutableListOf<Int>()
 
     map(ModelResource::model).forEach { model ->
+        val vertexCount = vertices.size
+
         vertices += model.vertices.map { Vector3f(it.x * 1f, it.y * 1f, it.z * 1f) }
-        faces += model.faces.flatMap { listOf(it.a, it.b, it.c) }
+        faces += model.faces.flatMap { listOf(it.a + vertexCount, it.b + vertexCount, it.c + vertexCount) }
     }
 
     return MeshContentModel(vertices.toTypedArray(), faces.toIntArray())
