@@ -1,8 +1,12 @@
 .*
+
 !.gitignore
+!.editorconfig
 
-target
-bin
-
+*~
 *.class
 *.iml
+
+**/target/
+**/build/
+**/out/

@@ -6,10 +6,6 @@ import java.util.Arrays;
 /**
  * The Whirlpool hashing function.
  *
- * <p>
- * <b>References</b>
- *
- * <p>
  * The Whirlpool algorithm was developed by Paulo S. L. M. Barreto (pbarreto@scopus.com.br) and Vincent Rijmen
  * (vincent.rijmen@cryptomathic.com).
  *
@@ -20,57 +16,45 @@ import java.util.Arrays;
  * @author Vincent Rijmen.
  * @version 3.0 (2003.03.12)
  *
- *          =============================================================================
+ * =============================================================================
  *
- *          Differences from version 2.1:
+ * Differences from version 2.1:
  *
- *          - Suboptimal diffusion matrix replaced by cir(1, 1, 4, 1, 8, 5, 2, 9).
+ * - Suboptimal diffusion matrix replaced by cir(1, 1, 4, 1, 8, 5, 2, 9).
  *
- *          =============================================================================
+ * =============================================================================
  *
- *          Differences from version 2.0:
+ * Differences from version 2.0:
  *
- *          - Generation of ISO/IEC 10118-3 test vectors. - Bug fix: nonzero carry was ignored when tallying the data
- *          length (this bug apparently only manifested itself when feeding data in pieces rather than in a single
- *          chunk
- *          at once).
+ * - Generation of ISO/IEC 10118-3 test vectors. - Bug fix: nonzero carry was ignored when tallying the data
+ * length (this bug apparently only manifested itself when feeding data in pieces rather than in a single
+ * chunk
+ * at once).
  *
- *          Differences from version 1.0:
+ * Differences from version 1.0:
  *
- *          - Original S-box replaced by the tweaked, hardware-efficient version.
+ * - Original S-box replaced by the tweaked, hardware-efficient version.
  *
- *          =============================================================================
+ * =============================================================================
  *
- *          THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
- *          NOT
- *          LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- *          IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- *          EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- *          SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- *          LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
- *          ANY
- *          WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHORS ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
+ * NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+ * IN NO EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY
+ * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- *          =============================================================================
- *
- *          Name changes made by Major.
+ * =============================================================================
  */
 public class Whirlpool {
 
 	/**
-	 * The message digest size (in bits)
-	 */
-	public static final int DIGEST_BITS = 512;
-
-	/**
-	 * The message digest size (in bytes)
-	 */
-	public static final int DIGEST_BYTES = DIGEST_BITS >>> 3;
-
-	/**
 	 * The number of rounds of the internal dedicated block cipher.
 	 */
-	protected static final int ROUNDS = 10;
+	private static final int ROUNDS = 10;
 
 	/**
 	 * The circulant table.
@@ -86,14 +70,14 @@ public class Whirlpool {
 	 * The substitution box.
 	 */
 	private static final String SUBSTITUTION_BOX = "\u1823\uc6E8\u87B8\u014F\u36A6\ud2F5\u796F\u9152"
-			+ "\u60Bc\u9B8E\uA30c\u7B35\u1dE0\ud7c2\u2E4B\uFE57" + "\u1577\u37E5\u9FF0\u4AdA\u58c9\u290A\uB1A0\u6B85"
-			+ "\uBd5d\u10F4\ucB3E\u0567\uE427\u418B\uA77d\u95d8" + "\uFBEE\u7c66\udd17\u479E\ucA2d\uBF07\uAd5A\u8333"
-			+ "\u6302\uAA71\uc819\u49d9\uF2E3\u5B88\u9A26\u32B0" + "\uE90F\ud580\uBEcd\u3448\uFF7A\u905F\u2068\u1AAE"
-			+ "\uB454\u9322\u64F1\u7312\u4008\uc3Ec\udBA1\u8d3d" + "\u9700\ucF2B\u7682\ud61B\uB5AF\u6A50\u45F3\u30EF"
-			+ "\u3F55\uA2EA\u65BA\u2Fc0\udE1c\uFd4d\u9275\u068A" + "\uB2E6\u0E1F\u62d4\uA896\uF9c5\u2559\u8472\u394c"
-			+ "\u5E78\u388c\ud1A5\uE261\uB321\u9c1E\u43c7\uFc04" + "\u5199\u6d0d\uFAdF\u7E24\u3BAB\ucE11\u8F4E\uB7EB"
-			+ "\u3c81\u94F7\uB913\u2cd3\uE76E\uc403\u5644\u7FA9" + "\u2ABB\uc153\udc0B\u9d6c\u3174\uF646\uAc89\u14E1"
-			+ "\u163A\u6909\u70B6\ud0Ed\ucc42\u98A4\u285c\uF886";
+		+ "\u60Bc\u9B8E\uA30c\u7B35\u1dE0\ud7c2\u2E4B\uFE57" + "\u1577\u37E5\u9FF0\u4AdA\u58c9\u290A\uB1A0\u6B85"
+		+ "\uBd5d\u10F4\ucB3E\u0567\uE427\u418B\uA77d\u95d8" + "\uFBEE\u7c66\udd17\u479E\ucA2d\uBF07\uAd5A\u8333"
+		+ "\u6302\uAA71\uc819\u49d9\uF2E3\u5B88\u9A26\u32B0" + "\uE90F\ud580\uBEcd\u3448\uFF7A\u905F\u2068\u1AAE"
+		+ "\uB454\u9322\u64F1\u7312\u4008\uc3Ec\udBA1\u8d3d" + "\u9700\ucF2B\u7682\ud61B\uB5AF\u6A50\u45F3\u30EF"
+		+ "\u3F55\uA2EA\u65BA\u2Fc0\udE1c\uFd4d\u9275\u068A" + "\uB2E6\u0E1F\u62d4\uA896\uF9c5\u2559\u8472\u394c"
+		+ "\u5E78\u388c\ud1A5\uE261\uB321\u9c1E\u43c7\uFc04" + "\u5199\u6d0d\uFAdF\u7E24\u3BAB\ucE11\u8F4E\uB7EB"
+		+ "\u3c81\u94F7\uB913\u2cd3\uE76E\uc403\u5644\u7FA9" + "\u2ABB\uc153\udc0B\u9d6c\u3174\uF646\uAc89\u14E1"
+		+ "\u163A\u6909\u70B6\ud0Ed\ucc42\u98A4\u285c\uF886";
 
 	static {
 		for (int x = 0; x < 256; x++) {
@@ -134,9 +118,9 @@ public class Whirlpool {
 		for (int r = 1; r <= ROUNDS; r++) {
 			int i = 8 * (r - 1);
 			ROUND_CONSTANTS[r] = CIRCULANT_TABLE[0][i] & 0xff00000000000000L ^ CIRCULANT_TABLE[1][i + 1] & 0x00ff000000000000L
-					^ CIRCULANT_TABLE[2][i + 2] & 0x0000ff0000000000L ^ CIRCULANT_TABLE[3][i + 3] & 0x000000ff00000000L
-					^ CIRCULANT_TABLE[4][i + 4] & 0x00000000ff000000L ^ CIRCULANT_TABLE[5][i + 5] & 0x0000000000ff0000L
-					^ CIRCULANT_TABLE[6][i + 6] & 0x000000000000ff00L ^ CIRCULANT_TABLE[7][i + 7] & 0x00000000000000ffL;
+				^ CIRCULANT_TABLE[2][i + 2] & 0x0000ff0000000000L ^ CIRCULANT_TABLE[3][i + 3] & 0x000000ff00000000L
+				^ CIRCULANT_TABLE[4][i + 4] & 0x00000000ff000000L ^ CIRCULANT_TABLE[5][i + 5] & 0x0000000000ff0000L
+				^ CIRCULANT_TABLE[6][i + 6] & 0x000000000000ff00L ^ CIRCULANT_TABLE[7][i + 7] & 0x00000000000000ffL;
 		}
 	}
 
@@ -146,7 +130,7 @@ public class Whirlpool {
 	 * @param data The data.
 	 * @return The hash.
 	 */
-	public static byte[] whirlpool(byte[] data) {
+	private static byte[] whirlpool(byte[] data) {
 		return whirlpool(data, 0, data.length);
 	}
 
@@ -190,17 +174,17 @@ public class Whirlpool {
 	/**
 	 * The temporary buffer for round transformations.
 	 */
-	protected long[] L = new long[8];
+	private final long[] L = new long[8];
 
 	/**
 	 * Global number of hashed bits (256-bit counter).
 	 */
-	protected byte[] bitLength = new byte[32];
+	private final byte[] bitLength = new byte[32];
 
 	/**
 	 * The block data.
 	 */
-	protected long[] block = new long[8]; // mu(buffer)
+	private final long[] block = new long[8]; // mu(buffer)
 
 	/**
 	 * Buffer of data to hash.
@@ -210,12 +194,12 @@ public class Whirlpool {
 	/**
 	 * Current number of bits on the buffer.
 	 */
-	protected int bufferBits = 0;
+	private int bufferBits;
 
 	/**
 	 * Current (possibly incomplete) byte slot on the buffer.
 	 */
-	protected int bufferPosition = 0;
+	private int bufferPosition;
 
 	/**
 	 * The hashing state.
@@ -230,7 +214,7 @@ public class Whirlpool {
 	/**
 	 * The cipher state.
 	 */
-	protected long[] state = new long[8]; // the cipher state
+	private final long[] state = new long[8]; // the cipher state
 
 	/**
 	 * Delivers input data to the hashing algorithm. This method maintains the invariant: {@code bufferBits < 512}.
@@ -309,7 +293,7 @@ public class Whirlpool {
 	 * @param source The data to hash, as an ASCII text string.
 	 */
 	public void add(String source) {
-		if (source.length() > 0) {
+		if (!source.isEmpty()) {
 			byte[] data = new byte[source.length()];
 			for (int i = 0; i < source.length(); i++) {
 				data[i] = (byte) source.charAt(i);
@@ -320,10 +304,8 @@ public class Whirlpool {
 
 	/**
 	 * Get the hash value from the hashing state. This method uses the invariant: {@code bufferBits < 512}.
-	 *
-	 * @param digest The digest.
 	 */
-	public void finalize(byte[] digest) {
+	private void finalize(byte[] digest) {
 		// append a '1'-bit:
 		buffer[bufferPosition] |= 0x80 >>> (bufferBits & 7);
 		bufferPosition++; // all remaining bits on the current byte are set to zero.
@@ -371,14 +353,14 @@ public class Whirlpool {
 	/**
 	 * The core Whirlpool transform.
 	 */
-	protected void processBuffer() {
+	private void processBuffer() {
 		/*
 		 * map the buffer to a block:
 		 */
 		for (int i = 0, j = 0; i < 8; i++, j += 8) {
 			block[i] = (long) buffer[j] << 56 ^ (buffer[j + 1] & 0xffL) << 48 ^ (buffer[j + 2] & 0xffL) << 40
-					^ (buffer[j + 3] & 0xffL) << 32 ^ (buffer[j + 4] & 0xffL) << 24 ^ (buffer[j + 5] & 0xffL) << 16
-					^ (buffer[j + 6] & 0xffL) << 8 ^ buffer[j + 7] & 0xffL;
+				^ (buffer[j + 3] & 0xffL) << 32 ^ (buffer[j + 4] & 0xffL) << 24 ^ (buffer[j + 5] & 0xffL) << 16
+				^ (buffer[j + 6] & 0xffL) << 8 ^ buffer[j + 7] & 0xffL;
 		}
 
 		/*
