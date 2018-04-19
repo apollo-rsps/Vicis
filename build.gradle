@@ -1,0 +1,36 @@
+buildscript {
+    ext.kotlin_version = '1.2.40'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    group = 'vicis'
+    version = '0.0.1'
+}
+
+subprojects {
+    apply plugin: 'kotlin'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        maven { url "https://repo.maven.apache.org/maven2" }
+    }
+
+    dependencies {
+        compile group: 'junit', name: 'junit', version: '4.12'
+        compile group: 'org.apache.commons', name: 'commons-compress', version: '1.9'
+        compile group: 'com.google.guava', name: 'guava', version: '18.0'
+        compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.2.31'
+        testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version: '1.2.31'
+    }
+}
