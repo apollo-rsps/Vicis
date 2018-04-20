@@ -1,5 +1,6 @@
 package rs.emulate.legacy.config.npc
 
+import rs.emulate.legacy.config.ConfigPropertyDelegate.Companion.property
 import rs.emulate.legacy.config.ConfigPropertyMap
 import rs.emulate.legacy.config.MutableConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
@@ -11,6 +12,7 @@ import rs.emulate.legacy.config.SerializableProperty
  * @param properties The [ConfigPropertyMap].
  */
 open class NpcDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
+
 
     /**
      * Gets the [SerializableProperty] containing the animation set.
