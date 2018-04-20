@@ -1,0 +1,14 @@
+description = 'Vicis Editor'
+
+compileKotlin {
+    kotlinOptions.jvmTarget= "1.8"
+}
+
+dependencies {
+    compile 'no.tornado:tornadofx:1.7.15'
+    compile 'org.controlsfx:controlsfx:8.40.14'
+    compile 'com.github.thomasnield:rxkotlinfx:2.2.2'
+    compile 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+
+    compile project(':legacy')
+}
