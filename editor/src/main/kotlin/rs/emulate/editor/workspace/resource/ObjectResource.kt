@@ -1,4 +1,4 @@
-package rs.emulate.editor.workspace
+package rs.emulate.editor.workspace.resource
 
 import javafx.collections.FXCollections
 import rs.emulate.legacy.IndexedFileSystem
