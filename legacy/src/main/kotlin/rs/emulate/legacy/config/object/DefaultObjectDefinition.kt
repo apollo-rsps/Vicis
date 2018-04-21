@@ -26,7 +26,7 @@ class DefaultObjectDefinition : DefaultConfigDefinition<ObjectDefinition>() {
         val properties = HashMap<Int, SerializableProperty<*>>()
 
         properties[1] = SerializableProperty(POSITIONED_MODELS, ModelSet.EMPTY, ModelSet.Companion::encode,
-            ModelSet.Companion::decode,
+            ModelSet.Companion::decodePositioned,
             { it.count * (java.lang.Short.BYTES + java.lang.Byte.BYTES) + java.lang.Byte.BYTES }
         )
 
