@@ -14,7 +14,7 @@ object PropertyEncoders {
 
     val BYTE_BUFFER_ENCODER: (DataBuffer, ByteBuffer) -> DataBuffer = DataBuffer::put
 
-    val BYTE_ENCODER: (DataBuffer, Int) -> DataBuffer = { buffer, value -> buffer.putByte(value.toInt()) }
+    val BYTE_ENCODER: (DataBuffer, Int) -> DataBuffer = { buffer, value -> buffer.putByte(value) }
 
     val C_STRING_ENCODER: (DataBuffer, String) -> DataBuffer = DataBuffer::putCString
 
@@ -22,7 +22,7 @@ object PropertyEncoders {
 
     val LONG_ENCODER: (DataBuffer, Long) -> DataBuffer = DataBuffer::putLong
 
-    val SHORT_ENCODER: (DataBuffer, Int) -> DataBuffer = { buffer, value -> buffer.putShort(value.toInt()) }
+    val SHORT_ENCODER: (DataBuffer, Int) -> DataBuffer = { buffer, value -> buffer.putShort(value) }
 
     val TRI_BYTE_ENCODER: (DataBuffer, Int) -> DataBuffer = DataBuffer::putTriByte
 

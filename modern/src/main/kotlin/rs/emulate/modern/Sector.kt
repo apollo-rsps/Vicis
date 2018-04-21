@@ -21,10 +21,10 @@ class Sector(val type: Int, val id: Int, val chunk: Int, val nextSector: Int, va
      */
     fun encode(): DataBuffer {
         return DataBuffer.allocate(SIZE).apply {
-            putShort(id.toShort().toInt())
-            putShort(chunk.toShort().toInt())
+            putShort(id)
+            putShort(chunk)
             putTriByte(nextSector)
-            putByte(type.toByte().toInt())
+            putByte(type)
             put(data)
 
             flip()

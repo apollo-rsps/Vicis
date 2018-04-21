@@ -2,7 +2,6 @@ package rs.emulate.shared.util
 
 import java.nio.ByteBuffer
 import java.util.Arrays
-import kotlin.experimental.and
 
 /**
  * Contains [ByteBuffer]-related utility methods.
@@ -33,8 +32,8 @@ object ByteBufferUtils {
 
         val limit = buffer.limit()
         for (index in 0 until limit) {
-            val byte = buffer.get() and 0xFF.toByte()
-            var hex = Integer.toHexString(byte.toInt()).toUpperCase()
+            val byte = buffer.get().toInt() and 0xFF
+            var hex = Integer.toHexString(byte).toUpperCase()
 
             if (hex.length == 1) {
                 hex = "0$hex"

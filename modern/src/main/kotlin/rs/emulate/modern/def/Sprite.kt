@@ -95,9 +95,9 @@ class Sprite(val width: Int, val height: Int, size: Int = 1) {
 
                 for (i in 1 until palette.size) {
                     val rgb = palette[i]
-                    os.write((rgb shr 16).toByte().toInt())
-                    os.write((rgb shr 8).toByte().toInt())
-                    os.write(rgb.toByte().toInt())
+                    os.write((rgb shr 16))
+                    os.write((rgb shr 8))
+                    os.write(rgb)
                 }
 
                 os.writeShort(width)

@@ -3,7 +3,6 @@ package rs.emulate.shared.util
 import rs.emulate.shared.util.crypto.Whirlpool
 import java.nio.ByteBuffer
 import java.util.zip.CRC32
-import kotlin.experimental.and
 
 /**
  * A wrapper for [ByteBuffer] that adds methods to read unsigned data types, and specific string types. All
@@ -84,7 +83,7 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
         get() {
             val value = byteBuffer.get(byteBuffer.position())
             return if (value >= 0) {
-                (byteBuffer.short and 0xFFFF.toShort()).toInt()
+                byteBuffer.short.toInt() and 0xFFFF
             } else {
                 byteBuffer.int and 0x7FFFFFFF
             }
@@ -114,7 +113,7 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
      * Reads a 'smart' from this DataBuffer.
      */
     fun getSmart(): Int {
-        val peek = byteBuffer.get(byteBuffer.position()) and 0xFF.toByte()
+        val peek = byteBuffer.get(byteBuffer.position()).toInt() and 0xFF
         return if (peek < 128) {
             getUnsignedByte()
         } else {
@@ -127,10 +126,10 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
      */
     fun getString(): String {
         val builder = StringBuilder()
-        var character: Char = byteBuffer.get().toChar()
+        var character = byteBuffer.get()
         while (character.toInt() != 10) {
-            builder.append(character)
-            character = byteBuffer.get().toChar()
+            builder.append(character.toChar())
+            character = byteBuffer.get()
         }
 
         return builder.toString()
@@ -139,17 +138,17 @@ class DataBuffer(val byteBuffer: ByteBuffer) {
     /**
      * Gets an unsigned byte from this DataBuffer.
      */
-    fun getUnsignedByte(): Int = (byteBuffer.get() and 0xFF.toByte()).toInt()
+    fun getUnsignedByte(): Int = byteBuffer.get().toInt() and 0xFF
 
     /**
      * Gets an unsigned int from this DataBuffer.
      */
-    fun getUnsignedInt(): Long = (byteBuffer.int and 0xFFFFFFFF.toInt()).toLong()
+    fun getUnsignedInt(): Long = byteBuffer.int.toLong() and 0xFFFFFFFF
 
     /**
      * Gets an unsigned `short` from this DataBuffer.
      */
-    fun getUnsignedShort(): Int = (byteBuffer.short and 0xFFFF.toShort()).toInt()
+    fun getUnsignedShort(): Int = byteBuffer.short.toInt() and 0xFFFF
 
     /**
      * Gets a tri-byte from this DataBuffer.

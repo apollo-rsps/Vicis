@@ -28,7 +28,6 @@ import java.util.Arrays
 import java.util.regex.Pattern
 import java.util.zip.CRC32
 import javax.imageio.ImageIO
-import kotlin.experimental.and
 
 object XteaAggregator {
 
@@ -187,7 +186,7 @@ object XteaAggregator {
          * Lots of the files we don't have keys for are sea, which contains no objects. Looking at the encrypted and
          * compressed length we can guess if the file contains no objects.
          */
-        val type = (buf.get(buf.position()) and 0xFF.toByte()).toInt()
+        val type = buf.get(buf.position()).toInt() and 0xFF
         return if (type == Container.COMPRESSION_NONE) {
             /*
              * A landscape file with no objects has a single zero-valued smart, which occupies 1 byte. We add on the 4
@@ -234,7 +233,7 @@ object XteaAggregator {
          */
         val clone = ByteBuffer.allocate(16)
 
-        val type = (buf.get(buf.position()) and 0xFF.toByte()).toInt()
+        val type = buf.get(buf.position()).toInt() and 0xFF
         if (type == Container.COMPRESSION_NONE) {
             throw UnsupportedOperationException("Can't test uncompressed containers for key validity.")
         }
@@ -260,15 +259,15 @@ object XteaAggregator {
             return false
 
         if (type == Container.COMPRESSION_GZIP) {
-            val magic = (clone.short and 0xFFFF.toShort()).toInt()
+            val magic = clone.short.toInt() and 0xFFFF
             if (magic != 0x1F8B)
                 return false
 
-            val compressionMethod = (clone.get() and 0xFF.toByte()).toInt()
+            val compressionMethod = clone.get().toInt() and 0xFF
             if (compressionMethod != 0x08)
                 return false
 
-            val flags = (clone.get() and 0xFF.toByte()).toInt()
+            val flags = clone.get().toInt() and 0xFF
             if (flags != 0)
                 return false
 
@@ -276,11 +275,11 @@ object XteaAggregator {
             if (time != 0)
                 return false
 
-            val extraFlags = (clone.get() and 0xFF.toByte()).toInt()
+            val extraFlags = clone.get().toInt() and 0xFF
             if (extraFlags != 0)
                 return false
 
-            val os = (clone.get() and 0xFF.toByte()).toInt()
+            val os = clone.get().toInt() and 0xFF
 
             return os == 0
         } else if (type == Container.COMPRESSION_BZIP2) {

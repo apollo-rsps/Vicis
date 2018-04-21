@@ -49,7 +49,7 @@ class Container(var type: Int, data: DataBuffer, version: Int = -1) {
         val header = 5 + (if (type == COMPRESSION_NONE) 0 else 4) + if (versioned) 2 else 0
         val buffer = DataBuffer.allocate(header + compressed.limit())
 
-        buffer.putByte(type.toByte().toInt())
+        buffer.putByte(type)
         buffer.putInt(compressed.limit())
 
         if (type != COMPRESSION_NONE) {
@@ -59,7 +59,7 @@ class Container(var type: Int, data: DataBuffer, version: Int = -1) {
         buffer.put(compressed)
 
         if (versioned) {
-            buffer.putShort(version.toShort().toInt())
+            buffer.putShort(version)
         }
 
         return buffer.flip()
