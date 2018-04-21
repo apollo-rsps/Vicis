@@ -20,32 +20,29 @@ import java.util.HashMap
  *
  * @param <T> The type of ObjectDefinition this DefaultObjectDefinition is for.
  */
-class DefaultObjectDefinition<T : ObjectDefinition> : DefaultConfigDefinition<T>() {
+class DefaultObjectDefinition : DefaultConfigDefinition<ObjectDefinition>() {
 
     override fun init(): Map<Int, SerializableProperty<*>> {
         val properties = HashMap<Int, SerializableProperty<*>>()
 
-        properties[1] = SerializableProperty(POSITIONED_MODELS, ModelSet.EMPTY,
-            { buffer: DataBuffer, models: ModelSet -> ModelSet.encode(buffer, models) },
-            { buffer: DataBuffer -> ModelSet.decodePositioned(buffer) },
-            { set -> set.count * (java.lang.Short.BYTES + java.lang.Byte.BYTES) + java.lang.Byte.BYTES }
+        properties[1] = SerializableProperty(POSITIONED_MODELS, ModelSet.EMPTY, ModelSet.Companion::encode,
+            ModelSet.Companion::decode,
+            { it.count * (java.lang.Short.BYTES + java.lang.Byte.BYTES) + java.lang.Byte.BYTES }
         )
 
         properties[2] = asciiString(NAME, "null")
         properties[3] = asciiString(DESCRIPTION, "null")
 
-        properties[5] = SerializableProperty(MODELS, ModelSet.EMPTY,
-            { buffer: DataBuffer, models: ModelSet -> ModelSet.encode(buffer, models) },
-            { buffer: DataBuffer -> ModelSet.decode(buffer) },
-            { set -> java.lang.Byte.BYTES + set.count * java.lang.Short.BYTES })
+        properties[5] = SerializableProperty(MODELS, ModelSet.EMPTY, ModelSet.Companion::encode,
+            ModelSet.Companion::decode, { java.lang.Byte.BYTES + it.count * java.lang.Short.BYTES }
+        )
 
         properties[14] = unsignedByte(WIDTH, 1)
         properties[15] = unsignedByte(LENGTH, 1)
         properties[17] = alwaysFalse(SOLID, true)
         properties[18] = alwaysFalse(IMPENETRABLE, true)
 
-        properties[19] = SerializableProperty(INTERACTIVE, false,
-            { obj: DataBuffer, value: Boolean -> obj.putBoolean(value) }, { obj: DataBuffer -> obj.getBoolean() },
+        properties[19] = SerializableProperty(INTERACTIVE, false, DataBuffer::putBoolean, DataBuffer::getBoolean,
             java.lang.Byte.BYTES)
 
         properties[21] = alwaysTrue(CONTOUR_GROUND, false)
@@ -57,8 +54,7 @@ class DefaultObjectDefinition<T : ObjectDefinition> : DefaultConfigDefinition<T>
         properties[29] = signedByte(AMBIENT_LIGHTING, 0)
 
         for (option in 1..ObjectDefinition.INTERACTION_COUNT) {
-            val name = ConfigUtils.newOptionProperty(ObjectDefinition.INTERACTION_PROPERTY_PREFIX,
-                option)
+            val name = ConfigUtils.newOptionProperty(ObjectDefinition.INTERACTION_PROPERTY_PREFIX, option)
             properties[option + 29] = asciiString(name, "hidden")
         }
 
@@ -84,10 +80,8 @@ class DefaultObjectDefinition<T : ObjectDefinition> : DefaultConfigDefinition<T>
         properties[74] = alwaysTrue(HOLLOW, false)
         properties[75] = unsignedByte(SUPPORTS_ITEMS, 0)
 
-        properties[77] = SerializableProperty<MorphismSet>(MORPHISM_SET, MorphismSet.EMPTY,
-            { buffer: DataBuffer, set: MorphismSet -> MorphismSet.encode(buffer, set) },
-            { buffer: DataBuffer -> MorphismSet.decode(buffer) },
-            { morphisms -> java.lang.Short.BYTES * (2 + morphisms.count) + java.lang.Byte.BYTES }
+        properties[77] = SerializableProperty(MORPHISM_SET, MorphismSet.EMPTY, MorphismSet.Companion::encode,
+            MorphismSet.Companion::decode, { java.lang.Short.BYTES * (2 + it.count) + java.lang.Byte.BYTES }
         )
 
         return properties

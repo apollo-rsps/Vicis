@@ -35,7 +35,6 @@ class Cache {
      * @param indexPrefix The prefix of the index files.
      * @throws IOException If there is an error writing the data to disk.
      */
-    @JvmOverloads
     fun encode(base: Path, dataFile: String = DEFAULT_DATA_FILE_NAME, indexPrefix: String = DEFAULT_INDEX_FILE_PREFIX) {
         if (Files.notExists(base)) {
             Files.createDirectories(base)
