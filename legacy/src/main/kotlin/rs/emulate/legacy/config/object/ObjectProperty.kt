@@ -8,7 +8,7 @@ import rs.emulate.legacy.config.npc.MorphismSet
  *
  * @param opcode The opcode.
  */
-public enum class ObjectProperty(override val opcode: Int) : ConfigPropertyType {
+enum class ObjectProperty(override val opcode: Int) : ConfigPropertyType {
 
     /**
      * The positioned models property.

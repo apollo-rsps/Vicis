@@ -18,10 +18,8 @@ import java.util.HashMap
 
 /**
  * A default [ItemDefinition] used as a base for actual definitions.
- *
- * @param T The type of ItemDefinition this DefaultItemDefinition is for.
  */
-class DefaultItemDefinition<T : ItemDefinition> : DefaultConfigDefinition<T>() {
+class DefaultItemDefinition : DefaultConfigDefinition<ItemDefinition>() {
 
     override fun init(): Map<Int, SerializableProperty<*>> {
         val properties = HashMap<Int, SerializableProperty<*>>()

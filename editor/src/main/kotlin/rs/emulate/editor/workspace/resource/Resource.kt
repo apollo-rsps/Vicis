@@ -3,18 +3,18 @@ package rs.emulate.editor.workspace.resource
 import javafx.collections.ObservableMap
 import rs.emulate.legacy.config.SerializableProperty
 
+interface Resource {
+    val id: ResourceId
+    val properties: ObservableMap<SerializableProperty<*>, *>
+}
+
 interface ResourceId {
     val name: String?
 }
 
-interface Resource<PropType : Any> {
-    val id: ResourceId
-    val properties: ObservableMap<SerializableProperty<PropType>, *>
-}
-
 interface ResourceBundle {
 
-    fun load(id: ResourceId): Resource<*>
+    fun load(id: ResourceId): Resource
 
     fun list(): Sequence<ResourceId>
 

@@ -16,10 +16,8 @@ import java.util.HashMap
 
 /**
  * A default [NpcDefinition] used as a base.
- *
- * @param T The type of NpcDefinition this DefaultNpcDefinition is for.
  */
-class DefaultNpcDefinition<T : NpcDefinition> : DefaultConfigDefinition<T>() {
+class DefaultNpcDefinition : DefaultConfigDefinition<NpcDefinition>() {
 
     override fun init(): Map<Int, SerializableProperty<*>> {
         val properties = HashMap<Int, SerializableProperty<*>>()

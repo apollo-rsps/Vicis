@@ -1,17 +1,21 @@
 package rs.emulate.editor.workspace.resource.legacy
 
-import rs.emulate.editor.workspace.resource.ObjectResourceBundle
+import rs.emulate.editor.workspace.ConfigResourceBundleFactory
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceBundleLoader
 import rs.emulate.legacy.AccessMode
 import rs.emulate.legacy.IndexedFileSystem
 import java.nio.file.Path
 
-class LegacyResourceBundleLoader(val path: Path) : ResourceBundleLoader {
+class LegacyResourceBundleLoader(private val path: Path) : ResourceBundleLoader {
+
     override fun load(out: MutableList<ResourceBundle>) {
         val fs = IndexedFileSystem(path, AccessMode.READ)
+        val factory = ConfigResourceBundleFactory(fs)
 
-        out.add(ObjectResourceBundle(fs))
+        out.add(factory.objects)
+        out.add(factory.items)
+        out.add(factory.npcs)
     }
 
 }
