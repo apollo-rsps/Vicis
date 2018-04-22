@@ -62,6 +62,7 @@ class EditorStartupView : View() {
                 runAsyncWithProgress {
                     controller.load(model.cacheType, model.cacheDataFile)
                 } success { cache ->
+                    model.commit()
                     controller.onCacheLoad.onNext(cache)
                 } fail { err ->
                     controller.onCacheLoadError.onNext(err)
