@@ -42,7 +42,16 @@ class EditorStartupView : View() {
 
         button(messages["button.continue"]) {
             enableWhen { model.cacheDataFileProperty.booleanBinding { Files.exists(it) } }
-            actionEvents().subscribe { controller.load(model.cacheType, model.cacheDataFile) }
+
+            action {
+                runAsyncWithProgress {
+                    controller.load(model.cacheType, model.cacheDataFile)
+                } success { cache ->
+                    controller.onCacheLoad.onNext(cache)
+                } fail { err ->
+                    controller.onCacheLoadError.onNext(err)
+                }
+            }
         }
     }
 
