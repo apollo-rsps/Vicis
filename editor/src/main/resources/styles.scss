@@ -1,0 +1,55 @@
+@import "_resets";
+
+$bar-background-color: #f2f2f2;
+$bar-border-color: #a0a0a0;
+
+$title-background-color: #eeeeee;
+$title-border-color: #cfcfcf;
+
+$drawer-background-color: $bar-background-color;
+$drawer-selected-background-color: #bdbdbd;
+
+.menu-bar, .tool-bar {
+  -fx-background-color: $bar-background-color;
+  -fx-border-color: $bar-border-color;
+}
+
+.menu-bar {
+  -fx-padding: 0;
+  -fx-border-width: 0px 0px 1px 0px;
+}
+
+
+
+.drawer {
+  .tool-bar:horizontal {
+    -fx-border-width: 1px 0px 1px 0px;
+  }
+
+  .tool-bar:vertical {
+    -fx-border-width: 0px 1px 0px 1px;
+  }
+
+  .tool-bar .toggle-button {
+    -fx-background-color: $drawer-background-color;
+    -fx-text-fill: #000000;
+
+    &:selected {
+      -fx-background-color: $drawer-selected-background-color;
+    }
+  }
+
+  .titled-pane {
+    -fx-border-color: $bar-border-color;
+    -fx-border-width: 0 0 1px 0;
+
+    .title {
+      -fx-background-color: $title-background-color;
+    }
+  }
+
+  .content-area {
+    -fx-border-width: 0px 1px 0px 0px;
+    -fx-border-color: $bar-border-color;
+  }
+}

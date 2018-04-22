@@ -1,7 +1,14 @@
 description = 'Vicis Editor'
 
-compileKotlin {
-    kotlinOptions.jvmTarget= "1.8"
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.freefair.gradle:jsass-gradle-plugin:1.0.1"
+    }
 }
 
 dependencies {
@@ -12,3 +19,15 @@ dependencies {
 
     compile project(':legacy')
 }
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+apply plugin: "io.freefair.jsass-java"
+apply plugin: 'application'
+
+mainClassName = "rs.emulate.editor.EditorApplication"
+
+processResources.dependsOn(compileSass)
+
