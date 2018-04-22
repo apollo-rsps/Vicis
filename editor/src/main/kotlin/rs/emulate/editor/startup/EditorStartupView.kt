@@ -10,6 +10,7 @@ import rs.emulate.editor.workspace.EditorWorkspaceModel
 import rs.emulate.editor.workspace.EditorWorkspaceView
 import tornadofx.*
 import java.nio.file.Files
+import java.nio.file.Paths
 
 /**
  * A startup view that gives the user the opportunity to select the location of their cache data.
@@ -19,7 +20,7 @@ class EditorStartupView : View() {
     val model: EditorStartupModel by inject()
 
     /**
-     * An array of file extension filters to only show RuneScape cache data files.
+     * The filters used to only show RuneScape cache data files.
      */
     val cacheFileFilters = arrayOf(ExtensionFilter(messages["file_chooser.description"], CACHE_FILE_NAME))
 
@@ -33,12 +34,13 @@ class EditorStartupView : View() {
                 button(messages["button.choose"]) {
                     actionEvents()
                         .flatMap {
-                            val choice = chooseFile(messages["file_chooser.title"], cacheFileFilters).firstOrNull()
-                            if (choice != null) {
-                                just(choice)
-                            } else {
-                                empty()
-                            }
+                            val choice = chooseFile(messages["file_chooser.title"], cacheFileFilters) {
+                                if (Files.exists(DEFAULT_DIR)) {
+                                    initialDirectory = DEFAULT_DIR.toFile()
+                                }
+                            }.firstOrNull()
+
+                            choice?.let(::just) ?: empty()
                         }
                         .subscribe { it?.let { model.cacheDataFile = it.toPath() } }
                 }
@@ -80,6 +82,7 @@ class EditorStartupView : View() {
     }
 
     companion object {
-        const val CACHE_FILE_NAME = "main_file_cache.dat"
+        private const val CACHE_FILE_NAME = "main_file_cache.dat"
+        private val DEFAULT_DIR = Paths.get("./data/resources")
     }
 }
