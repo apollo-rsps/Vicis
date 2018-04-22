@@ -10,6 +10,7 @@ import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.legacy.config.DefinitionSupplier
 import rs.emulate.legacy.config.MutableConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
+import kotlin.reflect.KClass
 
 /**
  * A [Resource] from the config archive.
@@ -40,6 +41,8 @@ abstract class ConfigResourceBundle<T : MutableConfigDefinition>(
     config: Archive,
     supplier: DefinitionSupplier<T>
 ) : ResourceBundle<ConfigResourceId> {
+
+    override val idType = ConfigResourceId::class
 
     protected val definitions = ConfigDecoder(config, supplier).decode()
         .associateBy { ConfigResourceId(it.id) } // TODO load lazily?

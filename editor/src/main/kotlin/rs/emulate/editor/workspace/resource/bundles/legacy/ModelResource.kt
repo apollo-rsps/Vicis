@@ -8,12 +8,14 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.ModelDecoder
 import rs.emulate.shared.util.CompressionUtils
+import kotlin.reflect.KClass
 
 data class ModelResource(override val id: ResourceId, val model: Model) : Resource
 
 data class ModelResourceId(val id: Int) : ResourceId
 
 class ModelResourceBundle(private val fs: IndexedFileSystem) : ResourceBundle<ModelResourceId> {
+    override val idType = ModelResourceId::class
 
     override fun load(id: ModelResourceId): Resource {
         val compressed = fs.getFile(MODEL_INDEX, id.id)

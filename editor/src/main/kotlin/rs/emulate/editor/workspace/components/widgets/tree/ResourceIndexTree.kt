@@ -1,5 +1,6 @@
 package rs.emulate.editor.workspace.components.widgets.tree
 
+import com.github.thomasnield.rxkotlinfx.toObservable
 import javafx.scene.control.SelectionMode
 import javafx.scene.control.TreeItem
 import rs.emulate.editor.workspace.components.EditorComponent
@@ -21,6 +22,11 @@ class ResourceIndexTree : EditorComponent() {
         with(root) {
             val tree = treeview<ResourceTreeItem>(TreeItem(Root())) {
                 selectionModel.selectionMode = SelectionMode.SINGLE
+                selectionModel.selectedItemProperty().toObservable()
+                    .filter { it.value is Item }
+                    .map { (it.value as Item).id }
+                    .distinctUntilChanged()
+                    .subscribe(controller::open)
 
                 cellFormat {
                     val item = this.item
@@ -33,7 +39,7 @@ class ResourceIndexTree : EditorComponent() {
                 }
             }
 
-            controller.onResourceIndexChanged.map(::indexMapper).subscribe {
+            model.onResourceIndexUpdate.map(::indexMapper).subscribe {
                 tree.root = TreeItem(it)
                 tree.populate { parent ->
                     val value = parent.value

@@ -2,6 +2,7 @@ package rs.emulate.editor.workspace
 
 import javafx.geometry.Side
 import org.controlsfx.control.StatusBar
+import rs.emulate.editor.workspace.components.EditorStatusBar
 import rs.emulate.editor.workspace.components.menu.EditorMenu
 import rs.emulate.editor.workspace.components.widgets.tree.ResourceIndexTree
 import tornadofx.*
@@ -27,7 +28,7 @@ class EditorWorkspaceView() : View() {
 
             }
 
-            add(StatusBar())
+            add<EditorStatusBar>()
         }
     }
 
