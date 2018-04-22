@@ -8,32 +8,26 @@ import rs.emulate.legacy.config.SerializableProperty
 
 /**
  * A definition for a graphic (a 'spotanim').
- *
- * @param id The id of the definition.
- * @param properties The [ConfigPropertyMap].
  */
 open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
     /**
      * Gets the [SerializableProperty] containing the animation id of this graphic.
      */
-    fun animation(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.ANIMATION)
-    }
+    val animation: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.ANIMATION)
 
     /**
      * Gets the [SerializableProperty] containing the breadth scale of this graphic.
      */
-    fun breadthScale(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.BREADTH_SCALE)
-    }
+    val breadthScale: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.BREADTH_SCALE)
 
     /**
      * Gets the [SerializableProperty] containing the model brightness of this graphic.
      */
-    fun brightness(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.BRIGHTNESS)
-    }
+    val brightness: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.BRIGHTNESS)
 
     /**
      * Gets an [ImmutableMap] containing the original and replacement colour values.
@@ -53,16 +47,14 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
     /**
      * Gets the [SerializableProperty] containing the depth scale of this graphic.
      */
-    fun depthScale(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.DEPTH_SCALE)
-    }
+    val depthScale: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.DEPTH_SCALE)
 
     /**
      * Gets the [SerializableProperty] containing the model id of this graphic.
      */
-    fun modelId(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.MODEL)
-    }
+    val modelId: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.MODEL)
 
     /**
      * Gets the [SerializableProperty] containing the original colour for the specified slot.
@@ -83,16 +75,14 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
     /**
      * Gets the [SerializableProperty] containing the rotation of this graphic.
      */
-    fun rotation(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.ROTATION)
-    }
+    val rotation: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.ROTATION)
 
     /**
      * Gets the [SerializableProperty] containing the model shadow of this graphic.
      */
-    fun shadow(): SerializableProperty<Int> {
-        return getProperty(GraphicProperty.SHADOW)
-    }
+    val shadow: SerializableProperty<Int>
+        get() = getProperty(GraphicProperty.SHADOW)
 
     companion object {
 

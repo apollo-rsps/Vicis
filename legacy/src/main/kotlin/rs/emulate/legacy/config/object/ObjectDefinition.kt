@@ -7,238 +7,113 @@ import rs.emulate.legacy.config.npc.MorphismSet
 
 /**
  * A [MutableConfigDefinition] for an object.
- *
- * @param id The id.
- * @param properties The [ConfigPropertyMap].
  */
 open class ObjectDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
-    /**
-     * Gets the [SerializableProperty] containing the ambient lighting factor.
-     */
-    fun ambientLighting(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.AMBIENT_LIGHTING)
-    }
+    val ambientLighting: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.AMBIENT_LIGHTING)
+
+    val animation: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.ANIMATION)
+
+    val castShadow: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.CAST_SHADOW)
 
     /**
-     * Gets the [SerializableProperty] containing the animation id.
+     * The [Map] of original to replacement colours.
      */
-    fun animation(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.ANIMATION)
-    }
+    val colours: SerializableProperty<Map<Int, Int>>
+        get() = getProperty(ObjectProperty.COLOURS)
+
+    val contourGround: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.CONTOUR_GROUND)
+
+    val decorDisplacement: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.DECOR_DISPLACEMENT)
+
+    val delayShading: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.DELAY_SHADING)
+
+    val description: SerializableProperty<String>
+        get() = getProperty(ObjectProperty.DESCRIPTION)
+
+    val hollow: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.HOLLOW)
+
+    val impenetrable: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.IMPENETRABLE)
+
+    val interactive: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.INTERACTIVE)
+
+    val inverted: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.INVERTED)
+
+    val length: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.LENGTH)
+
+    val lightDiffusion: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.LIGHT_DIFFUSION)
 
     /**
-     * Gets the [SerializableProperty] containing the casts shadow flag.
+     * Gets the id of the "mapscene" image displayed beneath the object when it is drawn on the map.
      */
-    fun castShadow(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.CAST_SHADOW)
-    }
+    val mapscene: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.MAPSCENE)
+
+    val minimapFunction: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.MINIMAP_FUNCTION)
+
+    val models: SerializableProperty<ModelSet>
+        get() = getProperty(ObjectProperty.MODELS)
+
+    val morphismSet: SerializableProperty<MorphismSet>
+        get() = getProperty(ObjectProperty.MORPHISM_SET)
+
+    val name: SerializableProperty<String>
+        get() = getProperty(ObjectProperty.NAME)
+
+    val obstructiveGround: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.OBSTRUCTIVE_GROUND)
+
+    val occlude: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.OCCLUDE)
+
+    val positionedModels: SerializableProperty<ModelSet>
+        get() = getProperty(ObjectProperty.POSITIONED_MODELS)
+
+    val scaleX: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.SCALE_X)
+
+    val scaleY: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.SCALE_Y)
+
+    val scaleZ: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.SCALE_Z)
+
+    val solid: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.SOLID)
 
     /**
-     * Gets the [SerializableProperty] containing the [Map] of original to replacement colours.
+     * Whether or not the object allows items to be placed on it. // TODO wrong?
      */
-    fun colours(): SerializableProperty<Map<Int, Int>> {
-        return getProperty(ObjectProperty.COLOURS)
-    }
+    val supportsItems: SerializableProperty<Boolean>
+        get() = getProperty(ObjectProperty.SUPPORTS_ITEMS)
 
-    /**
-     * Gets the [SerializableProperty] containing the contour ground flag.
-     */
-    fun contourGround(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.CONTOUR_GROUND)
-    }
+    val surroundings: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.SURROUNDINGS)
 
-    /**
-     * Gets the [SerializableProperty] containing the decor displacement value.
-     */
-    fun decorDisplacement(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.DECOR_DISPLACEMENT)
-    }
+    val translationX: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.TRANSLATION_X)
 
-    /**
-     * Gets the [SerializableProperty] containing the delay shading flag.
-     */
-    fun delayShading(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.DELAY_SHADING)
-    }
+    val translationY: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.TRANSLATION_Y)
 
-    /**
-     * Gets the [SerializableProperty] containing the description.
-     */
-    fun description(): SerializableProperty<String> {
-        return getProperty(ObjectProperty.DESCRIPTION)
-    }
+    val translationZ: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.TRANSLATION_Z)
 
-    /**
-     * Gets the [SerializableProperty] containing the hollow flag.
-     */
-    fun hollow(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.HOLLOW)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the impenetrable flag.
-     */
-    fun impenetrable(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.IMPENETRABLE)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the interactive flag.
-     */
-    fun interactive(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.INTERACTIVE)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the inverted flag.
-     */
-    fun inverted(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.INVERTED)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the length.
-     */
-    fun length(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.LENGTH)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the light diffusion factor.
-     */
-    fun lightDiffusion(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.LIGHT_DIFFUSION)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the mapscene id.
-     *
-     * This refers to the "mapscene" image displayed beneath the object when it is drawn on the map.
-     */
-    fun mapscene(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.MAPSCENE)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the minimap function.
-     */
-    fun minimapFunction(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.MINIMAP_FUNCTION)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the unpositioned [ModelSet].
-     */
-    fun models(): SerializableProperty<ModelSet> {
-        return getProperty(ObjectProperty.MODELS)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the [MorphismSet].
-     */
-    fun morphismSet(): SerializableProperty<MorphismSet> {
-        return getProperty(ObjectProperty.MORPHISM_SET)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the name.
-     */
-    fun name(): SerializableProperty<String> {
-        return getProperty(ObjectProperty.NAME)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the obstructive ground flag.
-     */
-    fun obstructiveGround(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.OBSTRUCTIVE_GROUND)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the occlusion flag.
-     */
-    fun occlude(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.OCCLUDE)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the positioned [ModelSet].
-     */
-    fun positionedModels(): SerializableProperty<ModelSet> {
-        return getProperty(ObjectProperty.POSITIONED_MODELS)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the width scaling factor.
-     */
-    fun scaleX(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.SCALE_X)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the length scaling factor.
-     */
-    fun scaleY(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.SCALE_Y)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the height scaling factor.
-     */
-    fun scaleZ(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.SCALE_Z)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the solid flag.
-     */
-    fun solid(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.SOLID)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the supports items flag, indicating whether or not the object
-     * allows items to be placed on it.
-     */
-    fun supportsItems(): SerializableProperty<Boolean> {
-        return getProperty(ObjectProperty.SUPPORTS_ITEMS)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the surroundings flag.
-     */
-    fun surroundings(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.SURROUNDINGS)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the width translation.
-     */
-    fun translationX(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.TRANSLATION_X)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the length translation.
-     */
-    fun translationY(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.TRANSLATION_Y)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the height translation.
-     */
-    fun translationZ(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.TRANSLATION_Z)
-    }
-
-    /**
-     * Gets the [SerializableProperty] containing the width.
-     */
-    fun width(): SerializableProperty<Int> {
-        return getProperty(ObjectProperty.WIDTH)
-    }
+    val width: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.WIDTH)
 
     companion object {
 

@@ -1,20 +1,22 @@
 package rs.emulate.editor.workspace.resource.bundles.legacy.config
 
 import javafx.collections.FXCollections
+import javafx.collections.ObservableMap
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceId
 import rs.emulate.editor.workspace.resource.index.ResourceIndexBuilder
 import rs.emulate.legacy.config.MutableConfigDefinition
+import rs.emulate.legacy.config.SerializableProperty
 
 /**
  * A [Resource] from the config archive.
  */
 class ConfigResource<T : MutableConfigDefinition>(definition: T, toResourceId: T.() -> ResourceId) : Resource {
 
-    override val properties = FXCollections.observableMap(definition.serializableProperties()
-        .associateBy({ it.value }, { it.value.value })
-    )!!
+    override val properties: ObservableMap<SerializableProperty<*>, *> = FXCollections.observableMap(
+        definition.serializableProperties().associateBy({ it.value }, { it.value.value })
+    )
 
     override val id = definition.toResourceId()
 
@@ -48,5 +50,5 @@ class ConfigResourceBundle<T : MutableConfigDefinition>(
             }
         }
     }
-}
 
+}

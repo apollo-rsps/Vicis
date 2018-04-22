@@ -12,17 +12,21 @@ class FrameCollection {
     /**
      * The frame durations.
      */
-    private val durations: IntArray?
+    val durations: IntArray?
+        get() = field?.clone()
+
 
     /**
      * The primary frame ids.
      */
-    private val primaries: IntArray?
+    val primaries: IntArray?
+        get() = field?.clone()
 
     /**
      * The secondary frame ids.
      */
-    private val secondaries: IntArray?
+    val secondaries: IntArray?
+        get() = field?.clone()
 
     /**
      * Gets the size of this collection.
@@ -35,7 +39,7 @@ class FrameCollection {
      */
     constructor(primaries: IntArray, secondaries: IntArray, durations: IntArray) {
         require(primaries.size == secondaries.size && primaries.size == durations.size) {
-            "Frame collection arays must all be of the same length."
+            "Frame collection arrays must all have the same size."
         }
 
         this.primaries = primaries
@@ -54,10 +58,9 @@ class FrameCollection {
 
     override fun equals(other: Any?): Boolean {
         if (other is FrameCollection) {
-            return if (!Arrays.equals(primaries, other.primaries) || !Arrays.equals(secondaries, other.secondaries)) {
-                false
-            } else Arrays.equals(durations, other.durations)
-
+            return Arrays.equals(primaries, other.primaries) &&
+                Arrays.equals(secondaries, other.secondaries) &&
+                Arrays.equals(durations, other.durations)
         }
 
         return false
@@ -71,31 +74,10 @@ class FrameCollection {
     }
 
     /**
-     * Gets the frame durations of this collection.
-     */
-    fun getDurations(): IntArray {
-        return durations!!.clone()
-    }
-
-    /**
-     * Gets the primary frame ids of this collection.
-     */
-    fun getPrimaries(): IntArray {
-        return primaries!!.clone()
-    }
-
-    /**
      * Gets the primary frame id at the specified index.
      */
     fun getPrimary(index: Int): Int {
         return primaries!![index]
-    }
-
-    /**
-     * Gets the secondary frame ids of this collection.
-     */
-    fun getSecondaries(): IntArray {
-        return secondaries!!.clone()
     }
 
     /**

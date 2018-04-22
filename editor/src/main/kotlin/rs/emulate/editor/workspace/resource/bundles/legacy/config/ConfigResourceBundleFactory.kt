@@ -1,7 +1,7 @@
 package rs.emulate.editor.workspace.resource.bundles.legacy.config
 
-import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResourceBundleDelegate.Companion.bundle
 import rs.emulate.editor.workspace.resource.ResourceId
+import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResourceBundleDelegate.Companion.bundle
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.config.ConfigDecoder
@@ -20,7 +20,7 @@ class ConfigResourceBundleFactory(fs: IndexedFileSystem) {
     private val config = fs.getArchive(CONFIG_INDEX, CONFIG_ARCHIVE_ID)
 
     val objects by bundle(config, objectSupplier) {
-        ObjectResourceId(id, name().value)
+        ObjectResourceId(id, name.value)
     }
 
     val items by bundle(config, itemSupplier) {
@@ -28,7 +28,7 @@ class ConfigResourceBundleFactory(fs: IndexedFileSystem) {
     }
 
     val npcs by bundle(config, npcSupplier) {
-        NpcResourceId(id, name().value)
+        NpcResourceId(id, name.value)
     }
 
     private companion object {
@@ -74,8 +74,7 @@ class ConfigResourceBundleDelegate<T : MutableConfigDefinition>(
             config: Archive,
             supplier: DefinitionSupplier<T>,
             toResourceId: T.() -> ResourceId
-        ): ConfigResourceBundleDelegate<T> = ConfigResourceBundleDelegate(
-            config, supplier, toResourceId)
+        ): ConfigResourceBundleDelegate<T> = ConfigResourceBundleDelegate(config, supplier, toResourceId)
 
     }
 

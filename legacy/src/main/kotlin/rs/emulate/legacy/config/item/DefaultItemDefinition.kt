@@ -13,7 +13,6 @@ import rs.emulate.legacy.config.Properties.unsignedInt
 import rs.emulate.legacy.config.Properties.unsignedShort
 import rs.emulate.legacy.config.SerializableProperty
 import rs.emulate.legacy.config.item.ItemProperty.*
-import rs.emulate.shared.util.DataBuffer
 import java.util.HashMap
 
 /**
@@ -74,9 +73,10 @@ class DefaultItemDefinition : DefaultConfigDefinition<ItemDefinition>() {
 
         for (option in 1..ItemConstants.ITEM_STACK_COUNT) {
             val type = ConfigUtils.newOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option)
+
             properties[option + 99] = SerializableProperty(type, ItemStack.EMPTY,
-                { buffer: DataBuffer, stack: ItemStack -> ItemStack.encode(buffer, stack) },
-                { buffer: DataBuffer -> ItemStack.decode(buffer) }, java.lang.Short.BYTES * 2)
+                ItemStack.Companion::encode, ItemStack.Companion::decode, java.lang.Short.BYTES * 2
+            )
         }
 
         properties[110] = unsignedShort(GROUND_SCALE_X, ConfigConstants.DEFAULT_SCALE)
@@ -84,8 +84,9 @@ class DefaultItemDefinition : DefaultConfigDefinition<ItemDefinition>() {
         properties[112] = unsignedShort(GROUND_SCALE_Z, ConfigConstants.DEFAULT_SCALE)
 
         properties[113] = signedByte(AMBIENCE, 0)
-        properties[114] = SerializableProperty(CONTRAST, 0, { buffer1, contrast -> buffer1.putByte(contrast / 5) },
-            { buffer -> buffer.getByte() * 5 }, java.lang.Byte.BYTES)
+        properties[114] = SerializableProperty(CONTRAST, 0, { buffer, contrast -> buffer.putByte(contrast / 5) },
+            { it.getByte() * 5 }, java.lang.Byte.BYTES
+        )
 
         properties[115] = unsignedByte(TEAM, 0)
 

@@ -9,9 +9,6 @@ import rs.emulate.legacy.config.SerializableProperty
 
 /**
  * A definition for an identikit.
- *
- * @param id The id of the definition.
- * @param properties The [ConfigPropertyMap].
  */
 open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
