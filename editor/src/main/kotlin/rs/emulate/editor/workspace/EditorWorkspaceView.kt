@@ -1,13 +1,18 @@
 package rs.emulate.editor.workspace
 
 import javafx.geometry.Side
-import org.controlsfx.control.StatusBar
+import rs.emulate.editor.workspace.components.EditorPropertySheet
 import rs.emulate.editor.workspace.components.EditorStatusBar
 import rs.emulate.editor.workspace.components.menu.EditorMenu
 import rs.emulate.editor.workspace.components.widgets.tree.ResourceIndexTree
-import tornadofx.*
+import tornadofx.View
+import tornadofx.borderpane
+import tornadofx.drawer
+import tornadofx.get
+import tornadofx.hbox
+import tornadofx.vbox
 
-class EditorWorkspaceView() : View() {
+class EditorWorkspaceView : View() {
     override val root = borderpane {
         top<EditorMenu>()
 
@@ -19,7 +24,7 @@ class EditorWorkspaceView() : View() {
 
         right = hbox {
             drawer(Side.RIGHT) {
-
+                add(EditorPropertySheet::class)
             }
         }
 
