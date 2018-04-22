@@ -1,7 +1,7 @@
 package rs.emulate.util.crypto
 
-import org.junit.Assert.assertArrayEquals
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertArrayEquals
+import org.junit.jupiter.api.Test
 import rs.emulate.shared.util.DataBuffer
 import rs.emulate.shared.util.crypto.Xtea
 

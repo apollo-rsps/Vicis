@@ -297,42 +297,42 @@ object XteaAggregator {
         store: FileStore, rt: ReferenceTable, id: Int, x: Int, y: Int, buf: ByteBuffer,
         possibleKeys: Set<Key>, otherCaches: List<CacheRef>
     ): ProcessResult {
-        var buf = buf
+        var buffer = buf
         val region = x shl 8 or y
         val absX = x * 64 + 32
         val absY = y * 64 + 32
 
         for (key in possibleKeys) {
-            if (isKeyValid(buf, key, false)) {
+            if (isKeyValid(buffer, key, false)) {
                 writeKey(region, key)
                 return ProcessResult.HAVE_KEY
             }
         }
 
-        if (isEmpty(buf)) {
+        if (isEmpty(buffer)) {
             val entry = rt.getEntry(id)!!
 
             val previousVersion = entry.version
             val version = previousVersion + 1
             entry.version = version
 
-            buf = ByteBuffer.allocate(1)
-            buf.put(0.toByte())
-            buf.flip()
+            buffer = ByteBuffer.allocate(1)
+            buffer.put(0.toByte())
+            buffer.flip()
 
-            val container = Container(Container.COMPRESSION_GZIP, DataBuffer.wrap(buf), version)
-            buf = container.encode().byteBuffer
+            val container = Container(Container.COMPRESSION_GZIP, DataBuffer.wrap(buffer), version)
+            buffer = container.encode().byteBuffer
 
             val previousCrc = entry.crc
 
-            val bytes = ByteArray(buf.limit() - 2) /* exclude version from CRC */
-            buf.slice().get(bytes)
+            val bytes = ByteArray(buffer.limit() - 2) /* exclude version from CRC */
+            buffer.slice().get(bytes)
 
             val crc = CRC32()
             crc.update(bytes)
             entry.crc = crc.value.toInt()
 
-            store.write(MAP_INDEX, id, buf)
+            store.write(MAP_INDEX, id, buffer)
 
             println("$MAP_INDEX\t$id\t$previousVersion\t$version\t$previousCrc\t${entry.crc}\t($absX, $absY)")
 
@@ -344,28 +344,28 @@ object XteaAggregator {
         for (otherCache in otherCaches) {
             val otherId = otherCache.findLandscapeFile(x, y)
             if (otherId != -1) {
-                buf = otherCache.store.read(MAP_INDEX, otherId).byteBuffer
+                buffer = otherCache.store.read(MAP_INDEX, otherId).byteBuffer
 
                 for (key in possibleKeys) {
-                    if (isKeyValid(buf, key, otherCache.rs3)) {
+                    if (isKeyValid(buffer, key, otherCache.rs3)) {
                         val entry = rt.getEntry(id)!!
 
                         val previousVersion = entry.version
                         val version = previousVersion + 1
                         entry.version = version
 
-                        buf.putShort(buf.limit() - 2, version.toShort())
+                        buffer.putShort(buffer.limit() - 2, version.toShort())
 
                         val previousCrc = entry.crc
 
-                        val bytes = ByteArray(buf.limit() - 2)
-                        buf.slice().get(bytes)
+                        val bytes = ByteArray(buffer.limit() - 2)
+                        buffer.slice().get(bytes)
 
                         val crc = CRC32()
                         crc.update(bytes)
                         entry.crc = crc.value.toInt()
 
-                        store.write(MAP_INDEX, id, buf)
+                        store.write(MAP_INDEX, id, buffer)
 
                         println(
                             "$MAP_INDEX\t$id\t$previousVersion\t$version\t$previousCrc\t${entry.crc}\t($absX, $absY)")

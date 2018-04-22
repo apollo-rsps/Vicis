@@ -27,10 +27,20 @@ subprojects {
     }
 
     dependencies {
-        compile group: 'junit', name: 'junit', version: '4.12'
         compile group: 'org.apache.commons', name: 'commons-compress', version: '1.9'
         compile group: 'com.google.guava', name: 'guava', version: '18.0'
-        compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version: '1.2.31'
-        testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version: '1.2.31'
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testCompile "org.junit.jupiter:junit-jupiter-api:5.1.0"
+        testCompile "org.junit.jupiter:junit-jupiter-params:5.1.0"
+        testCompile "io.mockk:mockk:1.7.15"
+
+        testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.0"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.0"
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
