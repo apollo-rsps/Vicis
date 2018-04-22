@@ -13,6 +13,7 @@ class LegacyResourceBundleLoader(private val path: Path) : ResourceBundleLoader 
         val fs = IndexedFileSystem(path, AccessMode.READ)
 
         out += ConfigResourceBundleFactory(fs).bundles()
+        out += ModelResourceBundle(fs)
     }
 
 }
