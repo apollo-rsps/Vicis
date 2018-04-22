@@ -21,7 +21,7 @@ class EditorStartupModel : ViewModel() {
 
     override fun onCommit() {
         with(config) {
-            set(DATA_FILE, cacheDataFile)
+            set(DATA_FILE, cacheDataFile.toString())
             save()
         }
     }
