@@ -5,20 +5,20 @@ import javafx.collections.ObservableMap
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceId
-import rs.emulate.editor.workspace.resource.index.ResourceIndexBuilder
+import rs.emulate.legacy.archive.Archive
+import rs.emulate.legacy.config.ConfigDecoder
+import rs.emulate.legacy.config.DefinitionSupplier
 import rs.emulate.legacy.config.MutableConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
 
 /**
  * A [Resource] from the config archive.
  */
-class ConfigResource<T : MutableConfigDefinition>(definition: T, toResourceId: T.() -> ResourceId) : Resource {
+class ConfigResource<T : MutableConfigDefinition>(override val id: ResourceId, definition: T) : Resource {
 
-    override val properties: ObservableMap<SerializableProperty<*>, *> = FXCollections.observableMap(
+    val properties: ObservableMap<SerializableProperty<*>, *> = FXCollections.observableMap(
         definition.serializableProperties().associateBy({ it.value }, { it.value.value })
     )
-
-    override val id = definition.toResourceId()
 
     override fun equals(other: Any?): Boolean { /* TODO should we only care about matching id? */
         return other is ConfigResource<*> && id == other.id && properties == other.properties
@@ -34,21 +34,15 @@ class ConfigResource<T : MutableConfigDefinition>(definition: T, toResourceId: T
 
 }
 
-class ConfigResourceBundle<T : MutableConfigDefinition>(
-    private val definitions: Map<ResourceId, T>,
-    private val toResourceId: T.() -> ResourceId
+abstract class ConfigResourceBundle<T : MutableConfigDefinition>(
+    config: Archive,
+    supplier: DefinitionSupplier<T>,
+    toResourceId: T.() -> ResourceId
 ) : ResourceBundle {
 
-    override fun load(id: ResourceId): Resource = ConfigResource(definitions[id]!!, toResourceId)
+    protected val definitions: Map<ResourceId, T> = ConfigDecoder(config, supplier).decode()
+        .associateBy(toResourceId)
 
-    override fun index(index: ResourceIndexBuilder) {
-        definitions.forEach { (resourceId, def) ->
-            index.entry {
-                id = resourceId
-                label = resourceId.name
-                type = def.javaClass.simpleName
-            }
-        }
-    }
+    override fun load(id: ResourceId): Resource = ConfigResource(id, definitions[id]!!)
 
 }

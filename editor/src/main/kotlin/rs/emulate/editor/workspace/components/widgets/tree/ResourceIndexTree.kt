@@ -3,8 +3,14 @@ package rs.emulate.editor.workspace.components.widgets.tree
 import javafx.scene.control.SelectionMode
 import javafx.scene.control.TreeItem
 import rs.emulate.editor.workspace.components.EditorComponent
-import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.*
-import tornadofx.*
+import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.Category
+import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.Item
+import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.Root
+import tornadofx.borderpane
+import tornadofx.cellFormat
+import tornadofx.get
+import tornadofx.populate
+import tornadofx.treeview
 
 class ResourceIndexTree : EditorComponent() {
     override val root = borderpane()
@@ -22,7 +28,7 @@ class ResourceIndexTree : EditorComponent() {
                     text = when (item) {
                         is Root -> messages["tree.root_label"]
                         is Category -> item.name
-                        is Item -> item.id.name
+                        is Item -> item.name
                     }
                 }
             }

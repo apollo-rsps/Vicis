@@ -52,17 +52,17 @@ class DefinitionSupplier<T : MutableConfigDefinition> private constructor(
          *
          * @param name The name of the ArchiveEntry containing the definitions, **without** an extension.
          * @param definition The definition [Class] type.
-         * @param defaultClass The [DefaultConfigDefinition] Class type.
+         * @param default The [DefaultConfigDefinition] Class type.
          * @return The MutableConfigDefinition of type `T`.
          */
         fun <T : MutableConfigDefinition> create(
             name: String,
             definition: Class<T>,
-            defaultClass: Class<out DefaultConfigDefinition<T>>
+            default: Class<out DefaultConfigDefinition<T>>
         ): DefinitionSupplier<T> {
             try {
                 val constructor = definition.getConstructor(Int::class.javaPrimitiveType, ConfigPropertyMap::class.java)
-                val immutable = defaultClass.newInstance()
+                val immutable = default.newInstance()
 
                 return DefinitionSupplier(name, definition, constructor, immutable)
             } catch (exception: ReflectiveOperationException) {
