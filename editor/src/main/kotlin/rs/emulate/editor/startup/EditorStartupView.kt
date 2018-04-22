@@ -1,6 +1,8 @@
 package rs.emulate.editor.startup
 
 import com.github.thomasnield.rxkotlinfx.actionEvents
+import io.reactivex.Observable.empty
+import io.reactivex.Observable.just
 import javafx.stage.FileChooser.ExtensionFilter
 import rs.emulate.editor.utils.PathConverter
 import rs.emulate.editor.utils.showExceptionAlert
@@ -30,7 +32,14 @@ class EditorStartupView : View() {
 
                 button(messages["button.choose"]) {
                     actionEvents()
-                        .map { chooseFile(messages["file_chooser.title"], cacheFileFilters).firstOrNull() }
+                        .flatMap {
+                            val choice = chooseFile(messages["file_chooser.title"], cacheFileFilters).firstOrNull()
+                            if (choice != null) {
+                                just(choice)
+                            } else {
+                                empty()
+                            }
+                        }
                         .subscribe { it?.let { model.cacheDataFile = it.toPath() } }
                 }
             }
