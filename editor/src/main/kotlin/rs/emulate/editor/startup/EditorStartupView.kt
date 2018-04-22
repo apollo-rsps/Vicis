@@ -52,7 +52,11 @@ class EditorStartupView : View() {
         }
 
         button(messages["button.continue"]) {
-            enableWhen { model.cacheDataFileProperty.booleanBinding { Files.exists(it) } }
+            enableWhen {
+                model.cacheDataFileProperty.booleanBinding {
+                    Files.exists(it) && it?.endsWith(CACHE_FILE_NAME) == true
+                }
+            }
 
             action {
                 runAsyncWithProgress {
