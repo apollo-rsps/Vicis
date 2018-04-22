@@ -8,7 +8,7 @@ import rs.emulate.editor.workspace.resource.ResourceCache
 import rs.emulate.editor.workspace.resource.bundles.legacy.LegacyResourceBundleLoader
 import rs.emulate.editor.workspace.resource.bundles.modern.ModernResourceBundleLoader
 import rs.emulate.legacy.IndexedFileSystem
-import tornadofx.*
+import tornadofx.Controller
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -34,7 +34,7 @@ class EditorStartupController : Controller() {
             Legacy -> LegacyResourceBundleLoader(cachePath)
         }
 
-        val list = mutableListOf<ResourceBundle>()
+        val list = mutableListOf<ResourceBundle<*>>()
         bundleLoader.load(list)
 
         return ResourceCache(list)

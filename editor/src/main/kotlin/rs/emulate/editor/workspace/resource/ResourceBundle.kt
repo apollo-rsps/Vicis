@@ -3,12 +3,12 @@ package rs.emulate.editor.workspace.resource
 import rs.emulate.editor.workspace.resource.index.ResourceIndexBuilder
 
 interface ResourceBundleLoader {
-    fun load(out: MutableList<ResourceBundle>)
+    fun load(out: MutableList<ResourceBundle<*>>)
 }
 
-interface ResourceBundle {
+interface ResourceBundle<T: ResourceId> {
 
-    fun load(id: ResourceId): Resource
+    fun load(id: T): Resource
 
     fun index(index: ResourceIndexBuilder)
 

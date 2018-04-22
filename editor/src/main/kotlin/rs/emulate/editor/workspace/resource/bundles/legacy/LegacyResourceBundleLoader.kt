@@ -9,11 +9,10 @@ import java.nio.file.Path
 
 class LegacyResourceBundleLoader(private val path: Path) : ResourceBundleLoader {
 
-    override fun load(out: MutableList<ResourceBundle>) {
+    override fun load(out: MutableList<ResourceBundle<*>>) {
         val fs = IndexedFileSystem(path, AccessMode.READ)
-        val factory = ConfigResourceBundleFactory(fs)
 
-        out += factory.bundles()
+        out += ConfigResourceBundleFactory(fs).bundles()
     }
 
 }

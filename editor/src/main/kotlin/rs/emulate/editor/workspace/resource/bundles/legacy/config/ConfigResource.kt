@@ -34,15 +34,16 @@ class ConfigResource<T : MutableConfigDefinition>(override val id: ResourceId, d
 
 }
 
+data class ConfigResourceId(val id: Int) : ResourceId
+
 abstract class ConfigResourceBundle<T : MutableConfigDefinition>(
     config: Archive,
-    supplier: DefinitionSupplier<T>,
-    toResourceId: T.() -> ResourceId
-) : ResourceBundle {
+    supplier: DefinitionSupplier<T>
+) : ResourceBundle<ConfigResourceId> {
 
-    protected val definitions: Map<ResourceId, T> = ConfigDecoder(config, supplier).decode()
-        .associateBy(toResourceId)
+    protected val definitions = ConfigDecoder(config, supplier).decode()
+        .associateBy { ConfigResourceId(it.id) } // TODO load lazily?
 
-    override fun load(id: ResourceId): Resource = ConfigResource(id, definitions[id]!!)
+    override fun load(id: ConfigResourceId): Resource = ConfigResource(id, definitions[id]!!)
 
 }
