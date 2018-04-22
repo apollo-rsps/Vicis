@@ -88,6 +88,6 @@ class EditorStartupView : View() {
 
     companion object {
         private const val CACHE_FILE_NAME = "main_file_cache.dat"
-        private val DEFAULT_DIR = Paths.get("./data/resources")
+        private val DEFAULT_DIR = Paths.get("../data/resources")
     }
 }
