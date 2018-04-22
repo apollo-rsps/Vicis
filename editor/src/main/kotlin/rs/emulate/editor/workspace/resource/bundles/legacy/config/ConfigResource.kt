@@ -1,9 +1,10 @@
-package rs.emulate.editor.workspace
+package rs.emulate.editor.workspace.resource.bundles.legacy.config
 
 import javafx.collections.FXCollections
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceId
+import rs.emulate.editor.workspace.resource.index.ResourceIndexBuilder
 import rs.emulate.legacy.config.MutableConfigDefinition
 
 /**
@@ -38,7 +39,14 @@ class ConfigResourceBundle<T : MutableConfigDefinition>(
 
     override fun load(id: ResourceId): Resource = ConfigResource(definitions[id]!!, toResourceId)
 
-    override fun list(): Sequence<ResourceId> = definitions.keys.asSequence()
-
+    override fun index(index: ResourceIndexBuilder) {
+        definitions.forEach { (resourceId, def) ->
+            index.entry {
+                id = resourceId
+                label = resourceId.name
+                type = def.javaClass.simpleName
+            }
+        }
+    }
 }
 

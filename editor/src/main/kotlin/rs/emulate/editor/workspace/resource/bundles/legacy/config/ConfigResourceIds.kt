@@ -1,4 +1,4 @@
-package rs.emulate.editor.workspace
+package rs.emulate.editor.workspace.resource.bundles.legacy.config
 
 import rs.emulate.editor.workspace.resource.ResourceId
 

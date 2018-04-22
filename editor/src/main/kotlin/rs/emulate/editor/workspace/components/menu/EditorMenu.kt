@@ -1,4 +1,4 @@
-package rs.emulate.editor.workspace.components
+package rs.emulate.editor.workspace.components.menu
 
 import tornadofx.*
 

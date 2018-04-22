@@ -1,4 +1,4 @@
-package rs.emulate.editor.workspace.resource.modern
+package rs.emulate.editor.workspace.resource.bundles.modern
 
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceBundleLoader

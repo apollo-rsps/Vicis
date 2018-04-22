@@ -1,6 +1,6 @@
-package rs.emulate.editor.workspace.resource.legacy
+package rs.emulate.editor.workspace.resource.bundles.legacy
 
-import rs.emulate.editor.workspace.ConfigResourceBundleFactory
+import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResourceBundleFactory
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceBundleLoader
 import rs.emulate.legacy.AccessMode

@@ -1,6 +1,6 @@
-package rs.emulate.editor.workspace
+package rs.emulate.editor.workspace.resource.bundles.legacy.config
 
-import rs.emulate.editor.workspace.ConfigResourceBundleDelegate.Companion.bundle
+import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResourceBundleDelegate.Companion.bundle
 import rs.emulate.editor.workspace.resource.ResourceId
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive

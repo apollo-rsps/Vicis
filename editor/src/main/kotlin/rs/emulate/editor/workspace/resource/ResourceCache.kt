@@ -1,5 +1,10 @@
 package rs.emulate.editor.workspace.resource
 
-class ResourceCache(val bundles: List<ResourceBundle>) {
+import rs.emulate.editor.workspace.resource.index.ResourceIndexBuilder
 
+class ResourceCache(val bundles: List<ResourceBundle> = emptyList()) {
+    fun index() = bundles.fold(ResourceIndexBuilder()) { builder, bundle ->
+        bundle.index(builder);
+        builder
+    }.build()
 }
