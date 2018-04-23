@@ -17,7 +17,7 @@ class Variable private constructor(
     companion object {
 
         fun create(variable: Int, high: Int, low: Int): Variable {
-            require(variable >= 0) { "Variable id must be greater than or equal to 0." }
+            require(variable >= 0) { "Varbit id must be greater than or equal to 0." }
             require(validMaskIndex(high) && validMaskIndex(low)) {
                 "High and low mask indices must be greater than or equal to 0 and less than 33."
             }

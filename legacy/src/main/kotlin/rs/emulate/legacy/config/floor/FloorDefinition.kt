@@ -13,21 +13,21 @@ open class FloorDefinition(id: Int, properties: ConfigPropertyMap) : MutableConf
      * The colour of the floor, in RGB.
      */
     val colour: SerializableProperty<Int>
-        get() = properties[FloorProperty.COLOUR]
+        get() = getProperty(FloorProperty.Colour)
 
     /**
      * The colour when the floor is displayed on the minimap, in RGB.
      */
     val minimapColour: SerializableProperty<Int>
-        get() = properties[FloorProperty.MINIMAP_COLOUR]
+        get() = getProperty(FloorProperty.MinimapColour)
 
     val name: SerializableProperty<String>
-        get() = properties[FloorProperty.NAME]
+        get() = getProperty(FloorProperty.Name)
 
     val shadowed: SerializableProperty<Boolean>
-        get() = properties[FloorProperty.SHADOWED]
+        get() = getProperty(FloorProperty.Shadowed)
 
     val texture: SerializableProperty<Int>
-        get() = properties[FloorProperty.TEXTURE]
+        get() = getProperty(FloorProperty.Texture)
 
 }

@@ -3,22 +3,27 @@ package rs.emulate.legacy.config
 import rs.emulate.shared.property.PropertyType
 
 /**
- * A [PropertyType] used as part of the [ConfigEncoder] and [ConfigDecoder], [opcode].
- * Should **only** be implemented by enumerators (excluding the existing [DynamicConfigPropertyType] class).
+ * A [PropertyType] used by the [ConfigEncoder] and [ConfigDecoder].
  */
-interface ConfigPropertyType : PropertyType {
+abstract class ConfigPropertyType<T> : PropertyType {
+
+    /**
+     * The opcode of this ConfigPropertyType.
+     * */
+    abstract val opcode: Int
+
+    override val name = javaClass.simpleName!!
 
     /**
      * Gets the [SerializableProperty] associated with this ConfigPropertyType from the specified
      * [MutableConfigDefinition].
      */
-    fun <T : Any> propertyFrom(definition: MutableConfigDefinition): SerializableProperty<T> {
+    fun propertyFrom(definition: MutableConfigDefinition): SerializableProperty<T> {
         return definition.getProperty(this)
     }
 
-    /**
-     * The opcode of this ConfigPropertyType.
-     * */
-    val opcode: Int
+    override fun formattedName(): String {
+        return javaClass.simpleName!!.replace("(.)([A-Z])".toRegex(), "$1 $2")
+    }
 
 }

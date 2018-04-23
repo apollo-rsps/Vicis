@@ -16,7 +16,7 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
      * Gets the [SerializableProperty] containing the body model ids of this IdentikitDefinition.
      */
     val bodyModels: SerializableProperty<IntArray>
-        get() = getProperty(IdentikitProperty.MODELS)
+        get() = getProperty(IdentikitProperty.Models)
 
     /**
      * Gets an [ImmutableMap] containing the original and replacement colour values of this IdentikitDefinition.
@@ -29,7 +29,7 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
                 val original = getProperty<Int>(ConfigUtils.getOriginalColourPropertyName(slot))
                 val replacement = getProperty<Int>(ConfigUtils.getReplacementColourPropertyName(slot))
 
-                builder.put(original.value!!, replacement.value!!)
+                builder.put(original.value, replacement.value)
             }
 
             return builder.build()
@@ -53,14 +53,14 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
      * Gets the [SerializableProperty] containing the part of this IdentikitDefinition.
      */
     val part: SerializableProperty<Part>
-        get() = getProperty(IdentikitProperty.PART)
+        get() = getProperty(IdentikitProperty.Part)
 
     /**
      * Returns the [SerializableProperty] containing whether or not this IdentikitDefinition can be used when
      * designing a player.
      */
     val isPlayerDesignStyle: SerializableProperty<Boolean>
-        get() = getProperty(IdentikitProperty.PLAYER_DESIGN_STYLE)
+        get() = getProperty(IdentikitProperty.PlayerDesignStyle)
 
     /**
      * Gets the [SerializableProperty] containing the specified head model id of this IdentikitDefinition.

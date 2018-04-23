@@ -9,38 +9,38 @@ import rs.emulate.legacy.config.SerializableProperty
  */
 open class AnimationDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
-    val interleaveOrder: SerializableProperty<IntArray>
-        get() = getProperty(AnimationProperty.INTERLEAVE_ORDER)
+    val interleaveOrder: SerializableProperty<ByteArray>
+        get() = getProperty(AnimationProperty.InterleaveOrder)
 
     val animatingPrecedence: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.ANIMATING_PRECEDENCE)
+        get() = getProperty(AnimationProperty.AnimatingPrecedence)
 
     val frameCollection: SerializableProperty<FrameCollection>
-        get() = getProperty(AnimationProperty.FRAMES)
+        get() = getProperty(AnimationProperty.Frames)
 
     val loopOffset: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.LOOP_OFFSET)
+        get() = getProperty(AnimationProperty.LoopOffset)
 
     val maximumLoops: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.MAXIMUM_LOOPS)
+        get() = getProperty(AnimationProperty.MaximumLoops)
 
-    val playerMainhand: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.PLAYER_MAINHAND)
+    val characterMainhand: SerializableProperty<Int>
+        get() = getProperty(AnimationProperty.CharacterMainhand)
 
-    val playerOffhand: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.PLAYER_OFFHAND)
+    val characterOffhand: SerializableProperty<Int>
+        get() = getProperty(AnimationProperty.CharacterOffhand)
 
     val priority: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.PRIORITY)
+        get() = getProperty(AnimationProperty.Priority)
 
     val replayMode: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.REPLAY_MODE)
+        get() = getProperty(AnimationProperty.ReplayMode)
 
     val stretches: SerializableProperty<Boolean>
-        get() = getProperty(AnimationProperty.STRETCHES)
+        get() = getProperty(AnimationProperty.Stretches)
 
     val walkingPrecedence: SerializableProperty<Int>
-        get() = getProperty(AnimationProperty.WALKING_PRECEDENCE)
+        get() = getProperty(AnimationProperty.WalkingPrecedence)
 
     companion object {
 

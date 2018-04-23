@@ -3,6 +3,7 @@ package rs.emulate.legacy.config.npc
 import rs.emulate.legacy.config.ConfigPropertyMap
 import rs.emulate.legacy.config.MutableConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
+import rs.emulate.legacy.config.npc.NpcProperty.*
 
 /**
  * A [MutableConfigDefinition] for an npc.
@@ -10,64 +11,64 @@ import rs.emulate.legacy.config.SerializableProperty
 open class NpcDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
     val animationSet: SerializableProperty<MovementAnimationSet>
-        get() = getProperty(NpcProperty.ANIMATION_SET)
+        get() = getProperty(AnimationSet)
 
     val clickable: SerializableProperty<Boolean>
-        get() = getProperty(NpcProperty.CLICKABLE)
+        get() = getProperty(Clickable)
 
     val colours: SerializableProperty<Map<Int, Int>>
-        get() = getProperty(NpcProperty.COLOURS)
+        get() = getProperty(Colours)
 
     val combatLevel: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.COMBAT_LEVEL)
+        get() = getProperty(CombatLevel)
 
     val description: SerializableProperty<String>
-        get() = getProperty(NpcProperty.DESCRIPTION)
+        get() = getProperty(Description)
 
     val flatScale: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.FLAT_SCALE)
+        get() = getProperty(FlatScale)
 
     val headIcon: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.HEAD_ICON)
+        get() = getProperty(HeadIcon)
 
     val heightScale: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.HEIGHT_SCALE)
+        get() = getProperty(HeightScale)
 
     val idleAnimation: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.IDLE_ANIMATION)
+        get() = getProperty(IdleAnimation)
 
     val lightModifier: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.LIGHT_MODIFIER)
+        get() = getProperty(LightModifier)
 
     val minimapVisible: SerializableProperty<Boolean>
-        get() = getProperty(NpcProperty.MINIMAP_VISIBLE)
+        get() = getProperty(MinimapVisible)
 
     val models: SerializableProperty<IntArray>
-        get() = getProperty(NpcProperty.MODELS)
+        get() = getProperty(Models)
 
     val morphismSet: SerializableProperty<MorphismSet>
-        get() = getProperty(NpcProperty.MORPHISM_SET)
+        get() = getProperty(Morphisms)
 
     val name: SerializableProperty<String>
-        get() = getProperty(NpcProperty.NAME)
+        get() = getProperty(Name)
 
     val priorityRender: SerializableProperty<Boolean>
-        get() = getProperty(NpcProperty.PRIORITY_RENDER)
+        get() = getProperty(PriorityRender)
 
     val rotation: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.ROTATION)
+        get() = getProperty(Rotation)
 
     val secondaryModels: SerializableProperty<IntArray>
-        get() = getProperty(NpcProperty.SECONDARY_MODELS)
+        get() = getProperty(SecondaryModels)
 
     val shadowModifier: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.SHADOW_MODIFIER)
+        get() = getProperty(ShadowModifier)
 
     val size: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.SIZE)
+        get() = getProperty(Size)
 
     val walkingAnimation: SerializableProperty<Int>
-        get() = getProperty(NpcProperty.WALKING_ANIMATION)
+        get() = getProperty(WalkingAnimation)
 
     companion object {
 

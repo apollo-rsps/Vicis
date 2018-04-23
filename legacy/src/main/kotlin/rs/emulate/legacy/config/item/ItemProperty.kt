@@ -2,166 +2,37 @@ package rs.emulate.legacy.config.item
 
 import rs.emulate.legacy.config.ConfigPropertyType
 
-/**
- * A [ConfigPropertyType] implementation for [ItemDefinition]s.
- *
- * @param opcode The opcode.
- */
-internal enum class ItemProperty(override val opcode: Int) : ConfigPropertyType {
 
-    /**
-     * The model id property.
-     */
-    MODEL(1),
-
-    /**
-     * The name property.
-     */
-    NAME(2),
-
-    /**
-     * The description property.
-     */
-    DESCRIPTION(3),
-
-    /**
-     * The sprite scale property.
-     */
-    SPRITE_SCALE(4),
-
-    /**
-     * The sprite pitch property.
-     */
-    SPRITE_PITCH(5),
-
-    /**
-     * The sprite camera roll property.
-     */
-    SPRITE_CAMERA_ROLL(6),
-
-    /**
-     * The horizontal sprite translation property.
-     */
-    SPRITE_TRANSLATE_X(7),
-
-    /**
-     * The vertical sprite translation property.
-     */
-    SPRITE_TRANSLATE_Y(8),
-
-    /**
-     * The stackable property.
-     */
-    STACKABLE(11),
-
-    /**
-     * The value property.
-     */
-    VALUE(12),
-
-    /**
-     * The members-only property.
-     */
-    MEMBERS(16),
-
-    /**
-     * The primary male model id property.
-     */
-    PRIMARY_MALE_MODEL(23),
-
-    /**
-     * The secondary male model id property.
-     */
-    SECONDARY_MALE_MODEL(24),
-
-    /**
-     * The primary female model id property.
-     */
-    PRIMARY_FEMALE_MODEL(25),
-
-    /**
-     * The secondary female model id property.
-     */
-    SECONDARY_FEMALE_MODEL(26),
-
-    /**
-     * The colours property.
-     */
-    COLOURS(40),
-
-    /**
-     * The tertiary male model id property.
-     */
-    TERTIARY_MALE_MODEL(78),
-
-    /**
-     * The tertiary female model id property.
-     */
-    TERTIARY_FEMALE_MODEL(79),
-
-    /**
-     * The primary male head piece id property.
-     */
-    PRIMARY_MALE_HEAD_PIECE(90),
-
-    /**
-     * The primary female head piece id property.
-     */
-    PRIMARY_FEMALE_HEAD_PIECE(91),
-
-    /**
-     * The secondary male head piece id property.
-     */
-    SECONDARY_MALE_HEAD_PIECE(92),
-
-    /**
-     * The secondary female head piece id property.
-     */
-    SECONDARY_FEMALE_HEAD_PIECE(93),
-
-    /**
-     * The sprite camera yaw property.
-     */
-    SPRITE_CAMERA_YAW(95),
-
-    /**
-     * The note info item id.
-     */
-    NOTE_INFO_ID(97),
-
-    /**
-     * The note template item id.
-     */
-    NOTE_TEMPLATE_ID(98),
-
-    /**
-     * The ground model width scale property.
-     */
-    GROUND_SCALE_X(110),
-
-    /**
-     * The ground model length scale property.
-     */
-    GROUND_SCALE_Y(111),
-
-    /**
-     * The ground model height scale property.
-     */
-    GROUND_SCALE_Z(112),
-
-    /**
-     * The light ambience property.
-     */
-    AMBIENCE(113),
-
-    /**
-     * The light diffusion property.
-     */
-    CONTRAST(114),
-
-    /**
-     * The team property.
-     */
-    TEAM(115);
-
-}
+sealed class ItemProperty<T>(override val opcode: Int) : ConfigPropertyType<T>() {
+    object Model : ItemProperty<Int>(1)
+    object Name : ItemProperty<String>(2)
+    object Description : ItemProperty<String>(3)
+    object SpriteScale : ItemProperty<Int>(4)
+    object SpritePitch : ItemProperty<Int>(5)
+    object SpriteCameraRoll : ItemProperty<Int>(6)
+    object SpriteTranslateX : ItemProperty<Int>(7)
+    object SpriteTranslateY : ItemProperty<Int>(8)
+    object Stackable : ItemProperty<Boolean>(11)
+    object Value : ItemProperty<Long>(12)
+    object Members : ItemProperty<Boolean>(16)
+    object PrimaryMaleModel : ItemProperty<PrimaryModel>(23)
+    object SecondaryMaleModel : ItemProperty<Int>(24)
+    object PrimaryFemaleModel : ItemProperty<PrimaryModel>(25)
+    object SecondaryFemaleModel : ItemProperty<Int>(26)
+    object Colours : ItemProperty<Map<Int, Int>>(40)
+    object TertiaryMaleModel : ItemProperty<Int>(78)
+    object TertiaryFemaleModel : ItemProperty<Int>(79)
+    object PrimaryMaleHeadPiece : ItemProperty<Int>(90)
+    object PrimaryFemaleHeadPiece : ItemProperty<Int>(91)
+    object SecondaryMaleHeadPiece : ItemProperty<Int>(92)
+    object SecondaryFemaleHeadPiece : ItemProperty<Int>(93)
+    object SpriteCameraYaw : ItemProperty<Int>(95)
+    object NoteInfoId : ItemProperty<Int>(97)
+    object NoteTemplateId : ItemProperty<Int>(98)
+    object GroundScaleX : ItemProperty<Int>(110)
+    object GroundScaleY : ItemProperty<Int>(111)
+    object GroundScaleZ : ItemProperty<Int>(112)
+    object Ambience : ItemProperty<Int>(113)
+    object Contrast : ItemProperty<Int>(114)
+    object Team : ItemProperty<Int>(115)
+} // TODO action and stack properties

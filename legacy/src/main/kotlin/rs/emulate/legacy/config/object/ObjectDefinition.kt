@@ -11,109 +11,109 @@ import rs.emulate.legacy.config.npc.MorphismSet
 open class ObjectDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
     val ambientLighting: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.AMBIENT_LIGHTING)
+        get() = getProperty(ObjectProperty.AmbientLighting)
 
     val animation: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.ANIMATION)
+        get() = getProperty(ObjectProperty.Animation)
 
     val castShadow: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.CAST_SHADOW)
+        get() = getProperty(ObjectProperty.CastShadow)
 
     /**
      * The [Map] of original to replacement colours.
      */
     val colours: SerializableProperty<Map<Int, Int>>
-        get() = getProperty(ObjectProperty.COLOURS)
+        get() = getProperty(ObjectProperty.Colours)
 
     val contourGround: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.CONTOUR_GROUND)
+        get() = getProperty(ObjectProperty.ContourGround)
 
     val decorDisplacement: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.DECOR_DISPLACEMENT)
+        get() = getProperty(ObjectProperty.DecorDisplacement)
 
     val delayShading: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.DELAY_SHADING)
+        get() = getProperty(ObjectProperty.DelayShading)
 
     val description: SerializableProperty<String>
-        get() = getProperty(ObjectProperty.DESCRIPTION)
+        get() = getProperty(ObjectProperty.Description)
 
     val hollow: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.HOLLOW)
+        get() = getProperty(ObjectProperty.Hollow)
 
     val impenetrable: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.IMPENETRABLE)
+        get() = getProperty(ObjectProperty.Impenetrable)
 
     val interactive: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.INTERACTIVE)
+        get() = getProperty(ObjectProperty.Interactive)
 
     val inverted: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.INVERTED)
+        get() = getProperty(ObjectProperty.Inverted)
 
     val length: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.LENGTH)
+        get() = getProperty(ObjectProperty.Length)
 
     val lightDiffusion: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.LIGHT_DIFFUSION)
+        get() = getProperty(ObjectProperty.LightDiffusion)
 
     /**
      * Gets the id of the "mapscene" image displayed beneath the object when it is drawn on the map.
      */
     val mapscene: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.MAPSCENE)
+        get() = getProperty(ObjectProperty.Mapscene)
 
     val minimapFunction: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.MINIMAP_FUNCTION)
+        get() = getProperty(ObjectProperty.MinimapFunction)
 
     val models: SerializableProperty<ModelSet>
-        get() = getProperty(ObjectProperty.MODELS)
+        get() = getProperty(ObjectProperty.Models)
 
     val morphismSet: SerializableProperty<MorphismSet>
-        get() = getProperty(ObjectProperty.MORPHISM_SET)
+        get() = getProperty(ObjectProperty.Morphisms)
 
     val name: SerializableProperty<String>
-        get() = getProperty(ObjectProperty.NAME)
+        get() = getProperty(ObjectProperty.Name)
 
     val obstructiveGround: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.OBSTRUCTIVE_GROUND)
+        get() = getProperty(ObjectProperty.ObstructiveGround)
 
     val occlude: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.OCCLUDE)
+        get() = getProperty(ObjectProperty.Occlude)
 
     val positionedModels: SerializableProperty<ModelSet>
-        get() = getProperty(ObjectProperty.POSITIONED_MODELS)
+        get() = getProperty(ObjectProperty.PositionedModels)
 
     val scaleX: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.SCALE_X)
+        get() = getProperty(ObjectProperty.ScaleX)
 
     val scaleY: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.SCALE_Y)
+        get() = getProperty(ObjectProperty.ScaleY)
 
     val scaleZ: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.SCALE_Z)
+        get() = getProperty(ObjectProperty.ScaleZ)
 
     val solid: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.SOLID)
+        get() = getProperty(ObjectProperty.Solid)
 
     /**
      * Whether or not the object allows items to be placed on it. // TODO wrong?
      */
-    val supportsItems: SerializableProperty<Boolean>
-        get() = getProperty(ObjectProperty.SUPPORTS_ITEMS)
+    val supportsItems: SerializableProperty<Int>
+        get() = getProperty(ObjectProperty.SupportsItems)
 
     val surroundings: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.SURROUNDINGS)
+        get() = getProperty(ObjectProperty.Surroundings)
 
     val translationX: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.TRANSLATION_X)
+        get() = getProperty(ObjectProperty.TranslationX)
 
     val translationY: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.TRANSLATION_Y)
+        get() = getProperty(ObjectProperty.TranslationY)
 
     val translationZ: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.TRANSLATION_Z)
+        get() = getProperty(ObjectProperty.TranslationZ)
 
     val width: SerializableProperty<Int>
-        get() = getProperty(ObjectProperty.WIDTH)
+        get() = getProperty(ObjectProperty.Width)
 
     companion object {
 

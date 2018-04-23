@@ -15,19 +15,19 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
      * Gets the [SerializableProperty] containing the animation id of this graphic.
      */
     val animation: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.ANIMATION)
+        get() = getProperty(GraphicProperty.Animation)
 
     /**
      * Gets the [SerializableProperty] containing the breadth scale of this graphic.
      */
     val breadthScale: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.BREADTH_SCALE)
+        get() = getProperty(GraphicProperty.BreadthScale)
 
     /**
      * Gets the [SerializableProperty] containing the model brightness of this graphic.
      */
     val brightness: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.BRIGHTNESS)
+        get() = getProperty(GraphicProperty.Brightness)
 
     /**
      * Gets an [ImmutableMap] containing the original and replacement colour values.
@@ -48,13 +48,13 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
      * Gets the [SerializableProperty] containing the depth scale of this graphic.
      */
     val depthScale: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.DEPTH_SCALE)
+        get() = getProperty(GraphicProperty.DepthScale)
 
     /**
      * Gets the [SerializableProperty] containing the model id of this graphic.
      */
     val modelId: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.MODEL)
+        get() = getProperty(GraphicProperty.Model)
 
     /**
      * Gets the [SerializableProperty] containing the original colour for the specified slot.
@@ -76,13 +76,13 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
      * Gets the [SerializableProperty] containing the rotation of this graphic.
      */
     val rotation: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.ROTATION)
+        get() = getProperty(GraphicProperty.Rotation)
 
     /**
      * Gets the [SerializableProperty] containing the model shadow of this graphic.
      */
     val shadow: SerializableProperty<Int>
-        get() = getProperty(GraphicProperty.SHADOW)
+        get() = getProperty(GraphicProperty.Shadow)
 
     companion object {
 

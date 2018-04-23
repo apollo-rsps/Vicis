@@ -1,8 +1,7 @@
 package rs.emulate.shared.property
 
 /**
- * A type of a property. Should **only** be implemented by enumerators (excluding the existingDynamicConfigPropertyType
- * class).
+ * A type of a property.
  */
 interface PropertyType {
 
@@ -14,7 +13,7 @@ interface PropertyType {
     }
 
     /**
-     * The name of this PropertyType, as a String.
+     * The name of the property.
      */
     val name: String
 

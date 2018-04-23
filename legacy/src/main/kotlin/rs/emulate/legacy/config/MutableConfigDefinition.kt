@@ -37,7 +37,7 @@ abstract class MutableConfigDefinition(val id: Int, properties: ConfigPropertyMa
     /**
      * Gets a [SerializableProperty] with the specified opcode.
      */
-    fun <T : Any> getProperty(opcode: Int): SerializableProperty<T> {
+    fun <T> getProperty(opcode: Int): SerializableProperty<T> {
         @Suppress("UNCHECKED_CAST")
         val property = properties.get<Any>(opcode) as SerializableProperty<T>
         return requireNotNull(property) { "No property with opcode $opcode exists." }
@@ -46,9 +46,9 @@ abstract class MutableConfigDefinition(val id: Int, properties: ConfigPropertyMa
     /**
      * Gets a [SerializableProperty] with the specified [ConfigPropertyType].
      */
-    fun <T : Any> getProperty(name: ConfigPropertyType): SerializableProperty<T> {
+    fun <T> getProperty(name: ConfigPropertyType<T>): SerializableProperty<T> {
         @Suppress("UNCHECKED_CAST")
-        val property = properties.get<Any>(name) as SerializableProperty<T>
+        val property = properties[name]
         return requireNotNull(property) { "No property called $name exists." }
     }
 
@@ -62,8 +62,8 @@ abstract class MutableConfigDefinition(val id: Int, properties: ConfigPropertyMa
     /**
      * Sets the value of the [SerializableProperty] with the specified opcode.
      */
-    fun <V> setProperty(name: ConfigPropertyType, value: V) {
-        getProperty<Any>(name).value = value
+    fun <V> setProperty(name: ConfigPropertyType<V>, value: V) {
+        getProperty(name).value = value
     }
 
     override fun toString(): String {

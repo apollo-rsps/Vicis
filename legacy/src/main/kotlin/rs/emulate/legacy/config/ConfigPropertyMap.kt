@@ -27,7 +27,7 @@ class ConfigPropertyMap(opcodes: Map<Int, SerializableProperty<*>>) {
      * Gets the [SerializableProperty] with the specified [ConfigPropertyType].
      * @throws IllegalArgumentException If no ConfigProperty with the specified name exists.
      */
-    operator fun <T : Any> get(name: ConfigPropertyType): SerializableProperty<T> {
+    operator fun <T> get(name: ConfigPropertyType<T>): SerializableProperty<T> {
         return validate(opcodes[name.opcode], name)
     }
 
@@ -35,7 +35,7 @@ class ConfigPropertyMap(opcodes: Map<Int, SerializableProperty<*>>) {
      * Gets the [SerializableProperty] with the specified opcode.
      * @throws IllegalArgumentException If no ConfigProperty with the specified opcode exists.
      */
-    operator fun <T : Any> get(opcode: Int): SerializableProperty<T> {
+    operator fun <T> get(opcode: Int): SerializableProperty<T> {
         return validate(opcodes[opcode], opcode)
     }
 
@@ -72,7 +72,7 @@ class ConfigPropertyMap(opcodes: Map<Int, SerializableProperty<*>>) {
      * Validates the specified [SerializableProperty] (i.e. ensures that it is not `null`).
      * @throws IllegalArgumentException If the ConfigProperty is `null`.
      */
-    private fun <T : Any> validate(property: SerializableProperty<*>?, key: Any): SerializableProperty<T> {
+    private fun <T> validate(property: SerializableProperty<*>?, key: Any): SerializableProperty<T> {
         @Suppress("UNCHECKED_CAST")
         return requireNotNull(property) { "No property with a key of $key exists." } as SerializableProperty<T>
     }

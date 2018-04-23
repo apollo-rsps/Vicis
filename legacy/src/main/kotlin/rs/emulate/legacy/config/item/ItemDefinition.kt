@@ -4,6 +4,7 @@ import rs.emulate.legacy.config.ConfigPropertyMap
 import rs.emulate.legacy.config.ConfigUtils
 import rs.emulate.legacy.config.MutableConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
+import rs.emulate.legacy.config.item.ItemProperty.*
 import rs.emulate.shared.world.Sex
 
 /**
@@ -15,76 +16,76 @@ open class ItemDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfi
      * The [Map] of original to replacement colours.
      */
     val colours: SerializableProperty<Map<Int, Int>>
-        get() = getProperty(ItemProperty.COLOURS)
+        get() = getProperty(Colours)
 
     val description: SerializableProperty<String>
-        get() = getProperty(ItemProperty.DESCRIPTION)
+        get() = getProperty(Description)
 
     /**
      * The scale, in the x-direction, of this item's model when displayed on the ground.
      */
     val groundScaleX: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.GROUND_SCALE_X)
+        get() = getProperty(GroundScaleX)
 
     /**
      * The scale, in the vertical direction, of this item's model when displayed on the ground.
      */
     val groundScaleY: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.GROUND_SCALE_Y)
+        get() = getProperty(GroundScaleY)
 
     /**
      * The scale, in the z-direction, of this item's model when displayed on the ground.
      */
     val groundScaleZ: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.GROUND_SCALE_Z)
+        get() = getProperty(GroundScaleZ)
 
     val lightAmbiance: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.AMBIENCE)
+        get() = getProperty(Ambience)
 
     val lightDiffusion: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.CONTRAST)
+        get() = getProperty(Contrast)
 
     val modelId: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.MODEL)
+        get() = getProperty(Model)
 
     val name: SerializableProperty<String>
-        get() = getProperty(ItemProperty.NAME)
+        get() = getProperty(Name)
 
     val noteInfoId: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.NOTE_INFO_ID)
+        get() = getProperty(NoteInfoId)
 
     val noteTemplateId: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.NOTE_TEMPLATE_ID)
+        get() = getProperty(NoteTemplateId)
 
     val spriteCameraRoll: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.SPRITE_CAMERA_ROLL)
+        get() = getProperty(SpriteCameraRoll)
 
     val spriteCameraYaw: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.SPRITE_CAMERA_YAW)
+        get() = getProperty(SpriteCameraYaw)
 
     val spritePitch: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.SPRITE_PITCH)
+        get() = getProperty(SpritePitch)
 
     val spriteScale: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.SPRITE_SCALE)
+        get() = getProperty(SpriteScale)
 
     val spriteTranslateX: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.SPRITE_TRANSLATE_X)
+        get() = getProperty(SpriteTranslateX)
 
     val spriteTranslateY: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.SPRITE_TRANSLATE_Y)
+        get() = getProperty(SpriteTranslateY)
 
     val team: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.TEAM)
+        get() = getProperty(Team)
 
-    val value: SerializableProperty<Int>
-        get() = getProperty(ItemProperty.VALUE)
+    val value: SerializableProperty<Long>
+        get() = getProperty(Value)
 
     val isMembers: SerializableProperty<Boolean>
-        get() = getProperty(ItemProperty.MEMBERS)
+        get() = getProperty(Members)
 
     val isStackable: SerializableProperty<Boolean>
-        get() = getProperty(ItemProperty.STACKABLE)
+        get() = getProperty(Stackable)
 
     fun getGroundAction(index: Int): SerializableProperty<String> {
         require(index in 0 until ItemConstants.MENU_ACTION_COUNT) {
@@ -108,25 +109,25 @@ open class ItemDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfi
     }
 
     fun getPrimaryHeadModel(sex: Sex): SerializableProperty<Int> {
-        val property = if (sex.isMale) ItemProperty.PRIMARY_MALE_HEAD_PIECE else ItemProperty.PRIMARY_FEMALE_HEAD_PIECE
+        val property = if (sex.isMale) PrimaryMaleHeadPiece else PrimaryFemaleHeadPiece
         return getProperty(property)
     }
 
-    fun getPrimaryModel(sex: Sex): SerializableProperty<Int> {
-        return getProperty(if (sex.isMale) ItemProperty.PRIMARY_MALE_MODEL else ItemProperty.PRIMARY_FEMALE_MODEL)
+    fun getPrimaryModel(sex: Sex): SerializableProperty<PrimaryModel> {
+        return getProperty(if (sex.isMale) PrimaryMaleModel else PrimaryFemaleModel)
     }
 
     fun getSecondaryHeadModel(sex: Sex): SerializableProperty<Int> {
-        val property = if (sex.isMale) ItemProperty.SECONDARY_MALE_HEAD_PIECE else ItemProperty.SECONDARY_FEMALE_HEAD_PIECE
+        val property = if (sex.isMale) SecondaryMaleHeadPiece else SecondaryFemaleHeadPiece
         return getProperty(property)
     }
 
     fun getSecondaryModel(sex: Sex): SerializableProperty<Int> {
-        return getProperty(if (sex.isMale) ItemProperty.SECONDARY_MALE_MODEL else ItemProperty.SECONDARY_FEMALE_MODEL)
+        return getProperty(if (sex.isMale) SecondaryMaleModel else SecondaryFemaleModel)
     }
 
     fun getTertiaryModel(sex: Sex): SerializableProperty<Int> {
-        return getProperty(if (sex.isMale) ItemProperty.TERTIARY_MALE_MODEL else ItemProperty.TERTIARY_FEMALE_MODEL)
+        return getProperty(if (sex.isMale) TertiaryMaleModel else TertiaryFemaleModel)
     }
 
     companion object {

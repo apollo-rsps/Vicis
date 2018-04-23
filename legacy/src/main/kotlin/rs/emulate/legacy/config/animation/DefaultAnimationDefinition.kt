@@ -19,11 +19,11 @@ class DefaultAnimationDefinition<T : AnimationDefinition> : DefaultConfigDefinit
     override fun init(): Map<Int, SerializableProperty<*>> {
         val properties = HashMap<Int, SerializableProperty<*>>(11)
 
-        properties[1] = SerializableProperty(FRAMES, FrameCollection.EMPTY, FrameCollection.Companion::encode,
+        properties[1] = SerializableProperty(Frames, FrameCollection.EMPTY, FrameCollection.Companion::encode,
             FrameCollection.Companion::decode, FrameCollection.Companion::bytes
         )
 
-        properties[2] = unsignedShort(LOOP_OFFSET, -1)
+        properties[2] = unsignedShort(LoopOffset, -1)
 
         val interleaveDecoder = { buffer: DataBuffer ->
             val count = buffer.getUnsignedByte()
@@ -37,18 +37,18 @@ class DefaultAnimationDefinition<T : AnimationDefinition> : DefaultConfigDefinit
             buffer.putByte(order.size).put(order)
         }
 
-        properties[3] = SerializableProperty(INTERLEAVE_ORDER, ByteArray(0), interleaveEncoder,
+        properties[3] = SerializableProperty(InterleaveOrder, ByteArray(0), interleaveEncoder,
             interleaveDecoder, { interleave -> interleave.size + java.lang.Byte.BYTES }
         )
 
-        properties[4] = alwaysTrue(STRETCHES, false)
-        properties[5] = unsignedByte(PRIORITY, 5)
-        properties[6] = unsignedShort(PLAYER_MAINHAND, -1)
-        properties[7] = unsignedShort(PLAYER_OFFHAND, -1)
-        properties[8] = unsignedByte(MAXIMUM_LOOPS, 99)
-        properties[9] = unsignedByte(ANIMATING_PRECEDENCE, -1)
-        properties[10] = unsignedByte(WALKING_PRECEDENCE, -1)
-        properties[11] = unsignedByte(REPLAY_MODE, 2)
+        properties[4] = alwaysTrue(Stretches, false)
+        properties[5] = unsignedByte(Priority, 5)
+        properties[6] = unsignedShort(CharacterMainhand, -1)
+        properties[7] = unsignedShort(CharacterOffhand, -1)
+        properties[8] = unsignedByte(MaximumLoops, 99)
+        properties[9] = unsignedByte(AnimatingPrecedence, -1)
+        properties[10] = unsignedByte(WalkingPrecedence, -1)
+        properties[11] = unsignedByte(ReplayMode, 2)
 
         return properties
     }

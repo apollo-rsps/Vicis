@@ -20,13 +20,13 @@ class DefaultGraphicDefinition<T : GraphicDefinition> : DefaultConfigDefinition<
     override fun init(): Map<Int, SerializableProperty<*>> {
         val defaults = HashMap<Int, SerializableProperty<*>>(27)
 
-        defaults[1] = unsignedShort(MODEL, 0)
-        defaults[2] = unsignedShort(ANIMATION, -1)
-        defaults[4] = unsignedShort(BREADTH_SCALE, ConfigConstants.DEFAULT_SCALE)
-        defaults[5] = unsignedShort(DEPTH_SCALE, ConfigConstants.DEFAULT_SCALE)
-        defaults[6] = unsignedShort(ROTATION, 0)
-        defaults[7] = unsignedByte(BRIGHTNESS, 0)
-        defaults[8] = unsignedByte(SHADOW, 0)
+        defaults[1] = unsignedShort(Model, 0)
+        defaults[2] = unsignedShort(Animation, -1)
+        defaults[4] = unsignedShort(BreadthScale, ConfigConstants.DEFAULT_SCALE)
+        defaults[5] = unsignedShort(DepthScale, ConfigConstants.DEFAULT_SCALE)
+        defaults[6] = unsignedShort(Rotation, 0)
+        defaults[7] = unsignedByte(Brightness, 0)
+        defaults[8] = unsignedByte(Shadow, 0)
 
         for (slot in 1..COLOUR_COUNT) {
             defaults[slot + 40] = unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0)

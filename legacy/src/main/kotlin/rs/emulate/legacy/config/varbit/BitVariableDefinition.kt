@@ -6,9 +6,6 @@ import rs.emulate.legacy.config.SerializableProperty
 
 /**
  * A definition for bit variables (a 'varbit').
- *
- * @param id The id.
- * @param properties The [ConfigPropertyMap].
  */
 open class BitVariableDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
@@ -34,7 +31,7 @@ open class BitVariableDefinition(id: Int, properties: ConfigPropertyMap) : Mutab
      * Gets the [SerializableProperty] containing the [Variable].
      */
     val variable: SerializableProperty<Variable>
-        get() = getProperty(BitVariableProperty.VARIABLE)
+        get() = getProperty(BitVariableProperty.Varbit)
 
     /**
      * Gets the variable id of this definition.

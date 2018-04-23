@@ -8,9 +8,8 @@ import rs.emulate.legacy.config.SerializableProperty
 import rs.emulate.legacy.config.kit.IdentikitDefinition.Companion.COLOUR_COUNT
 import rs.emulate.legacy.config.kit.IdentikitDefinition.Companion.HEAD_MODEL_COUNT
 import rs.emulate.legacy.config.kit.IdentikitDefinition.Companion.HEAD_MODEL_PREFIX
-import rs.emulate.legacy.config.kit.IdentikitProperty.MODELS
-import rs.emulate.legacy.config.kit.IdentikitProperty.PART
-import rs.emulate.legacy.config.kit.IdentikitProperty.PLAYER_DESIGN_STYLE
+import rs.emulate.legacy.config.kit.IdentikitProperty.Models
+import rs.emulate.legacy.config.kit.IdentikitProperty.PlayerDesignStyle
 import rs.emulate.shared.util.DataBuffer
 import java.util.HashMap
 
@@ -24,7 +23,7 @@ class DefaultIdentikitDefinition<T : IdentikitDefinition> : DefaultConfigDefinit
     override fun init(): Map<Int, SerializableProperty<*>> {
         val defaults = HashMap<Int, SerializableProperty<*>>(27)
 
-        defaults[1] = SerializableProperty(PART, Part.NULL, { buffer, part -> Part.encode(buffer, part) },
+        defaults[1] = SerializableProperty(IdentikitProperty.Part, Part.NULL, Part.Companion::encode,
             Part.Companion::decode, java.lang.Byte.BYTES)
 
         val modelsEncoder = { buffer: DataBuffer, models: IntArray ->
@@ -33,10 +32,11 @@ class DefaultIdentikitDefinition<T : IdentikitDefinition> : DefaultConfigDefinit
             buffer
         }
 
-        defaults[2] = SerializableProperty(MODELS, null, modelsEncoder,
-            ConfigUtils.MODEL_DECODER) { models -> models.size * java.lang.Short.SIZE + java.lang.Byte.SIZE }
+        defaults[2] = SerializableProperty(Models, IntArray(0), modelsEncoder, ConfigUtils.MODEL_DECODER) { models ->
+            models.size * java.lang.Short.SIZE + java.lang.Byte.SIZE
+        }
 
-        defaults[3] = alwaysTrue(PLAYER_DESIGN_STYLE, false)
+        defaults[3] = alwaysTrue(PlayerDesignStyle, false)
 
         for (slot in 1..COLOUR_COUNT) {
             defaults[slot + 39] = unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0)
@@ -44,7 +44,7 @@ class DefaultIdentikitDefinition<T : IdentikitDefinition> : DefaultConfigDefinit
         }
 
         for (model in 1..HEAD_MODEL_COUNT) {
-            val name = ConfigUtils.newOptionProperty(HEAD_MODEL_PREFIX, model)
+            val name = ConfigUtils.newOptionProperty<Int>(HEAD_MODEL_PREFIX, model)
             defaults[model + 59] = unsignedShort(name, -1)
         }
 

@@ -16,7 +16,7 @@ open class ParameterVariableDefinition(
      * Gets the [SerializableProperty] containing the parameter.
      */
     val parameter: SerializableProperty<Int>
-        get() = getProperty(ParameterVariableProperty.PARAMETER)
+        get() = getProperty(ParameterVariableProperty.Parameter)
 
     companion object {
 

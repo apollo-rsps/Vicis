@@ -10,7 +10,7 @@ import java.util.Objects
  * @param name The name of the DynamicPropertyType.
  * @param opcode The opcode of the DynamicPropertyType.
  */
-data class DynamicConfigPropertyType(override val name: String, override val opcode: Int) : ConfigPropertyType {
+data class DynamicConfigPropertyType<T>(override val name: String, override val opcode: Int) : ConfigPropertyType<T>() {
 
     init {
         require(!name.isEmpty()) { "Name of a property cannot be empty." }
@@ -22,7 +22,7 @@ data class DynamicConfigPropertyType(override val name: String, override val opc
         /**
          * The Map (used as a cache) of opcodes to DynamicPropertyTypes.
          */
-        private val cache = mutableMapOf<Int, DynamicConfigPropertyType>()
+        private val cache = mutableMapOf<Int, DynamicConfigPropertyType<*>>()
 
         /**
          * Creates a DynamicPropertyType with the specified name and opcode, or returns a previously-created value
@@ -31,11 +31,14 @@ data class DynamicConfigPropertyType(override val name: String, override val opc
          * @param name The name of the DynamicPropertyType. Must not be empty.
          * @param opcode The opcode of the DynamicPropertyType. Must be positive (i.e. `> 0`).
          */
-        fun valueOf(name: String, opcode: Int): DynamicConfigPropertyType {
+        fun <T> valueOf(name: String, opcode: Int): DynamicConfigPropertyType<T> {
             require(opcode.toLong() > 0) { "Opcode must be positiv1e." }
-            val hash = Objects.hash(name, opcode)
 
-            return cache.computeIfAbsent(hash) { DynamicConfigPropertyType(name, opcode) }
+            val hash = Objects.hash(name, opcode)
+            val cached = cache.computeIfAbsent(hash) { DynamicConfigPropertyType<T>(name, opcode) }
+
+            @Suppress("UNCHECKED_CAST")
+            return cached as DynamicConfigPropertyType<T>
         }
     }
 

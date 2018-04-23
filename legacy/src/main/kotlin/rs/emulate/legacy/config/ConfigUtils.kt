@@ -32,11 +32,8 @@ object ConfigUtils {
      *
      * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
      * DynamicPropertyType may exist per string (see [DynamicConfigPropertyType.valueOf]).
-     *
-     * @param slot The colour slot.
-     * @return The DynamicPropertyType.
      */
-    fun getOriginalColourPropertyName(slot: Int): DynamicConfigPropertyType {
+    fun <T> getOriginalColourPropertyName(slot: Int): DynamicConfigPropertyType<T> {
         return newOptionProperty(ORIGINAL_COLOUR_PREFIX, slot)
     }
 
@@ -46,11 +43,8 @@ object ConfigUtils {
      *
      * The returned DynamicPropertyType may be the same object as a previously created one, as only one
      * DynamicPropertyType may exist per string (see [DynamicConfigPropertyType.valueOf]).
-     *
-     * @param slot The colour slot.
-     * @return The DynamicPropertyType.
      */
-    fun getReplacementColourPropertyName(slot: Int): DynamicConfigPropertyType {
+    fun <T> getReplacementColourPropertyName(slot: Int): DynamicConfigPropertyType<T> {
         return newOptionProperty(REPLACEMENT_COLOUR_PREFIX, slot)
     }
 
@@ -62,14 +56,14 @@ object ConfigUtils {
      * @param type The [ConfigPropertyType] of the DefinitionProperty.
      * @return The DefinitionProperty.
      */
-    fun <T : ConfigPropertyType> newColourProperty(type: T): SerializableProperty<HashMap<Int, Int>> {
-        val encoder: (DataBuffer, HashMap<Int, Int>) -> DataBuffer = { buffer, colours ->
+    fun newColourProperty(type: ConfigPropertyType<Map<Int, Int>>): SerializableProperty<Map<Int, Int>> {
+        val encoder: (DataBuffer, Map<Int, Int>) -> DataBuffer = { buffer, colours ->
             buffer.putByte(colours.size)
             colours.entries.forEach { colour -> buffer.putShort(colour.key).putShort(colour.value) }
             buffer
         }
 
-        val decoder: (DataBuffer) -> HashMap<Int, Int> = { buffer ->
+        val decoder: (DataBuffer) -> Map<Int, Int> = { buffer ->
             val size = buffer.getUnsignedByte()
             val colours = HashMap<Int, Int>(size)
 
@@ -81,22 +75,21 @@ object ConfigUtils {
             colours
         }
 
-        return SerializableProperty(type, HashMap(1), encoder, decoder, { colours: HashMap<Int, Int> ->
+        return SerializableProperty(type, mutableMapOf(), encoder, decoder) { colours ->
             (colours.size * java.lang.Short.BYTES * 2) + java.lang.Byte.BYTES
-        })
+        }
     }
 
     /**
-     * Returns a [DynamicConfigPropertyType] with the name of the form "`[prefix]`-`[slot]`".
+     * Returns a [DynamicConfigPropertyType] with the name of the form "`[prefix]`-`[option]`".
      *
      * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
      * DynamicPropertyType may exist per string (see [DynamicConfigPropertyType.valueOf]).
      *
      * @param prefix The prefix.
      * @param option The option.
-     * @return The DynamicPropertyType.
      */
-    fun newOptionProperty(prefix: String, option: Int): DynamicConfigPropertyType {
+    fun <T> newOptionProperty(prefix: String, option: Int): DynamicConfigPropertyType<T> {
         return DynamicConfigPropertyType.valueOf("$prefix-$option", option)
     }
 

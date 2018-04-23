@@ -11,7 +11,7 @@ object Properties {
     /**
      * Creates a boolean [SerializableProperty] that encodes and decodes no data, and simply returns `false`.
      */
-    fun alwaysFalse(name: ConfigPropertyType, defaultValue: Boolean): SerializableProperty<Boolean> {
+    fun alwaysFalse(name: ConfigPropertyType<Boolean>, defaultValue: Boolean): SerializableProperty<Boolean> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.nullEncoder(), PropertyDecoders.FALSE_DECODER,
             0)
     }
@@ -19,7 +19,7 @@ object Properties {
     /**
      * Creates a boolean [SerializableProperty] that encodes and decodes no data, and simply returns `true`.
      */
-    fun alwaysTrue(name: ConfigPropertyType, defaultValue: Boolean): SerializableProperty<Boolean> {
+    fun alwaysTrue(name: ConfigPropertyType<Boolean>, defaultValue: Boolean): SerializableProperty<Boolean> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.nullEncoder(),
             PropertyDecoders.TRUE_DECODER, 0)
     }
@@ -27,7 +27,7 @@ object Properties {
     /**
      * Creates a string [SerializableProperty] with no value.
      */
-    fun asciiString(name: ConfigPropertyType, defaultValue: String?): SerializableProperty<String> {
+    fun asciiString(name: ConfigPropertyType<String>, defaultValue: String): SerializableProperty<String> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.ASCII_STRING_ENCODER,
             PropertyDecoders.ASCII_STRING_DECODER,
             { string: String -> string.length + java.lang.Byte.BYTES })
@@ -36,7 +36,7 @@ object Properties {
     /**
      * Creates a signed byte [SerializableProperty] with no value.
      */
-    fun signedByte(name: ConfigPropertyType, defaultValue: Int): SerializableProperty<Int> {
+    fun signedByte(name: ConfigPropertyType<Int>, defaultValue: Int): SerializableProperty<Int> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.BYTE_ENCODER,
             PropertyDecoders.SIGNED_BYTE_DECODER, java.lang.Byte.BYTES)
     }
@@ -44,7 +44,7 @@ object Properties {
     /**
      * Creates a signed short [SerializableProperty] with no value.
      */
-    fun signedShort(name: ConfigPropertyType, defaultValue: Int): SerializableProperty<Int> {
+    fun signedShort(name: ConfigPropertyType<Int>, defaultValue: Int): SerializableProperty<Int> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.SHORT_ENCODER,
             PropertyDecoders.SIGNED_SHORT_DECODER, java.lang.Short.BYTES)
     }
@@ -52,7 +52,7 @@ object Properties {
     /**
      * Creates a byte [SerializableProperty] with no value.
      */
-    fun unsignedByte(name: ConfigPropertyType, defaultValue: Int): SerializableProperty<Int> {
+    fun unsignedByte(name: ConfigPropertyType<Int>, defaultValue: Int): SerializableProperty<Int> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.BYTE_ENCODER, PropertyDecoders.BYTE_DECODER,
             java.lang.Byte.BYTES)
     }
@@ -60,7 +60,7 @@ object Properties {
     /**
      * Creates an integer [SerializableProperty] with no value.
      */
-    fun unsignedInt(name: ConfigPropertyType, defaultValue: Long): SerializableProperty<Long> {
+    fun unsignedInt(name: ConfigPropertyType<Long>, defaultValue: Long): SerializableProperty<Long> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.LONG_ENCODER, PropertyDecoders.INT_DECODER,
             Integer.BYTES)
     }
@@ -68,7 +68,7 @@ object Properties {
     /**
      * Creates a short [SerializableProperty] with no value.
      */
-    fun unsignedShort(name: ConfigPropertyType, defaultValue: Int): SerializableProperty<Int> {
+    fun unsignedShort(name: ConfigPropertyType<Int>, defaultValue: Int): SerializableProperty<Int> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.SHORT_ENCODER, PropertyDecoders.SHORT_DECODER,
             java.lang.Short.BYTES)
     }
@@ -76,7 +76,7 @@ object Properties {
     /**
      * Creates an unsigned tri-byte [SerializableProperty] with no value.
      */
-    fun unsignedTribyte(name: ConfigPropertyType, defaultValue: Int): SerializableProperty<Int> {
+    fun unsignedTribyte(name: ConfigPropertyType<Int>, defaultValue: Int): SerializableProperty<Int> {
         return SerializableProperty(name, defaultValue, PropertyEncoders.TRI_BYTE_ENCODER,
             PropertyDecoders.UNSIGNED_TRI_BYTE_DECODER, 3 * java.lang.Byte.BYTES)
     }

@@ -2,111 +2,25 @@ package rs.emulate.legacy.config.npc
 
 import rs.emulate.legacy.config.ConfigPropertyType
 
-/**
- * Contains [ConfigPropertyType] implementations for [NpcDefinition]s.
- *
- * @param opcode The opcode.
- */
-internal enum class NpcProperty(override val opcode: Int) : ConfigPropertyType {
-
-    /**
-     * The model ids property.
-     */
-    MODELS(1),
-
-    /**
-     * The name property.
-     */
-    NAME(2),
-
-    /**
-     * The description property.
-     */
-    DESCRIPTION(3),
-
-    /**
-     * The size property.
-     */
-    SIZE(12),
-
-    /**
-     * The idle animation id property.
-     */
-    IDLE_ANIMATION(13),
-
-    /**
-     * The walking animation id property.
-     */
-    WALKING_ANIMATION(14),
-
-    /**
-     * The movement animation ids property.
-     */
-    ANIMATION_SET(15),
-
-    /**
-     * The colours property.
-     */
-    COLOURS(40),
-
-    /**
-     * The secondary model ids property.
-     */
-    SECONDARY_MODELS(60),
-
-    /**
-     * The visible on minimap property.
-     */
-    MINIMAP_VISIBLE(93),
-
-    /**
-     * The combat level property.
-     */
-    COMBAT_LEVEL(95),
-
-    /**
-     * The flat scale property.
-     */
-    FLAT_SCALE(97),
-
-    /**
-     * The height scale property.
-     */
-    HEIGHT_SCALE(98),
-
-    /**
-     * The priority render property.
-     */
-    PRIORITY_RENDER(99),
-
-    /**
-     * The light modifier property.
-     */
-    LIGHT_MODIFIER(100),
-
-    /**
-     * The shadow modifier property.
-     */
-    SHADOW_MODIFIER(101),
-
-    /**
-     * The head icon id property.
-     */
-    HEAD_ICON(102),
-
-    /**
-     * The rotation property.
-     */
-    ROTATION(103),
-
-    /**
-     * The [MorphismSet] property.
-     */
-    MORPHISM_SET(106),
-
-    /**
-     * The clickable property.
-     */
-    CLICKABLE(107);
-
+sealed class NpcProperty<T>(override val opcode: Int) : ConfigPropertyType<T>() {
+    object Models : NpcProperty<IntArray>(1)
+    object Name : NpcProperty<String>(2)
+    object Description : NpcProperty<String>(3)
+    object Size : NpcProperty<Int>(12)
+    object IdleAnimation : NpcProperty<Int>(13)
+    object WalkingAnimation : NpcProperty<Int>(14)
+    object AnimationSet : NpcProperty<MovementAnimationSet>(15)
+    object Colours : NpcProperty<Map<Int, Int>>(40)
+    object SecondaryModels : NpcProperty<IntArray>(60)
+    object MinimapVisible : NpcProperty<Boolean>(93)
+    object CombatLevel : NpcProperty<Int>(95)
+    object FlatScale : NpcProperty<Int>(97)
+    object HeightScale : NpcProperty<Int>(98)
+    object PriorityRender : NpcProperty<Boolean>(99)
+    object LightModifier : NpcProperty<Int>(100)
+    object ShadowModifier : NpcProperty<Int>(101)
+    object HeadIcon : NpcProperty<Int>(102)
+    object Rotation : NpcProperty<Int>(103)
+    object Morphisms : NpcProperty<MorphismSet>(106)
+    object Clickable : NpcProperty<Boolean>(107)
 }

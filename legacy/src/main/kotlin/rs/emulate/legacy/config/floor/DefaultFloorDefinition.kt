@@ -19,11 +19,11 @@ class DefaultFloorDefinition<T : FloorDefinition> : DefaultConfigDefinition<T>()
     override fun init(): Map<Int, SerializableProperty<*>> {
         val properties = HashMap<Int, SerializableProperty<*>>()
 
-        properties[1] = unsignedTribyte(COLOUR, 0)
-        properties[2] = unsignedByte(TEXTURE, 0)
-        properties[5] = alwaysFalse(SHADOWED, true)
-        properties[6] = asciiString(NAME, null)
-        properties[7] = unsignedTribyte(MINIMAP_COLOUR, 0)
+        properties[1] = unsignedTribyte(Colour, 0)
+        properties[2] = unsignedByte(Texture, 0)
+        properties[5] = alwaysFalse(Shadowed, true)
+        properties[6] = asciiString(Name, "null") // TODO defaults to null (the value) in client
+        properties[7] = unsignedTribyte(MinimapColour, 0)
 
         return properties
     }

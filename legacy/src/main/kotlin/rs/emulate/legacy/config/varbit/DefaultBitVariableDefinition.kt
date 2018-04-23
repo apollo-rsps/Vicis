@@ -2,7 +2,7 @@ package rs.emulate.legacy.config.varbit
 
 import rs.emulate.legacy.config.DefaultConfigDefinition
 import rs.emulate.legacy.config.SerializableProperty
-import rs.emulate.legacy.config.varbit.BitVariableProperty.VARIABLE
+import rs.emulate.legacy.config.varbit.BitVariableProperty.Varbit
 import rs.emulate.shared.util.DataBuffer
 
 /**
@@ -28,8 +28,9 @@ class DefaultBitVariableDefinition<T : BitVariableDefinition> : DefaultConfigDef
         }
 
         return hashMapOf(
-            1 to SerializableProperty(VARIABLE, Variable.EMPTY, encoder, decoder,
-                java.lang.Short.BYTES + 2 * java.lang.Byte.BYTES)
+            1 to SerializableProperty(Varbit, Variable.EMPTY, encoder, decoder,
+                java.lang.Short.BYTES + 2 * java.lang.Byte.BYTES
+            )
         )
     }
 

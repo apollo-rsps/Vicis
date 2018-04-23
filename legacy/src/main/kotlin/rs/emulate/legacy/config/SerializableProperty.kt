@@ -8,42 +8,56 @@ import java.util.function.Function
 /**
  * A property belonging to a definition in the config archive.
  *
- * @param type The name of the property.
- * @param value The value. May be `null`.
- * @param defaultValue The default value. May be `null`.
- * @param encoder A [BiConsumer] that encodes the value into a [DataBuffer].
- * @param decoder A [Function] that decodes the value from a Buffer.
- * @param size A Function that returns the size of the value, in bytes.
- *
  * @param T The property value type.
  */
-class SerializableProperty<T : Any>(
-    type: ConfigPropertyType,
-    value: T?,
-    defaultValue: T?,
-    private val encoder: (DataBuffer, T) -> DataBuffer,
-    private val decoder: (DataBuffer) -> T,
+class SerializableProperty<T> : Property<T, ConfigPropertyType<T>> {
+
+    private val encoder: (DataBuffer, T) -> DataBuffer
+    private val decoder: (DataBuffer) -> T
     private val size: (T) -> Int
-) : Property<T, ConfigPropertyType>(type, value, defaultValue) {
 
     /**
-     * Creates a [SerializableProperty] with an initial value of `null`.
+     * @param type The name of the property.
+     * @param value The value. May be `null`.
+     * @param defaultValue The default value. May be `null`.
+     * @param encoder A [BiConsumer] that encodes the value into a [DataBuffer].
+     * @param decoder A [Function] that decodes the value from a Buffer.
+     * @param size A Function that returns the size of the value, in bytes.
      */
     constructor(
-        type: ConfigPropertyType,
-        defaultValue: T?,
+        type: ConfigPropertyType<T>,
+        value: T,
+        defaultValue: T,
         encoder: (DataBuffer, T) -> DataBuffer,
         decoder: (DataBuffer) -> T,
         size: (T) -> Int
-    ) : this(type, null, defaultValue, encoder, decoder, size)
-
+    ) : super(type, value, defaultValue) {
+        this.encoder = encoder
+        this.decoder = decoder
+        this.size = size
+    }
 
     /**
-     * Creates a [SerializableProperty] with an initial value of `null`.
+     * Creates a [SerializableProperty] with an initial value of `defaultValue`.
      */
     constructor(
-        type: ConfigPropertyType,
-        defaultValue: T?,
+        type: ConfigPropertyType<T>,
+        defaultValue: T,
+        encoder: (DataBuffer, T) -> DataBuffer,
+        decoder: (DataBuffer) -> T,
+        size: (T) -> Int
+    ) : super(type, defaultValue) {
+        this.encoder = encoder
+        this.decoder = decoder
+        this.size = size
+    }
+
+    /**
+     * Creates a [SerializableProperty] with an initial value of `defaultValue`.
+     */
+    constructor(
+        type: ConfigPropertyType<T>,
+        defaultValue: T,
         encoder: (DataBuffer, T) -> DataBuffer,
         decoder: (DataBuffer) -> T,
         size: Int
@@ -67,9 +81,7 @@ class SerializableProperty<T : Any>(
      * Encodes this DefinitionProperty into a [DataBuffer].
      */
     fun encode(): DataBuffer {
-        val value = value!! // TODO
         val buffer = DataBuffer.allocate(size(value))
-
         encoder(buffer, value)
         return buffer.flip()
     }

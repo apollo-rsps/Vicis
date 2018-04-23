@@ -1,24 +1,41 @@
 package rs.emulate.shared.property
 
-import java.util.Arrays
 import java.util.Objects
 
 /**
  * A mutable property belonging to some sort of definition.
  *
- * @param type The [PropertyType].
- * @param value The value.
- * @param default The default value.
  * @param V The type of the value.
  * @param T The type of [PropertyType].
  */
-open class Property<V : Any, out T : PropertyType>(val type: T, value: V?, val default: V?) {
+open class Property<V, out T : PropertyType> {
+
+    /**
+     * @param value The current value.
+     * @param default The default value.
+     */
+    constructor(type: T, value: V, default: V) {
+        this.type = type
+        this.default = default
+        this.value = value
+    }
+
+    /**
+     * @param default The default value.
+     */
+    constructor(type: T, default: V) {
+        this.type = type
+        this.default = default
+        value = default
+    }
 
     /**
      * The value of this DefinitionProperty.
      */
-    var value: V? = value
-        get() = field ?: default
+    var value: V
+
+    val type: T
+    val default: V
 
     /**
      * Gets the name of this DefinitionProperty.
@@ -30,7 +47,7 @@ open class Property<V : Any, out T : PropertyType>(val type: T, value: V?, val d
      * Resets the value of this DefinitionProperty.
      */
     fun reset() {
-        value = null
+        value = default
     }
 
     /**
@@ -53,25 +70,19 @@ open class Property<V : Any, out T : PropertyType>(val type: T, value: V?, val d
     }
 
     override fun toString(): String {
-        val value = value ?: return "null"
-        val type = value::class.java
+        val value = value
 
-        if (!type.isArray) {
-            return value.toString()
-        }
-
-        val component = type.componentType
-
-        return when (component) {
-            java.lang.Boolean.TYPE -> Arrays.toString(value as BooleanArray)
-            Character.TYPE -> Arrays.toString(value as CharArray)
-            java.lang.Byte.TYPE -> Arrays.toString(value as ByteArray)
-            java.lang.Short.TYPE -> Arrays.toString(value as ShortArray)
-            Integer.TYPE -> Arrays.toString(value as IntArray)
-            java.lang.Long.TYPE -> Arrays.toString(value as LongArray)
-            java.lang.Float.TYPE -> Arrays.toString(value as FloatArray)
-            java.lang.Double.TYPE -> Arrays.toString(value as DoubleArray)
-            else -> Arrays.toString(value as Array<*>)
+        return when (value) {
+            is BooleanArray -> value.contentToString()
+            is CharArray -> value.contentToString()
+            is ByteArray -> value.contentToString()
+            is ShortArray -> value.contentToString()
+            is IntArray -> value.contentToString()
+            is LongArray -> value.contentToString()
+            is FloatArray -> value.contentToString()
+            is DoubleArray -> value.contentToString()
+            is Array<*> -> value.contentDeepToString()
+            else -> value.toString()
         }
     }
 

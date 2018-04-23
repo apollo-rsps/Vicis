@@ -3,171 +3,37 @@ package rs.emulate.legacy.config.`object`
 import rs.emulate.legacy.config.ConfigPropertyType
 import rs.emulate.legacy.config.npc.MorphismSet
 
-/**
- * Contains [ConfigPropertyType] implementations for [ObjectDefinition]s.
- *
- * @param opcode The opcode.
- */
-enum class ObjectProperty(override val opcode: Int) : ConfigPropertyType {
-
-    /**
-     * The positioned models property.
-     */
-    POSITIONED_MODELS(1),
-
-    /**
-     * The name property.
-     */
-    NAME(2),
-
-    /**
-     * The description property.
-     */
-    DESCRIPTION(3),
-
-    /**
-     * The models property.
-     */
-    MODELS(5),
-
-    /**
-     * The width property.
-     */
-    WIDTH(14),
-
-    /**
-     * The length property.
-     */
-    LENGTH(15),
-
-    /**
-     * The solid property.
-     */
-    SOLID(16),
-
-    /**
-     * The impenetrable property.
-     */
-    IMPENETRABLE(17),
-
-    /**
-     * The interactive property.
-     */
-    INTERACTIVE(18),
-
-    /**
-     * The contour ground property.
-     */
-    CONTOUR_GROUND(21),
-
-    /**
-     * The delay shading property.
-     */
-    DELAY_SHADING(22),
-
-    /**
-     * The occlude property.
-     */
-    OCCLUDE(23),
-
-    /**
-     * The animation property.
-     */
-    ANIMATION(24),
-
-    /**
-     * The decor displacement property.
-     */
-    DECOR_DISPLACEMENT(28),
-
-    /**
-     * The ambient lighting property.
-     */
-    AMBIENT_LIGHTING(29),
-
-    /**
-     * The light diffusion property.
-     */
-    LIGHT_DIFFUSION(39),
-
-    /**
-     * The colours property.
-     */
-    COLOURS(40),
-
-    /**
-     * The minimap function property.
-     */
-    MINIMAP_FUNCTION(60),
-
-    /**
-     * The inverted property.
-     */
-    INVERTED(62),
-
-    /**
-     * The cast shadow property.
-     */
-    CAST_SHADOW(64),
-
-    /**
-     * The scale x property.
-     */
-    SCALE_X(65),
-
-    /**
-     * The scale y property.
-     */
-    SCALE_Y(66),
-
-    /**
-     * The scale z property.
-     */
-    SCALE_Z(67),
-
-    /**
-     * The mapscene property.
-     */
-    MAPSCENE(68),
-
-    /**
-     * The surroundings property.
-     */
-    SURROUNDINGS(69),
-
-    /**
-     * The translation x property.
-     */
-    TRANSLATION_X(70),
-
-    /**
-     * The translation y property.
-     */
-    TRANSLATION_Y(71),
-
-    /**
-     * The translation z property.
-     */
-    TRANSLATION_Z(72),
-
-    /**
-     * The obstructive ground property.
-     */
-    OBSTRUCTIVE_GROUND(73),
-
-    /**
-     * The hollow property.
-     */
-    HOLLOW(74),
-
-    /**
-     * The supports items property, indicating whether or not the object allows items to be placed on it.
-     */
-    SUPPORTS_ITEMS(75),
-
-    /**
-     * The [MorphismSet] property.
-     */
-    MORPHISM_SET(77);
-
+sealed class ObjectProperty<T>(override val opcode: Int) : ConfigPropertyType<T>() {
+    object PositionedModels : ObjectProperty<ModelSet>(1)
+    object Name : ObjectProperty<String>(2)
+    object Description : ObjectProperty<String>(3)
+    object Models : ObjectProperty<ModelSet>(5)
+    object Width : ObjectProperty<Int>(14)
+    object Length : ObjectProperty<Int>(15)
+    object Solid : ObjectProperty<Boolean>(16)
+    object Impenetrable : ObjectProperty<Boolean>(17)
+    object Interactive : ObjectProperty<Boolean>(18)
+    object ContourGround : ObjectProperty<Boolean>(21)
+    object DelayShading : ObjectProperty<Boolean>(22)
+    object Occlude : ObjectProperty<Boolean>(23)
+    object Animation : ObjectProperty<Int>(24)
+    object DecorDisplacement : ObjectProperty<Int>(28)
+    object AmbientLighting : ObjectProperty<Int>(29)
+    object LightDiffusion : ObjectProperty<Int>(39)
+    object Colours : ObjectProperty<Map<Int, Int>>(40)
+    object MinimapFunction : ObjectProperty<Int>(60)
+    object Inverted : ObjectProperty<Boolean>(62)
+    object CastShadow : ObjectProperty<Boolean>(64)
+    object ScaleX : ObjectProperty<Int>(65)
+    object ScaleY : ObjectProperty<Int>(66)
+    object ScaleZ : ObjectProperty<Int>(67)
+    object Mapscene : ObjectProperty<Int>(68)
+    object Surroundings : ObjectProperty<Int>(69)
+    object TranslationX : ObjectProperty<Int>(70)
+    object TranslationY : ObjectProperty<Int>(71)
+    object TranslationZ : ObjectProperty<Int>(72)
+    object ObstructiveGround : ObjectProperty<Boolean>(73)
+    object Hollow : ObjectProperty<Boolean>(74)
+    object SupportsItems : ObjectProperty<Int>(75)
+    object Morphisms : ObjectProperty<MorphismSet>(77)
 }
