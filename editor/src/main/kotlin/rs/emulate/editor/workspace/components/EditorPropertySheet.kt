@@ -5,12 +5,15 @@ import javafx.collections.ObservableMap
 import org.controlsfx.control.PropertySheet
 import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResource
 import rs.emulate.legacy.config.SerializableProperty
+import tornadofx.*
 import java.util.Optional
 
 class EditorPropertySheet : EditorComponent() {
     override val root: PropertySheet = PropertySheet()
 
     init {
+        title = messages["title"]
+
         model.onResourceSelected.map {
             if (it is ConfigResource<*>) {
                 it.properties.map { (property) ->
