@@ -22,7 +22,6 @@ class LegacyClientScript internal constructor(
 
     val instructions: List<LegacyInstruction> = instructions.toList()
 
-
     override fun toString(): String {
         return instructions.joinToString("\n", transform = LegacyInstruction::toString)
     }

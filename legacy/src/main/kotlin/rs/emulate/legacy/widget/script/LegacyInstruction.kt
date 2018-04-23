@@ -6,7 +6,7 @@ package rs.emulate.legacy.widget.script
  * @param type The [LegacyInstructionType].
  * @param operands The operands of the LegacyInstruction.
  */
-class LegacyInstruction private constructor(val type: LegacyInstructionType, operands: IntArray) {
+open class LegacyInstruction private constructor(val type: LegacyInstructionType, operands: IntArray) {
 
     val operands: IntArray = operands.clone()
         get() = field.clone()

@@ -2,7 +2,6 @@ package rs.emulate.legacy.widget.script
 
 import rs.emulate.shared.util.DataBuffer
 import java.util.ArrayList
-import java.util.function.Consumer
 
 /**
  * Encodes and decodes [LegacyClientScript]s stored in binary form.
@@ -30,14 +29,12 @@ object LegacyClientScriptCodec {
             val instructionCount = buffer.getUnsignedShort()
             val instructions = ArrayList<LegacyInstruction>(instructionCount)
 
-            for (instruction in 0 until instructionCount) {
+            var read = 0
+            while (read < instructionCount) {
                 val type = LegacyInstructionType.valueOf(buffer.getUnsignedShort())
-                val operands = IntArray(type.operandCount)
+                val operands = IntArray(type.operandCount) { buffer.getUnsignedShort() }
 
-                for (operand in operands.indices) {
-                    operands[operand] = buffer.getUnsignedShort()
-                }
-
+                read += java.lang.Short.BYTES * (1 + type.operandCount)
                 instructions.add(LegacyInstruction.create(type, operands))
             }
 
@@ -58,9 +55,7 @@ object LegacyClientScriptCodec {
         val buffers = ArrayList<DataBuffer>(count)
         var size = count * (java.lang.Short.BYTES + java.lang.Byte.BYTES)
 
-        for (index in 0 until count) {
-            val script = scripts[index]
-
+        for (script in scripts) {
             operators.putByte(script.operator.value)
             defaults.putShort(script.default)
 
@@ -73,12 +68,12 @@ object LegacyClientScriptCodec {
             }
 
             size += buffer.position()
-            buffers.add(buffer.flip())
+            buffers += buffer.flip()
         }
 
         val buffer = DataBuffer.allocate(size)
         buffer.put(operators.flip()).put(defaults.flip())
-        buffers.forEach(Consumer<DataBuffer> { buffer.put(it) })
+        buffers.forEach { buffer.put(it) }
 
         return buffer.flip()
     }

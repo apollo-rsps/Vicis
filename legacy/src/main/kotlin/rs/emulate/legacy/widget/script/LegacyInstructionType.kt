@@ -10,13 +10,13 @@ package rs.emulate.legacy.widget.script
 enum class LegacyInstructionType(
     private val value: Int,
     val mnemonic: String,
-    val operandCount: Int
+    val operandCount: Int = OperandCount.ZERO
 ) { // TODO these doc comments suck
 
     /**
-     * The return instruction, which end execution of the script and causes the VM to return the value.
+     * The return instruction, to signal the end of the script.
      */
-    RETURN(0, "ret", OperandCount.ZERO),
+    RETURN(0, "ret"),
 
     /**
      * Moves the current level of the skill with the id of the operand into the accumulator.
@@ -73,12 +73,12 @@ enum class LegacyInstructionType(
     /**
      * Moves the combat level of the local player into the accumulator.
      */
-    MOVE_COMBAT_LEVEL(8, "mov_cmb_lvl", OperandCount.ZERO),
+    MOVE_COMBAT_LEVEL(8, "mov_cmb_lvl"),
 
     /**
      * Moves the total level of the local player into the accumulator.
      */
-    MOVE_TOTAL_LEVEL(9, "mov_ttl_lvl", OperandCount.ZERO),
+    MOVE_TOTAL_LEVEL(9, "mov_ttl_lvl"),
 
     /**
      * Moves the value 999,999,999 (which instructs the client to display a too-large String, "*") into the general
@@ -93,12 +93,12 @@ enum class LegacyInstructionType(
     /**
      * Moves the current run energy level of the local player into the accumulator.
      */
-    MOVE_RUN_ENERGY(11, "mov_run", OperandCount.ZERO),
+    MOVE_RUN_ENERGY(11, "mov_run"),
 
     /**
      * Moves the current weight level of the local player into the accumulator.
      */
-    MOVE_WEIGHT(12, "mov_weight", OperandCount.ZERO),
+    MOVE_WEIGHT(12, "mov_weight"),
 
     /**
      * Moves the boolean result (i.e. either 1 or 0) of the setting specified by the first operand into the general
@@ -115,27 +115,27 @@ enum class LegacyInstructionType(
     /**
      * Specifies that the next operation that should be performed is a subtraction.
      */
-    SUBTRACT(15, "sub", OperandCount.ZERO),
+    SUBTRACT(15, "sub"),
 
     /**
      * Specifies that the next operation that should be performed is a division.
      */
-    DIVISION(16, "div", OperandCount.ZERO),
+    DIVISION(16, "div"),
 
     /**
      * Specifies that the next operation that should be performed is a multiplication.
      */
-    MULTIPLY(17, "mult", OperandCount.ZERO),
+    MULTIPLY(17, "mult"),
 
     /**
      * Moves the absolute x coordinate of the local player into the accumulator.
      */
-    MOVE_ABSOLUTE_X(18, "mov_abs_x", OperandCount.ZERO),
+    MOVE_ABSOLUTE_X(18, "mov_abs_x"),
 
     /**
      * Moves the absolute y coordinate of the local player into the accumulator.
      */
-    MOVE_ABSOLUTE_Y(19, "mov_abs_y", OperandCount.ZERO),
+    MOVE_ABSOLUTE_Y(19, "mov_abs_y"),
 
     /**
      * Moves the value specified by the first operand into the accumulator.

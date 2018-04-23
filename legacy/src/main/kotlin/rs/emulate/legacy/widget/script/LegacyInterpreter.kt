@@ -1,17 +1,26 @@
 package rs.emulate.legacy.widget.script
 
+import rs.emulate.shared.cs.PlayerProvider
+
 /**
  * An interpreter for [LegacyClientScript]s.
  *
  * @param script The [LegacyClientScript] to interpret.
- * @param context The [ClientScriptContext] for the LegacyClientScript being interpreted.
  */
-class LegacyInterpreter(private val script: LegacyClientScript, private val context: ClientScriptContext) {
+class LegacyInterpreter(
+    private val script: LegacyClientScript,
+    private val provider: PlayerProvider = PlayerProvider.defaultProvider()
+) {
 
     /**
      * The operator that will be used to evaluate the next instruction.
      */
     private var operator: (Int, Int) -> Int = Int::plus
+
+    /**
+     * The current result of the execution.
+     */
+    var value: Int = 0
 
     /**
      * Interprets the [LegacyClientScript] stored in this interpreter.
@@ -20,12 +29,15 @@ class LegacyInterpreter(private val script: LegacyClientScript, private val cont
      */
     fun interpret(): Int {
         for (instruction in script.instructions) {
-            val value = evaluate(instruction)
-            if (context.finished) {
-                return context.result
+            if (instruction.type == LegacyInstructionType.RETURN) {
+                return value
             }
 
-            context.apply(operator, value)
+            val result = evaluate(instruction)
+            if (result != null) {
+                value = operator(value, result)
+                operator = Int::plus
+            }
         }
 
         throw IllegalArgumentException("Script must end with a return call.")
@@ -34,15 +46,11 @@ class LegacyInterpreter(private val script: LegacyClientScript, private val cont
     /**
      * Evaluates the specified [LegacyInstruction].
      */
-    private fun evaluate(instruction: LegacyInstruction): Int {
+    private fun evaluate(instruction: LegacyInstruction): Int? {
         val operands = instruction.operands
-        val provider = context.provider
 
         return when (instruction.type) {
-            LegacyInstructionType.RETURN -> {
-                context.finish()
-                0 // TODO stop returning 0 here
-            }
+            LegacyInstructionType.RETURN -> throw IllegalStateException("Should never be called.")
             LegacyInstructionType.MOVE_CURRENT_LEVEL -> provider.skill(operands[0]).currentLevel
             LegacyInstructionType.MOVE_MAX_LEVEL -> provider.skill(operands[0]).maximumLevel
             LegacyInstructionType.MOVE_EXPERIENCE -> provider.skill(operands[0]).experience.toInt()
@@ -69,15 +77,15 @@ class LegacyInterpreter(private val script: LegacyClientScript, private val cont
             }
             LegacyInstructionType.SUBTRACT -> {
                 operator = Int::minus
-                0
+                null
             }
             LegacyInstructionType.MULTIPLY -> {
                 operator = Int::times
-                0
+                null
             }
             LegacyInstructionType.DIVISION -> {
                 operator = Int::div
-                0
+                null
             }
             LegacyInstructionType.MOVE_ABSOLUTE_X -> provider.position.x
             LegacyInstructionType.MOVE_ABSOLUTE_Y -> provider.position.z
