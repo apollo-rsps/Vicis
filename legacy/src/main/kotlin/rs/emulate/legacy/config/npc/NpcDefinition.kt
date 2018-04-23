@@ -85,7 +85,7 @@ open class NpcDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfig
         /**
          * The prefix used for interaction definition properties.
          */
-        const val INTERACTION_PROPERTY_PREFIX = "interaction"
+        const val INTERACTION_PROPERTY_PREFIX = "Interaction"
     }
 
 }

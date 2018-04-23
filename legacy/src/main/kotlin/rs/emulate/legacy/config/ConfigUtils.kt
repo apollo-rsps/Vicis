@@ -19,12 +19,12 @@ object ConfigUtils {
     /**
      * The String prefixed when creating [DynamicConfigPropertyType]s for original colours.
      */
-    private const val ORIGINAL_COLOUR_PREFIX = "original-colour"
+    private const val ORIGINAL_COLOUR_PREFIX = "Original Colour"
 
     /**
      * The String prefixed when creating [DynamicConfigPropertyType]s for replacement colours.
      */
-    private const val REPLACEMENT_COLOUR_PREFIX = "replacement-colour"
+    private const val REPLACEMENT_COLOUR_PREFIX = "Replacement Colour"
 
     /**
      * Creates or retrieves a [DynamicConfigPropertyType] for original colours, with a name of the form
@@ -90,7 +90,7 @@ object ConfigUtils {
      * @param option The option.
      */
     fun <T> newOptionProperty(prefix: String, option: Int): DynamicConfigPropertyType<T> {
-        return DynamicConfigPropertyType.valueOf("$prefix-$option", option)
+        return DynamicConfigPropertyType.valueOf("$prefix $option", option)
     }
 
 }

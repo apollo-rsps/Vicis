@@ -43,7 +43,7 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
             val builder = ImmutableList.builder<Int>()
 
             for (id in 1..HEAD_MODEL_COUNT) {
-                builder.add(getHeadModel(id).value!!)
+                builder.add(getHeadModel(id).value)
             }
 
             return builder.build()
@@ -89,7 +89,7 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
         /**
          * The prefix for head models.
          */
-        const val HEAD_MODEL_PREFIX = "head-model"
+        const val HEAD_MODEL_PREFIX = "Head Model"
     }
 
 }

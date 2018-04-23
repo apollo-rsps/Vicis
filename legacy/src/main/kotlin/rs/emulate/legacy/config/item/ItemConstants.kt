@@ -8,12 +8,12 @@ internal object ItemConstants {
     /**
      * The prefix used for ground action definition properties.
      */
-    const val GROUND_ACTION_PROPERTY_PREFIX = "ground-action"
+    const val GROUND_ACTION_PROPERTY_PREFIX = "Ground Action"
 
     /**
      * The prefix used for inventory action definition properties.
      */
-    const val INVENTORY_ACTION_PROPERTY_PREFIX = "inventory-action"
+    const val INVENTORY_ACTION_PROPERTY_PREFIX = "Inventory Action"
 
     /**
      * The amount of item stack properties.
@@ -23,7 +23,7 @@ internal object ItemConstants {
     /**
      * The prefix used for item stack definition properties.
      */
-    const val ITEM_STACK_PROPERTY_PREFIX = "item-stack"
+    const val ITEM_STACK_PROPERTY_PREFIX = "Item Stack"
 
     /**
      * The amount of menu actions

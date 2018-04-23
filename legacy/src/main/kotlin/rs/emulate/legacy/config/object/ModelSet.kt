@@ -67,10 +67,12 @@ class ModelSet {
     }
 
     override fun toString(): String {
-        return MoreObjects.toStringHelper(this)
-            .add("ids", Arrays.toString(models))
-            .add("types", Arrays.toString(types))
-            .toString()
+        val builder = MoreObjects.toStringHelper(this).add("ids", Arrays.toString(models))
+        if (types.isNotEmpty()) {
+            builder.add("types", Arrays.toString(types))
+        }
+
+        return builder.toString()
     }
 
     companion object {

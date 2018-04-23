@@ -33,7 +33,7 @@ class DefaultItemDefinition : DefaultConfigDefinition<ItemDefinition>() {
         properties[7] = signedShort(SpriteTranslateX, 0)
         properties[8] = signedShort(SpriteTranslateY, 0)
 
-        properties[10] = unsignedShort(DynamicConfigPropertyType.valueOf("unknown", 10), 0)
+        properties[10] = unsignedShort(DynamicConfigPropertyType.valueOf("unused", 10), 0)
         properties[11] = alwaysTrue(Stackable, false)
         properties[12] = unsignedInt(Value, 1)
         properties[16] = alwaysTrue(Members, false)

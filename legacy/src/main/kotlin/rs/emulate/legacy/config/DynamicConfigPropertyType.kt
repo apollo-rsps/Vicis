@@ -17,6 +17,8 @@ data class DynamicConfigPropertyType<T>(override val name: String, override val 
         require(opcode.toLong() > 0) { "Opcode must be positive." }
     }
 
+    override fun formattedName(): String = name
+
     companion object {
 
         /**
