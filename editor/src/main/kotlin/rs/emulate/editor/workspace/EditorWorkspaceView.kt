@@ -24,7 +24,7 @@ class EditorWorkspaceView : View() {
 
         right = hbox {
             drawer(Side.RIGHT) {
-                add(EditorPropertySheet::class)
+                item(EditorPropertySheet::class, showHeader = true)
             }
         }
 
