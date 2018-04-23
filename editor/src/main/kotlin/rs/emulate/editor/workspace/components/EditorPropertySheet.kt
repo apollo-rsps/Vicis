@@ -1,5 +1,9 @@
 package rs.emulate.editor.workspace.components
 
+import com.github.thomasnield.rxkotlinfx.changes
+import com.github.thomasnield.rxkotlinfx.toBinding
+import io.reactivex.Observable
+import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableMap
 import org.controlsfx.control.PropertySheet
@@ -15,12 +19,17 @@ class EditorPropertySheet : EditorComponent() {
         title = messages["title"]
 
         model.onResourceSelected.map {
-            if (it is ConfigResource<*>) {
-                it.properties.map { (property) ->
-                    StringPropertyItem(property, it.properties as ObservableMap<SerializableProperty<*>, Any?>)
+            when (it) {
+                is ConfigResource<*> -> it.properties.map { (property) ->
+                    val propertyValueChanges = it.properties.changes()
+                        .distinctUntilChanged()
+                        .filter(property::equals)
+                        .map { it.value }
+                        .startWith(property.value)
+
+                    StringPropertyItem(it.properties, property, propertyValueChanges)
                 }
-            } else {
-                emptyList()
+                else -> emptyList()
             }
         }.subscribe {
             root.items.setAll(it)
@@ -30,12 +39,21 @@ class EditorPropertySheet : EditorComponent() {
 }
 
 class StringPropertyItem(
+    val properties: ObservableMap<SerializableProperty<*>, out Any?>,
     val property: SerializableProperty<*>,
-    val properties: ObservableMap<SerializableProperty<*>, Any?>
+    val propertyChanges: Observable<*>
 ) : PropertySheet.Item {
 
+    val valueProperty = ReadOnlyObjectWrapper<Any>()
+
+    init {
+        valueProperty.bind(propertyChanges.toBinding())
+    }
+
     override fun setValue(value: Any?) {
-        properties[property] = value
+        // @todo - using `property` as the key here is weird
+        val propertyMap = properties as ObservableMap<SerializableProperty<*>, Any?>
+        propertyMap[property] = value as Any
     }
 
     override fun getName(): String = property.name
@@ -46,10 +64,7 @@ class StringPropertyItem(
 
     override fun getValue(): Any = property.value ?: ""
 
-    override fun getObservableValue(): Optional<ObservableValue<out Any>> {
-        // TODO
-        return Optional.empty()
-    }
+    override fun getObservableValue(): Optional<ObservableValue<out Any>>? = Optional.of(valueProperty)
 
     override fun getCategory(): String {
         return "Property"
