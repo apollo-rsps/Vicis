@@ -8,9 +8,12 @@ import javafx.beans.value.ObservableValue
 import javafx.collections.ObservableMap
 import org.controlsfx.control.PropertySheet
 import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResource
+import rs.emulate.legacy.config.ConfigPropertyType
 import rs.emulate.legacy.config.SerializableProperty
-import tornadofx.*
+import tornadofx.get
 import java.util.Optional
+import kotlin.collections.component1
+import kotlin.collections.set
 
 class EditorPropertySheet : EditorComponent() {
     override val root: PropertySheet = PropertySheet()
@@ -25,7 +28,7 @@ class EditorPropertySheet : EditorComponent() {
                         .distinctUntilChanged()
                         .filter(property::equals)
                         .map { it.value }
-                        .startWith(property.value)
+                        .startWith(property)
 
                     StringPropertyItem(it.properties, property, propertyValueChanges)
                 }
@@ -39,9 +42,9 @@ class EditorPropertySheet : EditorComponent() {
 }
 
 class StringPropertyItem(
-    val properties: ObservableMap<SerializableProperty<*>, out Any?>,
-    val property: SerializableProperty<*>,
-    val propertyChanges: Observable<*>
+    val properties: ObservableMap<ConfigPropertyType<*>, Any?>,
+    val type: ConfigPropertyType<*>,
+    propertyChanges: Observable<*>
 ) : PropertySheet.Item {
 
     val valueProperty = ReadOnlyObjectWrapper<Any>()
@@ -51,18 +54,16 @@ class StringPropertyItem(
     }
 
     override fun setValue(value: Any?) {
-        // @todo - using `property` as the key here is weird
-        val propertyMap = properties as ObservableMap<SerializableProperty<*>, Any?>
-        propertyMap[property] = value as Any
+        properties[type] = value as Any
     }
 
-    override fun getName(): String = property.name
+    override fun getName(): String = type.name
 
     override fun getDescription(): String = "Filler description"
 
     override fun getType(): Class<*> = SerializableProperty::class.java
 
-    override fun getValue(): Any = property.value ?: ""
+    override fun getValue(): Any = properties[type] ?: ""
 
     override fun getObservableValue(): Optional<ObservableValue<out Any>>? = Optional.of(valueProperty)
 

@@ -7,18 +7,17 @@ import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceId
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.config.ConfigDecoder
+import rs.emulate.legacy.config.ConfigPropertyType
 import rs.emulate.legacy.config.DefinitionSupplier
 import rs.emulate.legacy.config.MutableConfigDefinition
-import rs.emulate.legacy.config.SerializableProperty
-import kotlin.reflect.KClass
 
 /**
  * A [Resource] from the config archive.
  */
 class ConfigResource<T : MutableConfigDefinition>(override val id: ResourceId, definition: T) : Resource {
 
-    val properties: ObservableMap<SerializableProperty<*>, *> = FXCollections.observableMap(
-        definition.serializableProperties().associateBy({ it.value }, { it.value.value })
+    val properties: ObservableMap<ConfigPropertyType<*>, Any?> = FXCollections.observableMap(
+        definition.serializableProperties().associateBy({ it.value.type }, { it.value.value })
     )
 
     override fun equals(other: Any?): Boolean { /* TODO should we only care about matching id? */
