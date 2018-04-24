@@ -11,13 +11,10 @@ import java.util.Arrays
 /**
  * Decodes a [Sprite] from the 2D-graphics archive.
  *
- * @param graphics The graphics [Archive].
- * @param name The name of the [Sprites][Sprite] to decode.
+ * @param graphics The [Archive] containing the sprite.
+ * @param name The name of the [Sprite] to decode.
  */
-class SpriteDecoder(
-    graphics: Archive,
-    private val name: String
-) : GraphicsDecoder(getDataEntry(graphics, name), getIndexEntry(graphics)) {
+class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, name) {
 
     /**
      * Decodes all [Sprite]s, returning the decoded Sprites as an [ImmutableList].

@@ -7,19 +7,15 @@ import rs.emulate.legacy.graphics.GraphicsConstants
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
 import java.io.IOException
-import java.util.ArrayList
 import java.util.Arrays
 
 /**
  * Decodes an [IndexedImage] from the 2D-graphics archive.
  *
- * @param archive The [Archive].
+ * @param graphics The [Archive] containing the image.
  * @param name The name of the [IndexedImage(s)][IndexedImage] to decode.
  */
-class ImageDecoder(
-    archive: Archive,
-    private val name: String
-) : GraphicsDecoder(getDataEntry(archive, name), getIndexEntry(archive)) {
+class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, name) {
 
     /**
      * Decodes all available [IndexedImage]s.
@@ -37,7 +33,7 @@ class ImageDecoder(
             palette[index] = this.index.getUnsignedTriByte()
         }
 
-        val images = ArrayList<IndexedImage>()
+        val images = mutableListOf<IndexedImage>()
 
         while (data.hasRemaining() && index.hasRemaining()) {
             images.add(decode(palette, resizeHeight, resizeWidth))

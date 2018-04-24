@@ -4,34 +4,28 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
-import java.util.Arrays
 
 /**
  * A [GraphicsDecoder] for [Font]s.
  *
- * @param graphics The graphics [Archive].
- * @param name The name of the font.
+ * @param graphics The [Archive] containing the font.
+ * @param name The name of the [Font] to decode.
  */
-class FontDecoder(
-    graphics: Archive,
-    private val name: String
-) : GraphicsDecoder(getDataEntry(graphics, name), getIndexEntry(graphics)) {
+class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, name) {
 
     /**
      * Decodes the [Font].
      */
     fun decode(): Font {
         index.position(data.getUnsignedShort() + 4)
-        val skip = index.getUnsignedByte()
+        val offset = index.getUnsignedByte()
 
-        if (skip > 0) {
-            index.skip(3 * (skip - 1))
+        if (offset > 0) {
+            index.skip(3 * (offset - 1))
         }
 
-        val glyphs = arrayOfNulls<Glyph>(GLYPHS_PER_FONT)
-        Arrays.setAll(glyphs) { decodeGlyph() }
-
-        return Font(name, glyphs.requireNoNulls())
+        val glyphs = Array(GLYPHS_PER_FONT) { decodeGlyph() }
+        return Font(name, glyphs)
     }
 
     /**
