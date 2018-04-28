@@ -1,6 +1,5 @@
 package rs.emulate.legacy.model
 
-import com.google.common.base.Preconditions
 import rs.emulate.legacy.model.ModelFeature.*
 import rs.emulate.shared.util.DataBuffer
 import java.util.EnumSet
@@ -149,7 +148,7 @@ class ModelDecoder(private val buffer: DataBuffer) {
         bonesOffset: Int,
         texturePointersOffset: Int
     ) {
-        Preconditions.checkState(faces.isNotEmpty(), "Must be 1 or more faces present")
+        check(faces.isNotEmpty()) { "Must be 1 or more faces present." }
 
         val faceData = buffer.asReadOnlyBuffer()
         faceData.position(faceDataOffset)
@@ -180,10 +179,11 @@ class ModelDecoder(private val buffer: DataBuffer) {
         for (index in faces.indices) {
             val type = types.getUnsignedByte()
             val colour = colours.getUnsignedShort()
-            val renderPriority = if (features.contains(FACE_RENDER_PRIORITY)) renderPriorities.getUnsignedByte() else -1
-            val alpha = if (features.contains(FACE_TRANSPARENCY)) alphas.getUnsignedByte() else -1
-            val bone = if (features.contains(FACE_SKINNING)) bones.getUnsignedByte() else -1
-            val texturePointer = if (features.contains(FACE_TEXTURES)) bones.getUnsignedByte() else -1
+
+            val renderPriority = if (FACE_RENDER_PRIORITY in features) renderPriorities.getUnsignedByte() else -1
+            val alpha = if (FACE_TRANSPARENCY in features) alphas.getUnsignedByte() else -1
+            val bone = if (FACE_SKINNING in features) bones.getUnsignedByte() else -1
+            val texturePointer = if (FACE_TEXTURES in features) bones.getUnsignedByte() else -1
 
             if (type == 1) {
                 faceA = faceData.getSignedSmart() + offset
@@ -219,7 +219,7 @@ class ModelDecoder(private val buffer: DataBuffer) {
      * Decode a list of [Vertex] objects from the input [Model] file.
      */
     private fun decodeVertices(xDataOffset: Int, yDataOffset: Int, zDataOffset: Int, vertexBonesOffset: Int) {
-        Preconditions.checkState(vertices.isNotEmpty(), "Vertex count must be greater than 0")
+        check(vertices.isNotEmpty()) { "Vertex count must be greater than 0." }
 
         val directionBuffer = buffer.asReadOnlyBuffer()
         directionBuffer.position(0)
@@ -241,39 +241,42 @@ class ModelDecoder(private val buffer: DataBuffer) {
 
         for (index in vertices.indices) {
             val mask = directionBuffer.getUnsignedByte()
-            var x = 0
-            if (mask and VERTEX_X_POSITION != 0) {
-                x = verticesX.getSignedSmart()
+            var x = when {
+                mask and VERTEX_X_POSITION != 0 -> verticesX.getSignedSmart()
+                else -> 0
             }
 
-            var y = 0
-            if (mask and VERTEX_Y_POSITION != 0) {
-                y = verticesY.getSignedSmart()
+            var y = when {
+                mask and VERTEX_Y_POSITION != 0 -> verticesY.getSignedSmart()
+                else -> 0
             }
 
-            var z = 0
-            if (mask and VERTEX_Z_POSITION != 0) {
-                z = verticesZ.getSignedSmart()
+            var z = when {
+                mask and VERTEX_Z_POSITION != 0 -> verticesZ.getSignedSmart()
+                else -> 0
+            }
+
+            val bone = when (VERTEX_SKINNING) {
+                in features -> bones.getUnsignedByte()
+                else -> -1
             }
 
             x += baseX
             y += baseY
             z += baseZ
+
             baseX = x
             baseY = y
             baseZ = z
 
-            vertices[index] = Vertex(x, y, z)
-
-            // TODO bone decoding
-            val bone = if (features.contains(VERTEX_SKINNING)) bones.getUnsignedByte() else -1
+            vertices[index] = Vertex(x, y, z, bone)
         }
     }
 
     companion object {
 
         /**
-         * The size in `byte`s of the model header block.
+         * The size (in bytes) of the model header block.
          */
         private const val HEADER_SIZE = 18
 
