@@ -3,6 +3,7 @@ package rs.emulate.editor.workspace
 import javafx.geometry.Side
 import rs.emulate.editor.workspace.components.EditorPropertySheet
 import rs.emulate.editor.workspace.components.EditorStatusBar
+import rs.emulate.editor.workspace.components.EditorTabPane
 import rs.emulate.editor.workspace.components.menu.EditorMenu
 import rs.emulate.editor.workspace.components.widgets.tree.ResourceIndexTree
 import tornadofx.View
@@ -20,6 +21,10 @@ class EditorWorkspaceView : View() {
             drawer(Side.LEFT) {
                 item(ResourceIndexTree::class, showHeader = true)
             }
+        }
+
+        center = vbox {
+            add(EditorTabPane::class)
         }
 
         right = hbox {
