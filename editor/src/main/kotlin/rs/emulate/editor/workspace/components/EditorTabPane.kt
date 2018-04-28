@@ -2,8 +2,9 @@ package rs.emulate.editor.workspace.components
 
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
+import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceId
-import tornadofx.tab
+import tornadofx.*
 
 class EditorTabPane : EditorComponent() {
     override val root: TabPane = TabPane()
@@ -11,21 +12,28 @@ class EditorTabPane : EditorComponent() {
     private val tabs = mutableMapOf<ResourceId, Tab>()
 
     init {
-        model.onResourceSelected.map { resource ->
+        model.onResourceSelected.distinctUntilChanged().map { resource ->
             val id = resource.id
-            // TODO fire onResourceSelected event when selected, to update the other components
 
             val tab = if (id in tabs) {
                 tabs[id]
             } else {
-                root.tab(id.toString()) {
-                    setOnClosed { tabs.remove(id) }
-                }.also {
-                    tabs[id] = it
+                val tab = Tab(id.toString())
+                tab.properties["resource"] = resource
+                tab.setOnClosed {
+                    tabs.remove(id)
                 }
+
+                root.tabs.add(tab)
+                tabs[id] = tab
+                tab
             }
 
             root.selectionModel.select(tab)
         }.subscribe()
+
+        root.selectionModel.selectedItemProperty().onChange {
+            it?.let { model.onResourceSelected.onNext(it.properties["resource"] as Resource) }
+        }
     }
 }
