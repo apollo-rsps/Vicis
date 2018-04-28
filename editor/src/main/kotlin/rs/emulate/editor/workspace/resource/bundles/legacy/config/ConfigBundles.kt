@@ -2,6 +2,7 @@ package rs.emulate.editor.workspace.resource.bundles.legacy.config
 
 import rs.emulate.editor.workspace.resource.index.ResourceIndexBuilder
 import rs.emulate.legacy.archive.Archive
+import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.legacy.config.DefinitionSupplier
 import rs.emulate.legacy.config.`object`.DefaultObjectDefinition
 import rs.emulate.legacy.config.`object`.ObjectDefinition
@@ -10,7 +11,12 @@ import rs.emulate.legacy.config.item.ItemDefinition
 import rs.emulate.legacy.config.npc.DefaultNpcDefinition
 import rs.emulate.legacy.config.npc.NpcDefinition
 
-class ObjectResourceBundle(config: Archive) : ConfigResourceBundle<ObjectDefinition>(config, DEFINITION_SUPPLIER) {
+class ObjectResourceBundle(config: Archive) : ConfigResourceBundle<ObjectResourceId, ObjectDefinition> {
+
+    override val idType = ObjectResourceId::class
+
+    override val definitions = ConfigDecoder(config, DEFINITION_SUPPLIER).decode()
+        .associateBy { ObjectResourceId(it.id) }
 
     override fun index(index: ResourceIndexBuilder) {
         definitions.forEach { (resourceId, def) ->
@@ -32,7 +38,12 @@ class ObjectResourceBundle(config: Archive) : ConfigResourceBundle<ObjectDefinit
 
 }
 
-class NpcResourceBundle(config: Archive) : ConfigResourceBundle<NpcDefinition>(config, DEFINITION_SUPPLIER) {
+class NpcResourceBundle(config: Archive) : ConfigResourceBundle<NpcResourceId, NpcDefinition> {
+
+    override val idType = NpcResourceId::class
+
+    override val definitions = ConfigDecoder(config, DEFINITION_SUPPLIER).decode()
+        .associateBy { NpcResourceId(it.id) }
 
     override fun index(index: ResourceIndexBuilder) {
         definitions.forEach { (resourceId, def) ->
@@ -54,7 +65,12 @@ class NpcResourceBundle(config: Archive) : ConfigResourceBundle<NpcDefinition>(c
 
 }
 
-class ItemResourceBundle(config: Archive) : ConfigResourceBundle<ItemDefinition>(config, DEFINITION_SUPPLIER) {
+class ItemResourceBundle(config: Archive) : ConfigResourceBundle<ItemResourceId, ItemDefinition> {
+
+    override val idType = ItemResourceId::class
+
+    override val definitions = ConfigDecoder(config, DEFINITION_SUPPLIER).decode()
+        .associateBy { ItemResourceId(it.id) }
 
     override fun index(index: ResourceIndexBuilder) {
         definitions.forEach { (resourceId, def) ->

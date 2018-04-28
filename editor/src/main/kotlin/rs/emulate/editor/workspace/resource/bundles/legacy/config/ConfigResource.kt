@@ -5,10 +5,7 @@ import javafx.collections.ObservableMap
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceBundle
 import rs.emulate.editor.workspace.resource.ResourceId
-import rs.emulate.legacy.archive.Archive
-import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.legacy.config.ConfigPropertyType
-import rs.emulate.legacy.config.DefinitionSupplier
 import rs.emulate.legacy.config.MutableConfigDefinition
 
 /**
@@ -20,8 +17,8 @@ class ConfigResource<T : MutableConfigDefinition>(override val id: ResourceId, d
         definition.serializableProperties().associateBy({ it.value.type }, { it.value.value })
     )
 
-    override fun equals(other: Any?): Boolean { /* TODO should we only care about matching id? */
-        return other is ConfigResource<*> && id == other.id && properties == other.properties
+    override fun equals(other: Any?): Boolean {
+        return other is ConfigResource<*> && id == other.id
     }
 
     override fun hashCode(): Int {
@@ -34,18 +31,10 @@ class ConfigResource<T : MutableConfigDefinition>(override val id: ResourceId, d
 
 }
 
-data class ConfigResourceId(val id: Int) : ResourceId
+interface ConfigResourceBundle<I : ConfigResourceId, T : MutableConfigDefinition> : ResourceBundle<I> {
 
-abstract class ConfigResourceBundle<T : MutableConfigDefinition>(
-    config: Archive,
-    supplier: DefinitionSupplier<T>
-) : ResourceBundle<ConfigResourceId> {
+    val definitions: Map<I, T>
 
-    override val idType = ConfigResourceId::class
-
-    protected val definitions = ConfigDecoder(config, supplier).decode()
-        .associateBy { ConfigResourceId(it.id) } // TODO load lazily?
-
-    override fun load(id: ConfigResourceId): Resource = ConfigResource(id, definitions[id]!!)
+    override fun load(id: I): Resource = ConfigResource(id, definitions[id]!!)
 
 }

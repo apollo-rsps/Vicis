@@ -21,16 +21,16 @@ class EditorPropertySheet : EditorComponent() {
     init {
         title = messages["title"]
 
-        model.onResourceSelected.map {
-            when (it) {
-                is ConfigResource<*> -> it.properties.map { (property) ->
-                    val propertyValueChanges = it.properties.changes()
+        model.onResourceSelected.map { resource ->
+            when (resource) {
+                is ConfigResource<*> -> resource.properties.map { (property) ->
+                    val propertyValueChanges = resource.properties.changes()
                         .distinctUntilChanged()
                         .filter(property::equals)
                         .map { it.value }
                         .startWith(property)
 
-                    StringPropertyItem(it.properties, property, propertyValueChanges)
+                    StringPropertyItem(resource.properties, property, propertyValueChanges)
                 }
                 else -> emptyList()
             }
