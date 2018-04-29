@@ -29,6 +29,10 @@ class ConfigResource<T : MutableConfigDefinition>(override val id: ResourceId, d
         return "ConfigResource($id) { $properties }"
     }
 
+    companion object {
+        const val INDEX_CATEGORY = "Config"
+    }
+
 }
 
 interface ConfigResourceBundle<I : ConfigResourceId, T : MutableConfigDefinition> : ResourceBundle<I> {

@@ -8,7 +8,6 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.ModelDecoder
 import rs.emulate.shared.util.CompressionUtils
-import kotlin.reflect.KClass
 
 data class ModelResource(override val id: ResourceId, val model: Model) : Resource
 
@@ -29,10 +28,11 @@ class ModelResourceBundle(private val fs: IndexedFileSystem) : ResourceBundle<Mo
         val count = fs.getFileCount(MODEL_INDEX)
 
         (0 until count).forEach { file ->
-            index.entry {
-                id = ModelResourceId(file)
-                label = file.toString()
-                type = Model::class.simpleName
+            index.category("Models") {
+                item {
+                    id = ModelResourceId(file)
+                    label = file.toString()
+                }
             }
         }
     }

@@ -20,10 +20,13 @@ class ObjectResourceBundle(config: Archive) : ConfigResourceBundle<ObjectResourc
 
     override fun index(index: ResourceIndexBuilder) {
         definitions.forEach { (resourceId, def) ->
-            index.entry {
-                id = resourceId
-                label = "${def.id} - ${def.name.value}"
-                type = def.javaClass.simpleName
+            index.category(ConfigResource.INDEX_CATEGORY) {
+                category("Object Definitions") {
+                    item {
+                        id = resourceId
+                        label = "${def.id} - ${def.name.value}"
+                    }
+                }
             }
         }
     }
@@ -47,10 +50,13 @@ class NpcResourceBundle(config: Archive) : ConfigResourceBundle<NpcResourceId, N
 
     override fun index(index: ResourceIndexBuilder) {
         definitions.forEach { (resourceId, def) ->
-            index.entry {
-                id = resourceId
-                label = "${def.id} - ${def.name.value}"
-                type = def.javaClass.simpleName
+            index.category(ConfigResource.INDEX_CATEGORY) {
+                category("Npc Definitions") {
+                    item {
+                        id = resourceId
+                        label = "${def.id} - ${def.name.value}"
+                    }
+                }
             }
         }
     }
@@ -74,10 +80,13 @@ class ItemResourceBundle(config: Archive) : ConfigResourceBundle<ItemResourceId,
 
     override fun index(index: ResourceIndexBuilder) {
         definitions.forEach { (resourceId, def) ->
-            index.entry {
-                id = resourceId
-                label = "${def.id} - ${def.name.value}"
-                type = def.javaClass.simpleName
+            index.category(ConfigResource.INDEX_CATEGORY) {
+                category("Item Definitions") {
+                    item {
+                        id = resourceId
+                        label = "${def.id} - ${def.name.value}"
+                    }
+                }
             }
         }
     }

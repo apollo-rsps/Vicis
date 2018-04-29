@@ -6,7 +6,6 @@ import javafx.scene.control.TreeItem
 import rs.emulate.editor.workspace.components.EditorComponent
 import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.Category
 import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.Item
-import rs.emulate.editor.workspace.components.widgets.tree.ResourceTreeItem.Root
 import tornadofx.borderpane
 import tornadofx.cellFormat
 import tornadofx.get
@@ -20,7 +19,9 @@ class ResourceIndexTree : EditorComponent() {
         title = messages["title"]
 
         with(root) {
-            val tree = treeview<ResourceTreeItem>(TreeItem(Root())) {
+            val tree = treeview<ResourceTreeItem>(TreeItem(Category("hidden root node", emptyList()))) {
+                isShowRoot = false
+
                 selectionModel.selectionMode = SelectionMode.SINGLE
                 selectionModel.selectedItemProperty().toObservable()
                     .filter { it.value is Item }
@@ -32,7 +33,6 @@ class ResourceIndexTree : EditorComponent() {
                     val item = this.item
 
                     text = when (item) {
-                        is Root -> messages["tree.root_label"]
                         is Category -> item.name
                         is Item -> item.name
                     }
@@ -45,7 +45,6 @@ class ResourceIndexTree : EditorComponent() {
                     val value = parent.value
 
                     when (value) {
-                        is Root -> value.items
                         is Category -> value.items
                         is Item -> emptyList()
                     }
