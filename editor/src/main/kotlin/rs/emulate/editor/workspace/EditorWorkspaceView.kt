@@ -1,17 +1,13 @@
 package rs.emulate.editor.workspace
 
 import javafx.geometry.Side
+import javafx.scene.layout.Priority
 import rs.emulate.editor.workspace.components.EditorPropertySheet
 import rs.emulate.editor.workspace.components.EditorStatusBar
 import rs.emulate.editor.workspace.components.EditorTabPane
 import rs.emulate.editor.workspace.components.menu.EditorMenu
 import rs.emulate.editor.workspace.components.widgets.tree.ResourceIndexTree
-import tornadofx.View
-import tornadofx.borderpane
-import tornadofx.drawer
-import tornadofx.get
-import tornadofx.hbox
-import tornadofx.vbox
+import tornadofx.*
 
 class EditorWorkspaceView : View() {
     override val root = borderpane {

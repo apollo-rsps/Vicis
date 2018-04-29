@@ -1,6 +1,10 @@
 description = 'Vicis Editor'
 
 buildscript {
+    ext {
+        lwjglVersion = "3.1.6"
+    }
+
     repositories {
         maven {
             url "https://plugins.gradle.org/m2/"
@@ -21,6 +25,13 @@ dependencies {
     compile 'com.github.thomasnield:rxkotlinfx:2.2.2'
     compile 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     compile 'com.github.kotlin-graphics:glm:v1.0.1'
+
+    ["lwjgl", "lwjgl-glfw", "lwjgl-opengl"].each { artifact ->
+        compile "org.lwjgl:${artifact}:${lwjglVersion}"
+        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-linux"
+        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-windows"
+        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-macos"
+    }
 
     compile project(':legacy')
 }
