@@ -1,10 +1,22 @@
 package rs.emulate.editor.workspace
 
+import rs.emulate.editor.workspace.components.widgets.content.ResourceViewerExtension
 import rs.emulate.editor.workspace.resource.ResourceId
+import rs.emulate.editor.workspace.resource.extensions.ResourceExtensionPoint
 import tornadofx.*
 
 class EditorWorkspaceController : Controller() {
     val model: EditorWorkspaceModel by inject()
+    val viewerExtensions = ResourceExtensionPoint(ResourceViewerExtension::class)
+
+    init {
+        runAsync {
+            viewerExtensions.load()
+            model.cache.index()
+        } success {
+            model.onResourceIndexUpdate.onNext(it)
+        }
+    }
 
     fun open(resourceId: ResourceId) {
         runAsync {
@@ -14,9 +26,5 @@ class EditorWorkspaceController : Controller() {
         } fail {
             model.onResourceSelectionError.onNext(it)
         }
-    }
-
-    init {
-        model.onResourceIndexUpdate.onNext(model.cache.index())
     }
 }

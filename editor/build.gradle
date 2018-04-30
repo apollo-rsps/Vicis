@@ -25,6 +25,7 @@ dependencies {
     compile 'com.github.thomasnield:rxkotlinfx:2.2.2'
     compile 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     compile 'com.github.kotlin-graphics:glm:v1.0.1'
+    compile 'io.github.lukehutch:fast-classpath-scanner:2.18.2'
 
     ["lwjgl", "lwjgl-glfw", "lwjgl-opengl"].each { artifact ->
         compile "org.lwjgl:${artifact}:${lwjglVersion}"

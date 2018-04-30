@@ -3,7 +3,7 @@ package rs.emulate.editor.workspace.components
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.Priority
-import rs.emulate.editor.workspace.components.opengl.GLFragment
+import rs.emulate.editor.workspace.components.widgets.content.ResourceViewer
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceId
 import tornadofx.*
@@ -23,21 +23,38 @@ class EditorTabPane : EditorComponent() {
                 tabs[id]
             } else {
                 val tab = Tab(id.toString())
+                val tabContentExtension = controller.viewerExtensions.extensionFor(resource::class)
+                val tabContent = tabContentExtension?.createView(resource)
+
+                tab.content = tabContent?.root
+                tab.properties["viewer"] = tabContent
                 tab.properties["resource"] = resource
+
                 tab.setOnClosed {
+                    tabContent?.onClose()
                     tabs.remove(id)
                 }
 
                 root.tabs.add(tab)
                 tabs[id] = tab
+                tabContent?.onOpen()
                 tab
             }
 
             root.selectionModel.select(tab)
         }.subscribe()
 
-        root.selectionModel.selectedItemProperty().onChange {
-            it?.let { model.onResourceSelected.onNext(it.properties["resource"] as Resource) }
+        root.selectionModel.selectedItemProperty().addListener { _, old, new ->
+            old?.let {
+                val viewer = it.properties["viewer"] as ResourceViewer?
+                viewer?.onFocusLost()
+            }
+            new?.let {
+                val viewer = it.properties["viewer"] as ResourceViewer?
+                viewer?.onFocus()
+
+                model.onResourceSelected.onNext(it.properties["resource"] as Resource)
+            }
         }
     }
 }
