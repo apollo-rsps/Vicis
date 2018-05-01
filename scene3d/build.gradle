@@ -1,0 +1,24 @@
+
+buildscript {
+    ext {
+        lwjglVersion = "3.1.6"
+        glmVersion = "v1.0.1"
+    }
+}
+
+group 'vicis'
+version '0.0.1'
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile "com.github.kotlin-graphics:glm:${glmVersion}"
+
+    ["lwjgl", "lwjgl-glfw", "lwjgl-opengl"].each { artifact ->
+        compile "org.lwjgl:${artifact}:${lwjglVersion}"
+        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-linux"
+    }
+}
