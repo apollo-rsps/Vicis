@@ -2,7 +2,12 @@ description = 'Vicis Editor'
 
 buildscript {
     ext {
-        lwjglVersion = "3.1.6"
+        glmVersion = "v1.0.1"
+        rxkotlinVersion = "2.2.0"
+        rxkotlinFxVersion = "2.2.2"
+        tornadoFxVersion = "1.7.15"
+        controlsFxVersion = "8.40.14"
+        classpathScannerVersion = "2.18.2"
     }
 
     repositories {
@@ -20,19 +25,12 @@ repositories {
 }
 
 dependencies {
-    compile 'no.tornado:tornadofx:1.7.15'
-    compile 'org.controlsfx:controlsfx:8.40.14'
-    compile 'com.github.thomasnield:rxkotlinfx:2.2.2'
-    compile 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-    compile 'com.github.kotlin-graphics:glm:v1.0.1'
-    compile 'io.github.lukehutch:fast-classpath-scanner:2.18.2'
-
-    ["lwjgl", "lwjgl-glfw", "lwjgl-opengl"].each { artifact ->
-        compile "org.lwjgl:${artifact}:${lwjglVersion}"
-        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-linux"
-        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-windows"
-        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-macos"
-    }
+    compile "no.tornado:tornadofx:$tornadoFxVersion"
+    compile "org.controlsfx:controlsfx:$controlsFxVersion"
+    compile "com.github.thomasnield:rxkotlinfx:$rxkotlinFxVersion"
+    compile "io.reactivex.rxjava2:rxkotlin:$rxkotlinVersion"
+    compile "com.github.kotlin-graphics:glm:$glmVersion"
+    compile "io.github.lukehutch:fast-classpath-scanner:$classpathScannerVersion"
 
     compile project(':legacy')
 }
