@@ -18,6 +18,11 @@ abstract class Renderer(protected val scene: Scene) {
     abstract fun initialize()
 
     /**
+     * Resize the dimensions of the [Renderer]s display.
+     */
+    abstract fun resize(width: Int, height: Int)
+
+    /**
      * Render the geometry of the scene.  Called every frame.
      */
     abstract fun render()

@@ -14,6 +14,7 @@ import rs.emulate.scene3d.Node
 import rs.emulate.scene3d.backend.opengl.bindings.OpenGLShaderModule
 import rs.emulate.scene3d.backend.opengl.bindings.OpenGLShaderModuleType
 import rs.emulate.scene3d.backend.opengl.bindings.OpenGLShaderProgram
+import rs.emulate.scene3d.material.VertexAttribute
 import kotlin.concurrent.withLock
 
 fun GeometryType.toOpenGLType() = when (this) {
@@ -49,7 +50,7 @@ class OpenGLGeometryState {
      * The ID of the Vertex Buffer Object containing the indices for rendering indexed geometry.
      * May be empty.
      */
-    lateinit var vertexIndexBufferObjectId: IntArray
+    var vertexIndexBufferObjectId: Int = -1
 
     /**
      * The shader program this geometry is drawn with.
@@ -68,15 +69,17 @@ class OpenGLGeometryState {
 
         val vaoBuffer = BufferUtils.createIntBuffer(1)
         val vboBuffer = BufferUtils.createIntBuffer(vertexLayout.elements.size)
+        val indexVboBuffer = BufferUtils.createIntBuffer(1)
 
         glGenVertexArrays(vaoBuffer)
         glGenBuffers(vboBuffer)
+        glGenBuffers(indexVboBuffer)
 
         geometryType = node.geometryType
         shader = OpenGLShaderProgram.create(vs, fs)
         vertexArrayObjectId = vaoBuffer[0]
         vertexBufferObjectIds = (0 until vertexLayout.elements.size).map { vboBuffer[it] }.toIntArray()
-        vertexIndexBufferObjectId = IntArray(0) //@todo - support indexed geometry
+        vertexIndexBufferObjectId = indexVboBuffer[0]
 
         update(node)
 
@@ -96,7 +99,14 @@ class OpenGLGeometryState {
         )
 
         glBindVertexArray(vertexArrayObjectId)
-        glDrawArrays(geometryType.toOpenGLType(), 0, node.positions.size)
+
+        if (node.indices.isEmpty()) {
+            glDrawArrays(geometryType.toOpenGLType(), 0, node.positions.size)
+        } else {
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexIndexBufferObjectId)
+            glDrawElements(geometryType.toOpenGLType(), node.indices.size * geometryType.components, GL_UNSIGNED_INT, 0L)
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)
+        }
 
         glUseProgram(0)
         glBindVertexArray(0)
@@ -107,6 +117,8 @@ class OpenGLGeometryState {
      */
     fun update(node: Geometry) {
         node.lock.withLock {
+            glBindVertexArray(vertexArrayObjectId)
+
             val vertexAttributes = node.material.vertexLayout.elements
             for (vertexAttribute in vertexAttributes) {
                 val data = node.data.buffer(vertexAttribute.type)
@@ -121,7 +133,6 @@ class OpenGLGeometryState {
                     continue
                 }
 
-                glBindVertexArray(vertexArrayObjectId)
                 glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectIds[location])
                 glEnableVertexAttribArray(location)
                 glBufferData(GL_ARRAY_BUFFER, data.buffer.asFloatBuffer(), GL_STATIC_DRAW)
@@ -130,8 +141,18 @@ class OpenGLGeometryState {
                 glBindVertexArray(0)
             }
 
+            if (node.indices.isNotEmpty()) {
+                val data = node.data.buffer(VertexAttribute.Index)
+
+                glBindVertexArray(vertexArrayObjectId)
+                glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vertexIndexBufferObjectId)
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.buffer, GL_DYNAMIC_DRAW)
+            }
+
             node.dirty = false
+            glBindVertexArray(0)
         }
+
     }
 
     companion object {

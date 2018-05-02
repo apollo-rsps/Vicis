@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
         Vec3(-1f, 0f, 0f)
     )
 
-    val renderer = OpenGLRenderer(scene, OpenGLDefaultRenderTarget())
+    val renderer = OpenGLRenderer(scene, OpenGLDefaultRenderTarget(), true)
     renderer.initialize()
 
     while(!glfwWindowShouldClose(renderer.windowContext)) {

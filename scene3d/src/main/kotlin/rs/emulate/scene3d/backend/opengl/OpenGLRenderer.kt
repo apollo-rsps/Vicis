@@ -19,7 +19,7 @@ val Node.glState: OpenGLGeometryState
  * @param scene The scene to render.
  * @param target The render target to blit the scene to.
  */
-class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget) : Renderer(scene) {
+class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget, val visible: Boolean = false) : Renderer(scene) {
 
     /**
      * Address of the GL context backing the renderer.
@@ -34,6 +34,7 @@ class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget) : Renderer(sc
     /**
      * Create a GLFW backed window and a new OpenGL context.
      */
+    //@todo - move into OpenGLRenderTarget
     override fun initialize() {
         if (!glfwInit()) {
             throw RuntimeException("Unable to initialize GLFW")
@@ -43,7 +44,7 @@ class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget) : Renderer(sc
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3)
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3)
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE)
-        glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE)
+        glfwWindowHint(GLFW_VISIBLE, if (visible) GLFW_TRUE else GLFW_FALSE)
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE) //@todo - control this from the render target
 
         windowContext = glfwCreateWindow(scene.width, scene.height, "offscreen buffer", NULL, NULL)
@@ -60,9 +61,14 @@ class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget) : Renderer(sc
         initialized = true
     }
 
+    override fun resize(width: Int, height: Int) {
+    }
+
     override fun render() {
         target.bind()
+        scene.update()
 
+        glViewport(0, 0, scene.width, scene.height)
         glClearColor(0f, 0.0f, 0f, 0f)
         glClear(GL_COLOR_BUFFER_BIT)
 

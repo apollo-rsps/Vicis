@@ -3,6 +3,7 @@ package rs.emulate.scene3d.buffer
 import glm_.mat4x4.Mat4
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
+import glm_.vec3.Vec3i
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import kotlin.reflect.KClass
@@ -84,6 +85,7 @@ abstract class GeometryDataBuffer<T : Any>(val components: Int, val componentSiz
             val buffer = when (type) {
                 Vec2::class -> Vec2fDataBuffer()
                 Vec3::class -> Vec3fDataBuffer()
+                Vec3i::class -> Vec3iDataBuffer()
                 Mat4::class -> Mat4fDataBuffer()
                 else -> throw IllegalStateException("VertexAttribute: ${this::class.java.simpleName} has an invalid element type: ${type.java.simpleName}")
             }

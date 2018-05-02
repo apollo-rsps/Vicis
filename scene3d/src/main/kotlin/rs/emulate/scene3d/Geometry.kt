@@ -2,6 +2,7 @@ package rs.emulate.scene3d
 
 import glm_.vec2.Vec2
 import glm_.vec3.Vec3
+import glm_.vec3.Vec3i
 import rs.emulate.scene3d.material.VertexAttribute
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -45,6 +46,11 @@ abstract class Geometry : Node() {
      * The texture coordinates of this [Geometry].
      */
     var texCoords: List<Vec2> by attribute(VertexAttribute.TexCoord)
+
+    /**
+     * Optional list of vertex indices for drawing indexed geometry.  May be empty.
+     */
+    var indices: List<Vec3i> by attribute(VertexAttribute.Index)
 
     /**
      * Get a list of the data for the given vertex [attribute].
