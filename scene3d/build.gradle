@@ -22,3 +22,17 @@ dependencies {
         compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-linux"
     }
 }
+
+sourceSets {
+    example {
+        kotlin {
+            srcDirs += "$projectDir/src/example/kotlin"
+            compileClasspath += main.output
+        }
+    }
+}
+
+configurations {
+    exampleCompile.extendsFrom compile
+    exampleRuntime.extendsFrom runtime
+}
