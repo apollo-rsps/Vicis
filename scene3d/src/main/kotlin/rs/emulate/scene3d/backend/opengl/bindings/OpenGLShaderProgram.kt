@@ -80,17 +80,20 @@ class OpenGLShaderProgram(
             val sizeBuffer = BufferUtils.createIntBuffer(1)
             val attributesLength = glGetProgrami(id, GL_ACTIVE_ATTRIBUTES)
 
-            for (attributeLocation in 0 until attributesLength) {
-                val name = glGetActiveAttrib(id, attributeLocation, sizeBuffer, typeBuffer)
+            for (attributeOffset in 0 until attributesLength) {
+                val name = glGetActiveAttrib(id, attributeOffset, sizeBuffer, typeBuffer)
+                val loc = glGetAttribLocation(id, name)
 
-                attributeLocations[name] = attributeLocation
+                attributeLocations[name] = loc
                 attributeTypes[name] = glmType(typeBuffer[0])
             }
 
             val uniformsLength = glGetProgrami(id, GL_ACTIVE_UNIFORMS);
 
-            for (uniformLocation in 0 until uniformsLength) {
-                val name = glGetActiveUniform(id, uniformLocation, sizeBuffer, typeBuffer)
+            for (uniformOffset in 0 until uniformsLength) {
+                val name = glGetActiveUniform(id, uniformOffset, sizeBuffer, typeBuffer)
+                val loc = glGetUniformLocation(id, name)
+
                 val type = glmType(typeBuffer[0])
                 val size = sizeBuffer[0]
                 if (size > 1) {
@@ -99,7 +102,7 @@ class OpenGLShaderProgram(
 
                 val buffer = GeometryDataBuffer.create(type)
 
-                uniformLocations[name] = uniformLocation
+                uniformLocations[name] = loc
                 uniformBuffers[name] = buffer
             }
 
