@@ -27,9 +27,13 @@ class EditorTabPane : EditorComponent() {
                 val tabContent = tabContentExtension?.createView(resource)
 
                 tab.content = tabContent?.root
+                tab.content.isFocusTraversable = true
+                tab.content.setOnMouseClicked {
+                    tab.content.requestFocus()
+                }
+
                 tab.properties["viewer"] = tabContent
                 tab.properties["resource"] = resource
-
                 tab.setOnClosed {
                     tabContent?.onClose()
                     tabs.remove(id)
@@ -41,7 +45,9 @@ class EditorTabPane : EditorComponent() {
                 tab
             }
 
+
             root.selectionModel.select(tab)
+            tab?.content?.requestFocus()
         }.subscribe()
 
         root.selectionModel.selectedItemProperty().addListener { _, old, new ->

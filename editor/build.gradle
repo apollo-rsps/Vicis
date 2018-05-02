@@ -33,6 +33,7 @@ dependencies {
     compile "io.github.lukehutch:fast-classpath-scanner:$classpathScannerVersion"
 
     compile project(':legacy')
+    compile project(':scene3d')
 }
 
 compileKotlin {
