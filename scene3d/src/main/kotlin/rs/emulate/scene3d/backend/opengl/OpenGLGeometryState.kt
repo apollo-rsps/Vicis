@@ -1,43 +1,55 @@
 package rs.emulate.scene3d.backend.opengl
 
+import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL15.*
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30.glBindVertexArray
 import org.lwjgl.opengl.GL30.glGenVertexArrays
-import org.lwjgl.system.MemoryUtil
+import org.lwjgl.system.MemoryUtil.NULL
 import rs.emulate.scene3d.Camera
 import rs.emulate.scene3d.Geometry
+import rs.emulate.scene3d.GeometryType
 import rs.emulate.scene3d.Node
 import rs.emulate.scene3d.backend.opengl.bindings.OpenGLShaderModule
 import rs.emulate.scene3d.backend.opengl.bindings.OpenGLShaderModuleType
 import rs.emulate.scene3d.backend.opengl.bindings.OpenGLShaderProgram
 import kotlin.concurrent.withLock
 
+fun GeometryType.toOpenGLType() = when (this) {
+    GeometryType.TRIANGLES -> GL_TRIANGLES
+}
+
 /**
  * OpenGL state and container objects for a single geometry node.
  */
 class OpenGLGeometryState {
-    /**
-     * The ID of the Vertex Array Object backing
-     */
-    val vertexArrayObject = IntArray(1)
-
-    /**
-     * The IDs of the Vertex Buffer Objects holding the geometry's vertex attributes.
-     */
-    val vertexBufferObjects = IntArray(1)
-
-    /**
-     * The ID of the Vertex Buffer Object containing the indices for rendering indexed geometry.
-     * May be empty.
-     */
-    val vertexIndexBufferObject = IntArray(1)
 
     /**
      * A flag indicating if the OpenGL state has been fully initialized.
      */
     var initialized: Boolean = false
+
+    /**
+     * The type of geometry this state represents.
+     */
+    lateinit var geometryType: GeometryType
+
+    /**
+     * The ID of the Vertex Array Object backing
+     */
+    var vertexArrayObjectId: Int = -1
+
+    /**
+     * The IDs of the Vertex Buffer Objects holding the geometry's vertex attributes.
+     */
+    lateinit var vertexBufferObjectIds: IntArray
+
+    /**
+     * The ID of the Vertex Buffer Object containing the indices for rendering indexed geometry.
+     * May be empty.
+     */
+    lateinit var vertexIndexBufferObjectId: IntArray
 
     /**
      * The shader program this geometry is drawn with.
@@ -47,15 +59,24 @@ class OpenGLGeometryState {
     /**
      * Create the required OpenGL state from the given [Node].
      */
-    fun initialize(node: Node) {
-        val vs = OpenGLShaderModule.create(OpenGLShaderModuleType.VERT, node.material.vertexShader.load())
-        val fs = OpenGLShaderModule.create(OpenGLShaderModuleType.FRAG, node.material.fragmentShader.load())
+    fun initialize(node: Geometry) {
+        val material = node.material
+        val vertexLayout = material.vertexLayout
 
+        val vs = OpenGLShaderModule.create(OpenGLShaderModuleType.VERT, material.vertexShader.load())
+        val fs = OpenGLShaderModule.create(OpenGLShaderModuleType.FRAG, material.fragmentShader.load())
+
+        val vaoBuffer = BufferUtils.createIntBuffer(1)
+        val vboBuffer = BufferUtils.createIntBuffer(vertexLayout.elements.size)
+
+        glGenVertexArrays(vaoBuffer)
+        glGenBuffers(vboBuffer)
+
+        geometryType = node.geometryType
         shader = OpenGLShaderProgram.create(vs, fs)
-
-        glGenVertexArrays(vertexBufferObjects)
-        glGenBuffers(vertexBufferObjects)
-        glGenBuffers(vertexIndexBufferObject)
+        vertexArrayObjectId = vaoBuffer[0]
+        vertexBufferObjectIds = (0 until vertexLayout.elements.size).map { vboBuffer[it] }.toIntArray()
+        vertexIndexBufferObjectId = IntArray(0) //@todo - support indexed geometry
 
         update(node)
 
@@ -65,16 +86,17 @@ class OpenGLGeometryState {
     /**
      * Draw the vertex arrays backing this OpenGL state with the parameters supplied by the [Node]'s [Geometry].
      */
-    fun draw(camera: Camera, node: Node) {
-        val geom = node as Geometry
+    fun draw(camera: Camera, node: Geometry) {
+        update(node)
 
-        shader.bind()
-        shader.setUniform("view", camera.viewMatrix)
-        shader.setUniform("projection", camera.projectionMatrix)
-        shader.setUniform("model", node.modelMatrix) //@todo - world matrix
+        shader.bind(
+            MODEL_MATRIX_UNIFORM to node.worldMatrix,
+            PROJECTION_MATRIX_UNIFORM to camera.projectionMatrix,
+            VIEW_MATRIX_UNIFORM to camera.viewMatrix
+        )
 
-        glBindVertexArray(vertexArrayObject[0])
-        glDrawArrays(GL_TRIANGLES, 0, geom.vertices.capacity() / 3)
+        glBindVertexArray(vertexArrayObjectId)
+        glDrawArrays(geometryType.toOpenGLType(), 0, node.positions.size)
 
         glUseProgram(0)
         glBindVertexArray(0)
@@ -83,18 +105,38 @@ class OpenGLGeometryState {
     /**
      * Update the already initialized VAOs and VBOs with new vertex data supplied by the [Node].
      */
-    fun update(node: Node) {
-        val geom = node as Geometry
-
+    fun update(node: Geometry) {
         node.lock.withLock {
-            glBindVertexArray(vertexArrayObject[0])
+            val vertexAttributes = node.material.vertexLayout.elements
+            for (vertexAttribute in vertexAttributes) {
+                val data = node.data.buffer(vertexAttribute.type)
+                val key = vertexAttribute.type.key
+                val location = shader.attributeLocations[key]
 
-            glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjects[0])
-            glEnableVertexAttribArray(0)
-            glBufferData(GL_ARRAY_BUFFER, geom.vertices, GL_STATIC_DRAW)
-            glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, MemoryUtil.NULL)
+                if (data.isEmpty() && !vertexAttribute.optional) {
+                    throw RuntimeException("Required vertex attribute $key not available in node.")
+                } else if (location == null && !vertexAttribute.optional) {
+                    throw RuntimeException("Required vertex attribute $key was not found in the shader.  Perhaps it was unused and optimized out?")
+                } else if (location == null) {
+                    continue
+                }
+
+                glBindVertexArray(vertexArrayObjectId)
+                glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectIds[location])
+                glEnableVertexAttribArray(location)
+                glBufferData(GL_ARRAY_BUFFER, data.buffer.asFloatBuffer(), GL_STATIC_DRAW)
+                glVertexAttribPointer(location, data.components, GL_FLOAT, false, 0, NULL)
+                glBindBuffer(GL_ARRAY_BUFFER, 0)
+                glBindVertexArray(0)
+            }
 
             node.dirty = false
         }
+    }
+
+    companion object {
+        const val MODEL_MATRIX_UNIFORM = "model"
+        const val PROJECTION_MATRIX_UNIFORM = "projection"
+        const val VIEW_MATRIX_UNIFORM = "view"
     }
 }

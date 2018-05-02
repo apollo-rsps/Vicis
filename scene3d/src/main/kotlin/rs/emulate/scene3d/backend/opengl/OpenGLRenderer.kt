@@ -40,8 +40,9 @@ class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget) : Renderer(sc
         }
 
         glfwDefaultWindowHints()
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2)
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0)
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3)
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3)
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE)
         glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE)
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE) //@todo - control this from the render target
 
@@ -66,7 +67,8 @@ class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget) : Renderer(sc
         glClear(GL_COLOR_BUFFER_BIT)
 
         val geometryNodes = scene.discover { it is Geometry }
-        for (geometry in geometryNodes) {
+        for (node in geometryNodes) {
+            val geometry = node as Geometry
             val glState = geometry.glState
 
             if (geometry.dirty && !geometry.lock.isLocked) {

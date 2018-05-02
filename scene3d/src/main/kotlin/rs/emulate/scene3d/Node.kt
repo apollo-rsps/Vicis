@@ -92,10 +92,9 @@ abstract class Node {
 
         if (parent != null) {
             worldMatrix.put(parent.worldMatrix)
-            worldMatrixdd.times(modelMatrix)
+            worldMatrix.times(modelMatrix)
         } else {
-            worldMatrix.put(smodelMatrix)
-
+            worldMatrix.put(modelMatrix)
         }
     }
 

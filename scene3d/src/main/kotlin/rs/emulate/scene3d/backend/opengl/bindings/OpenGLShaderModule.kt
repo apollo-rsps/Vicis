@@ -11,7 +11,7 @@ class OpenGLShaderModule(val id: Int) {
     }
 
     companion object {
-        fun create(type: OpenGLShaderModuleType, source: String) : OpenGLShaderModule {
+        fun create(type: OpenGLShaderModuleType, source: String): OpenGLShaderModule {
             val id = glCreateShader(when (type) {
                 OpenGLShaderModuleType.FRAG -> GL_FRAGMENT_SHADER
                 OpenGLShaderModuleType.VERT -> GL_VERTEX_SHADER

@@ -1,11 +1,8 @@
 package rs.emulate.scene3d
 
-import org.lwjgl.BufferUtils
-
-class Mesh : Node(), Geometry {
-    override var dirty = true
-    override val vertexSize = 3
-
+/**
+ * A simple mesh, represented by triangular geometry.
+ */
+class Mesh : Geometry() {
     override var geometryType = GeometryType.TRIANGLES
-    override var vertices = BufferUtils.createFloatBuffer(0)
 }
