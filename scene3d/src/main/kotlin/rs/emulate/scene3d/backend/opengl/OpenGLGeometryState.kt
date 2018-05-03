@@ -98,6 +98,9 @@ class OpenGLGeometryState {
             VIEW_MATRIX_UNIFORM to camera.viewMatrix
         )
 
+        glFrontFace(GL_CW);
+        glCullFace(GL_BACK);
+        glEnable(GL_CULL_FACE);
         glBindVertexArray(vertexArrayObjectId)
 
         if (node.indices.isEmpty()) {
