@@ -8,7 +8,11 @@
 *.class
 *.iml
 
-**/target/
-**/build/
-**/out/
+*/target/
+*/build/
+*/out/
+/target/
+/build/
+/out/
+
 data/resources/
