@@ -20,6 +20,7 @@ dependencies {
     ["lwjgl", "lwjgl-glfw", "lwjgl-opengl"].each { artifact ->
         compile "org.lwjgl:${artifact}:${lwjglVersion}"
         compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-linux"
+        compile "org.lwjgl:${artifact}:${lwjglVersion}:natives-windows"
     }
 }
 
