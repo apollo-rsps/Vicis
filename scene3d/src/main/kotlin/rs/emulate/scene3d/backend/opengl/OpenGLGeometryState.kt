@@ -117,8 +117,6 @@ class OpenGLGeometryState {
      */
     fun update(node: Geometry) {
         node.lock.withLock {
-            glBindVertexArray(vertexArrayObjectId)
-
             val vertexAttributes = node.material.vertexLayout.elements
             for (vertexAttribute in vertexAttributes) {
                 val data = node.data.buffer(vertexAttribute.type)
@@ -133,6 +131,7 @@ class OpenGLGeometryState {
                     continue
                 }
 
+                glBindVertexArray(vertexArrayObjectId)
                 glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObjectIds[location])
                 glEnableVertexAttribArray(location)
                 glBufferData(GL_ARRAY_BUFFER, data.buffer.asFloatBuffer(), GL_STATIC_DRAW)
