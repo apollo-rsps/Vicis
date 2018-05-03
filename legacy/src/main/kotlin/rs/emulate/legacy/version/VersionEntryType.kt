@@ -1,5 +1,7 @@
 package rs.emulate.legacy.version
 
+import rs.emulate.legacy.version.crc.CrcList
+
 /**
  * A type of an ArchiveEntry in the `versionlist` Archive.
  */

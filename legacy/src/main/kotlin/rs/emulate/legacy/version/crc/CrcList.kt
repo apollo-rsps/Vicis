@@ -1,4 +1,6 @@
-package rs.emulate.legacy.version
+package rs.emulate.legacy.version.crc
+
+import rs.emulate.legacy.version.VersionEntryType
 
 /**
  * A list of file CRCs, for a particular ArchiveEntry (such as models).

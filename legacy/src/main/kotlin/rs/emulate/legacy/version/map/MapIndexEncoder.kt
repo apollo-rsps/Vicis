@@ -1,4 +1,4 @@
-package rs.emulate.legacy.version
+package rs.emulate.legacy.version.map
 
 import rs.emulate.shared.util.DataBuffer
 

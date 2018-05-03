@@ -1,4 +1,4 @@
-package rs.emulate.legacy.version
+package rs.emulate.legacy.version.map
 
 /**
  * Contains data used for mapping region coordinates to object and map files.

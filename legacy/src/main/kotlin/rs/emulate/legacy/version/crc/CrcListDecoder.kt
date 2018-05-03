@@ -1,9 +1,9 @@
-package rs.emulate.legacy.version
+package rs.emulate.legacy.version.crc
 
 import com.google.common.collect.ImmutableList
 import rs.emulate.legacy.archive.Archive
-import rs.emulate.legacy.archive.ArchiveEntry
-import java.io.FileNotFoundException
+import rs.emulate.legacy.version.StandardVersionEntryType
+import rs.emulate.legacy.version.VersionEntryType
 import java.util.ArrayList
 import java.util.Arrays
 
@@ -13,7 +13,7 @@ import java.util.Arrays
  * @param version The [Archive] containing the version data.
  * @param types The [VersionEntryType]s to decode.
  */
-class CrcListDecoder @JvmOverloads constructor(
+class CrcListDecoder(
     private val version: Archive,
     types: List<VersionEntryType> = StandardVersionEntryType.values().toList()
 ) {
@@ -22,10 +22,7 @@ class CrcListDecoder @JvmOverloads constructor(
 
     /**
      * Decodes the [CrcList]s.
-     *
-     * @throws FileNotFoundException If any of the [ArchiveEntries][ArchiveEntry] could not be found.
      */
-    @Throws(FileNotFoundException::class)
     fun decode(): List<CrcList> {
         val lists = ArrayList<CrcList>(types.size)
 

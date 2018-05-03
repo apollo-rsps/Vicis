@@ -1,4 +1,4 @@
-package rs.emulate.legacy.version
+package rs.emulate.legacy.version.crc
 
 import rs.emulate.legacy.archive.ArchiveEntry
 import rs.emulate.shared.util.DataBuffer

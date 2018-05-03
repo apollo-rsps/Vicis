@@ -17,9 +17,10 @@ object ByteBufferUtils {
      * position.
      */
     fun copy(buffer: ByteBuffer): ByteBuffer {
-        val copy = ByteBuffer.allocate(buffer.limit())
+        val copy = ByteBuffer.allocate(buffer.remaining())
+        buffer.mark()
         copy.put(buffer).flip()
-        buffer.flip()
+        buffer.reset()
         return copy
     }
 

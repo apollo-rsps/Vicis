@@ -17,7 +17,6 @@ class VersionListDecoder(private val versions: Archive) {
      * Decodes the file [VersionList]s.
      * @throws FileNotFoundException If any of the [ArchiveEntry] names could not be found.
      */
-    @Throws(FileNotFoundException::class)
     fun decode(): List<VersionList> {
         val lists = ArrayList<VersionList>(VersionList.VERSION_ENTRY_NAMES.size)
 
