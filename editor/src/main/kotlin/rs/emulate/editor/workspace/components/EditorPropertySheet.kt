@@ -63,7 +63,22 @@ class StringPropertyItem(
 
     override fun getType(): Class<*> = SerializableProperty::class.java
 
-    override fun getValue(): Any = properties[type] ?: ""
+    override fun getValue(): Any {
+        val value = properties[type]
+
+        return when (value) {
+            is BooleanArray -> value.contentToString()
+            is CharArray -> value.contentToString()
+            is ByteArray -> value.contentToString()
+            is ShortArray -> value.contentToString()
+            is IntArray -> value.contentToString()
+            is LongArray -> value.contentToString()
+            is FloatArray -> value.contentToString()
+            is DoubleArray -> value.contentToString()
+            is Array<*> -> value.contentDeepToString()
+            else -> value.toString()
+        }
+    }
 
     override fun getObservableValue(): Optional<ObservableValue<out Any>>? = Optional.of(valueProperty)
 
