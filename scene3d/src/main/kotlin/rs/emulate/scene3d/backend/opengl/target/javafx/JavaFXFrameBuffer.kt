@@ -7,7 +7,11 @@ import org.lwjgl.opengl.ARBES2Compatibility
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL12.GL_BGRA
 import org.lwjgl.opengl.GL14
+import org.lwjgl.opengl.GL14.GL_DEPTH_COMPONENT16
 import org.lwjgl.opengl.GL30.*
+import org.lwjgl.opengl.GL41.GL_RGB565
+import org.lwjgl.opengl.GL45.*
+import rs.emulate.scene3d.backend.opengl.bindings.util.createGLObject
 import java.nio.ByteBuffer
 
 
@@ -44,23 +48,16 @@ class JavaFXFrameBuffer(
     companion object {
         fun create(width: Int, height: Int): JavaFXFrameBuffer {
             val pixels = BufferUtils.createByteBuffer(width * height * 4)
-            val fbo = IntArray(1)
-            glGenFramebuffers(fbo)
-            glBindFramebuffer(GL_FRAMEBUFFER, fbo[0])
+            val frameBuffer = createGLObject(::glCreateFramebuffers)
+            val (colorRenderBuffer, depthRenderBuffer) = createGLObject(2, ::glCreateRenderbuffers)
 
-            val rboColor = IntArray(1)
-            glGenRenderbuffers(rboColor)
-            glBindRenderbuffer(GL_RENDERBUFFER, rboColor[0])
-            glRenderbufferStorage(GL_RENDERBUFFER, ARBES2Compatibility.GL_RGB565, width, height)
-            glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, rboColor[0])
+            glNamedRenderbufferStorage(colorRenderBuffer, GL_RGB565, width, height)
+            glNamedFramebufferRenderbuffer(frameBuffer, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderBuffer)
+            glNamedRenderbufferStorage(depthRenderBuffer, GL_DEPTH_COMPONENT16, width, height)
+            glNamedFramebufferRenderbuffer(frameBuffer, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer)
+            glNamedFramebufferReadBuffer(frameBuffer, GL_FRONT)
 
-            val rboDepth = IntArray(1)
-            glGenRenderbuffers(rboDepth)
-            glBindRenderbuffer(GL_RENDERBUFFER, rboDepth[0])
-            glRenderbufferStorage(GL_RENDERBUFFER, GL14.GL_DEPTH_COMPONENT16, width, height)
-            glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth[0])
-
-            return JavaFXFrameBuffer(width, height, fbo[0], rboColor[0], rboDepth[0], pixels)
+            return JavaFXFrameBuffer(width, height, frameBuffer, colorRenderBuffer, depthRenderBuffer, pixels)
         }
     }
 }

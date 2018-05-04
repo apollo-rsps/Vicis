@@ -1,8 +1,9 @@
 package rs.emulate.scene3d.backend.opengl.target.javafx
 
 import javafx.scene.image.WritableImage
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.opengl.GL30.GL_COLOR_ATTACHMENT0
+import org.lwjgl.opengl.GL11.glFlush
+import org.lwjgl.opengl.GL30.GL_FRAMEBUFFER
+import org.lwjgl.opengl.GL30.glBindFramebuffer
 import rs.emulate.scene3d.backend.opengl.target.OpenGLRenderTarget
 
 /**
@@ -35,7 +36,7 @@ class JavaFXRenderTarget(target: WritableImage) : OpenGLRenderTarget {
             dirty = false
         }
 
-        glReadBuffer(GL_COLOR_ATTACHMENT0)
+        buffer?.let { glBindFramebuffer(GL_FRAMEBUFFER, it.fbo) }
     }
 
     override fun blit() {
