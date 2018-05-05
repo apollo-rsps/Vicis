@@ -7,7 +7,8 @@ import rs.emulate.scene3d.Mesh
 import java.awt.Color
 
 fun Vertex.toVec3f() = Vec3(x * 0.01f, -y * 0.01f, z * 0.01f)
-fun meshFromModels(vararg models: Model): Mesh {
+
+fun meshFromModels(models: List<Model>): Mesh {
     val positions = mutableListOf<Vec3>()
     val colors = mutableListOf<Vec3>()
 

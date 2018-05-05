@@ -8,6 +8,7 @@ import rs.emulate.editor.workspace.components.widgets.content.ResourceViewer
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceId
 import tornadofx.*
+import kotlin.collections.set
 
 const val VIEWER_PROP_KEY = "viewer"
 const val RESOURCE_PROP_KEY = "resource"
@@ -50,7 +51,7 @@ class EditorTabPane : EditorComponent() {
             } else {
                 val tab = Tab(id.toString())
                 val viewerExtension = controller.viewerExtensions.extensionFor(resource::class)
-                val viewer = viewerExtension?.createView(resource)
+                val viewer = viewerExtension?.createView(resource, model.cache)
 
                 if (viewer == null) {
                     tab.content = label(messages["label.no_viewer_available"]) {

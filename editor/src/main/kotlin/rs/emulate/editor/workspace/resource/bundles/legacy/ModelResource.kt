@@ -9,7 +9,13 @@ import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.ModelDecoder
 import rs.emulate.shared.util.CompressionUtils
 
-data class ModelResource(override val id: ResourceId, val model: Model) : Resource
+data class ModelResource(override val id: ResourceId, val model: Model) : Resource {
+
+    fun recoloured(changes: Map<Int, Int>): ModelResource {
+        return copy(model = model.recolour(changes))
+    }
+
+}
 
 data class ModelResourceId(val id: Int) : ResourceId
 
