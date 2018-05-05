@@ -17,12 +17,12 @@ class ModelViewerExtension : ResourceViewerExtension {
 class ModelResourceViewer(val resource: ModelResource) : ResourceViewer() {
     override val root = SceneComponent()
 
-    override fun onClose() {
-        root.onUndock()
+    override fun onFocusGained() {
+        root.active = true
     }
 
-    override fun onOpen() {
-        root.onDock()
+    override fun onFocusLost() {
+        root.active = false
     }
 
     init {

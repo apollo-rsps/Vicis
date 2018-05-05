@@ -5,30 +5,18 @@ import rs.emulate.scene3d.Scene
 /**
  * A renderer for a 3D [Scene].
  */
-abstract class Renderer(protected val scene: Scene) {
+interface Renderer {
+    /**
+     * Render the geometry of a [Scene] to a [RenderTarget].  Called every frame.
+     *
+     * @param scene The scene to render.
+     * @param target The [RenderTarget] that the [Renderer] should write its pixels to.
+     * @param alpha An optional value between [0,1) representing the time until the next [Scene] update.
+     */
+    fun render(scene: Scene, target: RenderTarget, alpha: Float = 0.0f)
 
     /**
-     * A flag indicating if the [Renderer] has finished initializing the display.
+     * Begin disposing of any resources allocated by the [Renderer]..
      */
-    abstract var initialized: Boolean
-
-    /**
-     * Initialize the display surface used to render.
-     */
-    abstract fun initialize()
-
-    /**
-     * Resize the dimensions of the [Renderer]s display.
-     */
-    abstract fun resize(width: Int, height: Int)
-
-    /**
-     * Render the geometry of the scene.  Called every frame.
-     */
-    abstract fun render()
-
-    /**
-     * Stop the renderer and begin disposing of any resources allocated.
-     */
-    abstract fun stop()
+    fun dispose()
 }

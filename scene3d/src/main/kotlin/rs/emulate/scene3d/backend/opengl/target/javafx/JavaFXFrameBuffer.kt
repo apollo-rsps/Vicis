@@ -55,7 +55,6 @@ class JavaFXFrameBuffer(
             glNamedFramebufferRenderbuffer(frameBuffer, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderBuffer)
             glNamedRenderbufferStorage(depthRenderBuffer, GL_DEPTH_COMPONENT16, width, height)
             glNamedFramebufferRenderbuffer(frameBuffer, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer)
-            glNamedFramebufferReadBuffer(frameBuffer, GL_FRONT)
 
             return JavaFXFrameBuffer(width, height, frameBuffer, colorRenderBuffer, depthRenderBuffer, pixels)
         }

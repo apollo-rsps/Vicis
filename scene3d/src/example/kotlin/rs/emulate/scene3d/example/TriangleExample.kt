@@ -25,15 +25,5 @@ fun main(args: Array<String>) {
         Vec3(-1f, 0f, 0f)
     )
 
-    val renderer = OpenGLRenderer(scene, OpenGLDefaultRenderTarget(), true)
-    renderer.initialize()
-
-    while(!glfwWindowShouldClose(renderer.windowContext)) {
-        if (renderer.initialized) {
-            scene.update()
-            renderer.render()
-        }
-
-        glfwPollEvents()
-    }
+    //@todo - needs a new render target
 }

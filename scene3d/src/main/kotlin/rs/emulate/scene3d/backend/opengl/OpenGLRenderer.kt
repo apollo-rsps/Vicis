@@ -7,6 +7,7 @@ import org.lwjgl.system.MemoryUtil.NULL
 import rs.emulate.scene3d.Geometry
 import rs.emulate.scene3d.Node
 import rs.emulate.scene3d.Scene
+import rs.emulate.scene3d.backend.RenderTarget
 import rs.emulate.scene3d.backend.Renderer
 import rs.emulate.scene3d.backend.opengl.target.OpenGLRenderTarget
 
@@ -19,58 +20,14 @@ val Node.glState: OpenGLGeometryState
  * @param scene The scene to render.
  * @param target The render target to blit the scene to.
  */
-class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget, val visible: Boolean = false) : Renderer(scene) {
+class OpenGLRenderer(val visible: Boolean = false) : Renderer {
 
-    /**
-     * Address of the GL context backing the renderer.
-     */
-    var windowContext: Long = NULL
-
-    /**
-     * Has a GLFW display been initialized?
-     */
-    override var initialized: Boolean = false
-
-    /**
-     * Create a GLFW backed window and a new OpenGL context.
-     */
-    //@todo - move into OpenGLRenderTarget
-    override fun initialize() {
-        if (!glfwInit()) {
-            throw RuntimeException("Unable to initialize GLFW")
-        }
-
-        glfwDefaultWindowHints()
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3)
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3)
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE)
-        glfwWindowHint(GLFW_VISIBLE, if (visible) GLFW_TRUE else GLFW_FALSE)
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE) //@todo - control this from the render target
-
-        windowContext = glfwCreateWindow(scene.width, scene.height, "offscreen buffer", NULL, NULL)
-
-        if (windowContext == NULL) {
-            glfwTerminate()
-            throw RuntimeException("Window == null")
-        }
-
-        // Bind an OpenGL context for the windowContext to the current thread.
-        glfwMakeContextCurrent(windowContext)
-        createCapabilities()
-
-        initialized = true
-    }
-
-    override fun resize(width: Int, height: Int) {
-    }
-
-    override fun render() {
+    override fun render(scene: Scene, target: RenderTarget, alpha: Float) {
         target.bind()
-        scene.update()
 
-        glViewport(0, 0, scene.width, scene.height)
         glClearColor(0f, 0.0f, 0f, 0f)
         glClear(GL_COLOR_BUFFER_BIT)
+        glViewport(0, 0, scene.width, scene.height)
 
         val geometryNodes = scene.discover { it is Geometry }
         for (node in geometryNodes) {
@@ -89,10 +46,9 @@ class OpenGLRenderer(scene: Scene, val target: OpenGLRenderTarget, val visible: 
         }
 
         target.blit()
-        glfwSwapBuffers(windowContext)
     }
 
-    override fun stop() {
+    override fun dispose() {
         // @todo - find all `Geometry` nodes and deallocate their resources
     }
 

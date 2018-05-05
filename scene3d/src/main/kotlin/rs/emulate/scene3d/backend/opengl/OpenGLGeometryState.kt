@@ -90,8 +90,6 @@ class OpenGLGeometryState {
      * Draw the vertex arrays backing this OpenGL state with the parameters supplied by the [Node]'s [Geometry].
      */
     fun draw(camera: Camera, node: Geometry) {
-        update(node)
-
         shader.bind(
             MODEL_MATRIX_UNIFORM to node.worldMatrix,
             PROJECTION_MATRIX_UNIFORM to camera.projectionMatrix,
