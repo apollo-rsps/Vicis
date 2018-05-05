@@ -50,7 +50,9 @@ class JavaFXRenderTarget(val target: ImageView) : OpenGLRenderTarget {
         buffer = JavaFXFrameBuffer.create(width, height)
         bufferImage = WritableImage(width, height)
 
+        Platform.runLater {
             target.image = bufferImage
+        }
     }
 
     private var buffer: JavaFXFrameBuffer? = null
