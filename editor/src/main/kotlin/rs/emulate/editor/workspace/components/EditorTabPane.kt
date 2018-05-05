@@ -1,5 +1,6 @@
 package rs.emulate.editor.workspace.components
 
+import javafx.geometry.Pos
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.Priority
@@ -7,6 +8,21 @@ import rs.emulate.editor.workspace.components.widgets.content.ResourceViewer
 import rs.emulate.editor.workspace.resource.Resource
 import rs.emulate.editor.workspace.resource.ResourceId
 import tornadofx.*
+
+const val VIEWER_PROP_KEY = "viewer"
+const val RESOURCE_PROP_KEY = "resource"
+
+var Tab.resourceViewer: ResourceViewer?
+    get() = properties[VIEWER_PROP_KEY] as? ResourceViewer
+    set(v) {
+        properties[VIEWER_PROP_KEY] = v
+    }
+
+var Tab.resource: Resource?
+    get() = properties[RESOURCE_PROP_KEY] as? Resource
+    set(v) {
+        properties[RESOURCE_PROP_KEY] = v
+    }
 
 class EditorTabPane : EditorComponent() {
     override val root: TabPane = with(TabPane()) {
@@ -16,6 +32,16 @@ class EditorTabPane : EditorComponent() {
     private val tabs = mutableMapOf<ResourceId, Tab>()
 
     init {
+        root.selectionModel.selectedItemProperty().addListener { _, old, new ->
+            old?.resourceViewer?.onFocusLost()
+
+            new?.let {
+                it.content.requestFocus()
+                it.resourceViewer?.onFocusGained()
+                it.resource?.let(model.onResourceSelected::onNext)
+            }
+        }
+
         model.onResourceSelected.distinctUntilChanged().map { resource ->
             val id = resource.id
 
@@ -23,25 +49,25 @@ class EditorTabPane : EditorComponent() {
                 tabs[id]
             } else {
                 val tab = Tab(id.toString())
-                val tabContentExtension = controller.viewerExtensions.extensionFor(resource::class)
-                val tabContent = tabContentExtension?.createView(resource)
+                val viewerExtension = controller.viewerExtensions.extensionFor(resource::class)
+                val viewer = viewerExtension?.createView(resource)
 
-                tab.content = tabContent?.root
-                tab.content.isFocusTraversable = true
-                tab.content.setOnMouseClicked {
-                    tab.content.requestFocus()
+                if (viewer == null) {
+                    tab.content = label(messages["label.no_viewer_available"]) {
+                        alignment = Pos.CENTER
+                    }
+                } else {
+                    tab.content = viewer.root
+                    tab.resourceViewer = viewer
+                    tab.resource = resource
                 }
 
-                tab.properties["viewer"] = tabContent
-                tab.properties["resource"] = resource
                 tab.setOnClosed {
-                    tabContent?.onClose()
                     tabs.remove(id)
                 }
 
                 root.tabs.add(tab)
                 tabs[id] = tab
-                tabContent?.onOpen()
                 tab
             }
 
@@ -49,18 +75,5 @@ class EditorTabPane : EditorComponent() {
             root.selectionModel.select(tab)
             tab?.content?.requestFocus()
         }.subscribe()
-
-        root.selectionModel.selectedItemProperty().addListener { _, old, new ->
-            old?.let {
-                val viewer = it.properties["viewer"] as ResourceViewer?
-                viewer?.onFocusLost()
-            }
-            new?.let {
-                val viewer = it.properties["viewer"] as ResourceViewer?
-                viewer?.onFocus()
-
-                model.onResourceSelected.onNext(it.properties["resource"] as Resource)
-            }
-        }
     }
 }

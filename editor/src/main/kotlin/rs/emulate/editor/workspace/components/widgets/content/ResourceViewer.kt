@@ -6,19 +6,7 @@ import tornadofx.*
 abstract class ResourceViewer : Component() {
     abstract val root: Node
 
-    open fun onFocus() {
+    open fun onFocusGained() { }
 
-    }
-
-    open fun onFocusLost() {
-
-    }
-
-    open fun onClose() {
-
-    }
-
-    open fun onOpen() {
-
-    }
+    open fun onFocusLost() { }
 }
