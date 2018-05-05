@@ -68,7 +68,7 @@ class SceneComponent : Pane() {
 
             scene3d.width = newWidth
             scene3d.height = newHeight
-            scene3d.camera.perspective(newWidth, newHeight, 90f, 0.01f, 100f)
+            scene3d.camera.perspective(newWidth, newHeight, 45f, 0.01f, 100f)
         }
 
         scene3d.camera.move(0f, 1f, -5f)
