@@ -2,7 +2,6 @@ package rs.emulate.legacy.model
 
 import rs.emulate.legacy.model.ModelFeature.*
 import rs.emulate.shared.util.DataBuffer
-import java.util.EnumSet
 import java.util.HashSet
 
 /**
@@ -32,21 +31,6 @@ class ModelDecoder(private val buffer: DataBuffer) {
      */
     private var features: Set<ModelFeature> = HashSet()
 
-    /**
-     * Decode the [ModelFeature]s present given the attributes in the `header` block.
-     */
-    private fun decodeFeatures(header: DataBuffer): Set<ModelFeature> {
-        val features = EnumSet.noneOf(ModelFeature::class.java)
-
-        FACE_TEXTURES.isEnabled(features, header::getBoolean)
-        FACE_RENDER_PRIORITY.isEnabled(features, { header.getUnsignedByte() == 255 })
-        FACE_TRANSPARENCY.isEnabled(features, header::getBoolean)
-        FACE_SKINNING.isEnabled(features, header::getBoolean)
-        VERTEX_SKINNING.isEnabled(features, header::getBoolean)
-
-        return features
-    }
-
     fun decode(): Model {
         val header = buffer.asReadOnlyBuffer()
         header.position(buffer.capacity() - HEADER_SIZE)
@@ -54,41 +38,41 @@ class ModelDecoder(private val buffer: DataBuffer) {
         vertices = arrayOfNulls(header.getUnsignedShort())
         faces = arrayOfNulls(header.getUnsignedShort())
         texCoords = arrayOfNulls(header.getUnsignedByte())
-        features = decodeFeatures(header)
+
+        features = ModelFeature.decodeFrom(header)
 
         val xDataLength = header.getUnsignedShort()
         val yDataLength = header.getUnsignedShort()
         val zDataLength = header.getUnsignedShort()
         val faceDataLength = header.getUnsignedShort()
 
-        var offset = 0
-        offset += vertices.size
+        var offset = vertices.size
 
         val faceTypesOffset = offset
         offset += faces.size
 
         val faceRenderPrioritiesOffset = offset
-        if (features.contains(FACE_RENDER_PRIORITY)) {
+        if (features.none { it is GlobalFaceRenderPriority }) { // TODO full scan is stupid
             offset += faces.size
         }
 
         val faceBonesOffset = offset
-        if (features.contains(FACE_SKINNING)) {
+        if (FaceSkinning in features) {
             offset += faces.size
         }
 
         val faceTexturePointersOffset = offset
-        if (features.contains(FACE_TEXTURES)) {
+        if (FaceTextures in features) {
             offset += faces.size
         }
 
         val vertexBonesOffset = offset
-        if (features.contains(VERTEX_SKINNING)) {
+        if (VertexSkinning in features) {
             offset += vertices.size
         }
 
         val faceAlphasOffset = offset
-        if (features.contains(FACE_TRANSPARENCY)) {
+        if (FaceTransparency in features) {
             offset += faces.size
         }
 
@@ -159,8 +143,8 @@ class ModelDecoder(private val buffer: DataBuffer) {
         val colours = buffer.asReadOnlyBuffer()
         colours.position(coloursOffset)
 
-        val renderPriorities = buffer.asReadOnlyBuffer()
-        renderPriorities.position(renderPrioritiesOffset)
+        val priorities = buffer.asReadOnlyBuffer()
+        priorities.position(renderPrioritiesOffset)
 
         val alphas = buffer.asReadOnlyBuffer()
         alphas.position(alphasOffset)
@@ -176,14 +160,17 @@ class ModelDecoder(private val buffer: DataBuffer) {
         var faceC = 0
         var offset = 0
 
+        val priorityFeature = features.find { it is GlobalFaceRenderPriority } as GlobalFaceRenderPriority?
+
         for (index in faces.indices) {
             val type = types.getUnsignedByte()
             val colour = colours.getUnsignedShort()
 
-            val renderPriority = if (FACE_RENDER_PRIORITY in features) renderPriorities.getUnsignedByte() else -1
-            val alpha = if (FACE_TRANSPARENCY in features) alphas.getUnsignedByte() else -1
-            val bone = if (FACE_SKINNING in features) bones.getUnsignedByte() else -1
-            val texturePointer = if (FACE_TEXTURES in features) bones.getUnsignedByte() else -1
+            val renderPriority = priorityFeature?.priority ?: priorities.getUnsignedByte()
+
+            val alpha = if (FaceTransparency in features) alphas.getUnsignedByte() else -1
+            val bone = if (FaceSkinning in features) bones.getUnsignedByte() else -1
+            val texturePointer = if (FaceTextures in features) bones.getUnsignedByte() else -1
 
             if (type == 1) {
                 faceA = faceData.getSignedSmart() + offset
@@ -256,7 +243,7 @@ class ModelDecoder(private val buffer: DataBuffer) {
                 else -> 0
             }
 
-            val bone = when (VERTEX_SKINNING) {
+            val bone = when (VertexSkinning) {
                 in features -> bones.getUnsignedByte()
                 else -> -1
             }
@@ -295,13 +282,5 @@ class ModelDecoder(private val buffer: DataBuffer) {
          */
         private const val VERTEX_Z_POSITION = 0x4
 
-        /**
-         * Decode a feature flag value and adds it to [features] if the flag was set.
-         */
-        private fun ModelFeature.isEnabled(features: MutableSet<ModelFeature>, decoder: () -> Boolean) {
-            if (decoder()) {
-                features.add(this)
-            }
-        }
     }
 }
