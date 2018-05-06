@@ -26,7 +26,7 @@ class OpenGLRenderer(val visible: Boolean = false) : Renderer {
         target.bind()
 
         glClearColor(0f, 0.0f, 0f, 0f)
-        glClear(GL_COLOR_BUFFER_BIT)
+        glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
         glViewport(0, 0, scene.width, scene.height)
 
         val geometryNodes = scene.discover { it is Geometry }
