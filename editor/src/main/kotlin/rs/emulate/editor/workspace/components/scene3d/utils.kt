@@ -13,7 +13,7 @@ fun meshFromModels(models: List<Model>): Mesh {
     val colors = mutableListOf<Vec3>()
 
     models.forEach { model ->
-        val faces = model.faces.sortedByDescending { it.renderPriority }
+        val faces = model.faces.sortedBy { it.renderPriority }
 
         positions += faces.flatMap {
             listOf(
