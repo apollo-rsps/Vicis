@@ -1,6 +1,7 @@
 package rs.emulate.editor.workspace.components
 
 import javafx.geometry.Pos
+import javafx.scene.control.Label
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.Priority
@@ -54,7 +55,7 @@ class EditorTabPane : EditorComponent() {
                 val viewer = viewerExtension?.createView(resource, model.cache)
 
                 if (viewer == null) {
-                    tab.content = label(messages["label.no_viewer_available"]) {
+                    tab.content = Label(messages["label.no_viewer_available"]).apply {
                         alignment = Pos.CENTER
                     }
                 } else {
