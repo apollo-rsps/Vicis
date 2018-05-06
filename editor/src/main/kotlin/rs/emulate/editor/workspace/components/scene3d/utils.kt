@@ -13,7 +13,9 @@ fun meshFromModels(models: List<Model>): Mesh {
     val colors = mutableListOf<Vec3>()
 
     models.forEach { model ->
-        positions += model.faces.flatMap {
+        val faces = model.faces.sortedByDescending { it.renderPriority }
+
+        positions += faces.flatMap {
             listOf(
                 model.vertices[it.a].toVec3f(),
                 model.vertices[it.b].toVec3f(),
@@ -21,7 +23,7 @@ fun meshFromModels(models: List<Model>): Mesh {
             )
         }
 
-        colors += model.faces
+        colors += faces
             .flatMap { listOf(it.colour, it.colour, it.colour) }
             .map {
                 val colour = it
