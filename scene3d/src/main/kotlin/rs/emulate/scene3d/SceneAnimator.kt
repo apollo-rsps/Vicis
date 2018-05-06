@@ -96,8 +96,10 @@ class SceneAnimator(val scene: Scene, val renderer: Renderer, val renderTarget: 
     /**
      * Stop the renderer thread.
      */
-    fun stop() = stopped.set(true)
-
+    fun stop() {
+        stopped.set(true)
+        resume()
+    }
 
     companion object {
         /**
