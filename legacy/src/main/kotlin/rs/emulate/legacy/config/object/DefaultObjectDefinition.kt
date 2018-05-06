@@ -53,9 +53,9 @@ class DefaultObjectDefinition : DefaultConfigDefinition<ObjectDefinition>() {
         properties[28] = unsignedByte(DecorDisplacement, 0)
         properties[29] = signedByte(AmbientLighting, 0)
 
-        for (option in 1..ObjectDefinition.INTERACTION_COUNT) {
-            val name = ConfigUtils.newOptionProperty<String>(ObjectDefinition.INTERACTION_PROPERTY_PREFIX, option)
-            properties[option + 29] = asciiString(name, "hidden")
+        for (option in 0 until ObjectDefinition.INTERACTION_COUNT) {
+            val name = ConfigUtils.newOptionProperty<String>(ObjectDefinition.INTERACTION_PROPERTY_PREFIX, option, 30)
+            properties[option + 30] = asciiString(name, "hidden")
         }
 
         properties[39] = signedByte(LightDiffusion, 0)

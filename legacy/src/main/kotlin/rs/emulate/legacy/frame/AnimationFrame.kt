@@ -15,15 +15,33 @@ class AnimationFrame(
     val transformY: IntArray,
     val transformZ: IntArray,
     var duration: Int = 0 // TODO all 0-duration frames should be remapped to a duration of 1
-)
+) {
+    override fun toString(): String {
+        return "AnimationFrame(id=$id, baseIndices=${Arrays.toString(
+            baseIndices)}, transformX=${Arrays.toString(transformX)}, transformY=${Arrays.toString(
+            transformY)}, transformZ=${Arrays.toString(transformZ)}, duration=$duration)"
+    }
+}
 
 /**
  * A base for an [AnimationFrame].
  */
-class FrameBase( // TODO alternative name?
+data class FrameBase( // TODO alternative name?
     val types: Array<TransformationType>,
     val bones: Array<BoneList>
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (other is FrameBase) {
+            return Arrays.equals(types, other.types) && Arrays.equals(bones, other.bones)
+        }
+
+        return false
+    }
+
+    override fun hashCode(): Int {
+        return 31 * Arrays.hashCode(types) + Arrays.hashCode(bones)
+    }
+}
 
 /**
  * A list of bones to apply a single transformation to.

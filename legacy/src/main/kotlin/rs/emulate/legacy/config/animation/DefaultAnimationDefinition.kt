@@ -14,7 +14,7 @@ import java.util.HashMap
  *
  * @param T The type of [AnimationDefinition] this default is for.
  */
-class DefaultAnimationDefinition<T : AnimationDefinition> : DefaultConfigDefinition<T>() {
+class DefaultAnimationDefinition : DefaultConfigDefinition<AnimationDefinition>() {
 
     override fun init(): Map<Int, SerializableProperty<*>> {
         val properties = HashMap<Int, SerializableProperty<*>>(11)

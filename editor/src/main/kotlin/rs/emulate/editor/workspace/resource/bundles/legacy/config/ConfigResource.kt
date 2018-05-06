@@ -40,11 +40,15 @@ class ConfigResourceBundleFactory(fs: IndexedFileSystem) {
 
     private val config = fs.getArchive(CONFIG_INDEX, CONFIG_ARCHIVE_ID)
 
+    val animations = AnimationResourceBundle(config)
+    val floors = FloorResourceBundle(config)
+    val graphics = GraphicResourceBundle(config)
+    val identikits = IdentikitResourceBundle(config)
     val items = ItemResourceBundle(config)
     val npcs = NpcResourceBundle(config)
     val objects = ObjectResourceBundle(config)
 
-    fun bundles(): List<ResourceBundle<*>> = listOf(items, npcs, objects)
+    fun bundles(): List<ResourceBundle<*>> = listOf(animations, floors, graphics, identikits, items, npcs, objects)
 
     private companion object {
         const val CONFIG_INDEX = 0

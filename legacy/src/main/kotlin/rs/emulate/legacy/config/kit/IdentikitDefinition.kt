@@ -1,7 +1,5 @@
 package rs.emulate.legacy.config.kit
 
-import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableMap
 import rs.emulate.legacy.config.ConfigPropertyMap
 import rs.emulate.legacy.config.ConfigUtils
 import rs.emulate.legacy.config.MutableConfigDefinition
@@ -12,41 +10,35 @@ import rs.emulate.legacy.config.SerializableProperty
  */
 open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfigDefinition(id, properties) {
 
-    /**
-     * Gets the [SerializableProperty] containing the body model ids of this IdentikitDefinition.
-     */
-    val bodyModels: SerializableProperty<IntArray>
+    val models: SerializableProperty<IntArray>
         get() = getProperty(IdentikitProperty.Models)
 
-    /**
-     * Gets an [ImmutableMap] containing the original and replacement colour values of this IdentikitDefinition.
-     */
-    val colours: ImmutableMap<Int, Int>
+    val colours: Map<Int, Int>
         get() {
-            val builder = ImmutableMap.builder<Int, Int>()
+            val colours = mutableMapOf<Int, Int>()
 
-            for (slot in 1..COLOUR_COUNT) {
-                val original = getProperty<Int>(ConfigUtils.getOriginalColourPropertyName(slot))
-                val replacement = getProperty<Int>(ConfigUtils.getReplacementColourPropertyName(slot))
+            for (slot in 0 until COLOUR_COUNT) {
+                val original = getProperty<Int>(ConfigUtils.getOriginalColourPropertyName(slot, 40))
+                val replacement = getProperty<Int>(ConfigUtils.getReplacementColourPropertyName(slot, 50))
 
-                builder.put(original.value, replacement.value)
+                colours[original.value] = replacement.value
             }
 
-            return builder.build()
+            return colours
         }
 
-    /**
-     * Gets an [ImmutableList] containing the head model ids of this IdentikitDefinition.
-     */
-    val headModels: ImmutableList<Int>
+    val widgetModels: List<Int>
         get() {
-            val builder = ImmutableList.builder<Int>()
+            val models = mutableListOf<Int>()
 
-            for (id in 1..HEAD_MODEL_COUNT) {
-                builder.add(getHeadModel(id).value)
+            for (id in 0 until WIDGET_MODEL_COUNT) {
+                val model = getWidgetModel(id).value
+                if (model != -1) {
+                    models.add(model)
+                }
             }
 
-            return builder.build()
+            return models
         }
 
     /**
@@ -65,8 +57,8 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
     /**
      * Gets the [SerializableProperty] containing the specified head model id of this IdentikitDefinition.
      */
-    fun getHeadModel(model: Int): SerializableProperty<Int> {
-        return getProperty(ConfigUtils.newOptionProperty(IdentikitDefinition.HEAD_MODEL_PREFIX, model))
+    fun getWidgetModel(model: Int): SerializableProperty<Int> {
+        return getProperty(ConfigUtils.newOptionProperty(IdentikitDefinition.WIDGET_MODEL_PREFIX, model, 60))
     }
 
     companion object {
@@ -82,14 +74,14 @@ open class IdentikitDefinition(id: Int, properties: ConfigPropertyMap) : Mutable
         const val COLOUR_COUNT = 10
 
         /**
-         * The amount of head models.
+         * The amount of widget models.
          */
-        const val HEAD_MODEL_COUNT = 10
+        const val WIDGET_MODEL_COUNT = 10
 
         /**
-         * The prefix for head models.
+         * The prefix for widget models.
          */
-        const val HEAD_MODEL_PREFIX = "Head Model"
+        const val WIDGET_MODEL_PREFIX = "Widget Model"
     }
 
 }

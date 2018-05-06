@@ -25,9 +25,13 @@ open class FloorDefinition(id: Int, properties: ConfigPropertyMap) : MutableConf
         get() = getProperty(FloorProperty.Name)
 
     val shadowed: SerializableProperty<Boolean>
-        get() = getProperty(FloorProperty.Shadowed)
+        get() = getProperty(FloorProperty.Occludes)
 
     val texture: SerializableProperty<Int>
         get() = getProperty(FloorProperty.Texture)
+
+    companion object {
+        const val ENTRY_NAME = "flo"
+    }
 
 }

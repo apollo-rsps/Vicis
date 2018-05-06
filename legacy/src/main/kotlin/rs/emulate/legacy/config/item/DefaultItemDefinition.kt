@@ -48,12 +48,12 @@ class DefaultItemDefinition : DefaultConfigDefinition<ItemDefinition>() {
         )
         properties[26] = unsignedShort(SecondaryFemaleModel, 0)
 
-        for (action in 1..ItemConstants.MENU_ACTION_COUNT) {
-            var type = ConfigUtils.newOptionProperty<String>(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, action)
-            properties[action + 29] = asciiString(type, "hidden")
+        for (action in 0 until ItemConstants.MENU_ACTION_COUNT) {
+            var type = ConfigUtils.newOptionProperty<String>(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, action, 30)
+            properties[action + 30] = asciiString(type, "hidden")
 
-            type = ConfigUtils.newOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, action)
-            properties[action + 34] = asciiString(type, "hidden")
+            type = ConfigUtils.newOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, action, 35)
+            properties[action + 35] = asciiString(type, "hidden")
         }
 
         properties[40] = ConfigUtils.newColourProperty(Colours)
@@ -71,10 +71,10 @@ class DefaultItemDefinition : DefaultConfigDefinition<ItemDefinition>() {
         properties[97] = unsignedShort(NoteInfoId, 0)
         properties[98] = unsignedShort(NoteTemplateId, 0)
 
-        for (option in 1..ItemConstants.ITEM_STACK_COUNT) {
-            val type = ConfigUtils.newOptionProperty<ItemStack>(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option)
+        for (option in 0 until ItemConstants.ITEM_STACK_COUNT) {
+            val type = ConfigUtils.newOptionProperty<ItemStack>(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, option, 100)
 
-            properties[option + 99] = SerializableProperty(type, ItemStack.EMPTY,
+            properties[option + 100] = SerializableProperty(type, ItemStack.EMPTY,
                 ItemStack.Companion::encode, ItemStack.Companion::decode, java.lang.Short.BYTES * 2
             )
         }

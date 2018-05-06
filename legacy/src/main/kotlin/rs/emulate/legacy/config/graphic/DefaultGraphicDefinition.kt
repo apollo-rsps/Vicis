@@ -12,10 +12,8 @@ import java.util.HashMap
 
 /**
  * A default [GraphicDefinition] used as a base for an actual definition.
- *
- * @param T The type of GraphicDefinition this DefaultGraphicDefinition is for.
  */
-class DefaultGraphicDefinition<T : GraphicDefinition> : DefaultConfigDefinition<T>() {
+class DefaultGraphicDefinition : DefaultConfigDefinition<GraphicDefinition>() {
 
     override fun init(): Map<Int, SerializableProperty<*>> {
         val defaults = HashMap<Int, SerializableProperty<*>>(27)
@@ -28,9 +26,9 @@ class DefaultGraphicDefinition<T : GraphicDefinition> : DefaultConfigDefinition<
         defaults[7] = unsignedByte(Brightness, 0)
         defaults[8] = unsignedByte(Shadow, 0)
 
-        for (slot in 1..COLOUR_COUNT) {
-            defaults[slot + 40] = unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot), 0)
-            defaults[slot + 50] = unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot), 0)
+        for (slot in 0 until COLOUR_COUNT) {
+            defaults[slot + 40] = unsignedShort(ConfigUtils.getOriginalColourPropertyName(slot, 40), 0)
+            defaults[slot + 50] = unsignedShort(ConfigUtils.getReplacementColourPropertyName(slot, 50), 0)
         }
 
         return defaults

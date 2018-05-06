@@ -82,7 +82,7 @@ enum class Part(val maleId: Int) {
         fun valueOf(value: Int): Part {
             require(value in 0..13) { "Part value must be [0, 13] (received $value)." }
             val values = values()
-            val id = value % values.size // 0-6 are male, 7-13 are female.
+            val id = value % (values.size - 1) // 0-6 are male, 7-13 are female.
 
             return values.find { part -> part.maleId == id }!!
         }

@@ -5,6 +5,7 @@ enum class TransformationType(val value: Int) {
     TRANSLATE(1),
     ROTATE(2),
     SCALE(3),
+    UNKNOWN(4),
     ALPHA(5);
 
     companion object {

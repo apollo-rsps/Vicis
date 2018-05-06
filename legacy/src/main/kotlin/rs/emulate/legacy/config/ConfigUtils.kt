@@ -33,8 +33,8 @@ object ConfigUtils {
      * The returned DynamicPropertyType may be the same object as a previously-returned one, as only one
      * DynamicPropertyType may exist per string (see [DynamicConfigPropertyType.valueOf]).
      */
-    fun <T> getOriginalColourPropertyName(slot: Int): DynamicConfigPropertyType<T> {
-        return newOptionProperty(ORIGINAL_COLOUR_PREFIX, slot)
+    fun <T> getOriginalColourPropertyName(slot: Int, offset: Int): DynamicConfigPropertyType<T> {
+        return newOptionProperty(ORIGINAL_COLOUR_PREFIX, slot, offset + slot)
     }
 
     /**
@@ -44,8 +44,8 @@ object ConfigUtils {
      * The returned DynamicPropertyType may be the same object as a previously created one, as only one
      * DynamicPropertyType may exist per string (see [DynamicConfigPropertyType.valueOf]).
      */
-    fun <T> getReplacementColourPropertyName(slot: Int): DynamicConfigPropertyType<T> {
-        return newOptionProperty(REPLACEMENT_COLOUR_PREFIX, slot)
+    fun <T> getReplacementColourPropertyName(slot: Int, offset: Int): DynamicConfigPropertyType<T> {
+        return newOptionProperty(REPLACEMENT_COLOUR_PREFIX, slot, offset + slot)
     }
 
     /**
@@ -89,8 +89,8 @@ object ConfigUtils {
      * @param prefix The prefix.
      * @param option The option.
      */
-    fun <T> newOptionProperty(prefix: String, option: Int): DynamicConfigPropertyType<T> {
-        return DynamicConfigPropertyType.valueOf("$prefix $option", option)
+    fun <T> newOptionProperty(prefix: String, option: Int, offset: Int): DynamicConfigPropertyType<T> {
+        return DynamicConfigPropertyType.valueOf("$prefix $option", option + offset)
     }
 
 }

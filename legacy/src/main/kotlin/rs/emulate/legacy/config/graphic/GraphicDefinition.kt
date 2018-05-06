@@ -1,6 +1,5 @@
 package rs.emulate.legacy.config.graphic
 
-import com.google.common.collect.ImmutableMap
 import rs.emulate.legacy.config.ConfigPropertyMap
 import rs.emulate.legacy.config.ConfigUtils
 import rs.emulate.legacy.config.MutableConfigDefinition
@@ -29,19 +28,17 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
     val brightness: SerializableProperty<Int>
         get() = getProperty(GraphicProperty.Brightness)
 
-    /**
-     * Gets an [ImmutableMap] containing the original and replacement colour values.
-     */
-    fun colours(): ImmutableMap<Int, Int> {
-        val builder = ImmutableMap.builder<Int, Int>()
+    fun colours(): Map<Int, Int> {
+        val builder = mutableMapOf<Int, Int>()
 
         for (slot in 1..COLOUR_COUNT) {
             val original = originalColour(slot)
             val replacement = replacementColour(slot)
-            builder.put(original.value!!, replacement.value!!)
+
+            builder[original.value] = replacement.value
         }
 
-        return builder.build()
+        return builder
     }
 
     /**
@@ -60,16 +57,16 @@ open class GraphicDefinition(id: Int, properties: ConfigPropertyMap) : MutableCo
      * Gets the [SerializableProperty] containing the original colour for the specified slot.
      */
     fun originalColour(slot: Int): SerializableProperty<Int> {
-        require(slot in 1..COLOUR_COUNT) { "Slot must be greater than 0 and less than $COLOUR_COUNT." }
-        return getProperty(ConfigUtils.getOriginalColourPropertyName(slot))
+        require(slot in 0 until COLOUR_COUNT) { "Slot must be greater than 0 and less than $COLOUR_COUNT." }
+        return getProperty(ConfigUtils.getOriginalColourPropertyName(slot, 40))
     }
 
     /**
      * Gets the [SerializableProperty] containing the replacement colour for the specified slot.
      */
     fun replacementColour(slot: Int): SerializableProperty<Int> {
-        require(slot in 1..COLOUR_COUNT) { "Slot must be greater than 0 and less than $COLOUR_COUNT." }
-        return getProperty(ConfigUtils.getReplacementColourPropertyName(slot))
+        require(slot in 0 until COLOUR_COUNT) { "Slot must be greater than 0 and less than $COLOUR_COUNT." }
+        return getProperty(ConfigUtils.getReplacementColourPropertyName(slot, 50))
     }
 
     /**

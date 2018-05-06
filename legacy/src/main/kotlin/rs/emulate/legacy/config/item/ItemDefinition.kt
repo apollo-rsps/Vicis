@@ -91,21 +91,21 @@ open class ItemDefinition(id: Int, properties: ConfigPropertyMap) : MutableConfi
         require(index in 0 until ItemConstants.MENU_ACTION_COUNT) {
             "Index must be non-negative and less than or equal to $index."
         }
-        return getProperty(ConfigUtils.newOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, 30 + index))
+        return getProperty(ConfigUtils.newOptionProperty(ItemConstants.GROUND_ACTION_PROPERTY_PREFIX, index, 30))
     }
 
     fun getInventoryAction(index: Int): SerializableProperty<String> {
         require(index in 0 until ItemConstants.MENU_ACTION_COUNT) {
             "Index must be non-negative and less than or equal to $index."
         }
-        return getProperty(ConfigUtils.newOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, 35 + index))
+        return getProperty(ConfigUtils.newOptionProperty(ItemConstants.INVENTORY_ACTION_PROPERTY_PREFIX, index, 35))
     }
 
     fun getItemStack(index: Int): SerializableProperty<ItemStack> {
         require(index in 0 until ItemConstants.ITEM_STACK_COUNT) {
             "Index must be non-negative and less than or equal to $index."
         }
-        return getProperty(ConfigUtils.newOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, 100 + index))
+        return getProperty(ConfigUtils.newOptionProperty(ItemConstants.ITEM_STACK_PROPERTY_PREFIX, index, 100))
     }
 
     fun getPrimaryHeadModel(sex: Sex): SerializableProperty<Int> {

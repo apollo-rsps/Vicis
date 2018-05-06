@@ -34,7 +34,7 @@ data class DynamicConfigPropertyType<T>(override val name: String, override val 
          * @param opcode The opcode of the DynamicPropertyType. Must be positive (i.e. `> 0`).
          */
         fun <T> valueOf(name: String, opcode: Int): DynamicConfigPropertyType<T> {
-            require(opcode.toLong() > 0) { "Opcode must be positiv1e." }
+            require(opcode > 0) { "Opcode must be positive." }
 
             val hash = Objects.hash(name, opcode)
             val cached = cache.computeIfAbsent(hash) { DynamicConfigPropertyType<T>(name, opcode) }

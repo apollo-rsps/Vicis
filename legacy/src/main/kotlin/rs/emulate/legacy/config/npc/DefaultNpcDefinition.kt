@@ -42,9 +42,9 @@ class DefaultNpcDefinition : DefaultConfigDefinition<NpcDefinition>() {
             { buffer: DataBuffer, set: MovementAnimationSet -> MovementAnimationSet.encode(buffer, set) },
             { buffer: DataBuffer -> MovementAnimationSet.decode(buffer) }, java.lang.Short.BYTES * 4)
 
-        for (option in 1..NpcDefinition.INTERACTION_COUNT) {
-            val name = ConfigUtils.newOptionProperty<String>(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option)
-            properties[option + 29] = asciiString(name, "hidden")
+        for (option in 0 until NpcDefinition.INTERACTION_COUNT) {
+            val name = ConfigUtils.newOptionProperty<String>(NpcDefinition.INTERACTION_PROPERTY_PREFIX, option, 30)
+            properties[option + 30] = asciiString(name, "hidden")
         }
 
         properties[40] = ConfigUtils.newColourProperty(Colours)
@@ -52,8 +52,8 @@ class DefaultNpcDefinition : DefaultConfigDefinition<NpcDefinition>() {
         properties[60] = SerializableProperty(SecondaryModels, IntArray(0), modelEncoder, ConfigUtils.MODEL_DECODER)
         { models: IntArray -> models.size * java.lang.Short.BYTES + java.lang.Byte.BYTES }
 
-        for (option in 1..3) {
-            properties[option + 89] = Properties.unsignedShort(ConfigUtils.newOptionProperty("unused", option), 0)
+        for (option in 0 until 3) {
+            properties[option + 90] = Properties.unsignedShort(ConfigUtils.newOptionProperty("unused", option, 90), 0)
         }
 
         properties[93] = alwaysFalse(MinimapVisible, true)

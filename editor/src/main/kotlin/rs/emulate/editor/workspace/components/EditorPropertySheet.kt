@@ -10,7 +10,7 @@ import org.controlsfx.control.PropertySheet
 import rs.emulate.editor.workspace.resource.bundles.legacy.config.ConfigResource
 import rs.emulate.legacy.config.ConfigPropertyType
 import rs.emulate.legacy.config.SerializableProperty
-import tornadofx.get
+import tornadofx.*
 import java.util.Optional
 import kotlin.collections.component1
 import kotlin.collections.set
