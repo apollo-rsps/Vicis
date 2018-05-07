@@ -3,10 +3,9 @@ package rs.emulate.scene3d.backend.opengl.target.javafx
 import javafx.scene.image.PixelFormat
 import javafx.scene.image.PixelWriter
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl.ARBES2Compatibility
-import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL11.GL_UNSIGNED_BYTE
+import org.lwjgl.opengl.GL11.glReadPixels
 import org.lwjgl.opengl.GL12.GL_BGRA
-import org.lwjgl.opengl.GL14
 import org.lwjgl.opengl.GL14.GL_DEPTH_COMPONENT16
 import org.lwjgl.opengl.GL30.*
 import org.lwjgl.opengl.GL41.GL_RGB565
@@ -39,8 +38,15 @@ class JavaFXFrameBuffer(
     fun copy(destination: PixelWriter) {
         glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, pixels)
 
-        pixels.get(pixelsArray, 0, pixelsArray.size)
-        pixels.position(0)
+        val rowWidth = width * 4
+        for (row in 0 until height) {
+            val rowOffset = row * rowWidth
+            val rowInverseOffset = pixelsArray.size - rowOffset - rowWidth
+
+            pixels.position(rowInverseOffset)
+            pixels.get(pixelsArray, rowOffset, rowWidth)
+            pixels.position(0)
+        }
 
         destination.setPixels(0, 0, width, height, PixelFormat.getByteBgraPreInstance(), pixelsArray, 0, width * 4)
     }

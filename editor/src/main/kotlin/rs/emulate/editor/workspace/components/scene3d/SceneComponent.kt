@@ -46,20 +46,12 @@ class SceneComponent : Pane() {
         }
 
         val imageview = imageview {
-            fitWidthProperty().bind(widthProperty())
-            fitHeightProperty().bind(heightProperty())
-
             style {
                 backgroundColor += Color.BLACK
             }
 
-            // Allow the node to manage its own layout
-            isManaged = false
-
-            // Flip the render buffer image so that 0,0 is at the top left instead of
-            // bottom left
-            scaleX = 1.0
-            scaleY = -1.0
+            fitWidth = -1.0
+            fitHeight = -1.0
         }
 
         onSizeChanged.subscribe {
