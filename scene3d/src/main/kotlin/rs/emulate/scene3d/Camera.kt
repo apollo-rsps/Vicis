@@ -35,7 +35,7 @@ class Camera(val position: Vec3 = Vec3(0f, 0f, 0f), val target: Vec3 = Vec3(0f, 
      * parameters.
      */
     fun perspective(width: Int, height: Int, fov: Float, near: Float, far: Float) {
-        glm.perspective(projectionMatrix, fov, (width / height).toFloat(), near, far)
+        glm.perspective(projectionMatrix, fov, width.toFloat() / height.toFloat(), near, far)
         update()
     }
 
