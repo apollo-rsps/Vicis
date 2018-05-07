@@ -28,6 +28,7 @@ var Tab.resource: Resource?
 
 class EditorTabPane : EditorComponent() {
     override val root: TabPane = with(TabPane()) {
+        tabClosingPolicy = TabPane.TabClosingPolicy.ALL_TABS
         vboxConstraints { vGrow = Priority.ALWAYS }
     }
 
