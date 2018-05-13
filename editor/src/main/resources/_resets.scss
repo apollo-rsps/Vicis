@@ -1,5 +1,7 @@
-.tree-view, .border-pane, .virtual-flow {
+.tree-view, .border-pane, .virtual-flow, .tab-pane {
   -fx-border-width: 0px;
   -fx-border-color: #ffffff;
   -fx-padding: 0px;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
 }
