@@ -1,6 +1,6 @@
 package rs.emulate.editor
 
-import rs.emulate.editor.startup.EditorStartupView
+import rs.emulate.editor.ui.startup.EditorStartupView
 import tornadofx.*
 
 class EditorApplication : App(EditorStartupView::class) {
