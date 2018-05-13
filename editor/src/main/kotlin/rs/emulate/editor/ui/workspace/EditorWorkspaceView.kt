@@ -1,7 +1,9 @@
 package rs.emulate.editor.ui.workspace
 
 import javafx.geometry.Side
+import javafx.scene.layout.Priority
 import mergeChangesOf
+import rs.emulate.editor.ui.widgets.layout.ResizableBorderPane
 import rs.emulate.editor.ui.workspace.components.EditorTopComponentScope
 import rs.emulate.editor.ui.workspace.components.EditorTopView
 import rs.emulate.editor.ui.workspace.components.explorer.EditorExplorer
@@ -17,7 +19,7 @@ class EditorWorkspaceView : View() {
     private val componentScope: EditorTopComponentScope
     private val model by inject<EditorWorkspaceModel>()
 
-    override val root = borderpane()
+    override val root = ResizableBorderPane()
 
     init {
         title = messages["title"]
@@ -26,26 +28,34 @@ class EditorWorkspaceView : View() {
 
         with(root) {
             top<EditorMenu>()
+            topSide.resizable = false
 
-            left = hbox {
-                drawer(Side.LEFT) {
-                    item(findTopView<EditorExplorer>(), showHeader = true)
+            left = drawer(Side.LEFT) {
+                hboxConstraints {
+                    hGrow = Priority.ALWAYS
                 }
+
+                leftSide.resizeTarget = contentArea
+                item(findTopView<EditorExplorer>(), showHeader = true)
             }
 
-            center = vbox {
-                add(findTopView<EditorTabPane>())
-            }
+            val tabPane = findTopView<EditorTabPane>()
+            center = tabPane.root
 
             right = hbox {
                 drawer(Side.RIGHT) {
+                    hboxConstraints {
+                        hGrow = Priority.ALWAYS
+                    }
+
+                    rightSide.resizeTarget = contentArea
                     item(findTopView<EditorPropertySheet>(), showHeader = true)
                 }
             }
 
             bottom = vbox {
                 drawer(Side.BOTTOM) {
-
+                    bottomSide.resizeTarget = contentArea
                 }
 
                 add(findTopView<EditorStatusBar>())
