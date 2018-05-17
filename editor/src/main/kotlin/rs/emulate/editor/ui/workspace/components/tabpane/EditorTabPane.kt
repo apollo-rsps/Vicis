@@ -40,12 +40,6 @@ class EditorTabPane : EditorTopView<EditorTabPaneController, EditorTabPaneModel>
 
         selectionModel.selectedItemProperty().addGuardedListener { _, old, new ->
             old?.resourceViewer?.onFocusLost()
-
-            new?.let {
-                it.content?.requestFocus()
-                it.resourceViewer?.onFocusGained()
-            }
-
             model.selectedTab = new
         }
     }
@@ -53,6 +47,8 @@ class EditorTabPane : EditorTopView<EditorTabPaneController, EditorTabPaneModel>
     init {
         model.selectedTabProperty.onGuardedChange {
             root.selectionModel.select(it)
+            root.selectionModel.selectedItem.content.requestFocus()
+            root.selectionModel.selectedItem.resourceViewer?.onFocusGained()
         }
 
         Bindings.bindContentBidirectional(model.openTabs, root.tabs)
