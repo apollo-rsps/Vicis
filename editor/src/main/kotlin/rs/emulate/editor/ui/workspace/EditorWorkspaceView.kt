@@ -1,6 +1,10 @@
 package rs.emulate.editor.ui.workspace
 
+import javafx.event.EventTarget
 import javafx.geometry.Side
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyCodeCombination
+import javafx.scene.input.KeyCombination
 import javafx.scene.layout.Priority
 import mergeChangesOf
 import rs.emulate.editor.ui.widgets.layout.ResizableBorderPane
@@ -30,29 +34,26 @@ class EditorWorkspaceView : View() {
             top<EditorMenu>()
             topSide.resizable = false
 
-            left = drawer(Side.LEFT) {
+            left = workspaceDrawer(Side.LEFT) {
                 hboxConstraints {
                     hGrow = Priority.ALWAYS
                 }
 
-                leftSide.resizeTarget = contentArea
-                item(findTopView<EditorExplorer>(), showHeader = true)
+                workspaceDrawerItem<EditorExplorer>(index = 1)
             }
 
             val tabPane = findTopView<EditorTabPane>()
             center = tabPane.root
-            right = drawer(Side.RIGHT) {
+            right = workspaceDrawer(Side.RIGHT) {
                 hboxConstraints {
                     hGrow = Priority.ALWAYS
                 }
 
-                rightSide.resizeTarget = contentArea
-                item(findTopView<EditorPropertySheet>(), showHeader = true)
+                workspaceDrawerItem<EditorPropertySheet>(index = 2)
             }
 
             bottom = vbox {
-                drawer(Side.BOTTOM) {
-                    bottomSide.resizeTarget = contentArea
+                workspaceDrawer(Side.BOTTOM) {
                 }
 
                 add(findTopView<EditorStatusBar>())
@@ -78,6 +79,44 @@ class EditorWorkspaceView : View() {
 
     private inline fun <reified T : EditorTopView<*, *>> findTopView(): T {
         return find(T::class, scope = componentScope)
+    }
+
+    private fun EventTarget.workspaceDrawer(side: Side, builder: Drawer.() -> Unit = {}): Drawer {
+        val drawer = drawer(side, op = builder)
+        val drawerSide = when (side) {
+            Side.LEFT -> root.leftSide
+            Side.RIGHT -> root.rightSide
+            Side.TOP -> root.topSide
+            Side.BOTTOM -> root.bottomSide
+        }
+
+        drawerSide.resizeTarget = drawer.contentArea
+        return drawer
+    }
+
+    private inline fun <reified T : EditorTopView<*, *>> Drawer.workspaceDrawerItem(
+        index: Int? = null,
+        crossinline builder: DrawerItem.() -> Unit = {}
+    ) {
+        val view = findTopView<T>()
+        val key = if (index == 10) 0 else index
+        val title = view.titleProperty.stringBinding { if (index != null) "$index: $it" else it }
+
+        val item = item(title) {
+            children.add(view.root)
+            builder(this)
+        }
+
+        if (key != null && key < 9) {
+            val keyCode = KeyCode.getKeyCode(key.toString())
+            val keyCombination = KeyCodeCombination(keyCode, KeyCombination.SHORTCUT_DOWN)
+
+            sceneProperty().onChangeOnce {
+                it?.accelerators?.put(keyCombination, Runnable {
+                    item.expanded = !item.expanded
+                })
+            }
+        }
     }
 
     companion object {
