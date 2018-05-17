@@ -1,0 +1,15 @@
+root = true
+
+[*]
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.java]
+indent_style=tab
+tab_width=4
+continuation_indent_size=4
+
+[*.{kt, kts}]
+indent_style=space
+tab_width=4
+continuation_indent_size=4

@@ -1,0 +1,5 @@
+description = 'Vicis Modern'
+
+dependencies {
+    compile project(':util')
+}

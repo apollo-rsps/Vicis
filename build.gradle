@@ -1,0 +1,51 @@
+buildscript {
+    ext.kotlin_version = '1.2.40'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    group = 'vicis'
+    version = '0.0.1'
+}
+
+wrapper {
+    gradleVersion = '4.6'
+}
+
+subprojects {
+    apply plugin: 'kotlin'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repo.maven.apache.org/maven2" }
+    }
+
+    dependencies {
+        compile group: 'org.apache.commons', name: 'commons-compress', version: '1.9'
+        compile group: 'com.google.guava', name: 'guava', version: '18.0'
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+        testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testCompile "org.junit.jupiter:junit-jupiter-api:5.1.0"
+        testCompile "org.junit.jupiter:junit-jupiter-params:5.1.0"
+        testCompile "io.mockk:mockk:1.7.15"
+
+        testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.0"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.0"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
