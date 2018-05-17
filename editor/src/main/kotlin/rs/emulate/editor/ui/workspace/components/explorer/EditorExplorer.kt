@@ -18,7 +18,7 @@ class EditorExplorer : EditorTopView<EditorExplorerController, EditorExplorerMod
 
         setOnMouseClicked {
             // Only select resources on double click
-            if (it.clickCount == 2) {
+            if (it.clickCount == 2 && selectionModel.selectedItem != null) {
                 model.selectedItem = selectionModel.selectedItem.value
             }
         }
