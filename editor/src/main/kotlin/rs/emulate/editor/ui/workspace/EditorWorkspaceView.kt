@@ -41,16 +41,13 @@ class EditorWorkspaceView : View() {
 
             val tabPane = findTopView<EditorTabPane>()
             center = tabPane.root
-
-            right = hbox {
-                drawer(Side.RIGHT) {
-                    hboxConstraints {
-                        hGrow = Priority.ALWAYS
-                    }
-
-                    rightSide.resizeTarget = contentArea
-                    item(findTopView<EditorPropertySheet>(), showHeader = true)
+            right = drawer(Side.RIGHT) {
+                hboxConstraints {
+                    hGrow = Priority.ALWAYS
                 }
+
+                rightSide.resizeTarget = contentArea
+                item(findTopView<EditorPropertySheet>(), showHeader = true)
             }
 
             bottom = vbox {

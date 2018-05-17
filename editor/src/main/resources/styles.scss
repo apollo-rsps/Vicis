@@ -19,9 +19,8 @@ $drawer-selected-background-color: #bdbdbd;
   -fx-border-width: 0px 0px 1px 0px;
 }
 
-
-
 .drawer {
+
   .tool-bar:horizontal {
     -fx-border-width: 1px 0px 1px 0px;
   }
@@ -49,7 +48,14 @@ $drawer-selected-background-color: #bdbdbd;
   }
 
   .content-area {
-    -fx-border-width: 0px 1px 0px 0px;
     -fx-border-color: $bar-border-color;
+  }
+
+  &.left .content-area {
+    -fx-border-width: 0px 1px 0px 0px;
+  }
+
+  &.right {
+    -fx-border-width: 0px 0px 0px 1px;
   }
 }

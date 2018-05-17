@@ -9,6 +9,7 @@ import javafx.geometry.Side
 import javafx.scene.Cursor
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
+import tornadofx.*
 import java.lang.Math.abs
 import java.lang.Math.max
 
@@ -32,6 +33,11 @@ class ResizableBorderPane : BorderPane() {
     }
 
     init {
+        leftProperty().onChange { node -> node?.addClass("left") }
+        rightProperty().onChange { node -> node?.addClass("right") }
+        topProperty().onChange { node -> node?.addClass("top") }
+        bottomProperty().onChange { node -> node?.addClass("bottom") }
+
         val mouseOver = filteredEvents(MouseEvent.MOUSE_MOVED)
         val mouseDrag = filteredEvents(MouseEvent.MOUSE_DRAGGED)
         val mouseDown = filteredEvents(MouseEvent.MOUSE_PRESSED)
