@@ -55,7 +55,7 @@ $drawer-selected-background-color: #bdbdbd;
     -fx-border-width: 0px 1px 0px 0px;
   }
 
-  &.right {
+  &.right .content-area {
     -fx-border-width: 0px 0px 0px 1px;
   }
 }
