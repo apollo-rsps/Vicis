@@ -100,14 +100,14 @@ class EditorWorkspaceView : View() {
     ) {
         val view = findTopView<T>()
         val key = if (index == 10) 0 else index
-        val title = view.titleProperty.stringBinding { if (index != null) "$index: $it" else it }
+        val title = view.titleProperty.stringBinding { if (index != null) "$key: $it" else it }
 
         val item = item(title) {
             children.add(view.root)
             builder(this)
         }
 
-        if (key != null && key < 9) {
+        if (key != null && key <= 9) {
             val keyCode = KeyCode.getKeyCode(key.toString())
             val keyCombination = KeyCodeCombination(keyCode, KeyCombination.SHORTCUT_DOWN)
 
