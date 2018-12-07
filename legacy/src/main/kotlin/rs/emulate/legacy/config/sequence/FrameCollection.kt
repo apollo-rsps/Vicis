@@ -1,4 +1,4 @@
-package rs.emulate.legacy.config.animation
+package rs.emulate.legacy.config.sequence
 
 import com.google.common.base.MoreObjects
 import rs.emulate.shared.util.DataBuffer

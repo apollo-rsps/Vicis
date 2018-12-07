@@ -1,14 +1,14 @@
-package rs.emulate.legacy.config.animation
+package rs.emulate.legacy.config.sequence
 
 import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.shared.util.DataBuffer
 
-object AnimationDefinitionDecoder : ConfigDecoder<AnimationDefinition> {
+object SequenceDefinitionDecoder : ConfigDecoder<SequenceDefinition> {
 
     override val entryName: String = "seq"
 
-    override fun decode(id: Int, buffer: DataBuffer): AnimationDefinition {
-        val definition = AnimationDefinition(id)
+    override fun decode(id: Int, buffer: DataBuffer): SequenceDefinition {
+        val definition = SequenceDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
         while (opcode != ConfigDecoder.DEFINITION_TERMINATOR) {
@@ -19,9 +19,9 @@ object AnimationDefinitionDecoder : ConfigDecoder<AnimationDefinition> {
         return definition
     }
 
-    private fun AnimationDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun SequenceDefinition.decode(buffer: DataBuffer, opcode: Int) {
         when (opcode) {
-            1 -> frameCollection = FrameCollection.decode(buffer)
+            1 -> frameCollection = FrameCollection.decode(buffer) // TODO inline and remove FrameCollection
             2 -> loopOffset = buffer.getUnsignedShort()
             3 -> {
                 val count = buffer.getUnsignedByte()

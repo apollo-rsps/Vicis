@@ -1,7 +1,7 @@
-package rs.emulate.legacy.config.animation
+package rs.emulate.legacy.config.sequence
 
-class AnimationDefinition(
-    var id: Int,
+class SequenceDefinition(
+    val id: Int,
     var frameCollection: FrameCollection = FrameCollection.EMPTY,
     var loopOffset: Int = -1,
     var interleaveOrder: IntArray? = null, // TODO
