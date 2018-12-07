@@ -1,12 +1,11 @@
 package rs.emulate.editor.ui.widgets.content
 
-import rs.emulate.editor.ui.widgets.scene3d.SceneComponent
-import rs.emulate.editor.ui.widgets.scene3d.meshFromModels
 import rs.emulate.editor.resource.Resource
 import rs.emulate.editor.resource.ResourceCache
 import rs.emulate.editor.resource.bundles.legacy.ModelResource
 import rs.emulate.editor.resource.extensions.annotations.SupportedResources
-
+import rs.emulate.editor.ui.widgets.scene3d.SceneComponent
+import rs.emulate.editor.ui.widgets.scene3d.meshFromModels
 
 @SupportedResources(types = [ModelResource::class])
 class ModelViewerExtension : ResourceViewerExtension {
@@ -15,7 +14,7 @@ class ModelViewerExtension : ResourceViewerExtension {
     }
 }
 
-class ModelResourceViewer(val models: List<ModelResource>) : ResourceViewer() {
+class ModelResourceViewer(models: List<ModelResource>) : ResourceViewer() {
     constructor(vararg resources: ModelResource) : this(resources.toList())
 
     override val root = SceneComponent()

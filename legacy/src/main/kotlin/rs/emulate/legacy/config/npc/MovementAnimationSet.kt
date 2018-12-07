@@ -39,7 +39,8 @@ data class MovementAnimationSet(
             val clockwiseQuarterTurn = buffer.getUnsignedShort()
             val anticlockwiseQuarterTurn = buffer.getUnsignedShort()
 
-            return MovementAnimationSet(walking, halfTurn, clockwiseQuarterTurn, anticlockwiseQuarterTurn)
+            return MovementAnimationSet(walking, halfTurn, clockwiseQuarterTurn,
+                anticlockwiseQuarterTurn)
         }
 
         /**

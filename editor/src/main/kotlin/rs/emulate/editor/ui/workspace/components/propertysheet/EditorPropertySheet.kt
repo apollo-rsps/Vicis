@@ -1,15 +1,9 @@
 package rs.emulate.editor.ui.workspace.components.propertysheet
 
 import javafx.beans.binding.Bindings
-import javafx.beans.value.ObservableValue
-import javafx.collections.ObservableMap
 import org.controlsfx.control.PropertySheet
 import rs.emulate.editor.ui.workspace.components.EditorTopView
-import rs.emulate.legacy.config.ConfigPropertyType
-import rs.emulate.legacy.config.SerializableProperty
 import tornadofx.*
-import java.util.*
-import kotlin.collections.set
 
 class EditorPropertySheet : EditorTopView<EditorPropertySheetController, EditorPropertySheetModel>() {
     override val controller by inject<EditorPropertySheetController>()
@@ -19,5 +13,9 @@ class EditorPropertySheet : EditorTopView<EditorPropertySheetController, EditorP
         title = messages["title"]
 
         Bindings.bindContent(items, model.resourceProperties)
+        setPropertyEditorFactory(model.editorFactory)
+
+        // FIXME must _not_ be a method reference because of a kotlinc bug
+        model.addEditorFactoryCallback { setPropertyEditorFactory(it) }
     }
 }
