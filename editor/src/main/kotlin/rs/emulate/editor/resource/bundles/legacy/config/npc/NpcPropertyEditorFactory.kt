@@ -16,11 +16,7 @@ object NpcPropertyEditorFactory : MutablePropertyEditorFactory<NpcProperty>() {
             NpcProperty.StandingSequence -> Editors.createNumericEditor(item)
             NpcProperty.WalkingSequence -> Editors.createNumericEditor(item)
             NpcProperty.MovementSequences -> null
-            NpcProperty.Action1 -> Editors.createTextEditor(item)
-            NpcProperty.Action2 -> Editors.createTextEditor(item)
-            NpcProperty.Action3 -> Editors.createTextEditor(item)
-            NpcProperty.Action4 -> Editors.createTextEditor(item)
-            NpcProperty.Action5 -> Editors.createTextEditor(item)
+            NpcProperty.Actions -> null
             NpcProperty.Colours -> null
             NpcProperty.WidgetModels -> null
             NpcProperty.VisibleOnMinimap -> Editors.createCheckEditor(item)

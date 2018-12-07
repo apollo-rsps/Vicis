@@ -43,29 +43,9 @@ sealed class NpcProperty(
         description = "Set of animations performed when the npc performs different movements."
     )
 
-    object Action1 : NpcProperty("Action1",
+    object Actions : NpcProperty("Actions",
         category = "interaction",
-        description = "The primary action, displayed first on the context menu."
-    )
-
-    object Action2 : NpcProperty("Action2",
-        category = "interaction",
-        description = "The action displayed second on the context menu."
-    )
-
-    object Action3 : NpcProperty("Action3",
-        category = "interaction",
-        description = "The action displayed third on the context menu."
-    )
-
-    object Action4 : NpcProperty("Action4",
-        category = "interaction",
-        description = "The action displayed fourth on the context menu."
-    )
-
-    object Action5 : NpcProperty("Action5",
-        category = "interaction",
-        description = "The action displayed fifth on the context menu."
+        description = "The context menu actions."
     )
 
     object Colours : NpcProperty("Colours",
