@@ -15,7 +15,6 @@ class FrameCollection {
     val durations: IntArray?
         get() = field?.clone()
 
-
     /**
      * The primary frame ids.
      */
