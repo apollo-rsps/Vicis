@@ -4,8 +4,6 @@ import rs.emulate.shared.util.DataBuffer
 
 /**
  * The body part an [IdentikitDefinition] is for.
- *
- * @param maleId The id of the Part.
  */
 enum class Part(val maleId: Int) {
 
@@ -52,15 +50,9 @@ enum class Part(val maleId: Int) {
     /**
      * Gets the id of this Part for female characters.
      */
-    val femaleId: Int
-        get() = maleId + FEMALE_ID_OFFSET
+    val femaleId: Int = maleId + FEMALE_ID_OFFSET
 
     companion object {
-
-        /**
-         * The id offset for female characters.
-         */
-        private const val FEMALE_ID_OFFSET = 7
 
         /**
          * Decodes a Part from the specified [DataBuffer].
@@ -89,3 +81,8 @@ enum class Part(val maleId: Int) {
     }
 
 }
+
+/**
+ * The id offset for female characters.
+ */
+private const val FEMALE_ID_OFFSET = 7
