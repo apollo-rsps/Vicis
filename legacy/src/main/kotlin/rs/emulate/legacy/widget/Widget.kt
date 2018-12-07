@@ -36,7 +36,6 @@ abstract class Widget(
     private val hoverText: String?
 ) {
 
-
     /**
      * Encodes this Widget into a [DataBuffer].
      */
@@ -99,7 +98,8 @@ abstract class Widget(
         if (hoverText != null) {
             val text = hoverText
 
-            return DataBuffer.allocate(text.length + java.lang.Byte.BYTES).apply { putAsciiString(text) }
+            return DataBuffer.allocate(text.length + java.lang.Byte.BYTES)
+                .putAsciiString(text)
                 .flip()
                 .asReadOnlyBuffer()
         }
