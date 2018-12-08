@@ -13,14 +13,4 @@ class SequenceDefinition(
     var animatingPrecedence: Int = if (interleaveOrder == null) 0 else 2,
     var walkingPrecedence: Int = if (interleaveOrder == null) 0 else 2,
     var replayMode: Int = 2
-) {
-
-    companion object {
-
-        /**
-         * The name of the ArchiveEntry containing the AnimationDefinitions, without the extension.
-         */
-        const val ENTRY_NAME = "seq"
-    }
-
-}
+)
