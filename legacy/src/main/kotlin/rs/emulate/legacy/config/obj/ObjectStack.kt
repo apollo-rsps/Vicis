@@ -1,11 +1,11 @@
-package rs.emulate.legacy.config.item
+package rs.emulate.legacy.config.obj
 
 import rs.emulate.shared.util.DataBuffer
 
 /**
  * A utility class containing an item stack amount and its corresponding model id.
  */
-class ItemStack {
+class ObjectStack {
 
     /**
      * The stack amount.
@@ -40,22 +40,22 @@ class ItemStack {
         /**
          * The empty ItemStack, used as the default value.
          */
-        val EMPTY = ItemStack()
+        val EMPTY = ObjectStack()
 
         /**
          * Decodes an ItemStack from the specified [DataBuffer].
          */
-        fun decode(buffer: DataBuffer): ItemStack {
+        fun decode(buffer: DataBuffer): ObjectStack {
             val amount = buffer.getUnsignedShort()
             val model = buffer.getUnsignedShort()
 
-            return ItemStack(amount, model)
+            return ObjectStack(amount, model)
         }
 
         /**
          * Encodes the specified ItemStack into the specified [DataBuffer].
          */
-        fun encode(buffer: DataBuffer, stack: ItemStack): DataBuffer {
+        fun encode(buffer: DataBuffer, stack: ObjectStack): DataBuffer {
             return buffer.putShort(stack.amount)
                 .putShort(stack.model)
         }
