@@ -1,6 +1,7 @@
 package rs.emulate.legacy.config
 
 import rs.emulate.legacy.archive.Archive
+import rs.emulate.shared.util.getUnsignedShort
 
 object ConfigArchiveDecoder {
 

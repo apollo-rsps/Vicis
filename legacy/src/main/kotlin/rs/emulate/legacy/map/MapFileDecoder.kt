@@ -10,17 +10,19 @@ import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
 import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
 import rs.emulate.legacy.map.Tile.Builder
 import rs.emulate.shared.util.CompressionUtils
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getByte
+import rs.emulate.shared.util.getUnsignedByte
 import rs.emulate.shared.world.Position
+import java.nio.ByteBuffer
 
 /**
  * A decoder for a [MapFile].
  *
- * @param buffer The DataBuffer containing the MapFile data. Should not be compressed.
+ * @param buffer The ByteBuffer containing the MapFile data. Should not be compressed.
  */
-class MapFileDecoder(buffer: DataBuffer) {
+class MapFileDecoder(buffer: ByteBuffer) {
 
-    private val buffer: DataBuffer = buffer.asReadOnlyBuffer()
+    private val buffer: ByteBuffer = buffer.asReadOnlyBuffer()
 
     /**
      * Decodes the data into a [MapFile].

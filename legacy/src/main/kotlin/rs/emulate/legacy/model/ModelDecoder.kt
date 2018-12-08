@@ -1,15 +1,18 @@
 package rs.emulate.legacy.model
 
 import rs.emulate.legacy.model.ModelFeature.*
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getSignedSmart
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 import java.util.HashSet
 
 /**
  * A decoder for [Model]s.
  *
- * @param buffer The uncompressed [DataBuffer] containing the encoded `Model`.
+ * @param buffer The uncompressed [ByteBuffer] containing the encoded `Model`.
  */
-class ModelDecoder(private val buffer: DataBuffer) {
+class ModelDecoder(private val buffer: ByteBuffer) {
 
     /**
      * An indexed array of [Vertex]es in the [Model] being decoded.

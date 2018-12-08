@@ -1,8 +1,9 @@
 package rs.emulate.legacy.frame
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import java.nio.ByteBuffer
 
-class FrameBaseDecoder(private val buffer: DataBuffer) {
+class FrameBaseDecoder(private val buffer: ByteBuffer) {
 
     fun decode(): FrameBase {
         val count = buffer.getUnsignedByte()

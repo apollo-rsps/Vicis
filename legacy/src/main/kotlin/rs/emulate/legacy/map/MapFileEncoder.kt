@@ -6,7 +6,7 @@ import rs.emulate.legacy.map.MapConstants.MINIMUM_ATTRIBUTES_TYPE
 import rs.emulate.legacy.map.MapConstants.MINIMUM_OVERLAY_TYPE
 import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
 import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
-import rs.emulate.shared.util.DataBuffer
+import java.nio.ByteBuffer
 import java.util.ArrayList
 import java.util.Arrays
 
@@ -18,16 +18,16 @@ import java.util.Arrays
 class MapFileEncoder(private val map: MapFile) {
 
     /**
-     * Encodes the [MapFile] into a [DataBuffer].
+     * Encodes the [MapFile] into a [ByteBuffer].
      */
-    fun encode(): DataBuffer {
+    fun encode(): ByteBuffer {
         val planes = map.planes
-        val buffers = ArrayList<DataBuffer>(planes.size)
+        val buffers = ArrayList<ByteBuffer>(planes.size)
         var size = 0
 
         for (plane in planes) {
             val tiles = plane.tiles()
-            val buffer = DataBuffer.allocate(tiles.size * 6 * java.lang.Byte.BYTES)
+            val buffer = ByteBuffer.allocate(tiles.size * 6 * java.lang.Byte.BYTES)
 
             tiles.map(::encodeTile).forEach { buffer.put(it) }
             size += buffer.position()
@@ -35,13 +35,13 @@ class MapFileEncoder(private val map: MapFile) {
             buffers.add(buffer)
         }
 
-        return buffers.fold(DataBuffer.allocate(size), DataBuffer::put)
+        return buffers.fold(ByteBuffer.allocate(size), ByteBuffer::put)
     }
 
     /**
-     * Encodes a single [Tile] into a [DataBuffer].
+     * Encodes a single [Tile] into a [ByteBuffer].
      */
-    private fun encodeTile(tile: Tile): DataBuffer {
+    private fun encodeTile(tile: Tile): ByteBuffer {
         val bytes = ByteArray(java.lang.Byte.BYTES * 6)
         var index = 0
 
@@ -81,7 +81,7 @@ class MapFileEncoder(private val map: MapFile) {
             bytes[index++] = (height / HEIGHT_MULTIPLICAND).toByte()
         }
 
-        return DataBuffer.wrap(Arrays.copyOf(bytes, index))
+        return ByteBuffer.wrap(Arrays.copyOf(bytes, index))
     }
 
 }

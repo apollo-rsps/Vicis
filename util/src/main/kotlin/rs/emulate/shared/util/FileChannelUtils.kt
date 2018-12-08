@@ -2,6 +2,7 @@ package rs.emulate.shared.util
 
 import java.io.EOFException
 import java.io.IOException
+import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
 
 /**
@@ -18,11 +19,11 @@ object FileChannelUtils {
      * @throws IOException If an I/O error occurs.
      * @throws EOFException If the end of the file was reached and the buffer could not be completely populated.
      */
-    fun readFully(channel: FileChannel, buffer: DataBuffer, position: Long) {
+    fun readFully(channel: FileChannel, buffer: ByteBuffer, position: Long) {
         var position = position
 
         while (buffer.remaining() > 0) {
-            val read = channel.read(buffer.byteBuffer, position).toLong()
+            val read = channel.read(buffer, position).toLong()
             if (read == -1L) {
                 throw EOFException("Unexpected end of file whilst reading fully.")
             }

@@ -18,12 +18,12 @@ object CompressionUtils {
     /**
      * Decompresses the BZIP2 data stored in the specified [ByteBuffer].
      *
-     * @param buffer The DataBuffer.
-     * @return A DataBuffer containing the decompressed data.
+     * @param buffer The ByteBuffer.
+     * @return A ByteBuffer containing the decompressed data.
      * @throws IOException If there is an error decompressing the data.
      */
-    fun bunzip2(buffer: DataBuffer): DataBuffer {
-        return DataBuffer.wrap(bunzip2(buffer.getRemainingBytes()))
+    fun bunzip2(buffer: ByteBuffer): ByteBuffer {
+        return ByteBuffer.wrap(bunzip2(buffer.getRemainingBytes()))
     }
 
     /**
@@ -45,14 +45,14 @@ object CompressionUtils {
     }
 
     /**
-     * BZIP2s the data stored in the specified [DataBuffer].
+     * BZIP2s the data stored in the specified [ByteBuffer].
      *
-     * @param buffer The DataBuffer.
-     * @return A DataBuffer containing the compressed data, without the BZIP2 header.
+     * @param buffer The ByteBuffer.
+     * @return A ByteBuffer containing the compressed data, without the BZIP2 header.
      * @throws IOException If there is an error compressing the data.
      */
-    fun bzip2(buffer: DataBuffer): DataBuffer {
-        return DataBuffer.wrap(bzip2(buffer.getRemainingBytes()))
+    fun bzip2(buffer: ByteBuffer): ByteBuffer {
+        return ByteBuffer.wrap(bzip2(buffer.getRemainingBytes()))
     }
 
     /**
@@ -76,15 +76,15 @@ object CompressionUtils {
     }
 
     /**
-     * Decompresses the GZIP data stored in the specified [DataBuffer].
+     * Decompresses the GZIP data stored in the specified [ByteBuffer].
      *
-     * @param buffer The DataBuffer.
-     * @return A DataBuffer containing the decompressed data.
+     * @param buffer The ByteBuffer.
+     * @return A ByteBuffer containing the decompressed data.
      * @throws IOException If there is an error decompressing the data.
      */
-    fun gunzip(buffer: DataBuffer): DataBuffer {
+    fun gunzip(buffer: ByteBuffer): ByteBuffer {
         val data = ByteArray(buffer.remaining())
-        buffer.read(data)
+        buffer.get(data)
 
         GZIPInputStream(ByteArrayInputStream(data)).use { decompressor ->
             ByteArrayOutputStream().use { out ->
@@ -98,19 +98,19 @@ object CompressionUtils {
                     out.write(buf, 0, read)
                 }
 
-                return DataBuffer.wrap(out.toByteArray())
+                return ByteBuffer.wrap(out.toByteArray())
             }
         }
     }
 
     /**
-     * Gzips the data stored in the specified [DataBuffer].
+     * Gzips the data stored in the specified [ByteBuffer].
      *
-     * @param buffer The DataBuffer.
-     * @return A DataBuffer containing the compressed data.
+     * @param buffer The ByteBuffer.
+     * @return A ByteBuffer containing the compressed data.
      * @throws IOException If there is an error compressing the data.
      */
-    fun gzip(buffer: DataBuffer): DataBuffer {
+    fun gzip(buffer: ByteBuffer): ByteBuffer {
         val data = buffer.getRemainingBytes()
 
         val out = ByteArrayOutputStream()
@@ -119,7 +119,7 @@ object CompressionUtils {
             compressor.finish()
         }
 
-        return DataBuffer.wrap(out.toByteArray())
+        return ByteBuffer.wrap(out.toByteArray())
     }
 
 }

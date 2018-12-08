@@ -2,13 +2,15 @@ package rs.emulate.legacy.config.kit
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object IdentikitDefinitionDecoder : ConfigDecoder<IdentikitDefinition> {
 
     override val entryName: String = "idk"
 
-    override fun decode(id: Int, buffer: DataBuffer): IdentikitDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): IdentikitDefinition {
         val definition = IdentikitDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -20,7 +22,7 @@ object IdentikitDefinitionDecoder : ConfigDecoder<IdentikitDefinition> {
         return definition
     }
 
-    private fun IdentikitDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun IdentikitDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> part = buffer.getUnsignedByte()
             2 -> {

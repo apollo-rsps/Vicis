@@ -1,6 +1,9 @@
 package rs.emulate.legacy.widget.script
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 import java.util.ArrayList
 
 /**
@@ -9,9 +12,9 @@ import java.util.ArrayList
 object LegacyClientScriptCodec {
 
     /**
-     * Decodes a [List] of [LegacyClientScript]s from the specified [DataBuffer].
+     * Decodes a [List] of [LegacyClientScript]s from the specified [ByteBuffer].
      */
-    fun decode(buffer: DataBuffer): List<LegacyClientScript> {
+    fun decode(buffer: ByteBuffer): List<LegacyClientScript> {
         var count = buffer.getUnsignedByte()
         val operators = mutableListOf<RelationalOperator>()
         val defaults = IntArray(count)
@@ -45,37 +48,37 @@ object LegacyClientScriptCodec {
     }
 
     /**
-     * Encodes the [List] of [LegacyClientScript]s into a [DataBuffer].
+     * Encodes the [List] of [LegacyClientScript]s into a [ByteBuffer].
      */
-    fun encode(scripts: List<LegacyClientScript>): DataBuffer {
+    fun encode(scripts: List<LegacyClientScript>): ByteBuffer {
         val count = scripts.size
 
-        val operators = DataBuffer.allocate(count * java.lang.Byte.BYTES)
-        val defaults = DataBuffer.allocate(count * java.lang.Short.BYTES)
-        val buffers = ArrayList<DataBuffer>(count)
+        val operators = ByteBuffer.allocate(count * java.lang.Byte.BYTES)
+        val defaults = ByteBuffer.allocate(count * java.lang.Short.BYTES)
+        val buffers = ArrayList<ByteBuffer>(count)
         var size = count * (java.lang.Short.BYTES + java.lang.Byte.BYTES)
 
         for (script in scripts) {
             operators.putByte(script.operator.value)
-            defaults.putShort(script.default)
+            defaults.putShort(script.default.toShort())
 
             val instructions = script.instructions
-            val buffer = DataBuffer.allocate(instructions.size * java.lang.Short.BYTES)
+            val buffer = ByteBuffer.allocate(instructions.size * java.lang.Short.BYTES)
 
             for (instruction in instructions) {
                 buffer.putShort(instruction.type.toInteger())
-                instruction.operands.forEach { buffer.putShort(it) }
+                instruction.operands.forEach { buffer.putShort(it.toShort()) }
             }
 
             size += buffer.position()
-            buffers += buffer.flip()
+            buffers += buffer.apply { flip() }
         }
 
-        val buffer = DataBuffer.allocate(size)
-        buffer.put(operators.flip()).put(defaults.flip())
+        val buffer = ByteBuffer.allocate(size)
+        buffer.put(operators.apply { flip() }).put(defaults.apply { flip() })
         buffers.forEach { buffer.put(it) }
 
-        return buffer.flip()
+        return buffer.apply { flip() }
     }
 
 }

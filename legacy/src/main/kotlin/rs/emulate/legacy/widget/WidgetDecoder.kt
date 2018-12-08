@@ -2,7 +2,8 @@ package rs.emulate.legacy.widget
 
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
 import java.io.FileNotFoundException
 import java.util.ArrayList
 
@@ -17,7 +18,7 @@ class WidgetDecoder(widgets: Archive) {
     /**
      * The Archive containing the Widgets.
      */
-    private val buffer: DataBuffer = widgets.getEntry(DATA_FILE_NAME).buffer
+    private val buffer = widgets.getEntry(DATA_FILE_NAME).buffer
 
     /**
      * Decodes the [Widget]s.

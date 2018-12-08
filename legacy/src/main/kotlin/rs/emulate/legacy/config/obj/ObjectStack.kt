@@ -1,6 +1,7 @@
 package rs.emulate.legacy.config.obj
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 /**
  * A utility class containing an item stack amount and its corresponding model id.
@@ -43,9 +44,9 @@ class ObjectStack {
         val EMPTY = ObjectStack()
 
         /**
-         * Decodes an ItemStack from the specified [DataBuffer].
+         * Decodes an ItemStack from the specified [ByteBuffer].
          */
-        fun decode(buffer: DataBuffer): ObjectStack {
+        fun decode(buffer: ByteBuffer): ObjectStack {
             val amount = buffer.getUnsignedShort()
             val model = buffer.getUnsignedShort()
 
@@ -53,11 +54,11 @@ class ObjectStack {
         }
 
         /**
-         * Encodes the specified ItemStack into the specified [DataBuffer].
+         * Encodes the specified ItemStack into the specified [ByteBuffer].
          */
-        fun encode(buffer: DataBuffer, stack: ObjectStack): DataBuffer {
-            return buffer.putShort(stack.amount)
-                .putShort(stack.model)
+        fun encode(buffer: ByteBuffer, stack: ObjectStack): ByteBuffer {
+            return buffer.putShort(stack.amount.toShort())
+                .putShort(stack.model.toShort())
         }
     }
 

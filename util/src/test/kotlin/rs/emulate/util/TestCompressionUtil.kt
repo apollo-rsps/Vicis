@@ -3,7 +3,7 @@ package rs.emulate.util
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import rs.emulate.shared.util.CompressionUtils
-import rs.emulate.shared.util.DataBuffer
+import java.nio.ByteBuffer
 
 class TestCompressionUtil {
 
@@ -25,7 +25,7 @@ class TestCompressionUtil {
     @Test
     fun testGzip() {
         val test = "Hello, World!"
-        val data = DataBuffer.wrap(test.toByteArray())
+        val data = ByteBuffer.wrap(test.toByteArray())
         val compressed = CompressionUtils.gzip(data)
         val decompressed = CompressionUtils.gunzip(compressed)
 

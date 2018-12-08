@@ -2,13 +2,15 @@ package rs.emulate.legacy.config.spotanim
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object SpotAnimationDefinitionDecoder : ConfigDecoder<SpotAnimationDefinition> {
 
     override val entryName: String = "spotanim"
 
-    override fun decode(id: Int, buffer: DataBuffer): SpotAnimationDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): SpotAnimationDefinition {
         val definition = SpotAnimationDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -20,7 +22,7 @@ object SpotAnimationDefinitionDecoder : ConfigDecoder<SpotAnimationDefinition> {
         return definition
     }
 
-    private fun SpotAnimationDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun SpotAnimationDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> model = buffer.getUnsignedShort()
             2 -> sequenceId = buffer.getUnsignedShort()

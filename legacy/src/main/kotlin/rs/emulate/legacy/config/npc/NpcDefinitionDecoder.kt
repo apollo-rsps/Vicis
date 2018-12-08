@@ -2,13 +2,17 @@ package rs.emulate.legacy.config.npc
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getAsciiString
+import rs.emulate.shared.util.getByte
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object NpcDefinitionDecoder : ConfigDecoder<NpcDefinition> {
 
     override val entryName: String = "npc"
 
-    override fun decode(id: Int, buffer: DataBuffer): NpcDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): NpcDefinition {
         val definition = NpcDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -20,19 +24,19 @@ object NpcDefinitionDecoder : ConfigDecoder<NpcDefinition> {
         return definition
     }
 
-    private fun NpcDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun NpcDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> {
                 val count = buffer.getUnsignedByte()
                 models = IntArray(count) { buffer.getUnsignedShort() }
             }
-            2 -> name = buffer.getString()
-            3 -> description = buffer.getString()
+            2 -> name = buffer.getAsciiString()
+            3 -> description = buffer.getAsciiString()
             12 -> size = buffer.getByte()
             13 -> standingSequence = buffer.getUnsignedShort()
             14 -> walkingSequence = buffer.getUnsignedShort()
             17 -> movementSequences = MovementAnimationSet.decode(buffer)
-            in 30..34 -> actions[opcode - 30] = buffer.getString()
+            in 30..34 -> actions[opcode - 30] = buffer.getAsciiString()
             40 -> {
                 val count = buffer.getUnsignedByte()
 

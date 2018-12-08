@@ -1,7 +1,10 @@
 package rs.emulate.legacy.config.sequence
 
 import com.google.common.base.MoreObjects
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 import java.util.Arrays
 
 /**
@@ -68,22 +71,22 @@ class FrameCollection {
     /**
      * Gets the duration at the specified index.
      */
-    fun getDuration(index: Int): Int {
-        return durations!![index]
+    fun getDuration(index: Int): Short {
+        return durations!![index].toShort()
     }
 
     /**
      * Gets the primary frame id at the specified index.
      */
-    fun getPrimary(index: Int): Int {
-        return primaries!![index]
+    fun getPrimary(index: Int): Short {
+        return primaries!![index].toShort()
     }
 
     /**
      * Gets the secondary frame id at the specified index.
      */
-    fun getSecondary(index: Int): Int {
-        return secondaries!![index]
+    fun getSecondary(index: Int): Short {
+        return secondaries!![index].toShort()
     }
 
     override fun hashCode(): Int {
@@ -121,9 +124,9 @@ class FrameCollection {
         }
 
         /**
-         * Decodes a [FrameCollection] from the specified [DataBuffer].
+         * Decodes a [FrameCollection] from the specified [ByteBuffer].
          */
-        fun decode(buffer: DataBuffer): FrameCollection {
+        fun decode(buffer: ByteBuffer): FrameCollection {
             val frames = buffer.getUnsignedByte()
             val primaries = IntArray(frames)
             val secondaries = IntArray(frames)
@@ -140,9 +143,9 @@ class FrameCollection {
         }
 
         /**
-         * Encodes the specified [FrameCollection] into the specified [DataBuffer].
+         * Encodes the specified [FrameCollection] into the specified [ByteBuffer].
          */
-        fun encode(buffer: DataBuffer, collection: FrameCollection): DataBuffer {
+        fun encode(buffer: ByteBuffer, collection: FrameCollection): ByteBuffer {
             val size = collection.size
             buffer.putByte(size)
 

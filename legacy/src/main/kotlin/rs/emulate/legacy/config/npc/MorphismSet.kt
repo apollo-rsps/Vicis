@@ -1,6 +1,9 @@
 package rs.emulate.legacy.config.npc
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 import java.util.Arrays
 
 /**
@@ -30,9 +33,9 @@ data class MorphismSet(
         val EMPTY = MorphismSet(-1, -1, IntArray(0))
 
         /**
-         * Decodes a [MorphismSet] from the specified [DataBuffer].
+         * Decodes a [MorphismSet] from the specified [ByteBuffer].
          */
-        fun decode(buffer: DataBuffer): MorphismSet {
+        fun decode(buffer: ByteBuffer): MorphismSet {
             val varbit = buffer.getUnsignedShort()
             val varp = buffer.getUnsignedShort()
             val count = buffer.getUnsignedByte()
@@ -42,13 +45,13 @@ data class MorphismSet(
         }
 
         /**
-         * Encodes the specified [MorphismSet] into the specified [DataBuffer].
+         * Encodes the specified [MorphismSet] into the specified [ByteBuffer].
          */
-        fun encode(buffer: DataBuffer, set: MorphismSet): DataBuffer {
-            buffer.putShort(set.bitVariable)
-                .putShort(set.parameterVariable)
+        fun encode(buffer: ByteBuffer, set: MorphismSet): ByteBuffer {
+            buffer.putShort(set.bitVariable.toShort())
+                .putShort(set.parameterVariable.toShort())
                 .putByte(set.count - 1)
-            set.morphisms.forEach { buffer.putShort(it) }
+            set.morphisms.forEach { buffer.putShort(it.toShort()) }
 
             return buffer
         }

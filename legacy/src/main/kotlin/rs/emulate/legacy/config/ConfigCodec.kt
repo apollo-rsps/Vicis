@@ -1,13 +1,13 @@
 package rs.emulate.legacy.config
 
-import rs.emulate.shared.util.DataBuffer
+import java.nio.ByteBuffer
 
 interface ConfigDecoder<T> {
     val entryName: String
-    fun decode(id: Int, buffer: DataBuffer): T
+    fun decode(id: Int, buffer: ByteBuffer): T
 }
 
 interface ConfigEncoder<T> {
     val entryName: String
-    fun encode(id: Int, definition: T): DataBuffer
+    fun encode(id: Int, definition: T): ByteBuffer
 }

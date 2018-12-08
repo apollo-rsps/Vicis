@@ -2,13 +2,17 @@ package rs.emulate.legacy.config.varp
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getAsciiString
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedInt
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object VarpDefinitionDecoder : ConfigDecoder<VarpDefinition> {
 
     override val entryName: String = "varp"
 
-    override fun decode(id: Int, buffer: DataBuffer): VarpDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): VarpDefinition {
         val definition = VarpDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -20,13 +24,13 @@ object VarpDefinitionDecoder : ConfigDecoder<VarpDefinition> {
         return definition
     }
 
-    private fun VarpDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun VarpDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> buffer.getUnsignedByte()
             2 -> buffer.getUnsignedByte()
             5 -> parameter = buffer.getUnsignedShort()
             7 -> buffer.getUnsignedInt()
-            10 -> buffer.getString()
+            10 -> buffer.getAsciiString()
             12 -> buffer.getUnsignedInt()
         }
     }

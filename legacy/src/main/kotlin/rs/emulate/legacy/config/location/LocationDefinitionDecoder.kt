@@ -3,13 +3,17 @@ package rs.emulate.legacy.config.location
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.legacy.config.npc.MorphismSet
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getAsciiString
+import rs.emulate.shared.util.getByte
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
 
     override val entryName: String = "loc"
 
-    override fun decode(id: Int, buffer: DataBuffer): LocationDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): LocationDefinition {
         val definition = LocationDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -38,7 +42,7 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
         return definition
     }
 
-    private fun LocationDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun LocationDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> {
                 val count = buffer.getUnsignedByte()
@@ -50,8 +54,8 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
                     modelTypes[index] = buffer.getUnsignedByte()
                 }
             }
-            2 -> name = buffer.getString()
-            3 -> description = buffer.getString()
+            2 -> name = buffer.getAsciiString()
+            3 -> description = buffer.getAsciiString()
             5 -> {
                 val count = buffer.getUnsignedByte()
                 models = IntArray(count) { buffer.getUnsignedShort() }
@@ -67,7 +71,7 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
             24 -> sequenceId = buffer.getUnsignedShort().let { if (it == 65535) -1 else it }
             28 -> decorDisplacement = buffer.getUnsignedByte()
             29 -> brightness = buffer.getByte()
-            in 30 until 39 -> actions[opcode - 30] = buffer.getString().let { if (it == "hidden") null else it }
+            in 30 until 39 -> actions[opcode - 30] = buffer.getAsciiString().let { if (it == "hidden") null else it }
             39 -> diffusion = buffer.getByte()
             40 -> {
                 val count = buffer.getUnsignedByte()
@@ -87,9 +91,9 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
             67 -> scaleZ = buffer.getUnsignedShort()
             68 -> mapsceneId = buffer.getUnsignedShort()
             69 -> surroundings = buffer.getUnsignedByte()
-            70 -> translateX = buffer.getShort()
-            71 -> translateY = buffer.getShort()
-            72 -> translateZ = buffer.getShort()
+            70 -> translateX = buffer.getShort().toInt()
+            71 -> translateY = buffer.getShort().toInt()
+            72 -> translateZ = buffer.getShort().toInt()
             73 -> obstructsGround = true
             74 -> hollow = true
             75 -> supportsItems = buffer.getUnsignedByte()

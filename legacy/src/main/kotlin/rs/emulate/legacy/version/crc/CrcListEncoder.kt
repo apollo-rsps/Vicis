@@ -1,8 +1,7 @@
 package rs.emulate.legacy.version.crc
 
 import rs.emulate.legacy.archive.ArchiveEntry
-import rs.emulate.shared.util.DataBuffer
-
+import java.nio.ByteBuffer
 import java.util.Arrays
 
 /**
@@ -29,8 +28,8 @@ class CrcListEncoder(crcs: List<CrcList>) {
             val type = list.type
             val crcs = list.crcs
 
-            val buffer = DataBuffer.allocate(crcs.size * Integer.BYTES)
-            Arrays.stream(crcs).forEach({ buffer.putInt(it) })
+            val buffer = ByteBuffer.allocate(crcs.size * Integer.BYTES)
+            Arrays.stream(crcs).forEach { buffer.putInt(it) }
 
             entries[index] = ArchiveEntry(type.asCrcList(), buffer)
         }

@@ -3,7 +3,9 @@ package rs.emulate.legacy.widget
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec
 import rs.emulate.legacy.widget.type.Option
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.putAsciiString
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 
 /**
  * A user interface component.
@@ -37,9 +39,9 @@ abstract class Widget(
 ) {
 
     /**
-     * Encodes this Widget into a [DataBuffer].
+     * Encodes this Widget into a [ByteBuffer].
      */
-    fun encode(): DataBuffer {
+    fun encode(): ByteBuffer {
         val bespoke = encodeBespoke()
         val scripts = LegacyClientScriptCodec.encode(scripts)
         val option = encodeOption()
@@ -51,23 +53,22 @@ abstract class Widget(
         val specific = scripts.remaining() + bespoke.remaining() + option.remaining() + hoverText.remaining()
 
         val size = parentSize + metaSize + hoverSize + specific
-
-        val buffer = DataBuffer.allocate(size)
+        val buffer = ByteBuffer.allocate(size)
 
         if (parentId != null) {
-            buffer.putShort(PARENT_ID_PRESENT)
-            buffer.putShort(id)
-            buffer.putShort(parentId)
+            buffer.putShort(PARENT_ID_PRESENT.toShort())
+            buffer.putShort(id.toShort())
+            buffer.putShort(parentId.toShort())
         } else {
-            buffer.putShort(id)
+            buffer.putShort(id.toShort())
         }
 
         buffer.putByte(group.value)
         buffer.putByte(optionType.value)
 
-        buffer.putShort(contentType)
-        buffer.putShort(width)
-        buffer.putShort(height)
+        buffer.putShort(contentType.toShort())
+        buffer.putShort(width.toShort())
+        buffer.putShort(height.toShort())
 
         buffer.putByte(alpha)
 
@@ -83,34 +84,33 @@ abstract class Widget(
         buffer.put(bespoke)
         buffer.put(option)
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
     /**
-     * Encodes the bespoke data belonging to this Widget into a [DataBuffer].
+     * Encodes the bespoke data belonging to this Widget into a [ByteBuffer].
      */
-    protected abstract fun encodeBespoke(): DataBuffer
+    protected abstract fun encodeBespoke(): ByteBuffer
 
     /**
-     * Encodes the hover text of this Widget into a [DataBuffer].
+     * Encodes the hover text of this Widget into a [ByteBuffer].
      */
-    private fun encodeHoverText(): DataBuffer {
+    private fun encodeHoverText(): ByteBuffer {
         if (hoverText != null) {
             val text = hoverText
 
-            return DataBuffer.allocate(text.length + java.lang.Byte.BYTES)
+            return ByteBuffer.allocate(text.length + java.lang.Byte.BYTES)
                 .putAsciiString(text)
-                .flip()
-                .asReadOnlyBuffer()
+                .apply { flip() }
         }
 
-        return DataBuffer.allocate(0)
+        return ByteBuffer.allocate(0)
     }
 
     /**
-     * Encodes the [Option] of this Widget into a [DataBuffer].
+     * Encodes the [Option] of this Widget into a [ByteBuffer].
      */
-    private fun encodeOption(): DataBuffer {
+    private fun encodeOption(): ByteBuffer {
         if (option != null) {
             require(group == WidgetGroup.INVENTORY || optionType == WidgetOption.USABLE) {
                 "Only usable or inventory widgets may have an option."
@@ -120,18 +120,18 @@ abstract class Widget(
             val circumfix = option.circumfix
             val text = option.text
 
-            val buffer = DataBuffer.allocate(
+            val buffer = ByteBuffer.allocate(
                 circumfix.length + text.length + 2 * java.lang.Byte.BYTES + java.lang.Short.BYTES
             )
             buffer.putAsciiString(circumfix).putAsciiString(text)
 
             val attributes = option.attributes
-            buffer.putShort(attributes)
+            buffer.putShort(attributes.toShort())
 
-            return buffer.flip().asReadOnlyBuffer()
+            return buffer.apply { flip() }
         }
 
-        return DataBuffer.allocate(0)
+        return ByteBuffer.allocate(0)
     }
 
     companion object {

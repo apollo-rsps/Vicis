@@ -4,6 +4,9 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
+import rs.emulate.shared.util.getByte
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
 
 /**
  * A [GraphicsDecoder] for [Font]s.
@@ -21,7 +24,7 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
         val offset = index.getUnsignedByte()
 
         if (offset > 0) {
-            index.skip(3 * (offset - 1))
+            index.position(3 * (offset - 1))
         }
 
         val glyphs = Array(GLYPHS_PER_FONT) { decodeGlyph() }
@@ -68,7 +71,7 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
         val raster = ByteArray(count)
 
         when (format) {
-            ImageFormat.COLUMN_ORDERED -> data.read(raster)
+            ImageFormat.COLUMN_ORDERED -> data.get(raster)
             ImageFormat.ROW_ORDERED -> for (x in 0 until width) {
                 for (y in 0 until height) {
                     raster[x + y * width] = data.getByte().toByte()

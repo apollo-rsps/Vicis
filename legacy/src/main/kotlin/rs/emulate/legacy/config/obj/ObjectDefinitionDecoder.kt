@@ -2,13 +2,17 @@ package rs.emulate.legacy.config.obj
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getAsciiString
+import rs.emulate.shared.util.getByte
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object ObjectDefinitionDecoder : ConfigDecoder<ObjectDefinition> {
 
     override val entryName: String = "seq"
 
-    override fun decode(id: Int, buffer: DataBuffer): ObjectDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): ObjectDefinition {
         val definition = ObjectDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -20,11 +24,11 @@ object ObjectDefinitionDecoder : ConfigDecoder<ObjectDefinition> {
         return definition
     }
 
-    private fun ObjectDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun ObjectDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> modelId = buffer.getUnsignedShort()
-            2 -> name = buffer.getString()
-            3 -> description = buffer.getString()
+            2 -> name = buffer.getAsciiString()
+            3 -> description = buffer.getAsciiString()
             4 -> spriteScale = buffer.getUnsignedShort()
             5 -> spriteRoll = buffer.getUnsignedShort()
             6 -> spriteYaw = buffer.getUnsignedShort()
@@ -44,8 +48,8 @@ object ObjectDefinitionDecoder : ConfigDecoder<ObjectDefinition> {
                 femaleTranslateY = buffer.getByte()
             }
             26 -> secondaryFemaleEquipmentId = buffer.getUnsignedShort()
-            in 30 until 35 -> groundActions[opcode - 30] = buffer.getString().let { if (it == "hidden") null else it }
-            in 35 until 40 -> widgetActions[opcode - 35] = buffer.getString()
+            in 30 until 35 -> groundActions[opcode - 30] = buffer.getAsciiString().let { if (it == "hidden") null else it }
+            in 35 until 40 -> widgetActions[opcode - 35] = buffer.getAsciiString()
             40 -> {
                 val count = buffer.getUnsignedByte()
 

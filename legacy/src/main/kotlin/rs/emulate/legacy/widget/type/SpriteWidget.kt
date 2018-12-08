@@ -5,7 +5,8 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.SPRITE
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.putAsciiString
+import java.nio.ByteBuffer
 
 /**
  * A [WidgetGroup.SPRITE] [Widget].
@@ -31,12 +32,12 @@ class SpriteWidget(
     private val secondary: String
 ) : Widget(id, parent, SPRITE, optionType, content, width, height, alpha, hover, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): DataBuffer {
-        val buffer = DataBuffer.allocate(primary.length + secondary.length + 2 * java.lang.Byte.BYTES)
+    override fun encodeBespoke(): ByteBuffer {
+        val buffer = ByteBuffer.allocate(primary.length + secondary.length + 2 * java.lang.Byte.BYTES)
         buffer.putAsciiString(primary)
         buffer.putAsciiString(secondary)
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
 }

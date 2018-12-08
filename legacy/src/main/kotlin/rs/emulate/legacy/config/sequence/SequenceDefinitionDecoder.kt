@@ -2,13 +2,16 @@ package rs.emulate.legacy.config.sequence
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedInt
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 object SequenceDefinitionDecoder : ConfigDecoder<SequenceDefinition> {
 
     override val entryName: String = "seq"
 
-    override fun decode(id: Int, buffer: DataBuffer): SequenceDefinition {
+    override fun decode(id: Int, buffer: ByteBuffer): SequenceDefinition {
         val definition = SequenceDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
@@ -20,7 +23,7 @@ object SequenceDefinitionDecoder : ConfigDecoder<SequenceDefinition> {
         return definition
     }
 
-    private fun SequenceDefinition.decode(buffer: DataBuffer, opcode: Int) {
+    private fun SequenceDefinition.decode(buffer: ByteBuffer, opcode: Int) {
         when (opcode) {
             1 -> frameCollection = FrameCollection.decode(buffer) // TODO inline and remove FrameCollection
             2 -> loopOffset = buffer.getUnsignedShort()

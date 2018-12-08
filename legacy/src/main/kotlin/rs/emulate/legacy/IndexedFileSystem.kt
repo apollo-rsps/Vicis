@@ -4,11 +4,15 @@ import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getRemainingBytes
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.shared.util.getUnsignedTriByte
 import java.io.Closeable
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.RandomAccessFile
+import java.nio.ByteBuffer
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.ArrayList
@@ -37,12 +41,12 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
     /**
      * The cached CRC table.
      */
-    private var crcs: DataBuffer? = null
+    private var crcs: ByteBuffer? = null
 
     /**
      * The CRC table.
      */
-    val crcTable: DataBuffer
+    val crcTable: ByteBuffer
         get() {
             if (readOnly) {
                 synchronized(this) {
@@ -52,7 +56,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
                 val archives = getFileCount(0)
                 var hash = 1234
 
-                val buffer = DataBuffer.allocate((archives + 1) * Integer.BYTES)
+                val buffer = ByteBuffer.allocate((archives + 1) * Integer.BYTES)
                 val crc = CRC32()
 
                 for (file in 1 until archives) {
@@ -118,9 +122,9 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
     /**
      * Gets a file.
      */
-    fun getFile(descriptor: FileDescriptor): DataBuffer {
+    fun getFile(descriptor: FileDescriptor): ByteBuffer {
         val (size, block) = getIndex(descriptor)
-        val buffer = DataBuffer.allocate(size)
+        val buffer = ByteBuffer.allocate(size)
 
         var position = (block * FileSystemConstants.BLOCK_SIZE).toLong()
         var read = 0
@@ -131,7 +135,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         }
 
         for (id in 0 until blocks) {
-            val header = DataBuffer.allocate(FileSystemConstants.HEADER_SIZE)
+            val header = ByteBuffer.allocate(FileSystemConstants.HEADER_SIZE)
             synchronized(data!!) {
                 data.seek(position)
                 data.readFully(header.array())
@@ -149,7 +153,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
             }
             val chunkSize = Math.min(FileSystemConstants.CHUNK_SIZE, size - read)
 
-            val chunk = DataBuffer.allocate(chunkSize)
+            val chunk = ByteBuffer.allocate(chunkSize)
             synchronized(data) {
                 data.seek(position)
                 data.readFully(chunk.array())
@@ -165,13 +169,13 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
             }
         }
 
-        return buffer.flip()
+        return buffer.apply { flip() }
     }
 
     /**
      * Gets a file.
      */
-    fun getFile(type: Int, file: Int): DataBuffer {
+    fun getFile(type: Int, file: Int): ByteBuffer {
         return getFile(FileDescriptor(type, file))
     }
 
@@ -198,7 +202,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         val position = (descriptor.file * Index.BYTES).toLong()
         require(position >= 0 && index.length() >= position + Index.BYTES) { "Could not find find index." }
 
-        val buffer = DataBuffer.allocate(Index.BYTES)
+        val buffer = ByteBuffer.allocate(Index.BYTES)
         synchronized(index) {
             index.seek(position)
             index.readFully(buffer.array())

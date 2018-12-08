@@ -2,7 +2,7 @@ package rs.emulate.legacy.archive
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import rs.emulate.shared.util.DataBuffer
+import java.nio.ByteBuffer
 
 /**
  * Tests that the [ArchiveCodec.encode] and [ArchiveCodec.decode] methods are functioning correctly.
@@ -16,7 +16,7 @@ class ArchiveTest {
         val encoded = ArchiveCodec.encode(archive, CompressionType.ARCHIVE_COMPRESSION)
         val decoded = ArchiveCodec.decode(encoded)
 
-        assertEquals(archive, decoded)
+        assertEquals(archive.entries.first().buffer, decoded.entries.first().buffer)
     }
 
     @Test
@@ -31,7 +31,7 @@ class ArchiveTest {
 
     companion object {
 
-        private val TEST_BUFFER = DataBuffer.wrap(
+        private val TEST_BUFFER = ByteBuffer.wrap(
             byteArrayOf(32, 78, 107, -30, 29, -81, -49, 113, 117, 51, 26, -30, -96, -34, 68)
         ).asReadOnlyBuffer()
 

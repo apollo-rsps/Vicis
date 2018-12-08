@@ -1,6 +1,8 @@
 package rs.emulate.legacy.config.kit
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 
 /**
  * The body part an [IdentikitDefinition] is for.
@@ -55,16 +57,16 @@ enum class Part(val maleId: Int) {
     companion object {
 
         /**
-         * Decodes a Part from the specified [DataBuffer].
+         * Decodes a Part from the specified [ByteBuffer].
          */
-        fun decode(buffer: DataBuffer): Part {
+        fun decode(buffer: ByteBuffer): Part {
             return Part.valueOf(buffer.getUnsignedByte())
         }
 
         /**
-         * Encodes the specified Part into the specified [DataBuffer].
+         * Encodes the specified Part into the specified [ByteBuffer].
          */
-        fun encode(buffer: DataBuffer, part: Part): DataBuffer {
+        fun encode(buffer: ByteBuffer, part: Part): ByteBuffer {
             return buffer.putByte(part.maleId)
         }
 

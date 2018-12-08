@@ -1,6 +1,7 @@
 package rs.emulate.legacy.config.npc
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 /**
  * A wrapper class containing four movement animations used by an npc.
@@ -31,9 +32,9 @@ data class MovementAnimationSet(
         val EMPTY = MovementAnimationSet(-1, -1, -1, -1)
 
         /**
-         * Decodes a MovementAnimationSet from the specified [DataBuffer].
+         * Decodes a MovementAnimationSet from the specified [ByteBuffer].
          */
-        fun decode(buffer: DataBuffer): MovementAnimationSet {
+        fun decode(buffer: ByteBuffer): MovementAnimationSet {
             val walking = buffer.getUnsignedShort()
             val halfTurn = buffer.getUnsignedShort()
             val clockwiseQuarterTurn = buffer.getUnsignedShort()
@@ -44,13 +45,13 @@ data class MovementAnimationSet(
         }
 
         /**
-         * Encodes the specified [MovementAnimationSet] into the specified [DataBuffer].
+         * Encodes the specified [MovementAnimationSet] into the specified [ByteBuffer].
          */
-        fun encode(buffer: DataBuffer, set: MovementAnimationSet): DataBuffer {
-            return buffer.putShort(set.walking)
-                .putShort(set.halfTurn)
-                .putShort(set.clockwiseQuarterTurn)
-                .putShort(set.anticlockwiseQuarterTurn)
+        fun encode(buffer: ByteBuffer, set: MovementAnimationSet): ByteBuffer {
+            return buffer.putShort(set.walking.toShort())
+                .putShort(set.halfTurn.toShort())
+                .putShort(set.clockwiseQuarterTurn.toShort())
+                .putShort(set.anticlockwiseQuarterTurn.toShort())
         }
     }
 

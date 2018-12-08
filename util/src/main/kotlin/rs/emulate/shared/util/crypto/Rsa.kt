@@ -1,7 +1,5 @@
 package rs.emulate.shared.util.crypto
 
-import rs.emulate.shared.util.DataBuffer
-
 import java.math.BigInteger
 import java.nio.ByteBuffer
 
@@ -17,14 +15,14 @@ object Rsa {
      * @param modulus The modulus.
      * @param key The key.
      */
-    fun crypt(buffer: DataBuffer, modulus: BigInteger, key: BigInteger): DataBuffer {
+    fun crypt(buffer: ByteBuffer, modulus: BigInteger, key: BigInteger): ByteBuffer {
         val bytes = ByteArray(buffer.limit())
-        buffer.read(bytes)
+        buffer.get(bytes)
 
         val input = BigInteger(bytes)
         val output = input.modPow(key, modulus)
 
-        return DataBuffer.wrap(output.toByteArray())
+        return ByteBuffer.wrap(output.toByteArray())
     }
 
 }

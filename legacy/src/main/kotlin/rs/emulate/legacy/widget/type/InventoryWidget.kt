@@ -5,8 +5,11 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.INVENTORY
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.DataBuffer
 import rs.emulate.shared.util.Point
+import rs.emulate.shared.util.putAsciiString
+import rs.emulate.shared.util.putBoolean
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 
 /**
  * Contains properties used by [WidgetGroup.INVENTORY].
@@ -46,20 +49,20 @@ class InventoryWidget(
         require(sprites.size == spritePoints.size) { "Sprite names and Points must have an equal size." }
     }
 
-    public override fun encodeBespoke(): DataBuffer {
+    public override fun encodeBespoke(): ByteBuffer {
         var size = actions.map(String::length).sum() + actions.size
         size += sprites.map { name ->
             (name?.length ?: 0) + 2 * java.lang.Short.BYTES + java.lang.Byte.BYTES
         }.sum()
 
-        val action = DataBuffer.allocate(size)
+        val action = ByteBuffer.allocate(size)
         actions.forEach { action.putAsciiString(it) }
         action.flip()
 
         size = sprites.map { name ->
             (name?.length ?: 0) + 2 * java.lang.Short.BYTES + java.lang.Byte.BYTES
         }.sum()
-        val sprite = DataBuffer.allocate(size)
+        val sprite = ByteBuffer.allocate(size)
 
         for (index in sprites.indices) {
             val name = sprites[index]
@@ -68,14 +71,14 @@ class InventoryWidget(
             if (name != null) {
                 val point = spritePoints[index]
 
-                sprite.putShort(point.x).putShort(point.y)
+                sprite.putShort(point.x.toShort()).putShort(point.y.toShort())
                 sprite.putAsciiString(name)
             }
         }
 
         sprite.flip()
 
-        val buffer = DataBuffer.allocate(6 * java.lang.Byte.BYTES + action.remaining() + sprite.remaining())
+        val buffer = ByteBuffer.allocate(6 * java.lang.Byte.BYTES + action.remaining() + sprite.remaining())
 
         buffer.putBoolean(swappable)
         buffer.putBoolean(actions.isEmpty())
@@ -86,7 +89,7 @@ class InventoryWidget(
         buffer.put(sprite)
         buffer.put(action)
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
 }

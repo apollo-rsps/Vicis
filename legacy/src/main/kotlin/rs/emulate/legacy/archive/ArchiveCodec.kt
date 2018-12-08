@@ -1,10 +1,15 @@
 package rs.emulate.legacy.archive
 
 import rs.emulate.shared.util.CompressionUtils
-import rs.emulate.shared.util.DataBuffer
-
+import rs.emulate.shared.util.get
+import rs.emulate.shared.util.getRemainingBytes
+import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.shared.util.getUnsignedTriByte
+import rs.emulate.shared.util.isEmpty
+import rs.emulate.shared.util.putTriByte
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.nio.ByteBuffer
 import java.util.ArrayList
 
 /**
@@ -13,12 +18,12 @@ import java.util.ArrayList
 object ArchiveCodec {
 
     /**
-     * Decodes the [Archive] in the specified [DataBuffer].
+     * Decodes the [Archive] in the specified [ByteBuffer].
      * @throws IOException If there is an error decompressing the data.
      */
-    fun decode(buffer: DataBuffer): Archive {
+    fun decode(buffer: ByteBuffer): Archive {
         var buffer = buffer
-        if (buffer.isEmpty) {
+        if (buffer.isEmpty()) {
             return Archive.EMPTY_ARCHIVE
         }
 
@@ -45,10 +50,14 @@ object ArchiveCodec {
         val entries = ArrayList<ArchiveEntry>(count)
 
         for (entry in 0 until count) {
-            val data = DataBuffer.allocate(if (extracted) extractedSizes[entry] else sizes[entry])
-            data.fill(buffer)
+            val uncompressedSize = if (extracted) extractedSizes[entry] else sizes[entry]
+            val data = ByteBuffer.allocate(uncompressedSize).apply {
+                buffer.get(this)
+                flip()
+            }
 
-            entries.add(ArchiveEntry(identifiers[entry], if (extracted) data else CompressionUtils.bunzip2(data)))
+            val uncompressed = if (extracted) data else CompressionUtils.bunzip2(data)
+            entries.add(ArchiveEntry(identifiers[entry], uncompressed))
         }
 
         return Archive(entries)
@@ -57,16 +66,16 @@ object ArchiveCodec {
     // TODO theres a bug with archive compression...
 
     /**
-     * Encodes the specified [Archive] into a [DataBuffer].
+     * Encodes the specified [Archive] into a [ByteBuffer].
      * @throws IOException If there is an error compressing the archive.
      */
-    fun encode(archive: Archive, compression: CompressionType): DataBuffer {
+    fun encode(archive: Archive, compression: CompressionType): ByteBuffer {
         ByteArrayOutputStream(archive.size).use { bos ->
             val entries = archive.entries
             val entryCount = entries.size
 
-            val meta = DataBuffer.allocate(entryCount * (Integer.BYTES + 2 * 3) + java.lang.Short.BYTES)
-            meta.putShort(entryCount)
+            val meta = ByteBuffer.allocate(entryCount * (Integer.BYTES + 2 * 3) + java.lang.Short.BYTES)
+            meta.putShort(entryCount.toShort())
 
             for (entry in entries) {
                 val uncompressed = entry.buffer
@@ -87,10 +96,10 @@ object ArchiveCodec {
             meta.flip()
 
             val compressed = bos.toByteArray()
-            var data = DataBuffer.allocate(meta.limit() + compressed.size)
+            var data = ByteBuffer.allocate(meta.limit() + compressed.size)
             data.put(meta).put(compressed).flip()
 
-            val header = DataBuffer.allocate(2 * 3)
+            val header = ByteBuffer.allocate(2 * 3)
             val extracted = data.limit()
             header.putTriByte(extracted)
 
@@ -101,7 +110,7 @@ object ArchiveCodec {
             val compressedLength = data.limit()
             header.putTriByte(compressedLength).flip()
 
-            val buffer = DataBuffer.allocate(header.limit() + data.limit())
+            val buffer = ByteBuffer.allocate(header.limit() + data.limit())
             buffer.put(header).put(data).flip()
 
             return buffer
@@ -109,6 +118,3 @@ object ArchiveCodec {
     }
 
 }
-/**
- * Sole private constructor to prevent instantiation.
- */

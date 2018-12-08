@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
 import rs.emulate.legacy.archive.CompressionType
-import rs.emulate.shared.util.DataBuffer
-
+import rs.emulate.shared.util.putByte
+import rs.emulate.shared.util.putTriByte
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
@@ -25,7 +25,7 @@ class Cache {
     /**
      * The Map of FileDescriptors to Buffers.
      */
-    private val files = HashMap<FileDescriptor, DataBuffer>()
+    private val files = HashMap<FileDescriptor, ByteBuffer>()
 
     /**
      * Encodes this cache, writing the output to the specified files in the specified [Path].
@@ -53,13 +53,10 @@ class Cache {
             val zero = FileChannel.open(base.resolve(indexPrefix + '0'), *options)
             indices[0] = zero
 
-            zero.write(IndexCodec.encode(Index(0, 0)).byteBuffer) // Index for the empty block.
+            zero.write(IndexCodec.encode(Index(0, 0))) // Index for the empty block.
             var block = 1
 
-            for (entry in sortedFileList()) {
-                val descriptor = entry.key
-                val buffer = entry.value
-
+            for ((descriptor, buffer) in sortedFileList()) {
                 val size = buffer.remaining()
                 val type = descriptor.type
                 val blocks = (size + FileSystemConstants.CHUNK_SIZE - 1) / FileSystemConstants.CHUNK_SIZE
@@ -67,31 +64,35 @@ class Cache {
                 var index: FileChannel? = indices[type]
 
                 if (index == null) {
-                    index = FileChannel.open(base.resolve(indexPrefix + type), *options)
+                    index = FileChannel.open(base.resolve(indexPrefix + type), *options)!!
                     indices[type] = index
                 }
 
                 val pointer = IndexCodec.encode(Index(size, block))
-                index!!.write(pointer.byteBuffer)
+                index.write(pointer)
 
                 val file = descriptor.file
                 for (id in 0 until blocks) {
-                    val header = DataBuffer.allocate(FileSystemConstants.HEADER_SIZE)
-                    header.putShort(file).putShort(id)
-                    header.putTriByte(++block).putByte(type + 1).flip()
-                    data.write(header.byteBuffer)
+                    val header = ByteBuffer.allocate(FileSystemConstants.HEADER_SIZE).apply {
+                        putShort(file.toShort()).putShort(id.toShort())
+                        putTriByte(++block).putByte(type + 1).flip()
+                    }
+
+                    data.write(header)
 
                     val remaining = buffer.remaining()
                     if (remaining < FileSystemConstants.CHUNK_SIZE) {
-                        data.write(buffer.byteBuffer)
+                        data.write(buffer)
                         val padding = FileSystemConstants.CHUNK_SIZE - remaining
 
                         data.write(ByteBuffer.allocate(padding))
                     } else {
-                        val chunk = DataBuffer.allocate(FileSystemConstants.CHUNK_SIZE)
-                        chunk.fill(buffer)
+                        val chunk = ByteBuffer.allocate(FileSystemConstants.CHUNK_SIZE)
+                        while (chunk.hasRemaining()) { // TODO replace
+                            chunk.put(buffer.get())
+                        }
 
-                        data.write(chunk.byteBuffer)
+                        data.write(chunk)
                     }
                 }
             }
@@ -126,7 +127,7 @@ class Cache {
     /**
      * Gets the file data with the specified [FileDescriptor].
      */
-    fun getFile(descriptor: FileDescriptor): DataBuffer {
+    fun getFile(descriptor: FileDescriptor): ByteBuffer {
         return files[descriptor]!!
     }
 
@@ -152,7 +153,7 @@ class Cache {
      * @param descriptor The FileDescriptor.
      * @param file The file data.
      */
-    fun putFile(descriptor: FileDescriptor, file: DataBuffer) {
+    fun putFile(descriptor: FileDescriptor, file: ByteBuffer) {
         files[descriptor] = file
     }
 
@@ -175,14 +176,14 @@ class Cache {
     /**
      * Gets the [List] of files to encode, in ascending order.
      */
-    private fun sortedFileList(): List<MutableEntry<FileDescriptor, DataBuffer>> {
-        val comparator: Comparator<MutableEntry<FileDescriptor, DataBuffer>> = Comparator { (first), (second) ->
+    private fun sortedFileList(): List<MutableEntry<FileDescriptor, ByteBuffer>> {
+        val comparator: Comparator<MutableEntry<FileDescriptor, ByteBuffer>> = Comparator { (first), (second) ->
             val type = Integer.compare(first.type, second.type)
 
             if (type == 0) Integer.compare(first.file, second.file) else type
         }
 
-        return ArrayList<MutableEntry<FileDescriptor, DataBuffer>>(files.entries).apply { sortWith(comparator) }
+        return ArrayList<MutableEntry<FileDescriptor, ByteBuffer>>(files.entries).apply { sortWith(comparator) }
     }
 
     companion object {

@@ -2,8 +2,8 @@ package rs.emulate.util.crypto
 
 import org.junit.jupiter.api.Assertions.assertArrayEquals
 import org.junit.jupiter.api.Test
-import rs.emulate.shared.util.DataBuffer
 import rs.emulate.shared.util.crypto.Xtea
+import java.nio.ByteBuffer
 
 /**
  * A unit test to validate the XTEA code.
@@ -31,7 +31,7 @@ class XteaTest {
                 ciphertext[index] = Integer.parseInt(hex, 16).toByte()
             }
 
-            val buffer = DataBuffer.wrap(ciphertext)
+            val buffer = ByteBuffer.wrap(ciphertext)
             Xtea.decipher(buffer, 0, 8, key)
             assertArrayEquals(plaintext, buffer.array())
         }
@@ -58,7 +58,7 @@ class XteaTest {
                 ciphertext[index] = Integer.parseInt(hex, 16).toByte()
             }
 
-            val buffer = DataBuffer.wrap(plaintext)
+            val buffer = ByteBuffer.wrap(plaintext)
             Xtea.encipher(buffer, 0, 8, key)
             assertArrayEquals(ciphertext, buffer.array())
         }

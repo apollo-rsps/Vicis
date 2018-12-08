@@ -1,8 +1,8 @@
 package rs.emulate.legacy.version.map
 
 import rs.emulate.legacy.archive.Archive
-import rs.emulate.shared.util.DataBuffer
-
+import rs.emulate.shared.util.getBoolean
+import rs.emulate.shared.util.getUnsignedShort
 import java.io.FileNotFoundException
 
 /**
@@ -13,7 +13,7 @@ import java.io.FileNotFoundException
  */
 class MapIndexDecoder constructor(archive: Archive) {
 
-    private val data: DataBuffer = archive.getEntry(MapIndex.ENTRY_NAME).buffer.asReadOnlyBuffer()
+    private val data = archive.getEntry(MapIndex.ENTRY_NAME).buffer.asReadOnlyBuffer()
 
     /**
      * Decodes the contents of the `map_index` entry into a [MapIndex].

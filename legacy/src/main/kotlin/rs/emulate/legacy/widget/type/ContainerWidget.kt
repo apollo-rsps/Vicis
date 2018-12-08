@@ -5,8 +5,9 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.CONTAINER
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.DataBuffer
 import rs.emulate.shared.util.Point
+import rs.emulate.shared.util.putBoolean
+import java.nio.ByteBuffer
 
 /**
  * Contains properties used by [WidgetGroup.CONTAINER] [Widget]s.
@@ -50,23 +51,23 @@ class ContainerWidget( // TODO this constructor size is PTSD-inducing
         require(children.size == childPoints.size) { "Child ids and child points must be of equal length." }
     }
 
-    public override fun encodeBespoke(): DataBuffer {
-        val buffer = DataBuffer.allocate((2 + children.size) * java.lang.Short.BYTES + java.lang.Byte.BYTES)
-        buffer.putShort(scrollLimit)
+    public override fun encodeBespoke(): ByteBuffer {
+        val buffer = ByteBuffer.allocate((2 + children.size) * java.lang.Short.BYTES + java.lang.Byte.BYTES)
+        buffer.putShort(scrollLimit.toShort())
         buffer.putBoolean(hidden)
 
         val size = children.size
-        buffer.putShort(size)
+        buffer.putShort(size.toShort())
 
         for (index in 0 until size) {
-            buffer.putShort(children[index])
+            buffer.putShort(children[index].toShort())
 
             val point = childPoints[index]
-            buffer.putShort(point.x)
-            buffer.putShort(point.y)
+            buffer.putShort(point.x.toShort())
+            buffer.putShort(point.y.toShort())
         }
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
 }

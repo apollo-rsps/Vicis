@@ -1,6 +1,7 @@
 package rs.emulate.legacy.archive
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.copy
+import java.nio.ByteBuffer
 
 /**
  * A single entry in an [Archive]. This class is immutable.
@@ -8,16 +9,16 @@ import rs.emulate.shared.util.DataBuffer
  * @param identifier The identifier.
  * @param buffer The buffer containing this entry's data.
  */
-class ArchiveEntry(val identifier: Int, buffer: DataBuffer) {
+class ArchiveEntry(val identifier: Int, buffer: ByteBuffer) {
 
     /**
      * The buffer of this entry.
      */
-    val buffer: DataBuffer = buffer.asReadOnlyBuffer()
+    val buffer: ByteBuffer = buffer.asReadOnlyBuffer()
         get() = field.copy()
 
     /**
-     * Gets the size of this entry (i.e. the capacity of the [DataBuffer] backing it), in bytes.
+     * Gets the size of this entry (i.e. the capacity of the [ByteBuffer] backing it), in bytes.
      */
     val size: Int
         get() = buffer.limit()
@@ -28,7 +29,7 @@ class ArchiveEntry(val identifier: Int, buffer: DataBuffer) {
      * @param name The name of the archive.
      * @param buffer The buffer containing this entry's data.
      */
-    constructor(name: String, buffer: DataBuffer) : this(ArchiveUtils.hash(name), buffer) {}
+    constructor(name: String, buffer: ByteBuffer) : this(ArchiveUtils.hash(name), buffer)
 
     override fun equals(other: Any?): Boolean {
         if (other is ArchiveEntry) {
@@ -43,9 +44,9 @@ class ArchiveEntry(val identifier: Int, buffer: DataBuffer) {
     }
 
     /**
-     * Returns a new archive entry with this entry's identifier, but the contents as the specified [DataBuffer].
+     * Returns a new archive entry with this entry's identifier, but the contents as the specified [ByteBuffer].
      */
-    fun update(buffer: DataBuffer): ArchiveEntry {
+    fun update(buffer: ByteBuffer): ArchiveEntry {
         return ArchiveEntry(identifier, buffer)
     }
 

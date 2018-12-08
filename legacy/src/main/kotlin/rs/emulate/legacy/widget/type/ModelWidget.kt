@@ -6,7 +6,9 @@ import rs.emulate.legacy.widget.WidgetGroup.MODEL
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.legacy.widget.type.ModelWidget.Model
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.putBoolean
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 import java.util.Arrays
 
 /**
@@ -44,14 +46,14 @@ class ModelWidget(
      */
     data class Model(val id: Int?, val animation: Int?)
 
-    override fun encodeBespoke(): DataBuffer {
+    override fun encodeBespoke(): ByteBuffer {
         var size = 3 * java.lang.Short.BYTES
         for (model in Arrays.asList(primary, secondary)) {
             size += if (model.id != null) java.lang.Short.BYTES else java.lang.Byte.BYTES
             size += if (model.animation != null) java.lang.Short.BYTES else java.lang.Byte.BYTES
         }
 
-        val buffer = DataBuffer.allocate(size)
+        val buffer = ByteBuffer.allocate(size)
         for (value in listOf(primary.id, secondary.id, primary.animation, secondary.animation)) {
             if (value != null) {
                 buffer.putByte(value shr 8 + 1)
@@ -61,11 +63,11 @@ class ModelWidget(
             }
         }
 
-        buffer.putShort(scale)
-        buffer.putShort(pitch)
-        buffer.putShort(roll)
+        buffer.putShort(scale.toShort())
+        buffer.putShort(pitch.toShort())
+        buffer.putShort(roll.toShort())
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
 }

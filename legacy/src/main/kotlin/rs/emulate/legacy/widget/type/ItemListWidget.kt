@@ -5,8 +5,11 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.ITEM_LIST
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.DataBuffer
 import rs.emulate.shared.util.Point
+import rs.emulate.shared.util.putAsciiString
+import rs.emulate.shared.util.putBoolean
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 
 /**
  * A [WidgetGroup.ITEM_LIST] [Widget].
@@ -40,14 +43,14 @@ class ItemListWidget(
     private val padding: Point
 ) : Widget(id, parent, ITEM_LIST, optionType, content, width, height, alpha, hover, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): DataBuffer {
+    override fun encodeBespoke(): ByteBuffer {
         val size = actions.map(String::length).sum() + actions.size
 
-        val action = DataBuffer.allocate(size)
+        val action = ByteBuffer.allocate(size)
         actions.forEach { action.putAsciiString(it) }
         action.flip()
 
-        val buffer = DataBuffer.allocate(
+        val buffer = ByteBuffer.allocate(
             4 * java.lang.Byte.BYTES + 2 * java.lang.Short.BYTES + Integer.BYTES + action.remaining()
         )
 
@@ -56,12 +59,12 @@ class ItemListWidget(
         buffer.putBoolean(shadowed)
 
         buffer.putInt(colour)
-        buffer.putShort(padding.x).putShort(padding.y)
+        buffer.putShort(padding.x.toShort()).putShort(padding.y.toShort())
 
         buffer.putBoolean(!actions.isEmpty())
         buffer.put(action)
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
 }

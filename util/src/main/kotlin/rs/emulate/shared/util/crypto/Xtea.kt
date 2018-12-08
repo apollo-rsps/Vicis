@@ -1,6 +1,6 @@
 package rs.emulate.shared.util.crypto
 
-import rs.emulate.shared.util.DataBuffer
+import java.nio.ByteBuffer
 
 /**
  * An implementation of the XTEA block cipher.
@@ -18,10 +18,10 @@ object Xtea {
     private const val ROUNDS = 32
 
     /**
-     * Deciphers the data in the specified [DataBuffer].
+     * Deciphers the data in the specified [ByteBuffer].
      * @throws IllegalArgumentException if the key is not exactly 4 elements long.
      */
-    fun decipher(buffer: DataBuffer, start: Int, end: Int, key: IntArray) {
+    fun decipher(buffer: ByteBuffer, start: Int, end: Int, key: IntArray) {
         require(key.size == 4) { "Key length must be four." }
 
         val quads = (end - start) / 8
@@ -42,10 +42,10 @@ object Xtea {
     }
 
     /**
-     * Enciphers the specified [DataBuffer] with the given key.
+     * Enciphers the specified [ByteBuffer] with the given key.
      * @throws IllegalArgumentException if the key is not exactly 4 elements long.
      */
-    fun encipher(buffer: DataBuffer, start: Int, end: Int, key: IntArray) {
+    fun encipher(buffer: ByteBuffer, start: Int, end: Int, key: IntArray) {
         require(key.size == 4) { "Key length must be four." }
 
         val quads = (end - start) / 8

@@ -5,7 +5,10 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.TEXT
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.putAsciiString
+import rs.emulate.shared.util.putBoolean
+import rs.emulate.shared.util.putByte
+import java.nio.ByteBuffer
 
 /**
  * A [WidgetGroup.TEXT] [Widget].
@@ -41,14 +44,14 @@ class TextWidget(
     private val shadowed: Boolean
 ) : Widget(id, parent, TEXT, optionType, content, width, height, alpha, hoverId, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): DataBuffer {
-        val primary = DataBuffer.allocate(defaultText.length + java.lang.Byte.BYTES)
+    override fun encodeBespoke(): ByteBuffer {
+        val primary = ByteBuffer.allocate(defaultText.length + java.lang.Byte.BYTES)
         primary.putAsciiString(defaultText).flip()
 
-        val secondary = DataBuffer.allocate(secondaryText.length + java.lang.Byte.BYTES)
+        val secondary = ByteBuffer.allocate(secondaryText.length + java.lang.Byte.BYTES)
         secondary.putAsciiString(secondaryText).flip()
 
-        val buffer = DataBuffer.allocate(
+        val buffer = ByteBuffer.allocate(
             3 * java.lang.Byte.BYTES + 4 * Integer.BYTES + primary.remaining() + secondary.remaining()
         )
 
@@ -63,7 +66,7 @@ class TextWidget(
             buffer.putInt(pair.secondary)
         }
 
-        return buffer.flip().asReadOnlyBuffer()
+        return buffer.apply { flip() }
     }
 
 }

@@ -2,6 +2,5 @@ description = 'Vicis Tools'
 
 dependencies {
     compile project(':legacy')
-    compile project(':modern')
     compile project(':util')
 }

@@ -1,7 +1,9 @@
 package rs.emulate.legacy
 
 import com.google.common.base.Preconditions
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.getUnsignedTriByte
+import rs.emulate.shared.util.putTriByte
+import java.nio.ByteBuffer
 
 /**
  * Contains methods for encoding and decoding [Index] objects.
@@ -9,10 +11,10 @@ import rs.emulate.shared.util.DataBuffer
 internal object IndexCodec {
 
     /**
-     * Decodes the [DataBuffer] into an index.
+     * Decodes the [ByteBuffer] into an index.
      * @throws IllegalArgumentException If the buffer length is invalid.
      */
-    fun decode(buffer: DataBuffer): Index {
+    fun decode(buffer: ByteBuffer): Index {
         Preconditions.checkArgument(buffer.remaining() == Index.BYTES, "Incorrect buffer length.")
 
         val size = buffer.getUnsignedTriByte()
@@ -22,10 +24,10 @@ internal object IndexCodec {
     }
 
     /**
-     * Encodes the index into a [DataBuffer].
+     * Encodes the index into a [ByteBuffer].
      */
-    fun encode(index: Index): DataBuffer {
-        return DataBuffer.allocate(6).putTriByte(index.size).putTriByte(index.block).flip()
+    fun encode(index: Index): ByteBuffer {
+        return ByteBuffer.allocate(6).putTriByte(index.size).putTriByte(index.block).apply { flip() }
     }
 
 }

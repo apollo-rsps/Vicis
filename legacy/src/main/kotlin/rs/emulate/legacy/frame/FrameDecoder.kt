@@ -1,15 +1,19 @@
 package rs.emulate.legacy.frame
 
-import rs.emulate.shared.util.DataBuffer
+import rs.emulate.shared.util.copy
+import rs.emulate.shared.util.getSmart
+import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.shared.util.getUnsignedShort
+import java.nio.ByteBuffer
 
 /**
- * @buffer The _decompressed_ [DataBuffer] (i.e. has already been gunzipped).
+ * @buffer The _decompressed_ [ByteBuffer] (i.e. has already been gunzipped).
  */
-class FrameDecoder(private val buffer: DataBuffer) {
+class FrameDecoder(private val buffer: ByteBuffer) {
 
     fun decode(): List<AnimationFrame> {
         val frameCount = buffer.getUnsignedShort()
-        val trailer = buffer.position(buffer.limit() - 4 * java.lang.Short.BYTES)
+        val trailer = buffer.apply { position(buffer.limit() - 4 * java.lang.Short.BYTES) }
 
         val metadataLength = trailer.getUnsignedShort()
         val attributesLength = trailer.getUnsignedShort()
@@ -19,12 +23,12 @@ class FrameDecoder(private val buffer: DataBuffer) {
         buffer.position(0)
         val frames = ArrayList<AnimationFrame>(frameCount)
 
-        val metadata = buffer.copy().position(java.lang.Short.BYTES)
-        val attributes = buffer.copy().position(metadata.position() + metadataLength)
-        val transforms = buffer.copy().position(attributes.position() + attributesLength)
-        val durations = buffer.copy().position(transforms.position() + transformLength)
+        val metadata = buffer.copy().apply { position(java.lang.Short.BYTES) }
+        val attributes = buffer.copy().apply { position(metadata.position() + metadataLength) }
+        val transforms = buffer.copy().apply { position(attributes.position() + attributesLength) }
+        val durations = buffer.copy().apply { position(transforms.position() + transformLength) }
 
-        val baseBuffer = buffer.copy().position(durations.position() + durationLength)
+        val baseBuffer = buffer.copy().apply { position(durations.position() + durationLength) }
         val base = FrameBaseDecoder(baseBuffer).decode()
 
         for (frameIndex in 0 until frameCount) {

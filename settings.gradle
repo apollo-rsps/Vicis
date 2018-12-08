@@ -1,7 +1,6 @@
 rootProject.name = 'vicis'
 
 include ':legacy'
-include ':modern'
 include ':util'
 include ':tools'
 include ':editor'
