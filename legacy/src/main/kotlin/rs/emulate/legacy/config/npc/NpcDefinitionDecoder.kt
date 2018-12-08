@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config.npc
 
+import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.legacy.config.ConfigDecoder.Companion.DEFINITION_TERMINATOR
 import rs.emulate.shared.util.DataBuffer
 
 object NpcDefinitionDecoder : ConfigDecoder<NpcDefinition> {
@@ -12,7 +12,7 @@ object NpcDefinitionDecoder : ConfigDecoder<NpcDefinition> {
         val definition = NpcDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
-        while (opcode != DEFINITION_TERMINATOR) {
+        while (opcode != Config.DEFINITION_TERMINATOR) {
             definition.decode(buffer, opcode)
             opcode = buffer.getUnsignedByte()
         }

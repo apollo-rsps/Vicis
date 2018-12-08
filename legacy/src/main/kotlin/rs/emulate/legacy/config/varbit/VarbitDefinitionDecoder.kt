@@ -1,5 +1,6 @@
 package rs.emulate.legacy.config.varbit
 
+import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.shared.util.DataBuffer
 
@@ -11,7 +12,7 @@ object VarbitDefinitionDecoder : ConfigDecoder<VarbitDefinition> {
         val definition = VarbitDefinition(id)
         var opcode = buffer.getUnsignedByte()
 
-        while (opcode != ConfigDecoder.DEFINITION_TERMINATOR) {
+        while (opcode != Config.DEFINITION_TERMINATOR) {
             definition.decode(buffer, opcode)
             opcode = buffer.getUnsignedByte()
         }
