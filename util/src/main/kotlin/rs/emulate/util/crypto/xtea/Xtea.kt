@@ -3,10 +3,6 @@ package rs.emulate.util.crypto.xtea
 import io.netty.buffer.ByteBuf
 
 object Xtea {
-    const val LOG_BLOCK_SIZE = 3
-    const val BLOCK_SIZE = 1 shl LOG_BLOCK_SIZE
-    const val MASK_BLOCK_SIZE = BLOCK_SIZE - 1
-
     const val GOLDEN_RATIO = -0x61c88647
     const val ROUNDS = 32
 }
@@ -31,12 +27,12 @@ fun ByteBuf.xteaEncrypt(start: Int, end: Int, key: XteaKey) {
     }
 }
 
-@Suppress("INTEGER_OVERFLOW")
 fun ByteBuf.xteaDecrypt(start: Int, end: Int, key: XteaKey) {
     val k = key.toIntArray()
     val blocks = (end - start) / 8
 
     repeat(blocks) { block ->
+        @Suppress("INTEGER_OVERFLOW")
         var sum = Xtea.GOLDEN_RATIO * Xtea.ROUNDS
         var v0 = getInt(start + block * 8)
         var v1 = getInt(start + block * 8 + 4)

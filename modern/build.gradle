@@ -1,0 +1,9 @@
+description = 'Vicis Modern'
+
+dependencies {
+    compile project(':util')
+    compile "io.netty:netty-buffer:4.1.32.Final"
+    compile "org.apache.commons:commons-compress:1.18"
+
+    testCompile "com.google.jimfs:jimfs:1.1"
+}

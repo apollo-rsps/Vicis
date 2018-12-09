@@ -21,10 +21,10 @@ object Cp1252Charset : Charset("Cp1252", null) {
     private val ENCODE_TABLE = ByteArray(65536)
 
     init {
-        for (i in DECODE_TABLE.indices) {
-            val ch = if (i in 128..159) CODE_PAGE_1252[i - 128].toInt() else i
-            DECODE_TABLE[i] = ch.toChar()
-            ENCODE_TABLE[ch] = i.toByte()
+        for (index in DECODE_TABLE.indices) {
+            val ch = if (index in 128..159) CODE_PAGE_1252[index - 128].toInt() else index
+            DECODE_TABLE[index] = ch.toChar()
+            ENCODE_TABLE[ch] = index.toByte()
         }
     }
 
@@ -97,10 +97,6 @@ object Cp1252Charset : Charset("Cp1252", null) {
     }
 }
 
-fun String.hashCodeCp1252(): Int { // TODO fold
-    var hash = 0
-    repeat(length) {
-        hash = Cp1252Charset.encodeChar(get(it)) + ((hash shl 5) - hash)
-    }
-    return hash
+fun String.hashCodeCp1252(): Int {
+    return fold(0) { hash, char -> Cp1252Charset.encodeChar(char) + ((hash shl 5) - hash) }
 }
