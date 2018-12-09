@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
 import rs.emulate.legacy.archive.CompressionType
-import rs.emulate.shared.util.putByte
-import rs.emulate.shared.util.putTriByte
+import rs.emulate.util.putByte
+import rs.emulate.util.putTriByte
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel

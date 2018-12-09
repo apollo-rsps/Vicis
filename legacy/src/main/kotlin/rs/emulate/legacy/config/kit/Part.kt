@@ -1,7 +1,7 @@
 package rs.emulate.legacy.config.kit
 
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.putByte
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.putByte
 import java.nio.ByteBuffer
 
 /**

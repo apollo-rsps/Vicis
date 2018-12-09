@@ -1,4 +1,4 @@
-package rs.emulate.shared.world
+package rs.emulate.util.world
 
 /**
  * Contains the two biological sexes used in Runescape.

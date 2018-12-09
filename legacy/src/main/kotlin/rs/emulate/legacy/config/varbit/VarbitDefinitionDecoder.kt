@@ -2,10 +2,10 @@ package rs.emulate.legacy.config.varbit
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.getAsciiString
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedInt
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getAsciiString
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedInt
+import rs.emulate.util.getUnsignedShort
 import java.nio.ByteBuffer
 
 object VarbitDefinitionDecoder : ConfigDecoder<VarbitDefinition> {

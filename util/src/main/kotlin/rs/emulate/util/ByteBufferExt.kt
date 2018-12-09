@@ -1,8 +1,8 @@
 @file:Suppress("UsePropertyAccessSyntax")
 
-package rs.emulate.shared.util
+package rs.emulate.util
 
-import rs.emulate.shared.util.crypto.Whirlpool
+import rs.emulate.util.crypto.Whirlpool
 import java.nio.ByteBuffer
 import java.util.zip.CRC32
 
@@ -89,6 +89,21 @@ fun ByteBuffer.getLargeSmart(): Int {
         getInt() and 0x7FFFFFFF
     }
 }
+
+fun ByteBuffer.putMedium(v: Int) {
+    put((v shr 16).toByte())
+    put((v shr 8).toByte())
+    put(v.toByte())
+}
+
+fun ByteBuffer.getUnsignedMedium(): Int {
+    var v = 0
+    v = v or (get().toInt() and 0xFF shl 16)
+    v = v or (get().toInt() and 0xFF shl 8)
+    v = v or (get().toInt() and 0xFF)
+    return v
+}
+
 
 fun ByteBuffer.getAsciiString(): String {
     val builder = StringBuilder()

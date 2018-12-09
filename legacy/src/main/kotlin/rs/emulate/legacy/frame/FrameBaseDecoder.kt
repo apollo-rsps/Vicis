@@ -1,6 +1,6 @@
 package rs.emulate.legacy.frame
 
-import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.util.getUnsignedByte
 import java.nio.ByteBuffer
 
 class FrameBaseDecoder(private val buffer: ByteBuffer) {

@@ -5,9 +5,9 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.TEXT
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.putAsciiString
-import rs.emulate.shared.util.putBoolean
-import rs.emulate.shared.util.putByte
+import rs.emulate.util.putAsciiString
+import rs.emulate.util.putBoolean
+import rs.emulate.util.putByte
 import java.nio.ByteBuffer
 
 /**

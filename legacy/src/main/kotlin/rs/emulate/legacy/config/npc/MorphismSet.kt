@@ -1,8 +1,8 @@
 package rs.emulate.legacy.config.npc
 
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
-import rs.emulate.shared.util.putByte
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
+import rs.emulate.util.putByte
 import java.nio.ByteBuffer
 import java.util.Arrays
 

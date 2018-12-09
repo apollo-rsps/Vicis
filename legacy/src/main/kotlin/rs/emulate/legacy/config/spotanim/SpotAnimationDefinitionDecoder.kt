@@ -2,8 +2,8 @@ package rs.emulate.legacy.config.spotanim
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
 import java.nio.ByteBuffer
 
 object SpotAnimationDefinitionDecoder : ConfigDecoder<SpotAnimationDefinition> {

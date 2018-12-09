@@ -9,10 +9,10 @@ import rs.emulate.legacy.map.MapConstants.MINIMUM_OVERLAY_TYPE
 import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
 import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
 import rs.emulate.legacy.map.Tile.Builder
-import rs.emulate.shared.util.CompressionUtils
-import rs.emulate.shared.util.getByte
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.world.Position
+import rs.emulate.util.CompressionUtils
+import rs.emulate.util.getByte
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.world.Position
 import java.nio.ByteBuffer
 
 /**

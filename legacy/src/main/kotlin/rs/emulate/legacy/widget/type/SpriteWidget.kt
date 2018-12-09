@@ -5,7 +5,7 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.SPRITE
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.putAsciiString
+import rs.emulate.util.putAsciiString
 import java.nio.ByteBuffer
 
 /**

@@ -1,9 +1,9 @@
 package rs.emulate.legacy.frame
 
-import rs.emulate.shared.util.copy
-import rs.emulate.shared.util.getSmart
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.copy
+import rs.emulate.util.getSmart
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
 import java.nio.ByteBuffer
 
 /**

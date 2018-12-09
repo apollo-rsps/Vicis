@@ -1,6 +1,6 @@
 package rs.emulate.legacy.widget.script
 
-import rs.emulate.shared.cs.PlayerProvider
+import rs.emulate.util.cs.PlayerProvider
 
 /**
  * An interpreter for [LegacyClientScript]s.

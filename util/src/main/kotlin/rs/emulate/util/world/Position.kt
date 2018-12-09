@@ -1,4 +1,4 @@
-package rs.emulate.shared.world
+package rs.emulate.util.world
 
 /**
  * A position in the world.

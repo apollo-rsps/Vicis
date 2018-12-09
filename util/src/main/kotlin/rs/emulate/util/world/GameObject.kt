@@ -1,4 +1,4 @@
-package rs.emulate.shared.world
+package rs.emulate.util.world
 
 /**
  * An object in the game world.

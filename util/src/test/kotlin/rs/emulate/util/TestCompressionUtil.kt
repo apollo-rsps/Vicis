@@ -2,7 +2,6 @@ package rs.emulate.util
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import rs.emulate.shared.util.CompressionUtils
 import java.nio.ByteBuffer
 
 class TestCompressionUtil {

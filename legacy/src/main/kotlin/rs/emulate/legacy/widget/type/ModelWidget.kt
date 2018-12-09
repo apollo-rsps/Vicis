@@ -6,8 +6,8 @@ import rs.emulate.legacy.widget.WidgetGroup.MODEL
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.legacy.widget.type.ModelWidget.Model
-import rs.emulate.shared.util.putBoolean
-import rs.emulate.shared.util.putByte
+import rs.emulate.util.putBoolean
+import rs.emulate.util.putByte
 import java.nio.ByteBuffer
 import java.util.Arrays
 

@@ -2,9 +2,9 @@ package rs.emulate.legacy.config.floor
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.getAsciiString
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedTriByte
+import rs.emulate.util.getAsciiString
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedTriByte
 import java.nio.ByteBuffer
 
 object FloorDefinitionDecoder : ConfigDecoder<FloorDefinition> {

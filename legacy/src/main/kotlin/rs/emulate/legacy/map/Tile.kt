@@ -1,6 +1,6 @@
 package rs.emulate.legacy.map
 
-import rs.emulate.shared.world.Position
+import rs.emulate.util.world.Position
 
 /**
  * A single tile on the map.

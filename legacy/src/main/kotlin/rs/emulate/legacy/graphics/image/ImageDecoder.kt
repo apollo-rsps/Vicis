@@ -6,10 +6,10 @@ import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsConstants
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
-import rs.emulate.shared.util.getByte
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
-import rs.emulate.shared.util.getUnsignedTriByte
+import rs.emulate.util.getByte
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
+import rs.emulate.util.getUnsignedTriByte
 import java.io.IOException
 import java.util.Arrays
 

@@ -1,6 +1,6 @@
 package rs.emulate.legacy.archive
 
-import rs.emulate.shared.util.copy
+import rs.emulate.util.copy
 import java.nio.ByteBuffer
 
 /**

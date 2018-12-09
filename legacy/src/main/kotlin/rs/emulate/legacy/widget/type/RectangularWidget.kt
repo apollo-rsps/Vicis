@@ -5,7 +5,7 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.RECTANGULAR
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.putBoolean
+import rs.emulate.util.putBoolean
 import java.nio.ByteBuffer
 
 /**

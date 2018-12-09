@@ -1,4 +1,4 @@
-package rs.emulate.shared.util
+package rs.emulate.util
 
 import com.google.common.io.ByteStreams
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream

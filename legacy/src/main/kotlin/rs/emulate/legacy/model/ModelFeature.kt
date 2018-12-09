@@ -1,7 +1,7 @@
 package rs.emulate.legacy.model
 
-import rs.emulate.shared.util.getBoolean
-import rs.emulate.shared.util.getUnsignedByte
+import rs.emulate.util.getBoolean
+import rs.emulate.util.getUnsignedByte
 import java.nio.ByteBuffer
 
 /**

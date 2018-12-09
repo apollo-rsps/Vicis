@@ -1,8 +1,8 @@
 package rs.emulate.legacy.version.map
 
 import rs.emulate.legacy.archive.Archive
-import rs.emulate.shared.util.getBoolean
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getBoolean
+import rs.emulate.util.getUnsignedShort
 import java.io.FileNotFoundException
 
 /**

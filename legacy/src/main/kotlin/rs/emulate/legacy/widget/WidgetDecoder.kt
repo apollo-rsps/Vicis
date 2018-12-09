@@ -2,8 +2,8 @@ package rs.emulate.legacy.widget
 
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
 import java.io.FileNotFoundException
 import java.util.ArrayList
 

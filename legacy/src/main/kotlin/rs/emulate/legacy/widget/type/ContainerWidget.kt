@@ -5,8 +5,8 @@ import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.CONTAINER
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.shared.util.Point
-import rs.emulate.shared.util.putBoolean
+import rs.emulate.util.Point
+import rs.emulate.util.putBoolean
 import java.nio.ByteBuffer
 
 /**

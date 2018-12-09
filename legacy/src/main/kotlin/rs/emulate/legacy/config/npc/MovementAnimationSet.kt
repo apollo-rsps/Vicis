@@ -1,6 +1,6 @@
 package rs.emulate.legacy.config.npc
 
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getUnsignedShort
 import java.nio.ByteBuffer
 
 /**

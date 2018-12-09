@@ -7,7 +7,7 @@ import rs.emulate.editor.resource.index.ResourceIndexBuilder
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.ModelDecoder
-import rs.emulate.shared.util.CompressionUtils
+import rs.emulate.util.CompressionUtils
 
 data class ModelResource(override val id: ResourceId, val model: Model) : Resource {
 

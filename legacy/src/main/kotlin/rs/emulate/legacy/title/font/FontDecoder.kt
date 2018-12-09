@@ -4,9 +4,9 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
-import rs.emulate.shared.util.getByte
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getByte
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
 
 /**
  * A [GraphicsDecoder] for [Font]s.

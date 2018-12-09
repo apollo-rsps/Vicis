@@ -2,10 +2,10 @@ package rs.emulate.legacy.config.obj
 
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.shared.util.getAsciiString
-import rs.emulate.shared.util.getByte
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getAsciiString
+import rs.emulate.util.getByte
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
 import java.nio.ByteBuffer
 
 object ObjectDefinitionDecoder : ConfigDecoder<ObjectDefinition> {

@@ -4,10 +4,10 @@ import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
-import rs.emulate.shared.util.getRemainingBytes
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
-import rs.emulate.shared.util.getUnsignedTriByte
+import rs.emulate.util.getRemainingBytes
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
+import rs.emulate.util.getUnsignedTriByte
 import java.io.Closeable
 import java.io.FileNotFoundException
 import java.io.IOException

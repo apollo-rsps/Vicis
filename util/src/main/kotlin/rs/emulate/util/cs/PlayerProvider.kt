@@ -1,6 +1,6 @@
-package rs.emulate.shared.cs
+package rs.emulate.util.cs
 
-import rs.emulate.shared.world.Position
+import rs.emulate.util.world.Position
 import java.util.function.Supplier
 
 /**
@@ -108,7 +108,14 @@ class PlayerProvider(
         var energies = { 100 }
         var positions = { Position(10, 10) }
         var settings: (Int) -> Int = { 1 }
-        var skills: SkillProvider = SkillProvider { Skill(0.0, 1, 1) }
+        var skills: SkillProvider =
+            SkillProvider {
+                Skill(
+                    0.0,
+                    1,
+                    1
+                )
+            }
         var weights = { 42 }
 
         fun build(): PlayerProvider {

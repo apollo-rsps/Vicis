@@ -1,8 +1,8 @@
 package rs.emulate.legacy
 
 import com.google.common.base.Preconditions
-import rs.emulate.shared.util.getUnsignedTriByte
-import rs.emulate.shared.util.putTriByte
+import rs.emulate.util.getUnsignedTriByte
+import rs.emulate.util.putTriByte
 import java.nio.ByteBuffer
 
 /**

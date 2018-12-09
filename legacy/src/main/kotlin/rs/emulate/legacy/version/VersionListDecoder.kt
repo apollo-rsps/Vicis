@@ -2,7 +2,7 @@ package rs.emulate.legacy.version
 
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveEntry
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getUnsignedShort
 import java.io.FileNotFoundException
 import java.util.ArrayList
 import java.util.Arrays

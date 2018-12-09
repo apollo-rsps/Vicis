@@ -1,12 +1,12 @@
 package rs.emulate.legacy.archive
 
-import rs.emulate.shared.util.CompressionUtils
-import rs.emulate.shared.util.get
-import rs.emulate.shared.util.getRemainingBytes
-import rs.emulate.shared.util.getUnsignedShort
-import rs.emulate.shared.util.getUnsignedTriByte
-import rs.emulate.shared.util.isEmpty
-import rs.emulate.shared.util.putTriByte
+import rs.emulate.util.CompressionUtils
+import rs.emulate.util.get
+import rs.emulate.util.getRemainingBytes
+import rs.emulate.util.getUnsignedShort
+import rs.emulate.util.getUnsignedTriByte
+import rs.emulate.util.isEmpty
+import rs.emulate.util.putTriByte
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.nio.ByteBuffer

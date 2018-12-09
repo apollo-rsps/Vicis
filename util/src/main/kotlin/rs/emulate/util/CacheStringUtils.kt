@@ -1,4 +1,4 @@
-package rs.emulate.shared.util
+package rs.emulate.util
 
 /**
  * Contains String-related utility methods.

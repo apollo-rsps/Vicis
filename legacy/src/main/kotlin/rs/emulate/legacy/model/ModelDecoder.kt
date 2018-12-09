@@ -1,9 +1,9 @@
 package rs.emulate.legacy.model
 
 import rs.emulate.legacy.model.ModelFeature.*
-import rs.emulate.shared.util.getSignedSmart
-import rs.emulate.shared.util.getUnsignedByte
-import rs.emulate.shared.util.getUnsignedShort
+import rs.emulate.util.getSignedSmart
+import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.getUnsignedShort
 import java.nio.ByteBuffer
 import java.util.HashSet
 

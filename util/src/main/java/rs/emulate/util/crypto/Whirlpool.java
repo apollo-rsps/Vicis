@@ -1,4 +1,4 @@
-package rs.emulate.shared.util.crypto;
+package rs.emulate.util.crypto;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;

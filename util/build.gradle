@@ -1,2 +1,7 @@
 
 description = 'Vicis Utilities'
+
+dependencies {
+    compile "io.netty:netty-buffer:4.1.32.Final"
+    compile "org.bouncycastle:bcprov-jdk15on:1.60"
+}
