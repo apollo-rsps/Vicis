@@ -23,7 +23,7 @@ class VersionListDecoder(private val versions: Archive) {
 
         for (type in VersionList.VERSION_ENTRY_NAMES.indices) {
             val name = VersionList.VERSION_ENTRY_NAMES[type]
-            val entry = versions.getEntry(name)
+            val entry = versions[name]
             val data = entry.buffer
 
             val count = data.limit() / java.lang.Short.BYTES

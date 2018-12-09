@@ -13,7 +13,7 @@ import java.io.FileNotFoundException
  */
 class MapIndexDecoder constructor(archive: Archive) {
 
-    private val data = archive.getEntry(MapIndex.ENTRY_NAME).buffer.asReadOnlyBuffer()
+    private val data = archive[MapIndex.ENTRY_NAME].buffer.asReadOnlyBuffer()
 
     /**
      * Decodes the contents of the `map_index` entry into a [MapIndex].

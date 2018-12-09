@@ -101,7 +101,7 @@ class MapFileDecoder(buffer: ByteBuffer) {
          * Creates a MapFileDecoder for the specified map file.
          */
         fun create(fs: IndexedFileSystem, map: Int): MapFileDecoder {
-            val compressed = fs.getFile(MAP_INDEX, map)
+            val compressed = fs[MAP_INDEX, map]
             val decompressed = CompressionUtils.gunzip(compressed)
 
             return MapFileDecoder(decompressed)

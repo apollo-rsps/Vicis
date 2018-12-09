@@ -16,11 +16,11 @@ abstract class GraphicsDecoder(graphics: Archive, protected val name: String) {
     /**
      * The [ByteBuffer] containing the graphic data.
      */
-    protected val data: ByteBuffer = graphics.getEntry(name + DATA_EXTENSION).buffer.asReadOnlyBuffer()
+    protected val data: ByteBuffer = graphics[name + DATA_EXTENSION].buffer.asReadOnlyBuffer()
 
     /**
      * The [ByteBuffer] containing the file indices.
      */
-    protected val index: ByteBuffer = graphics.getEntry(INDEX_FILE_NAME).buffer.asReadOnlyBuffer()
+    protected val index: ByteBuffer = graphics[INDEX_FILE_NAME].buffer.asReadOnlyBuffer()
 
 }

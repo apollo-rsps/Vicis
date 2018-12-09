@@ -18,7 +18,7 @@ class WidgetDecoder(widgets: Archive) {
     /**
      * The Archive containing the Widgets.
      */
-    private val buffer = widgets.getEntry(DATA_FILE_NAME).buffer
+    private val buffer = widgets[DATA_FILE_NAME].buffer
 
     /**
      * Decodes the [Widget]s.

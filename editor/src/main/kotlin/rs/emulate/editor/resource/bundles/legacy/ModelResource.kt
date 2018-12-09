@@ -23,7 +23,7 @@ class ModelResourceBundle(private val fs: IndexedFileSystem) : ResourceBundle<Mo
     override val idType = ModelResourceId::class
 
     override fun load(id: ModelResourceId): Resource {
-        val compressed = fs.getFile(MODEL_INDEX, id.id)
+        val compressed = fs[MODEL_INDEX, id.id]
         val decompressed = CompressionUtils.gunzip(compressed)
 
         val decoder = ModelDecoder(decompressed)

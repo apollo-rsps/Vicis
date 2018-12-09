@@ -1,5 +1,8 @@
 package rs.emulate.legacy.archive
 
+import rs.emulate.legacy.archive.CompressionType.ARCHIVE_COMPRESSION
+import rs.emulate.legacy.archive.CompressionType.ENTRY_COMPRESSION
+import rs.emulate.legacy.archive.CompressionType.NO_COMPRESSION
 import rs.emulate.util.CompressionUtils
 import rs.emulate.util.get
 import rs.emulate.util.getRemainingBytes
@@ -63,8 +66,6 @@ object ArchiveCodec {
         return Archive(entries)
     }
 
-    // TODO theres a bug with archive compression...
-
     /**
      * Encodes the specified [Archive] into a [ByteBuffer].
      * @throws IOException If there is an error compressing the archive.
@@ -80,16 +81,15 @@ object ArchiveCodec {
             for (entry in entries) {
                 val uncompressed = entry.buffer
                 val compressed = CompressionUtils.bzip2(uncompressed)
-                uncompressed.position(0) // We just read from this buffer, so reset the position.
+                uncompressed.position(0) // We just read from this buffer, so reset the position
 
                 meta.putInt(entry.identifier)
                 meta.putTriByte(uncompressed.remaining())
                 meta.putTriByte(compressed.remaining())
 
                 when (compression) {
-                    CompressionType.ARCHIVE_COMPRESSION, CompressionType.NO_COMPRESSION -> bos.write(
-                        uncompressed.getRemainingBytes())
-                    CompressionType.ENTRY_COMPRESSION -> bos.write(compressed.getRemainingBytes())
+                    ARCHIVE_COMPRESSION, NO_COMPRESSION -> bos.write(uncompressed.getRemainingBytes())
+                    ENTRY_COMPRESSION -> bos.write(compressed.getRemainingBytes())
                 }
             }
 
@@ -103,7 +103,7 @@ object ArchiveCodec {
             val extracted = data.limit()
             header.putTriByte(extracted)
 
-            if (compression === CompressionType.ARCHIVE_COMPRESSION) {
+            if (compression === ARCHIVE_COMPRESSION) {
                 data = CompressionUtils.bzip2(data)
             }
 

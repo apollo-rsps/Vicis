@@ -28,7 +28,7 @@ class CrcListDecoder(
 
         for (type in types) {
             val name = type.asCrcList()
-            val entry = version.getEntry(name)
+            val entry = version[name]
             val data = entry.buffer
 
             val count = data.limit() / Integer.BYTES

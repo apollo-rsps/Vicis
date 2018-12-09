@@ -1,10 +1,11 @@
 package rs.emulate.legacy.archive
 
+import rs.emulate.legacy.archive.Archive.Companion.entryHash
 import rs.emulate.util.copy
 import java.nio.ByteBuffer
 
 /**
- * A single entry in an [Archive]. This class is immutable.
+ * A single entry in an [Archive].
  *
  * @param identifier The identifier.
  * @param buffer The buffer containing this entry's data.
@@ -29,7 +30,7 @@ class ArchiveEntry(val identifier: Int, buffer: ByteBuffer) {
      * @param name The name of the archive.
      * @param buffer The buffer containing this entry's data.
      */
-    constructor(name: String, buffer: ByteBuffer) : this(ArchiveUtils.hash(name), buffer)
+    constructor(name: String, buffer: ByteBuffer) : this(name.entryHash(), buffer)
 
     override fun equals(other: Any?): Boolean {
         if (other is ArchiveEntry) {
@@ -41,13 +42,6 @@ class ArchiveEntry(val identifier: Int, buffer: ByteBuffer) {
 
     override fun hashCode(): Int {
         return 31 * buffer.hashCode() + identifier
-    }
-
-    /**
-     * Returns a new archive entry with this entry's identifier, but the contents as the specified [ByteBuffer].
-     */
-    fun update(buffer: ByteBuffer): ArchiveEntry {
-        return ArchiveEntry(identifier, buffer)
     }
 
 }

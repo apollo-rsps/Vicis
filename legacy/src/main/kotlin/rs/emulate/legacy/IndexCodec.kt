@@ -1,6 +1,5 @@
 package rs.emulate.legacy
 
-import com.google.common.base.Preconditions
 import rs.emulate.util.getUnsignedTriByte
 import rs.emulate.util.putTriByte
 import java.nio.ByteBuffer
@@ -15,7 +14,7 @@ internal object IndexCodec {
      * @throws IllegalArgumentException If the buffer length is invalid.
      */
     fun decode(buffer: ByteBuffer): Index {
-        Preconditions.checkArgument(buffer.remaining() == Index.BYTES, "Incorrect buffer length.")
+        require(buffer.remaining() == Index.BYTES) { "Incorrect buffer length." }
 
         val size = buffer.getUnsignedTriByte()
         val block = buffer.getUnsignedTriByte()

@@ -1,9 +1,9 @@
 package rs.emulate.legacy
 
-import com.google.common.base.Preconditions
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
 import rs.emulate.legacy.archive.CompressionType
+import rs.emulate.util.get
 import rs.emulate.util.putByte
 import rs.emulate.util.putTriByte
 import java.io.IOException
@@ -13,7 +13,6 @@ import java.nio.file.Files
 import java.nio.file.OpenOption
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import java.util.ArrayList
 import java.util.HashMap
 import kotlin.collections.MutableMap.MutableEntry
 
@@ -88,10 +87,7 @@ class Cache {
                         data.write(ByteBuffer.allocate(padding))
                     } else {
                         val chunk = ByteBuffer.allocate(FileSystemConstants.CHUNK_SIZE)
-                        while (chunk.hasRemaining()) { // TODO replace
-                            chunk.put(buffer.get())
-                        }
-
+                        chunk.get(buffer)
                         data.write(chunk)
                     }
                 }
@@ -105,9 +101,6 @@ class Cache {
 
     /**
      * Gets the [Archive] with the specified [FileDescriptor].
-     *
-     * @param descriptor The descriptor.
-     * @return The Archive.
      */
     fun getArchive(descriptor: FileDescriptor): Archive {
         val file = files[descriptor]
@@ -133,10 +126,6 @@ class Cache {
 
     /**
      * Places an [Archive] with the specified [FileDescriptor] into this Cache.
-     *
-     * @param descriptor The FileDescriptor of the Archive. Must not be `null`.
-     * @param archive The Archive. Must not be `null`.
-     * @param type The [CompressionType] to apply to the Archive. Must not be `null`.
      */
     fun putArchive(descriptor: FileDescriptor, archive: Archive, type: CompressionType) {
         try {
@@ -144,33 +133,13 @@ class Cache {
         } catch (e: IOException) {
             throw IllegalArgumentException("Invalid archive provided.", e)
         }
-
     }
 
     /**
      * Places the file with the specified [FileDescriptor] into this Cache.
-     *
-     * @param descriptor The FileDescriptor.
-     * @param file The file data.
      */
     fun putFile(descriptor: FileDescriptor, file: ByteBuffer) {
         files[descriptor] = file
-    }
-
-    /**
-     * Replaces the [Archive] represented by the specified [FileDescriptor] with the specified Archive.
-     *
-     * @param descriptor The FileDescriptor of the Archive. Must not be `null`.
-     * @param archive The Archive to replace the existing one with. Must not be `null`.
-     * @param type The [CompressionType] to apply to the new Archive. Must not be `null`.
-     * @throws IllegalArgumentException If the Archive does not exist.
-     */
-    fun replaceArchive(descriptor: FileDescriptor, archive: Archive, type: CompressionType) {
-        val buffer = files[descriptor]
-        Preconditions.checkArgument(buffer != null,
-            "Archive does not exist, cannot replace it (use putArchive() instead).")
-
-        putArchive(descriptor, archive, type)
     }
 
     /**
@@ -183,7 +152,7 @@ class Cache {
             if (type == 0) Integer.compare(first.file, second.file) else type
         }
 
-        return ArrayList<MutableEntry<FileDescriptor, ByteBuffer>>(files.entries).apply { sortWith(comparator) }
+        return files.entries.sortedWith(comparator)
     }
 
     companion object {

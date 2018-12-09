@@ -6,8 +6,8 @@ package rs.emulate.legacy
  * @param size The size of the file.
  * @param block The first block of the file.
  */
-data class Index(val size: Int, val block: Int) {
-    // TODO verify each fits in 24 bits
+data class Index(val size: Int, val block: Int) { // TODO verify each fits in 24 bits
+
     companion object {
 
         /**

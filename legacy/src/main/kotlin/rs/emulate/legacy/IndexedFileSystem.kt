@@ -28,14 +28,8 @@ import java.util.zip.CRC32
  */
 class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
 
-    /**
-     * The data file.
-     */
     private val data: RandomAccessFile?
 
-    /**
-     * The index files.
-     */
     private val indices: List<RandomAccessFile>
 
     /**
@@ -43,9 +37,6 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
      */
     private var crcs: ByteBuffer? = null
 
-    /**
-     * The CRC table.
-     */
     val crcTable: ByteBuffer
         get() {
             if (readOnly) {
@@ -60,7 +51,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
                 val crc = CRC32()
 
                 for (file in 1 until archives) {
-                    val bytes = getFile(0, file).getRemainingBytes()
+                    val bytes = get(0, file).getRemainingBytes()
                     crc.update(bytes)
 
                     val value = crc.value.toInt()
@@ -72,24 +63,18 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
                 buffer.flip()
 
                 synchronized(this) {
-                    val duplicate = buffer.asReadOnlyBuffer()
-                    crcs = duplicate
-                    return duplicate
+                    return buffer.asReadOnlyBuffer().also {
+                        crcs = it
+                    }
                 }
             }
 
             throw IOException("Cannot get CRC table from a writable file system.")
         }
 
-    /**
-     * Gets the amount of indices in this IndexedFileSystem.
-     */
     val indexCount: Int
         get() = indices.size
 
-    /**
-     * Checks if this [IndexedFileSystem] is read only.
-     */
     val readOnly: Boolean
         get() = mode === AccessMode.READ
 
@@ -112,18 +97,12 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         }
     }
 
-    /**
-     * Decodes a file into an [Archive].
-     */
     fun getArchive(type: Int, file: Int): Archive {
-        return ArchiveCodec.decode(getFile(type, file))
+        return ArchiveCodec.decode(get(type, file))
     }
 
-    /**
-     * Gets a file.
-     */
-    fun getFile(descriptor: FileDescriptor): ByteBuffer {
-        val (size, block) = getIndex(descriptor)
+    operator fun get(type: Int, file: Int): ByteBuffer {
+        val (size, block) = getIndex(type, file)
         val buffer = ByteBuffer.allocate(size)
 
         var position = (block * FileSystemConstants.BLOCK_SIZE).toLong()
@@ -148,9 +127,7 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
             val nextBlock = header.getUnsignedTriByte()
             val nextType = header.getUnsignedByte()
 
-            require(id == currentChunk) {
-                "Chunk id mismatch: id=$id, chunk=$currentChunk, type=${descriptor.type}, file=${descriptor.file}."
-            }
+            check(id == currentChunk) { "Chunk id mismatch: id=$id, chunk=$currentChunk, type=$type, file=$file." }
             val chunkSize = Math.min(FileSystemConstants.CHUNK_SIZE, size - read)
 
             val chunk = ByteBuffer.allocate(chunkSize)
@@ -158,48 +135,26 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
                 data.seek(position)
                 data.readFully(chunk.array())
             }
+
             buffer.put(chunk)
 
             read += chunkSize
             position = (nextBlock * FileSystemConstants.BLOCK_SIZE).toLong()
 
             if (size > read) {
-                Preconditions.checkArgument(nextType == descriptor.type + 1, "File type mismatch.")
-                Preconditions.checkArgument(nextFile == descriptor.file, "File id mismatch.")
+                check(nextType == type + 1) { "File type mismatch." }
+                check(nextFile == file) { "File id mismatch." }
             }
         }
 
         return buffer.apply { flip() }
     }
 
-    /**
-     * Gets a file.
-     */
-    fun getFile(type: Int, file: Int): ByteBuffer {
-        return getFile(FileDescriptor(type, file))
-    }
-
-    /**
-     * Gets the number of files with the specified type.
-     */
-    fun getFileCount(type: Int): Int {
-        Preconditions.checkElementIndex(type, indices.size, "File type out of bounds.")
-
-        val index = indices[type]
-        synchronized(index) {
-            return (index.length() / Index.BYTES).toInt()
-        }
-    }
-
-    /**
-     * Gets the index of a file.
-     */
-    fun getIndex(descriptor: FileDescriptor): Index {
-        val type = descriptor.type
+    fun getIndex(type: Int, file: Int): Index {
         Preconditions.checkElementIndex(type, indices.size, "File descriptor type out of bounds.")
 
         val index = indices[type]
-        val position = (descriptor.file * Index.BYTES).toLong()
+        val position = (file * Index.BYTES).toLong()
         require(position >= 0 && index.length() >= position + Index.BYTES) { "Could not find find index." }
 
         val buffer = ByteBuffer.allocate(Index.BYTES)
@@ -211,9 +166,15 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         return IndexCodec.decode(buffer)
     }
 
-    /**
-     * Gets the data file (`main_file_cache.dat`), as a [RandomAccessFile].
-     */
+    fun getFileCount(type: Int): Int {
+        require(type in indices.indices) { "File type out of bounds." }
+
+        val index = indices[type]
+        synchronized(index) {
+            return (index.length() / Index.BYTES).toInt()
+        }
+    }
+
     private fun getDataFile(base: Path): RandomAccessFile {
         val resources = base.resolve("main_file_cache.dat")
 
@@ -224,9 +185,6 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         return RandomAccessFile(resources.toFile(), mode.asUnix())
     }
 
-    /**
-     * Gets the index files, as a [List] of [RandomAccessFile]s.
-     */
     private fun getIndexFiles(base: Path): List<RandomAccessFile> {
         val indices = ArrayList<RandomAccessFile>()
 
