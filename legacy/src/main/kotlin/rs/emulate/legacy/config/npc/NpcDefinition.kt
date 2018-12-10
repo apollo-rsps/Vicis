@@ -1,7 +1,9 @@
 package rs.emulate.legacy.config.npc
 
+import rs.emulate.legacy.config.Definition
+
 class NpcDefinition(
-    val id: Int,
+    override val id: Int,
     var models: IntArray? = null,
     var name: String = "null",
     var description: String? = null,
@@ -23,5 +25,5 @@ class NpcDefinition(
     var defaultOrientation: Int = 32,
     var morphisms: MorphismSet = MorphismSet.EMPTY,
     var clickable: Boolean = true
-)
+) : Definition
 

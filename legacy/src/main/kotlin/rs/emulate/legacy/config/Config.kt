@@ -3,7 +3,7 @@ package rs.emulate.legacy.config
 /**
  * Contains constants related to entries in the config archive.
  */
-internal object Config {
+object Config {
 
     /**
      * The extension for entries containing data.
@@ -17,4 +17,8 @@ internal object Config {
 
     const val DEFINITION_TERMINATOR = 0
 
+}
+
+interface Definition {
+    val id: Int
 }

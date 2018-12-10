@@ -120,8 +120,8 @@ class Cache {
     /**
      * Gets the file data with the specified [FileDescriptor].
      */
-    fun getFile(descriptor: FileDescriptor): ByteBuffer {
-        return files[descriptor]!!
+    fun getFile(descriptor: FileDescriptor): ByteBuffer? {
+        return files[descriptor]
     }
 
     /**

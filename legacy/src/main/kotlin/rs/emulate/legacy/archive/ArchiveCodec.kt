@@ -60,7 +60,7 @@ object ArchiveCodec {
             }
 
             val uncompressed = if (extracted) data else CompressionUtils.bunzip2(data)
-            entries.add(ArchiveEntry(identifiers[entry], uncompressed))
+            entries += ArchiveEntry(identifiers[entry], uncompressed)
         }
 
         return Archive(entries)

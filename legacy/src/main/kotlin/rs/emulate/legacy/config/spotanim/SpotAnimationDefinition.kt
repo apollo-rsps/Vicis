@@ -1,7 +1,9 @@
 package rs.emulate.legacy.config.spotanim
 
+import rs.emulate.legacy.config.Definition
+
 class SpotAnimationDefinition(
-    val id: Int,
+    override val id: Int,
     var model: Int = 0,
     var sequenceId: Int = -1,
     var planarScale: Int = 128,
@@ -11,4 +13,4 @@ class SpotAnimationDefinition(
     var modelDiffusion: Int = 0,
     var originalColours: IntArray = IntArray(size = 10),
     var replacementColours: IntArray = IntArray(size = 10)
-)
+) : Definition

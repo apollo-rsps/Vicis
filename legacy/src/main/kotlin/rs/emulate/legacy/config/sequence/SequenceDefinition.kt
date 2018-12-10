@@ -1,7 +1,9 @@
 package rs.emulate.legacy.config.sequence
 
+import rs.emulate.legacy.config.Definition
+
 class SequenceDefinition(
-    val id: Int,
+    override val id: Int,
     var frameCollection: FrameCollection = FrameCollection.EMPTY,
     var loopOffset: Int = -1,
     var interleaveOrder: IntArray? = null, // TODO
@@ -13,4 +15,4 @@ class SequenceDefinition(
     var animatingPrecedence: Int = if (interleaveOrder == null) 0 else 2,
     var walkingPrecedence: Int = if (interleaveOrder == null) 0 else 2,
     var replayMode: Int = 2
-)
+) : Definition

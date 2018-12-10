@@ -1,6 +1,8 @@
 package rs.emulate.legacy.config.varp
 
+import rs.emulate.legacy.config.Definition
+
 class VarpDefinition(
-    val id: Int,
+    override val id: Int,
     var parameter: Int = 0
-)
+) : Definition

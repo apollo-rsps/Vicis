@@ -12,8 +12,12 @@ class Archive(val entries: List<ArchiveEntry>) {
         get() = entries.sumBy(ArchiveEntry::size)
 
     operator fun get(name: String): ArchiveEntry {
+        return getOrNull(name) ?: throw FileNotFoundException("Missing entry $name")
+    }
+
+    fun getOrNull(name: String): ArchiveEntry? {
         val hash = name.entryHash()
-        return entries.firstOrNull { it.identifier == hash } ?: throw FileNotFoundException("Missing entry $name")
+        return entries.firstOrNull { it.identifier == hash }
     }
 
     override fun equals(other: Any?): Boolean {

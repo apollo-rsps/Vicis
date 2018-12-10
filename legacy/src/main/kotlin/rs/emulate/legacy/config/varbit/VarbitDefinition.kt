@@ -1,14 +1,16 @@
 package rs.emulate.legacy.config.varbit
 
+import rs.emulate.legacy.config.Definition
+
 /**
  * A definition for a bit variable ('varbit').
  */
 class VarbitDefinition(
-    val id: Int,
+    override val id: Int,
     var varp: Int = 0,
     var low: Int = 0,
     var high: Int = 0
-) {
+) : Definition {
 
     companion object {
 

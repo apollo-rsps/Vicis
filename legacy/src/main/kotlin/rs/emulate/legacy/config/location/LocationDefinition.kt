@@ -1,9 +1,10 @@
 package rs.emulate.legacy.config.location
 
+import rs.emulate.legacy.config.Definition
 import rs.emulate.legacy.config.npc.MorphismSet
 
 class LocationDefinition(
-    val id: Int,
+    override val id: Int,
     var models: IntArray = IntArray(0),
     var modelTypes: IntArray = IntArray(0),
     var name: String = "null",
@@ -37,4 +38,4 @@ class LocationDefinition(
     var hollow: Boolean = false,
     var supportsItems: Int = if (solid) 1 else -1,
     var morphisms: MorphismSet = MorphismSet.EMPTY
-)
+) : Definition

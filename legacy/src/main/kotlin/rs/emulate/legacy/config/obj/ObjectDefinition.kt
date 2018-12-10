@@ -1,7 +1,9 @@
 package rs.emulate.legacy.config.obj
 
+import rs.emulate.legacy.config.Definition
+
 class ObjectDefinition(
-    val id: Int,
+    override val id: Int,
     var modelId: Int = 0,
     var name: String = "",
     var description: String = "",
@@ -38,4 +40,4 @@ class ObjectDefinition(
     var brightness: Int = 0,
     var diffusion: Int = 0,
     var team: Int = 0
-)
+) : Definition
