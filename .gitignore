@@ -8,12 +8,14 @@
 *.class
 *.iml
 
+*/reports/
 */target/
 */build/
 */out/
 /target/
 /build/
 /out/
+/conf/
 
 data/resources/
 editor/conf/

@@ -1,3 +1,5 @@
+package rs.emulate.editor.utils.reactivex
+
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.reactivex.rxjavafx.schedulers.JavaFxScheduler

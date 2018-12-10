@@ -1,8 +1,8 @@
 package rs.emulate.scene3d
 
-import glm_.vec2.Vec2
-import glm_.vec3.Vec3
-import glm_.vec3.Vec3i
+import org.joml.Vector2f
+import org.joml.Vector3f
+import org.joml.Vector3i
 import rs.emulate.scene3d.material.VertexAttribute
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -30,27 +30,27 @@ abstract class Geometry : Node() {
     /**
      * The vertex positions of this [Geometry].
      */
-    var positions: List<Vec3> by attribute(VertexAttribute.Position)
+    var positions: List<Vector3f> by attribute(VertexAttribute.Position)
 
     /**
      * The vertex normals of this [Geometry].
      */
-    var normals: List<Vec3> by attribute(VertexAttribute.Normal)
+    var normals: List<Vector3f> by attribute(VertexAttribute.Normal)
 
     /**
      * The vertex colors of this [Geometry].
      */
-    var colors: List<Vec3> by attribute(VertexAttribute.Color)
+    var colors: List<Vector3f> by attribute(VertexAttribute.Color)
 
     /**
      * The texture coordinates of this [Geometry].
      */
-    var texCoords: List<Vec2> by attribute(VertexAttribute.TexCoord)
+    var texCoords: List<Vector2f> by attribute(VertexAttribute.TexCoord)
 
     /**
      * Optional list of vertex indices for drawing indexed geometry.  May be empty.
      */
-    var indices: List<Vec3i> by attribute(VertexAttribute.Index)
+    var indices: List<Vector3i> by attribute(VertexAttribute.Index)
 
     /**
      * Get a list of the data for the given vertex [attribute].

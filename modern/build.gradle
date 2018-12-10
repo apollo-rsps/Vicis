@@ -1,8 +1,0 @@
-description = 'Vicis Modern'
-
-dependencies {
-    compile project(':util')
-    compile "io.netty:netty-buffer:4.1.32.Final"
-
-    testCompile "com.google.jimfs:jimfs:1.1"
-}

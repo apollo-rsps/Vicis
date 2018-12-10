@@ -1,9 +1,9 @@
 package rs.emulate.scene3d
 
-import glm_.Java.Companion.glm
-import glm_.mat4x4.Mat4
-import glm_.quat.Quat
-import glm_.vec3.Vec3
+import org.joml.Matrix3f
+import org.joml.Matrix4f
+import org.joml.Quaternionf
+import org.joml.Vector3f
 import rs.emulate.scene3d.material.Material
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.locks.ReentrantLock
@@ -31,27 +31,27 @@ abstract class Node {
     /**
      * The [Node]'s local model matrix.
      */
-    val modelMatrix: Mat4 = Mat4(1.0f)
+    val modelMatrix: Matrix4f = Matrix4f().identity()
 
     /**
      * The [Node]'s world model matrix.
      */
-    val worldMatrix: Mat4 = Mat4(1.0f)
+    val worldMatrix: Matrix4f = Matrix4f().identity()
 
     /**
      * The local translation of this [Node].
      */
-    var position by observable(Vec3(0f, 0f, 0f)) { _, _, _ -> recomposeModelMatrix() }
+    var position by observable(Vector3f(0f, 0f, 0f)) { _, _, _ -> recomposeModelMatrix() }
 
     /**
      * The local translation of this [Node].
      */
-    var rotation by observable(Quat(0.0f, 0.0f, 0.0f, 1.0f)) { _, _, _ -> recomposeModelMatrix() }
+    var rotation by observable(Quaternionf(0.0f, 0.0f, 0.0f, 1.0f)) { _, _, _ -> recomposeModelMatrix() }
 
     /**
      * The local scale of this [Node].
      */
-    var scale by observable(Vec3(1f, 1f, 1f)) { _, _, _ -> recomposeModelMatrix() }
+    var scale by observable(Vector3f(0.1f, 0.1f, 0.1f)) { _, _, _ -> recomposeModelMatrix() }
 
     /**
      * The parent [Node], used to calculate the world matrix.
@@ -91,10 +91,10 @@ abstract class Node {
         val parent = this.parent
 
         if (parent != null) {
-            worldMatrix.put(parent.worldMatrix)
-            worldMatrix.times(modelMatrix)
+            worldMatrix.set(parent.worldMatrix)
+            worldMatrix.mul(modelMatrix)
         } else {
-            worldMatrix.put(modelMatrix)
+            worldMatrix.set(modelMatrix)
         }
     }
 
@@ -102,17 +102,13 @@ abstract class Node {
      * Recompute this [Node]'s model matrix after a change to any of its components.
      */
     private fun recomposeModelMatrix() {
-        modelMatrix.put(IDENTITY_MATRIX)
-
-        val rotationMatrix = Mat4(1.0f)
-        glm.mat4_cast(rotation, rotationMatrix)
-
-        glm.translate(modelMatrix, position)
-        glm.times(modelMatrix, rotationMatrix, modelMatrix)
-        glm.scale(modelMatrix, scale)
+        modelMatrix.set(IDENTITY_MATRIX)
+        modelMatrix.translate(position)
+        modelMatrix.rotate(rotation)
+        modelMatrix.scale(scale)
     }
 
     companion object {
-        val IDENTITY_MATRIX = Mat4(1.0f)
+        val IDENTITY_MATRIX = Matrix4f().identity()
     }
 }

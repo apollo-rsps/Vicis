@@ -7,11 +7,11 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
-import nullableChangesOf
+import rs.emulate.editor.utils.reactivex.nullableChangesOf
 import rs.emulate.scene3d.Scene
 import rs.emulate.scene3d.SceneAnimator
 import rs.emulate.scene3d.backend.opengl.OpenGLRenderer
-import rs.emulate.scene3d.backend.opengl.target.javafx.JavaFXRenderTarget
+import rs.emulate.editor.ui.widgets.scene3d.javafx.JavaFXRenderTarget
 import tornadofx.*
 import java.lang.Integer.max
 import java.util.concurrent.TimeUnit

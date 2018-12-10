@@ -2,7 +2,7 @@ package rs.emulate.editor.ui.workspace
 
 import javafx.geometry.Side
 import javafx.scene.layout.Priority
-import mergeChangesOf
+import rs.emulate.editor.utils.reactivex.mergeChangesOf
 import rs.emulate.editor.ui.widgets.layout.ResizableBorderPane
 import rs.emulate.editor.ui.workspace.components.EditorTopComponentScope
 import rs.emulate.editor.ui.workspace.components.EditorTopView

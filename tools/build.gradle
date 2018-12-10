@@ -1,6 +1,6 @@
 description = 'Vicis Tools'
 
 dependencies {
-    compile project(':legacy')
-    compile project(':util')
+    implementation project(':legacy')
+    implementation project(':util')
 }

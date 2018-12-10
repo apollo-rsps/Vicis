@@ -1,4 +1,4 @@
-package rs.emulate.scene3d.backend.opengl.target.javafx
+package rs.emulate.editor.ui.widgets.scene3d.javafx
 
 import javafx.application.Platform
 import javafx.scene.image.ImageView

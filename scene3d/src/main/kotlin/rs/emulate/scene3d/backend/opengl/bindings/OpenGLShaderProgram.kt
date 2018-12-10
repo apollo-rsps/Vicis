@@ -1,14 +1,9 @@
 package rs.emulate.scene3d.backend.opengl.bindings
 
-import glmType
-import glm_.mat2x2.Mat2
-import glm_.mat3x3.Mat3
-import glm_.mat4x4.Mat4
-import glm_.vec2.Vec2
-import glm_.vec3.Vec3
-import glm_.vec4.Vec4
+import org.joml.*
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL20.*
+import rs.emulate.scene3d.backend.opengl.bindings.util.glmType
 import rs.emulate.scene3d.buffer.GeometryDataBuffer
 import kotlin.reflect.KClass
 
@@ -42,12 +37,12 @@ class OpenGLShaderProgram(
             buffer.position(0)
 
             when (value) {
-                is Vec2 -> glUniform2fv(location, buffer)
-                is Vec3 -> glUniform3fv(location, buffer)
-                is Vec4 -> glUniform4fv(location, buffer)
-                is Mat2 -> glUniformMatrix2fv(location, false, buffer)
-                is Mat3 -> glUniformMatrix3fv(location, false, buffer)
-                is Mat4 -> glUniformMatrix4fv(location, false, buffer)
+                is Vector2f -> glUniform2fv(location, buffer)
+                is Vector3f -> glUniform3fv(location, buffer)
+                is Vector4f -> glUniform4fv(location, buffer)
+//                is Matrix -> glUniformMatrix2fv(location, false, buffer)
+                is Matrix3f -> glUniformMatrix3fv(location, false, buffer)
+                is Matrix4f -> glUniformMatrix4fv(location, false, buffer)
             }
         }
 

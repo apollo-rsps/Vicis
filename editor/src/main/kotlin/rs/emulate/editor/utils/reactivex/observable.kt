@@ -1,3 +1,5 @@
+package rs.emulate.editor.utils.reactivex
+
 import io.reactivex.Observable.merge
 import io.reactivex.rxjavafx.observables.JavaFxObservable.changesOf
 import javafx.beans.value.ObservableValue

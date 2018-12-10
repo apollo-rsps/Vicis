@@ -1,4 +1,4 @@
-package rs.emulate.scene3d.backend.opengl.target.javafx
+package rs.emulate.editor.ui.widgets.scene3d.javafx
 
 import javafx.scene.image.PixelFormat
 import javafx.scene.image.PixelWriter

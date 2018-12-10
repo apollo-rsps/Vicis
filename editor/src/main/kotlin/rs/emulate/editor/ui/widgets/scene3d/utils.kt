@@ -1,16 +1,16 @@
 package rs.emulate.editor.ui.widgets.scene3d
 
-import glm_.vec3.Vec3
+import org.joml.Vector3f
 import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.Vertex
 import rs.emulate.scene3d.Mesh
 import java.awt.Color
 
-fun Vertex.toVec3f() = Vec3(x * 0.01f, -y * 0.01f, z * 0.01f)
+fun Vertex.toVec3f() = Vector3f(x * 0.01f, -y * 0.01f, z * 0.01f)
 
 fun meshFromModels(models: List<Model>): Mesh {
-    val positions = mutableListOf<Vec3>()
-    val colors = mutableListOf<Vec3>()
+    val positions = mutableListOf<Vector3f>()
+    val colors = mutableListOf<Vector3f>()
 
     models.forEach { model ->
         val faces = model.faces.sortedBy { it.renderPriority }
@@ -33,7 +33,7 @@ fun meshFromModels(models: List<Model>): Mesh {
 
                 val color = Color.getHSBColor(h / 60.0f, s / 8.0f, l / 128.0f)
 
-                Vec3(color.red / 256.0f, color.green / 256.0f, color.blue / 256.0f)
+                Vector3f(color.red / 256.0f, color.green / 256.0f, color.blue / 256.0f)
             }
     }
 

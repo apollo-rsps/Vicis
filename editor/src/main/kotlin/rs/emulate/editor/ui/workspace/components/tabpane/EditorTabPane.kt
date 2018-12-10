@@ -4,12 +4,12 @@ import javafx.beans.binding.Bindings
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
 import javafx.scene.layout.Priority
-import rs.emulate.editor.ui.workspace.components.EditorTopView
-import rs.emulate.editor.ui.widgets.content.ResourceViewer
 import rs.emulate.editor.resource.Resource
+import rs.emulate.editor.ui.widgets.content.ResourceViewer
+import rs.emulate.editor.ui.workspace.components.EditorTopView
 import rs.emulate.editor.utils.javafx.addGuardedListener
 import rs.emulate.editor.utils.javafx.onGuardedChange
-import tornadofx.*
+import tornadofx.vboxConstraints
 import kotlin.collections.set
 
 const val VIEWER_PROP_KEY = "viewer"

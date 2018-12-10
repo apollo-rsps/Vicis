@@ -1,6 +1,6 @@
 package rs.emulate.editor.ui.widgets.layout
 
-import filteredEvents
+import rs.emulate.editor.utils.reactivex.filteredEvents
 import io.reactivex.Observable.empty
 import io.reactivex.Observable.just
 import io.reactivex.disposables.Disposable

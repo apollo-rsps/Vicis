@@ -1,10 +1,9 @@
 package rs.emulate.scene3d.buffer
 
-import glm_.BYTES
-import glm_.mat4x4.Mat4
+import org.joml.Matrix4f
 
-class Mat4fDataBuffer : GeometryDataBuffer<Mat4>(4 * 4, Float.BYTES) {
-    override fun set(offset: Int, data: Mat4) {
-        data.to(buffer, elementOffset(offset))
+class Matrix4ffDataBuffer : GeometryDataBuffer<Matrix4f>(4 * 4, 4) {
+    override fun set(offset: Int, data: Matrix4f) {
+        data.get(elementOffset(offset), buffer)
     }
 }
