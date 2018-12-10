@@ -14,5 +14,6 @@ dependencies {
     implementation("org.bouncycastle", "bcprov-jdk15on", bouncycastleVersion)
     implementation("org.apache.commons", "commons-compress", commonsCompressVersion)
     implementation("com.google.guava", "guava", guavaVersion)
+    implementation("org.tukaani:xz:1.8")
     implementation(kotlin("stdlib"))
 }

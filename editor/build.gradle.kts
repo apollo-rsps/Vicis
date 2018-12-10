@@ -44,7 +44,7 @@ dependencies {
     implementation("com.google.inject.extensions", "guice-multibindings", guiceVersion)
 
     implementation("net.clearcontrol:dockfx:0.1.12")
-    implementation("com.dlsc.formsfx", "formsfx-core", "1.3.0")
+    implementation("com.dooapp.fxform2", "core", "9.0.0")
     implementation("com.panemu", "tiwulfx", "3.0")
 
     // @TODO - remove when transitive dependency resolution is fixed for the API configuration
