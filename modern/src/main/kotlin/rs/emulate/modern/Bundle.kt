@@ -139,12 +139,12 @@ class Bundle(private val referenceTable: ReferenceTable = ReferenceTable()) {
 
     companion object {
         fun ByteBuf.readBundle(): Bundle {
-            val table = readContainer().getBuffer().readRefTable()
+            val table = readContainer().buffer.readRefTable()
 
             val bundle = Bundle(table)
 
             for (id in table.entryIds) {
-                bundle.entries[id] = readContainer().getBuffer()
+                bundle.entries[id] = readContainer().buffer
             }
 
             return bundle

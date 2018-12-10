@@ -10,6 +10,8 @@ import rs.emulate.modern.compression.bunzip2
 import rs.emulate.modern.compression.bzip2
 import rs.emulate.modern.compression.gunzip
 import rs.emulate.modern.compression.gzip
+import rs.emulate.modern.compression.lzma
+import rs.emulate.modern.compression.unlzma
 import rs.emulate.util.crypto.xtea.XteaKey
 import rs.emulate.util.crypto.xtea.xteaDecrypt
 import rs.emulate.util.crypto.xtea.xteaEncrypt
@@ -17,11 +19,11 @@ import rs.emulate.util.crypto.xtea.xteaEncrypt
 class ContainerTest {
 
     @Test
-    fun read() {
+    fun `read uncompressed`() {
         val data = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
 
         val buf = Unpooled.wrappedBuffer(
-            Unpooled.wrappedBuffer(byteArrayOf(0, 0, 0, 0, 13)),
+            Unpooled.wrappedBuffer(byteArrayOf(CompressionType.NONE.id.toByte(), 0, 0, 0, data.writerIndex().toByte())),
             data.slice()
         )
 
@@ -29,7 +31,61 @@ class ContainerTest {
 
         assertFalse(buf.isReadable)
         assertEquals(CompressionType.NONE, container.compression)
-        assertEquals(data, container.getBuffer())
+        assertEquals(data, container.buffer)
+    }
+
+    @Test
+    fun `read gzip`() {
+        val data = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
+        val compressedData = data.slice().gzip()
+
+        val header = Unpooled.buffer()
+        header.writeByte(CompressionType.GZIP.id)
+        header.writeInt(compressedData.readableBytes())
+        header.writeInt(data.readableBytes())
+
+        val buf = Unpooled.wrappedBuffer(header, compressedData)
+        val container = buf.readContainer()
+
+        assertFalse(buf.isReadable)
+        assertEquals(CompressionType.GZIP, container.compression)
+        assertEquals(data, container.buffer)
+    }
+
+    @Test
+    fun `read bzip2`() {
+        val data = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
+        val compressedData = data.slice().bzip2()
+
+        val header = Unpooled.buffer()
+        header.writeByte(CompressionType.BZIP2.id)
+        header.writeInt(compressedData.readableBytes())
+        header.writeInt(data.readableBytes())
+
+        val buf = Unpooled.wrappedBuffer(header, compressedData)
+        val container = buf.readContainer()
+
+        assertFalse(buf.isReadable)
+        assertEquals(CompressionType.BZIP2, container.compression)
+        assertEquals(data, container.buffer)
+    }
+
+    @Test
+    fun `read lzma`() {
+        val data = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
+        val compressedData = data.slice().lzma()
+
+        val header = Unpooled.buffer()
+        header.writeByte(CompressionType.LZMA.id)
+        header.writeInt(compressedData.readableBytes())
+        header.writeInt(data.readableBytes())
+
+        val buf = Unpooled.wrappedBuffer(header, compressedData)
+        val container = buf.readContainer()
+
+        assertFalse(buf.isReadable)
+        assertEquals(CompressionType.LZMA, container.compression)
+        assertEquals(data, container.buffer)
     }
 
     @Test
@@ -40,7 +96,7 @@ class ContainerTest {
         encryptedData.xteaEncrypt(encryptedData.readerIndex(), encryptedData.readableBytes(), key)
 
         val buf = Unpooled.wrappedBuffer(
-            Unpooled.wrappedBuffer(byteArrayOf(0, 0, 0, 0, 13)),
+            Unpooled.wrappedBuffer(byteArrayOf(CompressionType.NONE.id.toByte(), 0, 0, 0, data.writerIndex().toByte())),
             encryptedData
         )
 
@@ -48,7 +104,7 @@ class ContainerTest {
 
         assertFalse(buf.isReadable)
         assertEquals(CompressionType.NONE, container.compression)
-        assertEquals(data, container.getBuffer())
+        assertEquals(data, container.buffer)
     }
 
     @Test
@@ -58,7 +114,7 @@ class ContainerTest {
         val compressedData = data.slice().gzip()
 
         val header = Unpooled.buffer()
-        header.writeByte(2)
+        header.writeByte(CompressionType.GZIP.id)
         header.writeInt(compressedData.readableBytes())
 
         val encryptedHeader = Unpooled.buffer()
@@ -70,16 +126,12 @@ class ContainerTest {
         )
         encryptedData.xteaEncrypt(encryptedData.readerIndex(), encryptedData.readableBytes(), key)
 
-        val buf = Unpooled.wrappedBuffer(
-            header,
-            encryptedData
-        )
-
+        val buf = Unpooled.wrappedBuffer(header, encryptedData)
         val container = buf.readContainer(key)
 
         assertFalse(buf.isReadable)
         assertEquals(CompressionType.GZIP, container.compression)
-        assertEquals(data, container.getBuffer())
+        assertEquals(data, container.buffer)
     }
 
     @Test
@@ -89,7 +141,7 @@ class ContainerTest {
         val compressedData = data.slice().bzip2()
 
         val header = Unpooled.buffer()
-        header.writeByte(1)
+        header.writeByte(CompressionType.BZIP2.id)
         header.writeInt(compressedData.readableBytes())
 
         val encryptedHeader = Unpooled.buffer()
@@ -101,90 +153,106 @@ class ContainerTest {
         )
         encryptedData.xteaEncrypt(encryptedData.readerIndex(), encryptedData.readableBytes(), key)
 
-        val buf = Unpooled.wrappedBuffer(
-            header,
-            encryptedData
-        )
-
+        val buf = Unpooled.wrappedBuffer(header, encryptedData)
         val container = buf.readContainer(key)
 
         assertFalse(buf.isReadable)
         assertEquals(CompressionType.BZIP2, container.compression)
-        assertEquals(data, container.getBuffer())
+        assertEquals(data, container.buffer)
     }
 
     @Test
-    fun `read gzip`() {
+    fun `read encrypted lzma`() {
+        val key = XteaKey.fromString("0123456789abcdef0123456789abcdef")
         val data = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
-        val compressedData = data.slice().gzip()
+        val compressedData = data.slice().lzma()
 
         val header = Unpooled.buffer()
-        header.writeByte(2)
+        header.writeByte(CompressionType.LZMA.id)
         header.writeInt(compressedData.readableBytes())
-        header.writeInt(data.readableBytes())
 
-        val buf = Unpooled.wrappedBuffer(
-            header,
-            compressedData
+        val encryptedHeader = Unpooled.buffer()
+        encryptedHeader.writeInt(data.readableBytes())
+
+        val encryptedData = Unpooled.wrappedBuffer(
+            encryptedHeader,
+            compressedData.copy() // TODO should lzma() really return a read-only copy?
         )
+        encryptedData.xteaEncrypt(encryptedData.readerIndex(), encryptedData.readableBytes(), key)
 
-        val container = buf.readContainer()
+        val buf = Unpooled.wrappedBuffer(header, encryptedData)
+        val container = buf.readContainer(key)
 
         assertFalse(buf.isReadable)
-        assertEquals(CompressionType.GZIP, container.compression)
-        assertEquals(data, container.getBuffer())
+        assertEquals(CompressionType.LZMA, container.compression)
+        assertEquals(data, container.buffer)
     }
 
     @Test
-    fun `read bzip 2`() {
-        val data = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
-        val compressedData = data.slice().bzip2()
-
-        val header = Unpooled.buffer()
-        header.writeByte(1)
-        header.writeInt(compressedData.readableBytes())
-        header.writeInt(data.readableBytes())
-
-        val buf = Unpooled.wrappedBuffer(
-            header,
-            compressedData
-        )
-
-        val container = buf.readContainer()
-
-        assertFalse(buf.isReadable)
-        assertEquals(CompressionType.BZIP2, container.compression)
-        assertEquals(data, container.getBuffer())
-    }
-
-    @Test
-    fun write() {
+    fun `write uncompressed`() {
         val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
         val container = Container(CompressionType.NONE, buf.slice())
 
         val out = container.write()
 
-        assertEquals(0, out.readUnsignedByte().toInt())
+        assertEquals(CompressionType.NONE.id, out.readUnsignedByte().toInt())
         assertEquals(buf.readableBytes(), out.readInt())
         assertEquals(buf, out.slice())
+    }
+
+    @Test
+    fun `write gzip`() {
+        val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
+        val container = Container(CompressionType.GZIP, buf.slice())
+
+        val out = container.write()
+
+        assertEquals(CompressionType.GZIP.id, out.readUnsignedByte().toInt())
+        assertEquals(out.readableBytes() - 8, out.readInt())
+        assertEquals(buf.readableBytes(), out.readInt())
+        assertEquals(buf, out.gunzip(buf.readableBytes()))
+    }
+
+    @Test
+    fun `write bzip2`() {
+        val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
+        val container = Container(CompressionType.BZIP2, buf.slice())
+
+        val out = container.write()
+
+        assertEquals(CompressionType.BZIP2.id, out.readUnsignedByte().toInt())
+        assertEquals(out.readableBytes() - 8, out.readInt())
+        assertEquals(buf.readableBytes(), out.readInt())
+        assertEquals(buf, out.bunzip2(buf.readableBytes()))
+    }
+
+    @Test
+    fun `write lzma`() {
+        val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
+        val container = Container(CompressionType.LZMA, buf.slice())
+
+        val out = container.write()
+
+        assertEquals(CompressionType.LZMA.id, out.readUnsignedByte().toInt())
+        assertEquals(out.readableBytes() - 8, out.readInt())
+        assertEquals(buf.readableBytes(), out.readInt())
+        assertEquals(buf, out.unlzma(buf.readableBytes()))
     }
 
     @Test
     fun `write encrypted`() {
         val key = XteaKey.fromString("0123456789abcdef0123456789abcdef")
         val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
-        val container = Container(CompressionType.GZIP, buf.slice())
+        val container = Container(CompressionType.NONE, buf.slice())
 
         val out = container.write(key).copy()
 
-        assertEquals(2, out.readUnsignedByte().toLong())
-        assertEquals((out.readableBytes() - 8).toLong(), out.readInt().toLong())
+        assertEquals(CompressionType.NONE.id, out.readUnsignedByte().toInt())
+        assertEquals(out.readableBytes() - 4, out.readInt())
 
         val decryptedData = out.slice()
         decryptedData.xteaDecrypt(decryptedData.readerIndex(), decryptedData.readableBytes(), key)
-
-        assertEquals(buf.readableBytes(), decryptedData.readInt())
-        assertEquals(buf, decryptedData.gunzip(buf.readableBytes()))
+        assertEquals(buf, decryptedData)
     }
 
     @Test
@@ -195,7 +263,7 @@ class ContainerTest {
 
         val out = container.write(key).copy()
 
-        assertEquals(2, out.readUnsignedByte())
+        assertEquals(CompressionType.GZIP.id, out.readUnsignedByte().toInt())
         assertEquals(out.readableBytes() - 8, out.readInt())
 
         val decryptedData = out.slice()
@@ -213,7 +281,7 @@ class ContainerTest {
 
         val out = container.write(key).copy()
 
-        assertEquals(1, out.readUnsignedByte())
+        assertEquals(CompressionType.BZIP2.id, out.readUnsignedByte().toInt())
         assertEquals(out.readableBytes() - 8, out.readInt())
 
         val decryptedData = out.slice()
@@ -224,28 +292,20 @@ class ContainerTest {
     }
 
     @Test
-    fun `write gzip`() {
+    fun `write encrypted lzma`() {
+        val key = XteaKey.fromString("0123456789abcdef0123456789abcdef")
         val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
-        val container = Container(CompressionType.GZIP, buf.slice())
+        val container = Container(CompressionType.LZMA, buf.slice())
 
-        val out = container.write()
+        val out = container.write(key).copy()
 
-        assertEquals(2, out.readUnsignedByte())
+        assertEquals(CompressionType.LZMA.id, out.readUnsignedByte().toInt())
         assertEquals(out.readableBytes() - 8, out.readInt())
-        assertEquals(buf.readableBytes(), out.readInt())
-        assertEquals(buf, out.gunzip(buf.readableBytes()))
-    }
 
-    @Test
-    fun `write bzip2`() {
-        val buf = Unpooled.wrappedBuffer("Hello, world!".toByteArray())
-        val container = Container(CompressionType.BZIP2, buf.slice())
+        val decryptedData = out.slice()
+        decryptedData.xteaDecrypt(decryptedData.readerIndex(), decryptedData.readableBytes(), key)
 
-        val out = container.write()
-
-        assertEquals(1, out.readUnsignedByte())
-        assertEquals(out.readableBytes() - 8, out.readInt())
-        assertEquals(buf.readableBytes(), out.readInt())
-        assertEquals(buf, out.bunzip2(buf.readableBytes()))
+        assertEquals(buf.readableBytes(), decryptedData.readInt())
+        assertEquals(buf, decryptedData.unlzma(buf.readableBytes()))
     }
 }

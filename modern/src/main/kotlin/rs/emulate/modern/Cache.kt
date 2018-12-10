@@ -221,7 +221,7 @@ class Cache(
         }
 
         val versionedContainerBuf = versionedContainer.getBuffer()
-        val buf = versionedContainerBuf.readContainer(key).getBuffer()
+        val buf = versionedContainerBuf.readContainer(key).buffer
 
         if (versionedContainerBuf.isReadable) {
             throw IOException("Trailing bytes after Container structure")
@@ -267,7 +267,7 @@ class Cache(
                 check(!buf.isReadable) { "Trailing bytes after Container structure" }
 
                 buf.release()
-                referenceTables[file] = container.getBuffer().readRefTable()
+                referenceTables[file] = container.buffer.readRefTable()
             }
 
             return Cache(store, referenceTables.toList())

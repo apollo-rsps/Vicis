@@ -14,17 +14,10 @@ import rs.emulate.util.crypto.xtea.XteaKey
 import rs.emulate.util.crypto.xtea.xteaDecrypt
 import rs.emulate.util.crypto.xtea.xteaEncrypt
 
-class Container(val compression: CompressionType, private var buffer: ByteBuf) {
+class Container(val compression: CompressionType, buffer: ByteBuf) {
 
-    /* returns an immutable buffer (each call returns a new slice) */
-    fun getBuffer(): ByteBuf {
-        return buffer.slice()
-    }
-
-    /* caller must ensure that buffer is immutable */
-    fun setBuffer(buffer: ByteBuf) {
-        this.buffer = buffer
-    }
+    var buffer = buffer
+        get() = field.slice()
 
     /* returns an immutable buffer */
     fun write(key: XteaKey = XteaKey.NONE): ByteBuf {
@@ -36,7 +29,7 @@ class Container(val compression: CompressionType, private var buffer: ByteBuf) {
             CompressionType.NONE -> buffer.slice()
             CompressionType.BZIP2 -> buffer.slice().bzip2()
             CompressionType.GZIP -> buffer.slice().gzip()
-            CompressionType.LZMA -> buffer.slice().lzma() // TODO test
+            CompressionType.LZMA -> buffer.slice().lzma()
         }
 
         buf.writeInt(data.readableBytes())
@@ -106,7 +99,7 @@ class Container(val compression: CompressionType, private var buffer: ByteBuf) {
                 CompressionType.NONE -> data
                 CompressionType.BZIP2 -> data.bunzip2(uncompressedLength)
                 CompressionType.GZIP -> data.gunzip(uncompressedLength)
-                CompressionType.LZMA -> data.unlzma(uncompressedLength) // TODO test this
+                CompressionType.LZMA -> data.unlzma(uncompressedLength)
             }
 
             return Container(compression, data.asReadOnly())
