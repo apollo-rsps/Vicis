@@ -1,14 +1,13 @@
 package rs.emulate.legacy.widget.type
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.widget.Widget
 import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.TEXT
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.util.putAsciiString
-import rs.emulate.util.putBoolean
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import rs.emulate.util.writeAsciiString
 
 /**
  * A [WidgetGroup.TEXT] [Widget].
@@ -44,29 +43,29 @@ class TextWidget(
     private val shadowed: Boolean
 ) : Widget(id, parent, TEXT, optionType, content, width, height, alpha, hoverId, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): ByteBuffer {
-        val primary = ByteBuffer.allocate(defaultText.length + java.lang.Byte.BYTES)
-        primary.putAsciiString(defaultText).flip()
+    override fun encodeBespoke(): ByteBuf {
+        val primary = Unpooled.buffer(defaultText.length + java.lang.Byte.BYTES)
+        primary.writeAsciiString(defaultText)
 
-        val secondary = ByteBuffer.allocate(secondaryText.length + java.lang.Byte.BYTES)
-        secondary.putAsciiString(secondaryText).flip()
+        val secondary = Unpooled.buffer(secondaryText.length + java.lang.Byte.BYTES)
+        secondary.writeAsciiString(secondaryText)
 
-        val buffer = ByteBuffer.allocate(
-            3 * java.lang.Byte.BYTES + 4 * Integer.BYTES + primary.remaining() + secondary.remaining()
-        )
+        val buffer = Unpooled.buffer(
+            3 * java.lang.Byte.BYTES + 4 * Integer.BYTES + primary.readableBytes() + secondary.readableBytes()
+        ) // TOD use composite buffer
 
-        buffer.putBoolean(centered)
-        buffer.putByte(font)
-        buffer.putBoolean(shadowed)
+        buffer.writeBoolean(centered)
+        buffer.writeByte(font)
+        buffer.writeBoolean(shadowed)
 
-        buffer.put(primary).put(secondary)
+        buffer.writeBytes(primary).writeBytes(secondary)
 
         for (pair in listOf(colour, hover)) {
-            buffer.putInt(pair.default)
-            buffer.putInt(pair.secondary)
+            buffer.writeInt(pair.default)
+            buffer.writeInt(pair.secondary)
         }
 
-        return buffer.apply { flip() }
+        return buffer
     }
 
 }

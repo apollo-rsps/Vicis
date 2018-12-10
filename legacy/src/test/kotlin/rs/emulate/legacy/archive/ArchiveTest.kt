@@ -1,9 +1,9 @@
 package rs.emulate.legacy.archive
 
+import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import rs.emulate.legacy.archive.Archive.Companion.entryHash
-import java.nio.ByteBuffer
 
 class ArchiveTest {
 
@@ -34,9 +34,9 @@ class ArchiveTest {
 
     companion object {
 
-        private val TEST_BUFFER = ByteBuffer.wrap(
+        private val TEST_BUFFER = Unpooled.wrappedBuffer(
             byteArrayOf(32, 78, 107, -30, 29, -81, -49, 113, 117, 51, 26, -30, -96, -34, 68)
-        ).asReadOnlyBuffer()
+        )
 
         private val TEST_IDENTIFIER = "test".entryHash()
 

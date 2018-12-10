@@ -1,8 +1,6 @@
 package rs.emulate.legacy.version.map
 
 import rs.emulate.legacy.archive.Archive
-import rs.emulate.util.getBoolean
-import rs.emulate.util.getUnsignedShort
 import java.io.FileNotFoundException
 
 /**
@@ -13,13 +11,13 @@ import java.io.FileNotFoundException
  */
 class MapIndexDecoder constructor(archive: Archive) {
 
-    private val data = archive[MapIndex.ENTRY_NAME].buffer.asReadOnlyBuffer()
+    private val data = archive[MapIndex.ENTRY_NAME].buffer.copy()
 
     /**
      * Decodes the contents of the `map_index` entry into a [MapIndex].
      */
     fun decode(): MapIndex {
-        val count = data.remaining() / (3 * java.lang.Short.BYTES + java.lang.Byte.BYTES)
+        val count = data.readableBytes() / (3 * java.lang.Short.BYTES + java.lang.Byte.BYTES)
 
         val areas = IntArray(count)
         val maps = IntArray(count)
@@ -27,10 +25,10 @@ class MapIndexDecoder constructor(archive: Archive) {
         val members = BooleanArray(count)
 
         for (index in 0 until count) {
-            areas[index] = data.getUnsignedShort()
-            maps[index] = data.getUnsignedShort()
-            objects[index] = data.getUnsignedShort()
-            members[index] = data.getBoolean()
+            areas[index] = data.readUnsignedShort()
+            maps[index] = data.readUnsignedShort()
+            objects[index] = data.readUnsignedShort()
+            members[index] = data.readBoolean()
         }
 
         return MapIndex(areas, objects, maps, members)

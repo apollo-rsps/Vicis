@@ -2,7 +2,6 @@ package rs.emulate.legacy.version
 
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveEntry
-import rs.emulate.util.getUnsignedShort
 import java.io.FileNotFoundException
 import java.util.ArrayList
 import java.util.Arrays
@@ -26,11 +25,11 @@ class VersionListDecoder(private val versions: Archive) {
             val entry = versions[name]
             val data = entry.buffer
 
-            val count = data.limit() / java.lang.Short.BYTES
+            val count = data.readableBytes() / java.lang.Short.BYTES
             val versions = IntArray(count)
-            Arrays.setAll(versions) { data.getUnsignedShort() }
+            Arrays.setAll(versions) { data.readUnsignedShort() }
 
-            lists.add(VersionList(versions))
+            lists += VersionList(versions)
         }
 
         return lists

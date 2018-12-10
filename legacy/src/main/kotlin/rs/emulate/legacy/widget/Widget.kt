@@ -1,11 +1,13 @@
 package rs.emulate.legacy.widget
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec
 import rs.emulate.legacy.widget.type.Option
-import rs.emulate.util.putAsciiString
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import rs.emulate.util.writeAsciiString
+import java.lang.Byte
+import java.lang.Short
 
 /**
  * A user interface component.
@@ -39,9 +41,9 @@ abstract class Widget(
 ) {
 
     /**
-     * Encodes this Widget into a [ByteBuffer].
+     * Encodes this Widget into a [ByteBuf].
      */
-    fun encode(): ByteBuffer {
+    fun encode(): ByteBuf {
         val bespoke = encodeBespoke()
         val scripts = LegacyClientScriptCodec.encode(scripts)
         val option = encodeOption()
@@ -50,67 +52,67 @@ abstract class Widget(
         val parentSize = if (parentId != null) 2 * java.lang.Short.BYTES else java.lang.Short.BYTES
         val hoverSize = if (hoverId != null) java.lang.Short.BYTES else java.lang.Byte.BYTES
         val metaSize = 4 * java.lang.Short.BYTES + 3 * java.lang.Byte.BYTES
-        val specific = scripts.remaining() + bespoke.remaining() + option.remaining() + hoverText.remaining()
+        val specific =
+            scripts.readableBytes() + bespoke.readableBytes() + option.readableBytes() + hoverText.readableBytes()
 
         val size = parentSize + metaSize + hoverSize + specific
-        val buffer = ByteBuffer.allocate(size)
+        val buffer = Unpooled.buffer(size) // TODO use composite buffer
 
         if (parentId != null) {
-            buffer.putShort(PARENT_ID_PRESENT.toShort())
-            buffer.putShort(id.toShort())
-            buffer.putShort(parentId.toShort())
+            buffer.writeShort(PARENT_ID_PRESENT)
+            buffer.writeShort(id)
+            buffer.writeShort(parentId)
         } else {
-            buffer.putShort(id.toShort())
+            buffer.writeShort(id)
         }
 
-        buffer.putByte(group.value)
-        buffer.putByte(optionType.value)
+        buffer.writeByte(group.value)
+        buffer.writeByte(optionType.value)
 
-        buffer.putShort(contentType.toShort())
-        buffer.putShort(width.toShort())
-        buffer.putShort(height.toShort())
+        buffer.writeShort(contentType)
+        buffer.writeShort(width)
+        buffer.writeShort(height)
 
-        buffer.putByte(alpha)
+        buffer.writeByte(alpha)
 
         if (hoverId != null) {
             val value = hoverId
-            buffer.putByte(value + 1 shr 8)
-            buffer.putByte(value)
+            buffer.writeByte(value + 1 shr 8)
+            buffer.writeByte(value)
         } else {
-            buffer.putByte(HOVER_ID_ABSENT)
+            buffer.writeByte(HOVER_ID_ABSENT)
         }
 
-        buffer.put(scripts)
-        buffer.put(bespoke)
-        buffer.put(option)
+        buffer.writeBytes(scripts)
+        buffer.writeBytes(bespoke)
+        buffer.writeBytes(option)
 
-        return buffer.apply { flip() }
+        return buffer
     }
 
     /**
-     * Encodes the bespoke data belonging to this Widget into a [ByteBuffer].
+     * Encodes the bespoke data belonging to this Widget into a [ByteBuf].
      */
-    protected abstract fun encodeBespoke(): ByteBuffer
+    protected abstract fun encodeBespoke(): ByteBuf
 
     /**
-     * Encodes the hover text of this Widget into a [ByteBuffer].
+     * Encodes the hover text of this Widget into a [ByteBuf].
      */
-    private fun encodeHoverText(): ByteBuffer {
+    private fun encodeHoverText(): ByteBuf {
         if (hoverText != null) {
             val text = hoverText
 
-            return ByteBuffer.allocate(text.length + java.lang.Byte.BYTES)
-                .putAsciiString(text)
-                .apply { flip() }
+            return Unpooled.buffer(text.length + java.lang.Byte.BYTES)
+                .apply { writeAsciiString(text) }
         }
 
-        return ByteBuffer.allocate(0)
+        return Unpooled.EMPTY_BUFFER
     }
 
     /**
-     * Encodes the [Option] of this Widget into a [ByteBuffer].
+     * Encodes the [Option] of this Widget into a [ByteBuf].
      */
-    private fun encodeOption(): ByteBuffer {
+    private fun encodeOption(): ByteBuf {
         if (option != null) {
             require(group == WidgetGroup.INVENTORY || optionType == WidgetOption.USABLE) {
                 "Only usable or inventory widgets may have an option."
@@ -120,18 +122,14 @@ abstract class Widget(
             val circumfix = option.circumfix
             val text = option.text
 
-            val buffer = ByteBuffer.allocate(
-                circumfix.length + text.length + 2 * java.lang.Byte.BYTES + java.lang.Short.BYTES
-            )
-            buffer.putAsciiString(circumfix).putAsciiString(text)
-
-            val attributes = option.attributes
-            buffer.putShort(attributes.toShort())
-
-            return buffer.apply { flip() }
+            return Unpooled.buffer(circumfix.length + text.length + 2 * Byte.BYTES + Short.BYTES).apply {
+                writeAsciiString(circumfix)
+                writeAsciiString(text)
+                writeShort(option.attributes)
+            }
         }
 
-        return ByteBuffer.allocate(0)
+        return Unpooled.EMPTY_BUFFER
     }
 
     companion object {

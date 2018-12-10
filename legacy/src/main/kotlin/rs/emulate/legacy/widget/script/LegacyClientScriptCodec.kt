@@ -1,9 +1,7 @@
 package rs.emulate.legacy.widget.script
 
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import java.util.ArrayList
 
 /**
@@ -12,30 +10,30 @@ import java.util.ArrayList
 object LegacyClientScriptCodec {
 
     /**
-     * Decodes a [List] of [LegacyClientScript]s from the specified [ByteBuffer].
+     * Decodes a [List] of [LegacyClientScript]s from the specified [ByteBuf].
      */
-    fun decode(buffer: ByteBuffer): List<LegacyClientScript> {
-        var count = buffer.getUnsignedByte()
+    fun decode(buffer: ByteBuf): List<LegacyClientScript> {
+        var count = buffer.readUnsignedByte().toInt()
         val operators = mutableListOf<RelationalOperator>()
         val defaults = IntArray(count)
 
         for (index in 0 until count) {
-            operators += RelationalOperator.valueOf(buffer.getUnsignedByte())
+            operators += RelationalOperator.valueOf(buffer.readUnsignedByte().toInt())
 
-            defaults[index] = buffer.getUnsignedShort()
+            defaults[index] = buffer.readUnsignedShort()
         }
 
-        count = buffer.getUnsignedByte()
+        count = buffer.readUnsignedByte().toInt()
         val scripts = mutableListOf<LegacyClientScript>()
 
         for (index in 0 until count) {
-            val instructionCount = buffer.getUnsignedShort()
+            val instructionCount = buffer.readUnsignedShort()
             val instructions = ArrayList<LegacyInstruction>(instructionCount)
 
             var read = 0
             while (read < instructionCount) {
-                val type = LegacyInstructionType.valueOf(buffer.getUnsignedShort())
-                val operands = IntArray(type.operandCount) { buffer.getUnsignedShort() }
+                val type = LegacyInstructionType.valueOf(buffer.readUnsignedShort())
+                val operands = IntArray(type.operandCount) { buffer.readUnsignedShort() }
 
                 read += java.lang.Short.BYTES * (1 + type.operandCount)
                 instructions.add(LegacyInstruction.create(type, operands))
@@ -48,37 +46,36 @@ object LegacyClientScriptCodec {
     }
 
     /**
-     * Encodes the [List] of [LegacyClientScript]s into a [ByteBuffer].
+     * Encodes the [List] of [LegacyClientScript]s into a [ByteBuf].
      */
-    fun encode(scripts: List<LegacyClientScript>): ByteBuffer {
+    fun encode(scripts: List<LegacyClientScript>): ByteBuf {
         val count = scripts.size
 
-        val operators = ByteBuffer.allocate(count * java.lang.Byte.BYTES)
-        val defaults = ByteBuffer.allocate(count * java.lang.Short.BYTES)
-        val buffers = ArrayList<ByteBuffer>(count)
+        val operators = Unpooled.buffer(count * java.lang.Byte.BYTES)
+        val defaults = Unpooled.buffer(count * java.lang.Short.BYTES)
+        val buffers = ArrayList<ByteBuf>(count)
         var size = count * (java.lang.Short.BYTES + java.lang.Byte.BYTES)
 
         for (script in scripts) {
-            operators.putByte(script.operator.value)
-            defaults.putShort(script.default.toShort())
+            operators.writeByte(script.operator.value)
+            defaults.writeShort(script.default)
 
             val instructions = script.instructions
-            val buffer = ByteBuffer.allocate(instructions.size * java.lang.Short.BYTES)
+            val buffer = Unpooled.buffer(instructions.size * java.lang.Short.BYTES)
 
             for (instruction in instructions) {
-                buffer.putShort(instruction.type.toInteger())
-                instruction.operands.forEach { buffer.putShort(it.toShort()) }
+                buffer.writeShort(instruction.type.toInteger())
+                instruction.operands.forEach { buffer.writeShort(it) }
             }
 
-            size += buffer.position()
-            buffers += buffer.apply { flip() }
+            size += buffer.readableBytes()
+            buffers += buffer
         }
 
-        val buffer = ByteBuffer.allocate(size)
-        buffer.put(operators.apply { flip() }).put(defaults.apply { flip() })
-        buffers.forEach { buffer.put(it) }
-
-        return buffer.apply { flip() }
+        return Unpooled.compositeBuffer(2 + buffers.size).apply {
+            addComponents(operators, defaults)
+            addComponents(buffers)
+        }
     }
 
 }

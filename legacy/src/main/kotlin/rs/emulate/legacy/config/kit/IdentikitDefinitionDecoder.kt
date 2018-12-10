@@ -1,38 +1,36 @@
 package rs.emulate.legacy.config.kit
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import java.nio.ByteBuffer
 
 object IdentikitDefinitionDecoder : ConfigDecoder<IdentikitDefinition> {
 
     override val entryName: String = "idk"
 
-    override fun decode(id: Int, buffer: ByteBuffer): IdentikitDefinition {
+    override fun decode(id: Int, buffer: ByteBuf): IdentikitDefinition {
         val definition = IdentikitDefinition(id)
-        var opcode = buffer.getUnsignedByte()
+        var opcode = buffer.readUnsignedByte().toInt()
 
         while (opcode != Config.DEFINITION_TERMINATOR) {
             definition.decode(buffer, opcode)
-            opcode = buffer.getUnsignedByte()
+            opcode = buffer.readUnsignedByte().toInt()
         }
 
         return definition
     }
 
-    private fun IdentikitDefinition.decode(buffer: ByteBuffer, opcode: Int) {
+    private fun IdentikitDefinition.decode(buffer: ByteBuf, opcode: Int) {
         when (opcode) {
-            1 -> part = buffer.getUnsignedByte()
+            1 -> part = buffer.readUnsignedByte().toInt()
             2 -> {
-                val count = buffer.getUnsignedByte()
-                models = IntArray(count) { buffer.getUnsignedShort() }
+                val count = buffer.readUnsignedByte().toInt()
+                models = IntArray(count) { buffer.readUnsignedShort() }
             }
             3 -> playerDesignStyle = true
-            in 40 until 50 -> originalColours[opcode - 40] = buffer.getUnsignedShort()
-            in 50 until 60 -> replacementColours[opcode - 50] = buffer.getUnsignedShort()
-            in 60 until 70 -> widgetModels[opcode - 50] = buffer.getUnsignedShort()
+            in 40 until 50 -> originalColours[opcode - 40] = buffer.readUnsignedShort()
+            in 50 until 60 -> replacementColours[opcode - 50] = buffer.readUnsignedShort()
+            in 60 until 70 -> widgetModels[opcode - 50] = buffer.readUnsignedShort()
         }
     }
 

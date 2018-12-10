@@ -1,25 +1,22 @@
 package rs.emulate.legacy.config.location
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.config.Config
 import rs.emulate.legacy.config.ConfigDecoder
 import rs.emulate.legacy.config.npc.MorphismSet
-import rs.emulate.util.getAsciiString
-import rs.emulate.util.getByte
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import java.nio.ByteBuffer
+import rs.emulate.util.readAsciiString
 
 object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
 
     override val entryName: String = "loc"
 
-    override fun decode(id: Int, buffer: ByteBuffer): LocationDefinition {
+    override fun decode(id: Int, buffer: ByteBuf): LocationDefinition {
         val definition = LocationDefinition(id)
-        var opcode = buffer.getUnsignedByte()
+        var opcode = buffer.readUnsignedByte().toInt()
 
         while (opcode != Config.DEFINITION_TERMINATOR) {
             definition.decode(buffer, opcode)
-            opcode = buffer.getUnsignedByte()
+            opcode = buffer.readUnsignedByte().toInt()
         }
 
         definition.apply {
@@ -42,61 +39,61 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
         return definition
     }
 
-    private fun LocationDefinition.decode(buffer: ByteBuffer, opcode: Int) {
+    private fun LocationDefinition.decode(buffer: ByteBuf, opcode: Int) {
         when (opcode) {
             1 -> {
-                val count = buffer.getUnsignedByte()
+                val count = buffer.readUnsignedByte().toInt()
                 models = IntArray(count)
                 modelTypes = IntArray(count)
 
                 repeat(count) { index ->
-                    models[index] = buffer.getUnsignedShort()
-                    modelTypes[index] = buffer.getUnsignedByte()
+                    models[index] = buffer.readUnsignedShort()
+                    modelTypes[index] = buffer.readUnsignedByte().toInt()
                 }
             }
-            2 -> name = buffer.getAsciiString()
-            3 -> description = buffer.getAsciiString()
+            2 -> name = buffer.readAsciiString()
+            3 -> description = buffer.readAsciiString()
             5 -> {
-                val count = buffer.getUnsignedByte()
-                models = IntArray(count) { buffer.getUnsignedShort() }
+                val count = buffer.readUnsignedByte().toInt()
+                models = IntArray(count) { buffer.readUnsignedShort() }
             }
-            14 -> width = buffer.getUnsignedByte()
-            15 -> length = buffer.getUnsignedByte()
+            14 -> width = buffer.readUnsignedByte().toInt()
+            15 -> length = buffer.readUnsignedByte().toInt()
             17 -> solid = false
             18 -> impenetrable = false
-            19 -> interactive = buffer.getUnsignedByte()
+            19 -> interactive = buffer.readUnsignedByte().toInt()
             21 -> contourGround = true
             22 -> delayShading = true
             23 -> occludes = true
-            24 -> sequenceId = buffer.getUnsignedShort().let { if (it == 65535) -1 else it }
-            28 -> decorDisplacement = buffer.getUnsignedByte()
-            29 -> brightness = buffer.getByte()
-            in 30 until 39 -> actions[opcode - 30] = buffer.getAsciiString().let { if (it == "hidden") null else it }
-            39 -> diffusion = buffer.getByte()
+            24 -> sequenceId = buffer.readUnsignedShort().let { if (it == 65535) -1 else it }
+            28 -> decorDisplacement = buffer.readUnsignedByte().toInt()
+            29 -> brightness = buffer.readByte().toInt()
+            in 30 until 39 -> actions[opcode - 30] = buffer.readAsciiString().let { if (it == "hidden") null else it }
+            39 -> diffusion = buffer.readByte().toInt()
             40 -> {
-                val count = buffer.getUnsignedByte()
+                val count = buffer.readUnsignedByte().toInt()
 
                 repeat(count) {
-                    val original = buffer.getUnsignedShort()
-                    val replacement = buffer.getUnsignedShort()
+                    val original = buffer.readUnsignedShort()
+                    val replacement = buffer.readUnsignedShort()
 
                     colours[original] = replacement
                 }
             }
-            60 -> minimapFunction = buffer.getUnsignedShort()
+            60 -> minimapFunction = buffer.readUnsignedShort()
             62 -> inverted = true
             64 -> castShadow = false
-            65 -> scaleX = buffer.getUnsignedShort()
-            66 -> scaleY = buffer.getUnsignedShort()
-            67 -> scaleZ = buffer.getUnsignedShort()
-            68 -> mapsceneId = buffer.getUnsignedShort()
-            69 -> surroundings = buffer.getUnsignedByte()
-            70 -> translateX = buffer.getShort().toInt()
-            71 -> translateY = buffer.getShort().toInt()
-            72 -> translateZ = buffer.getShort().toInt()
+            65 -> scaleX = buffer.readUnsignedShort()
+            66 -> scaleY = buffer.readUnsignedShort()
+            67 -> scaleZ = buffer.readUnsignedShort()
+            68 -> mapsceneId = buffer.readUnsignedShort()
+            69 -> surroundings = buffer.readUnsignedByte().toInt()
+            70 -> translateX = buffer.readShort().toInt()
+            71 -> translateY = buffer.readShort().toInt()
+            72 -> translateZ = buffer.readShort().toInt()
             73 -> obstructsGround = true
             74 -> hollow = true
-            75 -> supportsItems = buffer.getUnsignedByte()
+            75 -> supportsItems = buffer.readUnsignedByte().toInt()
             77 -> morphisms = MorphismSet.decode(buffer)
         }
     }

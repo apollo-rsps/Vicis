@@ -1,9 +1,6 @@
 package rs.emulate.legacy.config.npc
 
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import io.netty.buffer.ByteBuf
 import java.util.Arrays
 
 /**
@@ -33,25 +30,25 @@ data class MorphismSet(
         val EMPTY = MorphismSet(-1, -1, IntArray(0))
 
         /**
-         * Decodes a [MorphismSet] from the specified [ByteBuffer].
+         * Decodes a [MorphismSet] from the specified [ByteBuf].
          */
-        fun decode(buffer: ByteBuffer): MorphismSet {
-            val varbit = buffer.getUnsignedShort()
-            val varp = buffer.getUnsignedShort()
-            val count = buffer.getUnsignedByte()
-            val morphisms = IntArray(count + 1) { buffer.getUnsignedShort() }
+        fun decode(buffer: ByteBuf): MorphismSet {
+            val varbit = buffer.readUnsignedShort()
+            val varp = buffer.readUnsignedShort()
+            val count = buffer.readUnsignedByte()
+            val morphisms = IntArray(count + 1) { buffer.readUnsignedShort() }
 
             return MorphismSet(varbit, varp, morphisms)
         }
 
         /**
-         * Encodes the specified [MorphismSet] into the specified [ByteBuffer].
+         * Encodes the specified [MorphismSet] into the specified [ByteBuf].
          */
-        fun encode(buffer: ByteBuffer, set: MorphismSet): ByteBuffer {
-            buffer.putShort(set.bitVariable.toShort())
-                .putShort(set.parameterVariable.toShort())
-                .putByte(set.count - 1)
-            set.morphisms.forEach { buffer.putShort(it.toShort()) }
+        fun encode(buffer: ByteBuf, set: MorphismSet): ByteBuf {
+            buffer.writeShort(set.bitVariable)
+                .writeShort(set.parameterVariable)
+                .writeByte(set.count - 1)
+            set.morphisms.forEach { buffer.writeShort(it) }
 
             return buffer
         }

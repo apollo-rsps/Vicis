@@ -6,10 +6,7 @@ import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsConstants
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
-import rs.emulate.util.getByte
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import rs.emulate.util.getUnsignedTriByte
+import rs.emulate.util.readUnsignedTriByte
 import java.io.IOException
 import java.util.Arrays
 
@@ -25,21 +22,21 @@ class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, 
      * Decodes all available [IndexedImage]s.
      */
     fun decode(): List<IndexedImage> {
-        index.position(data.getUnsignedShort())
+        index.readerIndex(data.readUnsignedShort())
 
-        val resizeWidth = index.getUnsignedShort()
-        val resizeHeight = index.getUnsignedShort()
+        val resizeWidth = index.readUnsignedShort()
+        val resizeHeight = index.readUnsignedShort()
 
-        val colours = index.getUnsignedByte()
+        val colours = index.readUnsignedByte().toInt()
         val palette = IntArray(colours)
 
         for (index in 1 until colours) {
-            palette[index] = this.index.getUnsignedTriByte()
+            palette[index] = this.index.readUnsignedTriByte()
         }
 
         val images = mutableListOf<IndexedImage>()
 
-        while (data.hasRemaining() && index.hasRemaining()) {
+        while (data.readableBytes() > 0 && index.readableBytes() > 0) {
             images.add(decode(palette, resizeHeight, resizeWidth))
         }
 
@@ -50,13 +47,13 @@ class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, 
      * Decodes data into a [IndexedImage].
      */
     private fun decode(palette: IntArray, resizeHeight: Int, resizeWidth: Int): IndexedImage {
-        val offsetX = index.getUnsignedByte()
-        val offsetY = index.getUnsignedByte()
+        val offsetX = index.readUnsignedByte().toInt()
+        val offsetY = index.readUnsignedByte().toInt()
 
-        val width = index.getUnsignedShort()
-        val height = index.getUnsignedShort()
+        val width = index.readUnsignedShort()
+        val height = index.readUnsignedShort()
 
-        val format = ImageFormat.valueOf(index.getUnsignedByte())
+        val format = ImageFormat.valueOf(index.readUnsignedByte().toInt())
         val raster = decodeRaster(format, width, height, palette)
 
         return IndexedImage(name, format, width, height, raster, palette, offsetX, offsetY, resizeWidth, resizeHeight)
@@ -69,10 +66,10 @@ class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, 
         val raster = IntArray(width * height)
 
         when (format) {
-            ImageFormat.COLUMN_ORDERED -> Arrays.setAll(raster) { getColour(palette, data.getByte()) }
+            ImageFormat.COLUMN_ORDERED -> Arrays.setAll(raster) { getColour(palette, data.readByte()) }
             ImageFormat.ROW_ORDERED -> for (x in 0 until width) {
                 for (y in 0 until height) {
-                    raster[x + y * width] = getColour(palette, data.getByte())
+                    raster[x + y * width] = getColour(palette, data.readByte())
                 }
             }
         }
@@ -83,8 +80,8 @@ class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, 
     /**
      * Gets the ARGB colour of a pixel of the [IndexedImage].
      */
-    private fun getColour(palette: IntArray, index: Int): Int {
-        val colour = palette[index]
+    private fun getColour(palette: IntArray, index: Byte): Int {
+        val colour = palette[index.toInt()]
         return if (colour == 0) colour else colour or 0xFF00_0000.toInt()
     }
 

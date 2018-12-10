@@ -1,4 +1,4 @@
-package rs.emulate.modern.compression
+package rs.emulate.util.compression
 
 import com.google.common.io.ByteStreams
 import io.netty.buffer.ByteBuf
@@ -16,7 +16,7 @@ fun ByteBuf.bunzip2(uncompressedLength: Int): ByteBuf {
     val header = Unpooled.wrappedBuffer(Bzip.HEADER)
     val input = Unpooled.wrappedBuffer(header, this)
 
-    val output = Unpooled.buffer(uncompressedLength, uncompressedLength)
+    val output = Unpooled.buffer(uncompressedLength)
 
     BZip2CompressorInputStream(ByteBufInputStream(input)).use { inputStream ->
         ByteBufOutputStream(output).use { outputStream ->

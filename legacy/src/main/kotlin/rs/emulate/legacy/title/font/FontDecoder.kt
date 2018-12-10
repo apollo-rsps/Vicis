@@ -4,9 +4,6 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
-import rs.emulate.util.getByte
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
 
 /**
  * A [GraphicsDecoder] for [Font]s.
@@ -20,11 +17,11 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
      * Decodes the [Font].
      */
     fun decode(): Font {
-        index.position(data.getUnsignedShort() + 4)
-        val offset = index.getUnsignedByte()
+        index.readerIndex(data.readUnsignedShort() + 4)
+        val offset = index.readUnsignedByte()
 
         if (offset > 0) {
-            index.position(3 * (offset - 1))
+            index.readerIndex(3 * (offset - 1))
         }
 
         val glyphs = Array(GLYPHS_PER_FONT) { decodeGlyph() }
@@ -35,12 +32,12 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
      * Decodes a single [Glyph].
      */
     private fun decodeGlyph(): Glyph {
-        var horizontalOffset = index.getUnsignedByte()
-        val verticalOffset = index.getUnsignedByte()
-        val width = index.getUnsignedShort()
-        val height = index.getUnsignedShort()
+        var horizontalOffset = index.readUnsignedByte()
+        val verticalOffset = index.readUnsignedByte()
+        val width = index.readUnsignedShort()
+        val height = index.readUnsignedShort()
 
-        val format = ImageFormat.valueOf(index.getUnsignedByte())
+        val format = ImageFormat.valueOf(index.readUnsignedByte().toInt())
         val raster = decodeRaster(width, height, format)
 
         var spacing = width + SPACING
@@ -60,7 +57,7 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
             spacing--
         }
 
-        return Glyph(format, raster, height, width, horizontalOffset, verticalOffset, spacing)
+        return Glyph(format, raster, height, width, horizontalOffset.toInt(), verticalOffset.toInt(), spacing)
     }
 
     /**
@@ -71,10 +68,10 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
         val raster = ByteArray(count)
 
         when (format) {
-            ImageFormat.COLUMN_ORDERED -> data.get(raster)
+            ImageFormat.COLUMN_ORDERED -> data.readBytes(raster)
             ImageFormat.ROW_ORDERED -> for (x in 0 until width) {
                 for (y in 0 until height) {
-                    raster[x + y * width] = data.getByte().toByte()
+                    raster[x + y * width] = data.readByte()
                 }
             }
         }

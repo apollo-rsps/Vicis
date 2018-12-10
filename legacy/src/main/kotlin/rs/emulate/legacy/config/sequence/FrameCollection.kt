@@ -1,10 +1,7 @@
 package rs.emulate.legacy.config.sequence
 
 import com.google.common.base.MoreObjects
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import io.netty.buffer.ByteBuf
 import java.util.Arrays
 
 /**
@@ -71,22 +68,22 @@ class FrameCollection {
     /**
      * Gets the duration at the specified index.
      */
-    fun getDuration(index: Int): Short {
-        return durations!![index].toShort()
+    fun getDuration(index: Int): Int {
+        return durations!![index]
     }
 
     /**
      * Gets the primary frame id at the specified index.
      */
-    fun getPrimary(index: Int): Short {
-        return primaries!![index].toShort()
+    fun getPrimary(index: Int): Int {
+        return primaries!![index]
     }
 
     /**
      * Gets the secondary frame id at the specified index.
      */
-    fun getSecondary(index: Int): Short {
-        return secondaries!![index].toShort()
+    fun getSecondary(index: Int): Int {
+        return secondaries!![index]
     }
 
     override fun hashCode(): Int {
@@ -124,34 +121,34 @@ class FrameCollection {
         }
 
         /**
-         * Decodes a [FrameCollection] from the specified [ByteBuffer].
+         * Decodes a [FrameCollection] from the specified [ByteBuf].
          */
-        fun decode(buffer: ByteBuffer): FrameCollection {
-            val frames = buffer.getUnsignedByte()
+        fun decode(buffer: ByteBuf): FrameCollection {
+            val frames = buffer.readUnsignedByte().toInt()
             val primaries = IntArray(frames)
             val secondaries = IntArray(frames)
             val durations = IntArray(frames)
 
             for (frame in 0 until frames) {
-                primaries[frame] = buffer.getUnsignedShort()
-                val secondary = buffer.getUnsignedShort()
+                primaries[frame] = buffer.readUnsignedShort()
+                val secondary = buffer.readUnsignedShort()
                 secondaries[frame] = if (secondary == NULL_SECONDARY_ID) -1 else secondary
-                durations[frame] = buffer.getUnsignedShort()
+                durations[frame] = buffer.readUnsignedShort()
             }
 
             return FrameCollection(primaries, secondaries, durations)
         }
 
         /**
-         * Encodes the specified [FrameCollection] into the specified [ByteBuffer].
+         * Encodes the specified [FrameCollection] into the specified [ByteBuf].
          */
-        fun encode(buffer: ByteBuffer, collection: FrameCollection): ByteBuffer {
+        fun encode(buffer: ByteBuf, collection: FrameCollection): ByteBuf {
             val size = collection.size
-            buffer.putByte(size)
+            buffer.writeByte(size)
 
             for (index in 0 until size) {
-                buffer.putShort(collection.getPrimary(index)).putShort(collection.getSecondary(index))
-                buffer.putShort(collection.getDuration(index))
+                buffer.writeShort(collection.getPrimary(index)).writeShort(collection.getSecondary(index))
+                buffer.writeShort(collection.getDuration(index))
             }
 
             return buffer

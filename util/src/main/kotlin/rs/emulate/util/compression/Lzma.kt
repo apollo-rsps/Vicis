@@ -1,4 +1,4 @@
-package rs.emulate.modern.compression
+package rs.emulate.util.compression
 
 import com.google.common.io.ByteStreams
 import io.netty.buffer.ByteBuf

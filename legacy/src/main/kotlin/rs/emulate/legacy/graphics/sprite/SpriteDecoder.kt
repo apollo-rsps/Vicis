@@ -6,9 +6,7 @@ import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsConstants
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import rs.emulate.util.getUnsignedTriByte
+import rs.emulate.util.readUnsignedTriByte
 import java.util.Arrays
 
 /**
@@ -23,22 +21,22 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
      * Decodes all [Sprite]s, returning the decoded Sprites as an [ImmutableList].
      */
     fun decode(): List<Sprite> {
-        index.position(data.getUnsignedShort())
+        index.readerIndex(data.readUnsignedShort())
 
-        val resizeHeight = index.getUnsignedShort()
-        val resizeWidth = index.getUnsignedShort()
+        val resizeHeight = index.readUnsignedShort()
+        val resizeWidth = index.readUnsignedShort()
 
-        val colours = index.getUnsignedByte()
+        val colours = index.readUnsignedByte().toInt()
         val palette = IntArray(colours)
 
         for (index in 1 until colours) {
-            val colour = this.index.getUnsignedTriByte()
+            val colour = this.index.readUnsignedTriByte()
             palette[index] = if (colour == 0) 1 else colour
         }
 
         val sprites = mutableListOf<Sprite>()
 
-        while (data.hasRemaining() && index.hasRemaining()) {
+        while (data.readableBytes() > 0 && index.readableBytes() > 0) {
             sprites += decode(palette, resizeHeight, resizeWidth)
         }
 
@@ -49,16 +47,16 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
      * Decodes data into a [Sprite].
      */
     private fun decode(palette: IntArray, resizeHeight: Int, resizeWidth: Int): Sprite {
-        val offsetX = index.getUnsignedByte()
-        val offsetY = index.getUnsignedByte()
+        val offsetX = index.readUnsignedByte()
+        val offsetY = index.readUnsignedByte()
 
-        val width = index.getUnsignedShort()
-        val height = index.getUnsignedShort()
+        val width = index.readUnsignedShort()
+        val height = index.readUnsignedShort()
 
-        val format = ImageFormat.valueOf(index.getUnsignedByte())
+        val format = ImageFormat.valueOf(index.readUnsignedByte().toInt())
         val raster = decodeRaster(format, width, height, palette)
 
-        return Sprite(name, raster, format, height, width, offsetX, offsetY, resizeHeight, resizeWidth)
+        return Sprite(name, raster, format, height, width, offsetX.toInt(), offsetY.toInt(), resizeHeight, resizeWidth)
     }
 
     /**
@@ -68,10 +66,10 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
         val raster = IntArray(width * height)
 
         when (format) {
-            ImageFormat.COLUMN_ORDERED -> Arrays.setAll(raster) { getColour(palette, data.getUnsignedByte()) }
+            ImageFormat.COLUMN_ORDERED -> Arrays.setAll(raster) { getColour(palette, data.readUnsignedByte()) }
             ImageFormat.ROW_ORDERED -> for (x in 0 until width) {
                 for (y in 0 until height) {
-                    raster[x + y * width] = getColour(palette, data.getUnsignedByte())
+                    raster[x + y * width] = getColour(palette, data.readUnsignedByte())
                 }
             }
         }
@@ -82,8 +80,8 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
     /**
      * Gets the ARGB colour of a pixel of the [Sprite].
      */
-    private fun getColour(palette: IntArray, index: Int): Int {
-        val colour = palette[index]
+    private fun getColour(palette: IntArray, index: Short): Int {
+        val colour = palette[index.toInt()]
         return if (colour == 0) colour else colour or 0xFF00_0000.toInt()
     }
 

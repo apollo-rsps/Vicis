@@ -1,12 +1,13 @@
 package rs.emulate.legacy.widget.type
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.widget.Widget
 import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.SPRITE
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.util.putAsciiString
-import java.nio.ByteBuffer
+import rs.emulate.util.writeAsciiString
 
 /**
  * A [WidgetGroup.SPRITE] [Widget].
@@ -32,12 +33,12 @@ class SpriteWidget(
     private val secondary: String
 ) : Widget(id, parent, SPRITE, optionType, content, width, height, alpha, hover, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): ByteBuffer {
-        val buffer = ByteBuffer.allocate(primary.length + secondary.length + 2 * java.lang.Byte.BYTES)
-        buffer.putAsciiString(primary)
-        buffer.putAsciiString(secondary)
+    override fun encodeBespoke(): ByteBuf {
+        val buffer = Unpooled.buffer(primary.length + secondary.length + 2 * java.lang.Byte.BYTES)
+        buffer.writeAsciiString(primary)
+        buffer.writeAsciiString(secondary)
 
-        return buffer.apply { flip() }
+        return buffer
     }
 
 }

@@ -1,15 +1,14 @@
 package rs.emulate.legacy.widget.type
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.widget.Widget
 import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.ITEM_LIST
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.util.Point
-import rs.emulate.util.putAsciiString
-import rs.emulate.util.putBoolean
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import rs.emulate.util.writeAsciiString
 
 /**
  * A [WidgetGroup.ITEM_LIST] [Widget].
@@ -43,28 +42,27 @@ class ItemListWidget(
     private val padding: Point
 ) : Widget(id, parent, ITEM_LIST, optionType, content, width, height, alpha, hover, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): ByteBuffer {
+    override fun encodeBespoke(): ByteBuf {
         val size = actions.map(String::length).sum() + actions.size
 
-        val action = ByteBuffer.allocate(size)
-        actions.forEach { action.putAsciiString(it) }
-        action.flip()
+        val action = Unpooled.buffer(size)
+        actions.forEach { action.writeAsciiString(it) }
 
-        val buffer = ByteBuffer.allocate(
-            4 * java.lang.Byte.BYTES + 2 * java.lang.Short.BYTES + Integer.BYTES + action.remaining()
+        val buffer = Unpooled.buffer(
+            4 * java.lang.Byte.BYTES + 2 * java.lang.Short.BYTES + Integer.BYTES + action.readableBytes()
         )
 
-        buffer.putBoolean(centered)
-        buffer.putByte(font)
-        buffer.putBoolean(shadowed)
+        buffer.writeBoolean(centered)
+        buffer.writeByte(font)
+        buffer.writeBoolean(shadowed)
 
-        buffer.putInt(colour)
-        buffer.putShort(padding.x.toShort()).putShort(padding.y.toShort())
+        buffer.writeInt(colour)
+        buffer.writeShort(padding.x).writeShort(padding.y)
 
-        buffer.putBoolean(!actions.isEmpty())
-        buffer.put(action)
+        buffer.writeBoolean(!actions.isEmpty())
+        buffer.writeBytes(action)
 
-        return buffer.apply { flip() }
+        return buffer
     }
 
 }

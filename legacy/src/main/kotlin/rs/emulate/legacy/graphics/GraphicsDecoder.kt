@@ -1,5 +1,6 @@
 package rs.emulate.legacy.graphics
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsConstants.DATA_EXTENSION
 import rs.emulate.legacy.graphics.GraphicsConstants.INDEX_FILE_NAME
@@ -16,11 +17,11 @@ abstract class GraphicsDecoder(graphics: Archive, protected val name: String) {
     /**
      * The [ByteBuffer] containing the graphic data.
      */
-    protected val data: ByteBuffer = graphics[name + DATA_EXTENSION].buffer.asReadOnlyBuffer()
+    protected val data: ByteBuf = graphics[name + DATA_EXTENSION].buffer
 
     /**
      * The [ByteBuffer] containing the file indices.
      */
-    protected val index: ByteBuffer = graphics[INDEX_FILE_NAME].buffer.asReadOnlyBuffer()
+    protected val index: ByteBuf = graphics[INDEX_FILE_NAME].buffer
 
 }

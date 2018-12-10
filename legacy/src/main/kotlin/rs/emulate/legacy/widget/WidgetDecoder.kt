@@ -2,8 +2,6 @@ package rs.emulate.legacy.widget
 
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
 import java.io.FileNotFoundException
 import java.util.ArrayList
 
@@ -26,7 +24,7 @@ class WidgetDecoder(widgets: Archive) {
     fun decode(): List<Widget> {
         val widgets = ArrayList<Widget>()
 
-        while (buffer.hasRemaining()) {
+        while (buffer.readableBytes() > 0) {
             widgets.add(decodeWidget())
         }
 
@@ -37,25 +35,25 @@ class WidgetDecoder(widgets: Archive) {
      * Decodes a single [Widget].
      */
     private fun decodeWidget(): Widget {
-        var id = buffer.getUnsignedShort()
+        var id = buffer.readUnsignedShort()
         var parent = -1
 
         if (id == CHILD_WIDGET_IDENTIFIER) {
-            parent = buffer.getUnsignedShort()
-            id = buffer.getUnsignedShort()
+            parent = buffer.readUnsignedShort()
+            id = buffer.readUnsignedShort()
         }
 
-        val group = WidgetGroup.valueOf(buffer.getUnsignedByte())
-        val option = WidgetOption.valueOf(buffer.getUnsignedByte())
-        val contentType = buffer.getUnsignedByte()
+        val group = WidgetGroup.valueOf(buffer.readUnsignedByte().toInt())
+        val option = WidgetOption.valueOf(buffer.readUnsignedByte().toInt())
+        val contentType = buffer.readUnsignedByte()
 
-        val width = buffer.getUnsignedShort()
-        val height = buffer.getUnsignedShort()
-        val alpha = buffer.getUnsignedByte()
+        val width = buffer.readUnsignedShort()
+        val height = buffer.readUnsignedShort()
+        val alpha = buffer.readUnsignedByte()
 
-        val hoverId = buffer.getUnsignedByte()
+        val hoverId = buffer.readUnsignedByte().toInt()
         val hover = when (hoverId) {
-            0 -> hoverId - 1 shl java.lang.Byte.SIZE or buffer.getUnsignedByte()
+            0 -> hoverId - 1 shl java.lang.Byte.SIZE or buffer.readUnsignedByte().toInt()
             else -> null
         }
 

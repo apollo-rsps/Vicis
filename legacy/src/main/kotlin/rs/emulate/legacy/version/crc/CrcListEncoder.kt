@@ -1,24 +1,15 @@
 package rs.emulate.legacy.version.crc
 
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.archive.ArchiveEntry
-import java.nio.ByteBuffer
-import java.util.Arrays
 
 /**
  * Encodes [CrcList]s into [ArchiveEntry] objects.
  */
 class CrcListEncoder(crcs: List<CrcList>) {
 
-    /**
-     * The List of CrcLists.
-     */
     private val lists: List<CrcList> = crcs.toList()
 
-    /**
-     * Encodes the [CrcList]s.
-     *
-     * @return The array of [ArchiveEntry] objects.
-     */
     fun encode(): Array<ArchiveEntry> {
         val size = lists.size
         val entries = arrayOfNulls<ArchiveEntry>(size)
@@ -28,8 +19,8 @@ class CrcListEncoder(crcs: List<CrcList>) {
             val type = list.type
             val crcs = list.crcs
 
-            val buffer = ByteBuffer.allocate(crcs.size * Integer.BYTES)
-            Arrays.stream(crcs).forEach { buffer.putInt(it) }
+            val buffer = Unpooled.buffer(crcs.size * Integer.BYTES)
+            crcs.forEach { buffer.writeInt(it) }
 
             entries[index] = ArchiveEntry(type.asCrcList(), buffer)
         }

@@ -1,5 +1,6 @@
 package rs.emulate.legacy.map
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.map.MapConstants.HEIGHT_MULTIPLICAND
 import rs.emulate.legacy.map.MapConstants.LOWEST_CONTINUED_TYPE
@@ -9,20 +10,17 @@ import rs.emulate.legacy.map.MapConstants.MINIMUM_OVERLAY_TYPE
 import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
 import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
 import rs.emulate.legacy.map.Tile.Builder
-import rs.emulate.util.CompressionUtils
-import rs.emulate.util.getByte
-import rs.emulate.util.getUnsignedByte
+import rs.emulate.util.compression.gunzip
 import rs.emulate.util.world.Position
-import java.nio.ByteBuffer
 
 /**
  * A decoder for a [MapFile].
  *
- * @param buffer The ByteBuffer containing the MapFile data. Should not be compressed.
+ * @param buffer The ByteBuf containing the MapFile data. Should not be compressed.
  */
-class MapFileDecoder(buffer: ByteBuffer) {
+class MapFileDecoder(buffer: ByteBuf) {
 
-    private val buffer: ByteBuffer = buffer.asReadOnlyBuffer()
+    private val buffer: ByteBuf = buffer.copy()
 
     /**
      * Decodes the data into a [MapFile].
@@ -67,7 +65,7 @@ class MapFileDecoder(buffer: ByteBuffer) {
 
         var type: Int
         do {
-            type = buffer.getUnsignedByte()
+            type = buffer.readUnsignedByte().toInt()
 
             if (type == 0) {
                 if (level == 0) {
@@ -77,12 +75,12 @@ class MapFileDecoder(buffer: ByteBuffer) {
                     builder.height = below.height + PLANE_HEIGHT_DIFFERENCE
                 }
             } else if (type == 1) {
-                val height = buffer.getUnsignedByte()
+                val height = buffer.readUnsignedByte().toInt()
                 val below = if (level == 0) 0 else planes[level - 1]!!.getTile(x, z).height
 
                 builder.height = (if (height == 1) 0 else height) * HEIGHT_MULTIPLICAND + below
             } else if (type <= MINIMUM_OVERLAY_TYPE) {
-                builder.overlay = buffer.getByte()
+                builder.overlay = buffer.readByte().toInt()
                 builder.overlayType = (type - LOWEST_CONTINUED_TYPE) / ORIENTATION_COUNT
                 builder.overlayOrientation = type - LOWEST_CONTINUED_TYPE % ORIENTATION_COUNT
             } else if (type <= MINIMUM_ATTRIBUTES_TYPE) {
@@ -101,9 +99,7 @@ class MapFileDecoder(buffer: ByteBuffer) {
          * Creates a MapFileDecoder for the specified map file.
          */
         fun create(fs: IndexedFileSystem, map: Int): MapFileDecoder {
-            val compressed = fs[MAP_INDEX, map]
-            val decompressed = CompressionUtils.gunzip(compressed)
-
+            val decompressed = fs[MAP_INDEX, map].gunzip()
             return MapFileDecoder(decompressed)
         }
     }

@@ -147,8 +147,8 @@ enum class LegacyInstructionType(
     /**
      * Gets the integer value of this LegacyInstructionType.
      */
-    fun toInteger(): Short {
-        return value.toShort()
+    fun toInteger(): Int {
+        return value
     }
 
     companion object {

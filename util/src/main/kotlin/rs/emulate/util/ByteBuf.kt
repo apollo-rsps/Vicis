@@ -1,10 +1,18 @@
 package rs.emulate.util
 
-import rs.emulate.util.charset.Cp1252Charset
 import io.netty.buffer.ByteBuf
 import io.netty.util.ByteProcessor
+import rs.emulate.util.charset.Cp1252Charset
 import java.nio.charset.Charset
 import java.util.zip.CRC32
+
+fun ByteBuf.toByteArray(): ByteArray {
+    if (hasArray()) {
+        return array()
+    }
+
+    return ByteArray(readableBytes()).also { readBytes(it) }
+}
 
 fun ByteBuf.crc32(): Int {
     val bytes: ByteArray
@@ -42,7 +50,27 @@ fun ByteBuf.readString(charset: Charset = Cp1252Charset): String {
     return String(bytes, charset)
 }
 
-fun ByteBuf.writeString(str: String, charset: Charset = Cp1252Charset) {
+fun ByteBuf.readAsciiString(): String {
+    val builder = StringBuilder()
+    var character = readByte()
+
+    while (character.toInt() != 10) {
+        builder.append(character.toChar())
+        character = readByte()
+    }
+
+    return builder.toString()
+}
+
+fun ByteBuf.writeAsciiString(string: String) {
+    for (c in string.toCharArray()) {
+        writeByte(c.toInt())
+    }
+
+    writeByte(10)
+}
+
+fun ByteBuf.writeCString(str: String, charset: Charset = Cp1252Charset) {
     val bytes = str.toByteArray(charset)
     writeBytes(bytes)
     writeByte(0)
@@ -56,7 +84,7 @@ fun ByteBuf.readVersionedString(charset: Charset = Cp1252Charset): String {
 
 fun ByteBuf.writeVersionedString(str: String) {
     writeByte(0)
-    writeString(str)
+    writeCString(str)
 }
 
 fun ByteBuf.readOptionalString(charset: Charset = Cp1252Charset): String? {
@@ -67,7 +95,7 @@ fun ByteBuf.readOptionalString(charset: Charset = Cp1252Charset): String? {
 fun ByteBuf.writeOptionalString(str: String?, charset: Charset = Cp1252Charset) {
     if (str != null) {
         writeBoolean(true)
-        writeString(str, charset)
+        writeCString(str, charset)
     } else {
         writeBoolean(false)
     }
@@ -88,6 +116,25 @@ fun ByteBuf.writeUnsignedSmart(value: Int) {
         in 0..0x7fff -> writeShort(0x8000 or value)
         else -> throw IllegalArgumentException("Expected $value to fall within range [${0..0x7fff}]")
     }
+}
+
+fun ByteBuf.readSignedSmart(): Int {
+    val peek = getByte(readerIndex()).toInt() and 0xFF
+    return if (peek < 128) {
+        readUnsignedByte() - 64
+    } else {
+        readUnsignedShort() - 49152
+    }
+}
+
+fun ByteBuf.readUnsignedTriByte(): Int {
+    return readUnsignedByte().toInt() shl 16 or (readUnsignedByte().toInt() shl 8) or readUnsignedByte().toInt()
+}
+
+fun ByteBuf.writeTriByte(value: Int) {
+    writeByte(value shr 16 and 0xFF)
+    writeByte(value shr 8 and 0xFF)
+    writeByte(value and 0xFF)
 }
 
 fun ByteBuf.readUnsignedMultiSmart(): Int {

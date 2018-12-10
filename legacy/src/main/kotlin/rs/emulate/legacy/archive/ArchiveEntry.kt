@@ -1,8 +1,7 @@
 package rs.emulate.legacy.archive
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.archive.Archive.Companion.entryHash
-import rs.emulate.util.copy
-import java.nio.ByteBuffer
 
 /**
  * A single entry in an [Archive].
@@ -10,19 +9,23 @@ import java.nio.ByteBuffer
  * @param identifier The identifier.
  * @param buffer The buffer containing this entry's data.
  */
-class ArchiveEntry(val identifier: Int, buffer: ByteBuffer) {
+class ArchiveEntry(val identifier: Int, buffer: ByteBuf) {
+
+    init {
+        require(buffer.readerIndex() == 0) { "Cannot create an ArchiveEntry with a partially-read buffer" }
+    }
 
     /**
      * The buffer of this entry.
      */
-    val buffer: ByteBuffer = buffer.asReadOnlyBuffer()
+    val buffer: ByteBuf = buffer.copy()
         get() = field.copy()
 
     /**
-     * Gets the size of this entry (i.e. the capacity of the [ByteBuffer] backing it), in bytes.
+     * Gets the size of this entry (i.e. the capacity of the [ByteBuf] backing it), in bytes.
      */
     val size: Int
-        get() = buffer.limit()
+        get() = buffer.readableBytes()
 
     /**
      * Creates the archive entry.
@@ -30,7 +33,7 @@ class ArchiveEntry(val identifier: Int, buffer: ByteBuffer) {
      * @param name The name of the archive.
      * @param buffer The buffer containing this entry's data.
      */
-    constructor(name: String, buffer: ByteBuffer) : this(name.entryHash(), buffer)
+    constructor(name: String, buffer: ByteBuf) : this(name.entryHash(), buffer)
 
     override fun equals(other: Any?): Boolean {
         if (other is ArchiveEntry) {

@@ -1,7 +1,6 @@
 package rs.emulate.legacy.config.npc
 
-import rs.emulate.util.getUnsignedShort
-import java.nio.ByteBuffer
+import io.netty.buffer.ByteBuf
 
 /**
  * A wrapper class containing four movement animations used by an npc.
@@ -32,26 +31,25 @@ data class MovementAnimationSet(
         val EMPTY = MovementAnimationSet(-1, -1, -1, -1)
 
         /**
-         * Decodes a MovementAnimationSet from the specified [ByteBuffer].
+         * Decodes a MovementAnimationSet from the specified [ByteBuf].
          */
-        fun decode(buffer: ByteBuffer): MovementAnimationSet {
-            val walking = buffer.getUnsignedShort()
-            val halfTurn = buffer.getUnsignedShort()
-            val clockwiseQuarterTurn = buffer.getUnsignedShort()
-            val anticlockwiseQuarterTurn = buffer.getUnsignedShort()
+        fun decode(buffer: ByteBuf): MovementAnimationSet {
+            val walking = buffer.readUnsignedShort()
+            val halfTurn = buffer.readUnsignedShort()
+            val clockwiseQuarterTurn = buffer.readUnsignedShort()
+            val anticlockwiseQuarterTurn = buffer.readUnsignedShort()
 
-            return MovementAnimationSet(walking, halfTurn, clockwiseQuarterTurn,
-                anticlockwiseQuarterTurn)
+            return MovementAnimationSet(walking, halfTurn, clockwiseQuarterTurn, anticlockwiseQuarterTurn)
         }
 
         /**
-         * Encodes the specified [MovementAnimationSet] into the specified [ByteBuffer].
+         * Encodes the specified [MovementAnimationSet] into the specified [ByteBuf].
          */
-        fun encode(buffer: ByteBuffer, set: MovementAnimationSet): ByteBuffer {
-            return buffer.putShort(set.walking.toShort())
-                .putShort(set.halfTurn.toShort())
-                .putShort(set.clockwiseQuarterTurn.toShort())
-                .putShort(set.anticlockwiseQuarterTurn.toShort())
+        fun encode(buffer: ByteBuf, set: MovementAnimationSet): ByteBuf {
+            return buffer.writeShort(set.walking)
+                .writeShort(set.halfTurn)
+                .writeShort(set.clockwiseQuarterTurn)
+                .writeShort(set.anticlockwiseQuarterTurn)
         }
     }
 

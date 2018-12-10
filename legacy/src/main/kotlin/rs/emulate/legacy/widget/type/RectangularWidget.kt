@@ -1,12 +1,12 @@
 package rs.emulate.legacy.widget.type
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.widget.Widget
 import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.RECTANGULAR
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
-import rs.emulate.util.putBoolean
-import java.nio.ByteBuffer
 
 /**
  * A [RECTANGULAR][WidgetGroup.RECTANGULAR] [Widget].
@@ -34,16 +34,16 @@ class RectangularWidget(
     var hover: ColourPair
 ) : Widget(id, parent, RECTANGULAR, optionType, content, width, height, alpha, hoverId, scripts, option, hoverText) {
 
-    override fun encodeBespoke(): ByteBuffer {
-        val buffer = ByteBuffer.allocate(4 * Integer.BYTES + java.lang.Byte.BYTES)
-        buffer.putBoolean(filled)
+    override fun encodeBespoke(): ByteBuf {
+        val buffer = Unpooled.buffer(4 * Integer.BYTES + java.lang.Byte.BYTES)
+        buffer.writeBoolean(filled)
 
         for (pair in listOf(colour, hover)) {
-            buffer.putInt(pair.default)
-            buffer.putInt(pair.secondary)
+            buffer.writeInt(pair.default)
+            buffer.writeInt(pair.secondary)
         }
 
-        return buffer.apply { flip() }
+        return buffer
     }
 
 }

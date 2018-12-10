@@ -1,11 +1,11 @@
 package rs.emulate.editor.vfs
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.config.ConfigEntryDecoder
-import java.nio.ByteBuffer
 
 interface VirtualFileLoader<T : VirtualFileId> {
-    fun load(id: T): ByteBuffer?
+    fun load(id: T): ByteBuf?
 }
 
 class LegacyFileLoader(
@@ -14,7 +14,7 @@ class LegacyFileLoader(
 
     private val configArchive by lazy { cache.getArchive(CONFIG_INDEX, CONFIG_ARCHIVE_ID) }
 
-    override fun load(id: LegacyFileId): ByteBuffer? {
+    override fun load(id: LegacyFileId): ByteBuf? {
         return when (id) {
             is LegacyFileId.ArchiveEntry -> loadArchiveEntry(id)
             is LegacyFileId.ConfigEntry -> loadConfigEntry(id)
@@ -22,16 +22,16 @@ class LegacyFileLoader(
         }
     }
 
-    private fun loadFileEntry(id: LegacyFileId.FileEntry): ByteBuffer? {
+    private fun loadFileEntry(id: LegacyFileId.FileEntry): ByteBuf? {
         return cache[id.type, id.file]
     }
 
-    private fun loadArchiveEntry(id: LegacyFileId.ArchiveEntry): ByteBuffer? {
+    private fun loadArchiveEntry(id: LegacyFileId.ArchiveEntry): ByteBuf? {
         val archive = cache.getArchive(0, id.file)
         return archive.getOrNull(id.name)?.buffer
     }
 
-    private fun loadConfigEntry(id: LegacyFileId.ConfigEntry): ByteBuffer? {
+    private fun loadConfigEntry(id: LegacyFileId.ConfigEntry): ByteBuf? {
         return ConfigEntryDecoder.get(configArchive, id.entry, id.file)
     }
 

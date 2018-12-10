@@ -1,11 +1,12 @@
 package rs.emulate.legacy
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
 import rs.emulate.legacy.archive.CompressionType
 import rs.emulate.util.get
-import rs.emulate.util.putByte
-import rs.emulate.util.putTriByte
+import rs.emulate.util.writeTriByte
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
@@ -15,6 +16,9 @@ import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import java.util.HashMap
 import kotlin.collections.MutableMap.MutableEntry
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.set
 
 /**
  * A container for a set of [Archive]s.
@@ -24,7 +28,7 @@ class Cache {
     /**
      * The Map of FileDescriptors to Buffers.
      */
-    private val files = HashMap<FileDescriptor, ByteBuffer>()
+    private val files = HashMap<FileDescriptor, ByteBuf>()
 
     /**
      * Encodes this cache, writing the output to the specified files in the specified [Path].
@@ -52,11 +56,11 @@ class Cache {
             val zero = FileChannel.open(base.resolve(indexPrefix + '0'), *options)
             indices[0] = zero
 
-            zero.write(IndexCodec.encode(Index(0, 0))) // Index for the empty block.
+            zero.write(IndexCodec.encode(Index(0, 0)).nioBuffer()) // Index for the empty block.
             var block = 1
 
             for ((descriptor, buffer) in sortedFileList()) {
-                val size = buffer.remaining()
+                val size = buffer.readableBytes()
                 val type = descriptor.type
                 val blocks = (size + FileSystemConstants.CHUNK_SIZE - 1) / FileSystemConstants.CHUNK_SIZE
 
@@ -68,26 +72,28 @@ class Cache {
                 }
 
                 val pointer = IndexCodec.encode(Index(size, block))
-                index.write(pointer)
+                index.write(pointer.nioBuffer())
 
                 val file = descriptor.file
                 for (id in 0 until blocks) {
-                    val header = ByteBuffer.allocate(FileSystemConstants.HEADER_SIZE).apply {
-                        putShort(file.toShort()).putShort(id.toShort())
-                        putTriByte(++block).putByte(type + 1).flip()
+                    val header = Unpooled.buffer(FileSystemConstants.HEADER_SIZE).apply {
+                        writeShort(file)
+                        writeShort(id)
+                        writeTriByte(++block)
+                        writeByte(type + 1)
                     }
 
-                    data.write(header)
+                    data.write(header.nioBuffer())
 
-                    val remaining = buffer.remaining()
+                    val remaining = buffer.readableBytes()
                     if (remaining < FileSystemConstants.CHUNK_SIZE) {
-                        data.write(buffer)
+                        data.write(buffer.nioBuffer())
                         val padding = FileSystemConstants.CHUNK_SIZE - remaining
 
                         data.write(ByteBuffer.allocate(padding))
                     } else {
                         val chunk = ByteBuffer.allocate(FileSystemConstants.CHUNK_SIZE)
-                        chunk.get(buffer)
+                        buffer.nioBuffer().get(chunk)
                         data.write(chunk)
                     }
                 }
@@ -120,7 +126,7 @@ class Cache {
     /**
      * Gets the file data with the specified [FileDescriptor].
      */
-    fun getFile(descriptor: FileDescriptor): ByteBuffer? {
+    fun getFile(descriptor: FileDescriptor): ByteBuf? {
         return files[descriptor]
     }
 
@@ -138,15 +144,15 @@ class Cache {
     /**
      * Places the file with the specified [FileDescriptor] into this Cache.
      */
-    fun putFile(descriptor: FileDescriptor, file: ByteBuffer) {
+    fun putFile(descriptor: FileDescriptor, file: ByteBuf) {
         files[descriptor] = file
     }
 
     /**
      * Gets the [List] of files to encode, in ascending order.
      */
-    private fun sortedFileList(): List<MutableEntry<FileDescriptor, ByteBuffer>> {
-        val comparator: Comparator<MutableEntry<FileDescriptor, ByteBuffer>> = Comparator { (first), (second) ->
+    private fun sortedFileList(): List<MutableEntry<FileDescriptor, ByteBuf>> {
+        val comparator: Comparator<MutableEntry<FileDescriptor, ByteBuf>> = Comparator { (first), (second) ->
             val type = Integer.compare(first.type, second.type)
 
             if (type == 0) Integer.compare(first.file, second.file) else type

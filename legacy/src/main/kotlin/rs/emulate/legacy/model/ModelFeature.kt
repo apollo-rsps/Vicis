@@ -1,8 +1,6 @@
 package rs.emulate.legacy.model
 
-import rs.emulate.util.getBoolean
-import rs.emulate.util.getUnsignedByte
-import java.nio.ByteBuffer
+import io.netty.buffer.ByteBuf
 
 /**
  * Feature flags that control how [Model]s are rendered, and what extra attributes they may have.
@@ -35,16 +33,17 @@ sealed class ModelFeature {
     object VertexSkinning : ModelFeature()
 
     companion object {
-        fun decodeFrom(header: ByteBuffer): Set<ModelFeature> {
+        fun decodeFrom(header: ByteBuf): Set<ModelFeature> {
             val features = mutableSetOf<ModelFeature>()
 
-            if (header.getBoolean()) features += FaceTextures
+            if (header.readBoolean()) features += FaceTextures
 
-            header.getUnsignedByte().let { if (it != INDIVIDUAL_PRIORITIES) features += GlobalFaceRenderPriority(it) }
+            header.readUnsignedByte().toInt()
+                .let { if (it != INDIVIDUAL_PRIORITIES) features += GlobalFaceRenderPriority(it) }
 
-            if (header.getBoolean()) features += FaceTransparency
-            if (header.getBoolean()) features += FaceSkinning
-            if (header.getBoolean()) features += VertexSkinning
+            if (header.readBoolean()) features += FaceTransparency
+            if (header.readBoolean()) features += FaceSkinning
+            if (header.readBoolean()) features += VertexSkinning
 
             return features
 

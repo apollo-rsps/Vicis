@@ -31,9 +31,9 @@ class CrcListDecoder(
             val entry = version[name]
             val data = entry.buffer
 
-            val count = data.limit() / Integer.BYTES
+            val count = data.readableBytes() / Integer.BYTES
             val crcs = IntArray(count)
-            Arrays.setAll(crcs) { data.getInt() }
+            Arrays.setAll(crcs) { data.readInt() }
 
             lists.add(CrcList(type, crcs))
         }

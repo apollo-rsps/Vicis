@@ -1,18 +1,16 @@
 package rs.emulate.legacy.model
 
+import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.model.ModelFeature.*
-import rs.emulate.util.getSignedSmart
-import rs.emulate.util.getUnsignedByte
-import rs.emulate.util.getUnsignedShort
-import java.nio.ByteBuffer
+import rs.emulate.util.readSignedSmart
 import java.util.HashSet
 
 /**
  * A decoder for [Model]s.
  *
- * @param buffer The uncompressed [ByteBuffer] containing the encoded `Model`.
+ * @param buffer The uncompressed [ByteBuf] containing the encoded `Model`.
  */
-class ModelDecoder(private val buffer: ByteBuffer) {
+class ModelDecoder(private val buffer: ByteBuf) {
 
     /**
      * An indexed array of [Vertex]es in the [Model] being decoded.
@@ -35,19 +33,19 @@ class ModelDecoder(private val buffer: ByteBuffer) {
     private var features: Set<ModelFeature> = HashSet()
 
     fun decode(): Model {
-        val header = buffer.asReadOnlyBuffer()
-        header.position(buffer.capacity() - HEADER_SIZE)
+        val header = buffer.copy()
+        header.readerIndex(buffer.capacity() - HEADER_SIZE)
 
-        vertices = arrayOfNulls(header.getUnsignedShort())
-        faces = arrayOfNulls(header.getUnsignedShort())
-        texCoords = arrayOfNulls(header.getUnsignedByte())
+        vertices = arrayOfNulls(header.readUnsignedShort())
+        faces = arrayOfNulls(header.readUnsignedShort())
+        texCoords = arrayOfNulls(header.readUnsignedByte().toInt())
 
         features = ModelFeature.decodeFrom(header)
 
-        val xDataLength = header.getUnsignedShort()
-        val yDataLength = header.getUnsignedShort()
-        val zDataLength = header.getUnsignedShort()
-        val faceDataLength = header.getUnsignedShort()
+        val xDataLength = header.readUnsignedShort()
+        val yDataLength = header.readUnsignedShort()
+        val zDataLength = header.readUnsignedShort()
+        val faceDataLength = header.readUnsignedShort()
 
         var offset = vertices.size
 
@@ -111,13 +109,13 @@ class ModelDecoder(private val buffer: ByteBuffer) {
      * @param offset The offset into `buffer` of the texture coordinate data.
      */
     private fun decodeTexCoords(offset: Int) {
-        val texCoordsBuffer = buffer.asReadOnlyBuffer()
-        texCoordsBuffer.position(offset)
+        val texCoordsBuffer = buffer.copy()
+        texCoordsBuffer.readerIndex(offset)
 
         for (index in texCoords.indices) {
-            val origin = texCoordsBuffer.getUnsignedByte()
-            val u = texCoordsBuffer.getUnsignedByte()
-            val v = texCoordsBuffer.getUnsignedByte()
+            val origin = texCoordsBuffer.readUnsignedByte().toInt()
+            val u = texCoordsBuffer.readUnsignedByte().toInt()
+            val v = texCoordsBuffer.readUnsignedByte().toInt()
 
             texCoords[index] = TexCoord(origin, u, v)
         }
@@ -137,26 +135,26 @@ class ModelDecoder(private val buffer: ByteBuffer) {
     ) {
         check(faces.isNotEmpty()) { "Must be 1 or more faces present." }
 
-        val faceData = buffer.asReadOnlyBuffer()
-        faceData.position(faceDataOffset)
+        val faceData = buffer.copy()
+        faceData.readerIndex(faceDataOffset)
 
-        val types = buffer.asReadOnlyBuffer()
-        types.position(typesOffset)
+        val types = buffer.copy()
+        types.readerIndex(typesOffset)
 
-        val colours = buffer.asReadOnlyBuffer()
-        colours.position(coloursOffset)
+        val colours = buffer.copy()
+        colours.readerIndex(coloursOffset)
 
-        val priorities = buffer.asReadOnlyBuffer()
-        priorities.position(renderPrioritiesOffset)
+        val priorities = buffer.copy()
+        priorities.readerIndex(renderPrioritiesOffset)
 
-        val alphas = buffer.asReadOnlyBuffer()
-        alphas.position(alphasOffset)
+        val alphas = buffer.copy()
+        alphas.readerIndex(alphasOffset)
 
-        val bones = buffer.asReadOnlyBuffer()
-        bones.position(bonesOffset)
+        val bones = buffer.copy()
+        bones.readerIndex(bonesOffset)
 
-        val texturePointers = buffer.asReadOnlyBuffer()
-        texturePointers.position(texturePointersOffset)
+        val texturePointers = buffer.copy()
+        texturePointers.readerIndex(texturePointersOffset)
 
         var faceA = 0
         var faceB = 0
@@ -166,38 +164,38 @@ class ModelDecoder(private val buffer: ByteBuffer) {
         val priorityFeature = features.find { it is GlobalFaceRenderPriority } as GlobalFaceRenderPriority?
 
         for (index in faces.indices) {
-            val type = types.getUnsignedByte()
-            val colour = colours.getUnsignedShort()
+            val type = types.readUnsignedByte().toInt()
+            val colour = colours.readUnsignedShort()
 
-            val renderPriority = priorityFeature?.priority ?: priorities.getUnsignedByte()
+            val renderPriority = priorityFeature?.priority ?: priorities.readUnsignedByte().toInt()
 
-            val alpha = if (FaceTransparency in features) alphas.getUnsignedByte() else -1
-            val bone = if (FaceSkinning in features) bones.getUnsignedByte() else -1
-            val texturePointer = if (FaceTextures in features) bones.getUnsignedByte() else -1
+            val alpha = if (FaceTransparency in features) alphas.readUnsignedByte().toInt() else -1
+            val bone = if (FaceSkinning in features) bones.readUnsignedByte().toInt() else -1
+            val texturePointer = if (FaceTextures in features) bones.readUnsignedByte().toInt() else -1
 
             if (type == 1) {
-                faceA = faceData.getSignedSmart() + offset
+                faceA = faceData.readSignedSmart() + offset
                 offset = faceA
 
-                faceB = faceData.getSignedSmart() + offset
+                faceB = faceData.readSignedSmart() + offset
                 offset = faceB
 
-                faceC = faceData.getSignedSmart() + offset
+                faceC = faceData.readSignedSmart() + offset
                 offset = faceC
             } else if (type == 2) {
                 faceB = faceC
-                faceC = faceData.getSignedSmart() + offset
+                faceC = faceData.readSignedSmart() + offset
                 offset = faceC
             } else if (type == 3) {
                 faceA = faceC
-                faceC = faceData.getSignedSmart() + offset
+                faceC = faceData.readSignedSmart() + offset
                 offset = faceC
             } else if (type == 4) {
                 val temp = faceA
                 faceA = faceB
                 faceB = temp
 
-                faceC = faceData.getSignedSmart() + offset
+                faceC = faceData.readSignedSmart() + offset
                 offset = faceC
             }
 
@@ -211,43 +209,43 @@ class ModelDecoder(private val buffer: ByteBuffer) {
     private fun decodeVertices(xDataOffset: Int, yDataOffset: Int, zDataOffset: Int, vertexBonesOffset: Int) {
         check(vertices.isNotEmpty()) { "Vertex count must be greater than 0." }
 
-        val directionBuffer = buffer.asReadOnlyBuffer()
-        directionBuffer.position(0)
-        val verticesX = buffer.asReadOnlyBuffer()
-        verticesX.position(xDataOffset)
+        val directionBuffer = buffer.copy()
+        directionBuffer.readerIndex(0)
+        val verticesX = buffer.copy()
+        verticesX.readerIndex(xDataOffset)
 
-        val verticesY = buffer.asReadOnlyBuffer()
-        verticesY.position(yDataOffset)
+        val verticesY = buffer.copy()
+        verticesY.readerIndex(yDataOffset)
 
-        val verticesZ = buffer.asReadOnlyBuffer()
-        verticesZ.position(zDataOffset)
+        val verticesZ = buffer.copy()
+        verticesZ.readerIndex(zDataOffset)
 
-        val bones = buffer.asReadOnlyBuffer()
-        bones.position(vertexBonesOffset)
+        val bones = buffer.copy()
+        bones.readerIndex(vertexBonesOffset)
 
         var baseX = 0
         var baseY = 0
         var baseZ = 0
 
         for (index in vertices.indices) {
-            val mask = directionBuffer.getUnsignedByte()
+            val mask = directionBuffer.readUnsignedByte().toInt()
             var x = when {
-                mask and VERTEX_X_POSITION != 0 -> verticesX.getSignedSmart()
+                mask and VERTEX_X_POSITION != 0 -> verticesX.readSignedSmart()
                 else -> 0
             }
 
             var y = when {
-                mask and VERTEX_Y_POSITION != 0 -> verticesY.getSignedSmart()
+                mask and VERTEX_Y_POSITION != 0 -> verticesY.readSignedSmart()
                 else -> 0
             }
 
             var z = when {
-                mask and VERTEX_Z_POSITION != 0 -> verticesZ.getSignedSmart()
+                mask and VERTEX_Z_POSITION != 0 -> verticesZ.readSignedSmart()
                 else -> 0
             }
 
             val bone = when (VertexSkinning) {
-                in features -> bones.getUnsignedByte()
+                in features -> bones.readUnsignedByte().toInt()
                 else -> -1
             }
 

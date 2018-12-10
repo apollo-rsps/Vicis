@@ -1,4 +1,4 @@
-package rs.emulate.modern.compression
+package rs.emulate.util.compression
 
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals

@@ -2,9 +2,10 @@ package rs.emulate.legacy
 
 import com.google.common.base.Preconditions
 import com.google.common.collect.ImmutableList
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
-import rs.emulate.util.getRemainingBytes
 import rs.emulate.util.getUnsignedByte
 import rs.emulate.util.getUnsignedShort
 import rs.emulate.util.getUnsignedTriByte
@@ -35,9 +36,9 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
     /**
      * The cached CRC table.
      */
-    private var crcs: ByteBuffer? = null
+    private var crcs: ByteBuf? = null
 
-    val crcTable: ByteBuffer
+    val crcTable: ByteBuf
         get() {
             if (readOnly) {
                 synchronized(this) {
@@ -47,26 +48,25 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
                 val archives = getFileCount(0)
                 var hash = 1234
 
-                val buffer = ByteBuffer.allocate((archives + 1) * Integer.BYTES)
+                val buffer = Unpooled.buffer((archives + 1) * Integer.BYTES)
                 val crc = CRC32()
 
                 for (file in 1 until archives) {
-                    val bytes = get(0, file).getRemainingBytes()
+                    val bytes = get(0, file).readableBytes()
                     crc.update(bytes)
 
                     val value = crc.value.toInt()
-                    buffer.putInt(value)
+                    buffer.writeInt(value)
                     hash = (hash shl 1) + value
                 }
 
-                buffer.putInt(hash)
-                buffer.flip()
+                buffer.writeInt(hash)
 
                 synchronized(this) {
-                    return buffer.asReadOnlyBuffer().also {
-                        crcs = it
-                    }
+                    crcs = buffer
                 }
+
+                return buffer.asReadOnly()
             }
 
             throw IOException("Cannot get CRC table from a writable file system.")
@@ -83,25 +83,11 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         data = getDataFile(base)
     }
 
-    override fun close() {
-        if (data != null) {
-            synchronized(data) {
-                data.close()
-            }
-        }
-
-        for (index in indices) {
-            synchronized(index) {
-                index.close()
-            }
-        }
-    }
-
     fun getArchive(type: Int, file: Int): Archive {
         return ArchiveCodec.decode(get(type, file))
     }
 
-    operator fun get(type: Int, file: Int): ByteBuffer {
+    operator fun get(type: Int, file: Int): ByteBuf {
         val (size, block) = getIndex(type, file)
         val buffer = ByteBuffer.allocate(size)
 
@@ -147,7 +133,8 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
             }
         }
 
-        return buffer.apply { flip() }
+        buffer.flip()
+        return Unpooled.wrappedBuffer(buffer) // TODO do this properly
     }
 
     fun getIndex(type: Int, file: Int): Index {
@@ -157,13 +144,13 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         val position = (file * Index.BYTES).toLong()
         require(position >= 0 && index.length() >= position + Index.BYTES) { "Could not find find index." }
 
-        val buffer = ByteBuffer.allocate(Index.BYTES)
+        val bytes = ByteArray(Index.BYTES)
         synchronized(index) {
             index.seek(position)
-            index.readFully(buffer.array())
+            index.readFully(bytes)
         }
 
-        return IndexCodec.decode(buffer)
+        return IndexCodec.decode(Unpooled.wrappedBuffer(bytes))
     }
 
     fun getFileCount(type: Int): Int {
@@ -172,6 +159,20 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
         val index = indices[type]
         synchronized(index) {
             return (index.length() / Index.BYTES).toInt()
+        }
+    }
+
+    override fun close() {
+        if (data != null) {
+            synchronized(data) {
+                data.close()
+            }
+        }
+
+        for (index in indices) {
+            synchronized(index) {
+                index.close()
+            }
         }
     }
 

@@ -1,7 +1,9 @@
 package rs.emulate.legacy
 
-import rs.emulate.util.getUnsignedTriByte
-import rs.emulate.util.putTriByte
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
+import rs.emulate.util.readUnsignedTriByte
+import rs.emulate.util.writeTriByte
 import java.nio.ByteBuffer
 
 /**
@@ -13,11 +15,11 @@ internal object IndexCodec {
      * Decodes the [ByteBuffer] into an index.
      * @throws IllegalArgumentException If the buffer length is invalid.
      */
-    fun decode(buffer: ByteBuffer): Index {
-        require(buffer.remaining() == Index.BYTES) { "Incorrect buffer length." }
+    fun decode(buffer: ByteBuf): Index {
+        require(buffer.readableBytes() == Index.BYTES) { "Incorrect buffer length." }
 
-        val size = buffer.getUnsignedTriByte()
-        val block = buffer.getUnsignedTriByte()
+        val size = buffer.readUnsignedTriByte()
+        val block = buffer.readUnsignedTriByte()
 
         return Index(size, block)
     }
@@ -25,8 +27,11 @@ internal object IndexCodec {
     /**
      * Encodes the index into a [ByteBuffer].
      */
-    fun encode(index: Index): ByteBuffer {
-        return ByteBuffer.allocate(6).putTriByte(index.size).putTriByte(index.block).apply { flip() }
+    fun encode(index: Index): ByteBuf {
+        return Unpooled.buffer(6).apply {
+            writeTriByte(index.size)
+            writeTriByte(index.block)
+        }
     }
 
 }

@@ -7,7 +7,7 @@ import rs.emulate.editor.resource.index.ResourceIndexBuilder
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.ModelDecoder
-import rs.emulate.util.CompressionUtils
+import rs.emulate.util.compression.gunzip
 
 data class ModelResource(override val id: ResourceId, val model: Model) : Resource {
 
@@ -24,7 +24,7 @@ class ModelResourceBundle(private val fs: IndexedFileSystem) : ResourceBundle<Mo
 
     override fun load(id: ModelResourceId): Resource {
         val compressed = fs[MODEL_INDEX, id.id]
-        val decompressed = CompressionUtils.gunzip(compressed)
+        val decompressed = compressed.gunzip()
 
         val decoder = ModelDecoder(decompressed)
         return ModelResource(id, decoder.decode())

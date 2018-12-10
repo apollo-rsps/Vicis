@@ -1,15 +1,14 @@
 package rs.emulate.legacy.widget.type
 
+import io.netty.buffer.ByteBuf
+import io.netty.buffer.Unpooled
 import rs.emulate.legacy.widget.Widget
 import rs.emulate.legacy.widget.WidgetGroup
 import rs.emulate.legacy.widget.WidgetGroup.INVENTORY
 import rs.emulate.legacy.widget.WidgetOption
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.util.Point
-import rs.emulate.util.putAsciiString
-import rs.emulate.util.putBoolean
-import rs.emulate.util.putByte
-import java.nio.ByteBuffer
+import rs.emulate.util.writeAsciiString
 
 /**
  * Contains properties used by [WidgetGroup.INVENTORY].
@@ -49,47 +48,44 @@ class InventoryWidget(
         require(sprites.size == spritePoints.size) { "Sprite names and Points must have an equal size." }
     }
 
-    public override fun encodeBespoke(): ByteBuffer {
+    public override fun encodeBespoke(): ByteBuf {
         var size = actions.map(String::length).sum() + actions.size
         size += sprites.map { name ->
             (name?.length ?: 0) + 2 * java.lang.Short.BYTES + java.lang.Byte.BYTES
         }.sum()
 
-        val action = ByteBuffer.allocate(size)
-        actions.forEach { action.putAsciiString(it) }
-        action.flip()
+        val action = Unpooled.buffer(size)
+        actions.forEach { action.writeAsciiString(it) }
 
         size = sprites.map { name ->
             (name?.length ?: 0) + 2 * java.lang.Short.BYTES + java.lang.Byte.BYTES
         }.sum()
-        val sprite = ByteBuffer.allocate(size)
+        val sprite = Unpooled.buffer(size)
 
         for (index in sprites.indices) {
             val name = sprites[index]
-            sprite.putBoolean(name != null)
+            sprite.writeBoolean(name != null)
 
             if (name != null) {
                 val point = spritePoints[index]
 
-                sprite.putShort(point.x.toShort()).putShort(point.y.toShort())
-                sprite.putAsciiString(name)
+                sprite.writeShort(point.x).writeShort(point.y)
+                sprite.writeAsciiString(name)
             }
         }
 
-        sprite.flip()
+        val buffer = Unpooled.buffer(6 * java.lang.Byte.BYTES + action.readableBytes() + sprite.readableBytes())
+        // TODO use composite buffer
+        buffer.writeBoolean(swappable)
+        buffer.writeBoolean(actions.isEmpty())
+        buffer.writeBoolean(usable)
+        buffer.writeBoolean(replace)
 
-        val buffer = ByteBuffer.allocate(6 * java.lang.Byte.BYTES + action.remaining() + sprite.remaining())
+        buffer.writeByte(padding.x).writeByte(padding.y)
+        buffer.writeBytes(sprite)
+        buffer.writeBytes(action)
 
-        buffer.putBoolean(swappable)
-        buffer.putBoolean(actions.isEmpty())
-        buffer.putBoolean(usable)
-        buffer.putBoolean(replace)
-
-        buffer.putByte(padding.x).putByte(padding.y)
-        buffer.put(sprite)
-        buffer.put(action)
-
-        return buffer.apply { flip() }
+        return buffer
     }
 
 }
