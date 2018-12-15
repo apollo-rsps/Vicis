@@ -1,20 +1,20 @@
 package rs.emulate.editor.core.project.actions
 
-import com.dlsc.formsfx.model.structure.Field
-import com.dlsc.formsfx.model.structure.Form
-import com.dlsc.formsfx.model.structure.Group
-import com.dlsc.formsfx.view.renderer.FormRenderer
-import com.dlsc.formsfx.view.util.ColSpan
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.ScrollPane
-import javafx.scene.layout.HBox
-import javafx.scene.layout.Pane
-import javafx.scene.layout.Priority
-import rs.emulate.editor.ui.startup.EditorCacheType
-import tornadofx.enableWhen
+import javafx.stage.Stage
+import rs.emulate.editor.core.project.ProjectFactory
+import rs.emulate.editor.core.project.createProject
+import rs.emulate.editor.core.workbench.WorkbenchContext
+import rs.emulate.editor.utils.formfx.createFormBuilder
+import rs.emulate.editor.utils.javafx.createAsyncEventHandler
+import java.nio.file.Files
+import java.nio.file.Paths
+import javax.inject.Inject
 
-class OpenProjectDialog {
+class OpenProjectDialog @Inject constructor(val ctx: WorkbenchContext, val projectLoader: ProjectFactory) {
     @FXML
     lateinit var openButton: Button
 
@@ -24,29 +24,29 @@ class OpenProjectDialog {
     @FXML
     lateinit var formPane: ScrollPane
 
+    private val model = OpenProjectModel()
+
     @FXML
     fun initialize() {
-        val form = Form.of(
-            Group.of(
-                Field.ofStringType("cache")
-                    .label("Project name")
-                    .required(true)
-            ),
-            Group.of(
-                Field.ofSingleSelectionType(listOf(EditorCacheType.Legacy, EditorCacheType.Modern))
-                    .labelDescription("Game data version")
-                    .required(true),
+        val form = createFormBuilder()
+            .include("projectName", "vfsRoot", "vfsType")
+            .source(model)
+            .build()
 
-                Field.ofStringType("")
-                    .labelDescription("Game data location")
-                    .required(true)
-            )
-        )
+        formPane.content = form
+        openButton.onAction = createAsyncEventHandler(this::onOpenAction)
+        cancelButton.onAction = createAsyncEventHandler(this::onCancelAction)
+    }
 
-        openButton.enableWhen(form.validProperty())
+    private suspend fun onCancelAction(action: ActionEvent) {
+        (formPane.scene.window as Stage).close()
+    }
 
-        val element = FormRenderer(form)
+    private suspend fun onOpenAction(action: ActionEvent) {
+        val vfsRootPath = Paths.get(model.vfsRoot.get())
+        val vfsActualRootPath = if (Files.isDirectory(vfsRootPath)) vfsRootPath else vfsRootPath.parent
+        val project = projectLoader.createProject(model.projectName.get(), vfsActualRootPath, model.vfsType.get())
 
-        formPane.content = element
+        ctx.openProject(project)
     }
 }

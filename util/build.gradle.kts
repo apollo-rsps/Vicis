@@ -1,8 +1,10 @@
 plugins {
     kotlin("jvm")
+    `java-library`
 }
 
 description = "Vicis Utilities"
+ext["moduleName"] = "rs.emulate.util"
 
 val bouncycastleVersion: String by project
 val commonsCompressVersion : String by project

@@ -1,6 +1,6 @@
 package rs.emulate.editor.resource.bundles.legacy.config.npc
 
-import rs.emulate.editor.ui.workspace.components.propertysheet.ListedProperty
+import rs.emulate.editor.core.workbench.properties.ListedProperty
 
 sealed class NpcProperty(
     override val name: String,

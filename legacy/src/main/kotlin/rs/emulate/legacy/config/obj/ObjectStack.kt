@@ -21,7 +21,7 @@ class ObjectStack {
      * Creates the ItemStack.
      */
     constructor(amount: Int, model: Int) {
-        require(amount.toLong() > 0) { "Amount must be greater than 0, received $amount." }
+        require(amount.toLong() >= 0) { "Amount must be greater than or equal to 0, received $amount." }
         require(model.toLong() >= 0) { "Model id must be greater than or equal to 0, received $model." }
         this.amount = amount
         this.model = model

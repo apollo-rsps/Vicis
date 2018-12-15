@@ -4,6 +4,7 @@ plugins {
 }
 
 description = "Vicis 3D SceneGraph"
+ext["moduleName"] = "rs.emulate.scene3d"
 
 val guavaVersion: String by project
 val openjfxVersion: String by project

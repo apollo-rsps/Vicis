@@ -29,7 +29,7 @@ object SequenceDefinitionDecoder : ConfigDecoder<SequenceDefinition> {
                 val order = IntArray(count + 1)
 
                 repeat(count) { index -> order[index] = buffer.readUnsignedByte().toInt() }
-                order[count + 1] = 9_999_999
+                order[count] = 9_999_999
 
                 interleaveOrder = order
             }

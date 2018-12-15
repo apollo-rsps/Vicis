@@ -2,7 +2,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
+    `java-library`
 }
+
+ext["moduleName"] = "rs.emulate.legacy"
 
 val commonsCompressVersion: String by project
 val guavaVersion: String by project
@@ -14,9 +17,6 @@ dependencies {
 
     implementation("org.apache.commons", "commons-compress", commonsCompressVersion)
     implementation("com.google.guava", "guava", guavaVersion)
-
-    // @TODO - remove when transitive dependency resolution is fixed for the API configuration
-    implementation("io.netty", "netty-buffer", nettyVersion)
 
     api(project(":util"))
 }

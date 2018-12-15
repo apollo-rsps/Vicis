@@ -1,18 +1,13 @@
 package rs.emulate.editor.core.workbench
 
-import com.panemu.tiwulfx.control.DetachableTabPane
 import javafx.fxml.FXML
-import javafx.scene.Node
 import javafx.scene.control.MenuBar
 import javafx.scene.control.Tab
-import javafx.scene.layout.BorderPane
-import rs.emulate.editor.core.action.Action
+import javafx.scene.control.TabPane
 import rs.emulate.editor.core.workbench.docking.DockingArea
-import rs.emulate.editor.core.workbench.docking.DockingComponent
-import rs.emulate.editor.core.workbench.docking.WorkbenchDockNodeFactory
-import rs.emulate.editor.core.workbench.menu.WorkbenchMenuFactory
+import rs.emulate.editor.core.workbench.docking.DockingNodeFactory
+import rs.emulate.editor.core.workbench.menu.MenuFactory
 import rs.emulate.editor.javafx.loader.FxmlLoader
-import tornadofx.add
 import javax.inject.Inject
 
 /**
@@ -21,24 +16,24 @@ import javax.inject.Inject
 class Workbench @Inject constructor(
     val ctx: WorkbenchContext,
     val fxmlLoader: FxmlLoader,
-    val dockedNodeFactory: WorkbenchDockNodeFactory,
-    val menuFactory: WorkbenchMenuFactory
+    val dockedNodeFactory: DockingNodeFactory,
+    val menuFactory: MenuFactory
 ) {
 
     @FXML
-    lateinit var borderPane: DetachableTabPane
+    lateinit var borderPane: TabPane
 
     @FXML
-    lateinit var bottomDock: DetachableTabPane
+    lateinit var bottomDock: TabPane
 
     @FXML
-    lateinit var leftDock: DetachableTabPane
+    lateinit var leftDock: TabPane
 
     @FXML
-    lateinit var rightDock: DetachableTabPane
+    lateinit var rightDock: TabPane
 
     @FXML
-    lateinit var centerDock: DetachableTabPane
+    lateinit var centerDock: TabPane
 
     @FXML
     lateinit var menuBar: MenuBar

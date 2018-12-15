@@ -1,3 +1,5 @@
+import groovy.xml.dom.DOMCategory.attributes
+import org.gradle.jvm.tasks.Jar
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -38,11 +40,30 @@ subprojects {
             }
         }
 
+        tasks.withType<JavaCompile>().configureEach {
+            val kotlinCompileTask = tasks.findByName("compileKotlin") as KotlinCompile
+
+            destinationDir = kotlinCompileTask.destinationDir
+            dependsOn(kotlinCompileTask)
+
+            doFirst {
+                options.compilerArgs = listOf("--module-path", classpath.asPath)
+            }
+        }
+
         tasks.withType<KotlinCompile>().configureEach {
             println("Configuring $name in project ${project.name}...")
 
             kotlinOptions {
                 jvmTarget = "1.8"
+            }
+        }
+
+        tasks.withType<Jar> {
+            inputs.property("moduleName", ext["moduleName"])
+
+            manifest {
+                attributes("Automatic-Module-Name" to ext["moduleName"])
             }
         }
     }

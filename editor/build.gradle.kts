@@ -1,8 +1,15 @@
+import org.gradle.internal.jvm.Jvm
+import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     application
+    `java-library`
     kotlin("jvm")
     id("org.openjfx.javafxplugin")
 }
+
+ext["moduleName"] = "rs.emulate.util"
 
 val classpathScannerVersion: String by project
 val controlsFxVersion: String by project
@@ -24,15 +31,12 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
     implementation(kotlinx("coroutines-core", "1.0.1"))
     implementation(kotlinx("coroutines-javafx", "1.0.1"))
     implementation(kotlinx("coroutines-jdk8", "1.0.1"))
 
-    implementation("no.tornado", "tornadofx", tornadoFxVersion)
     implementation("org.controlsfx", "controlsfx", controlsFxVersion)
-    implementation("com.github.thomasnield", "rxkotlinfx", rxkotlinFxVersion)
-    implementation("io.reactivex.rxjava2", "rxkotlin", rxkotlinVersion)
-    implementation("io.github.lukehutch", "fast-classpath-scanner", classpathScannerVersion)
     implementation("org.openjfx", "javafx-controls", openjfxVersion)
     implementation("org.openjfx", "javafx-fxml", openjfxVersion)
     implementation("org.openjfx", "javafx-web", openjfxVersion)
@@ -47,16 +51,22 @@ dependencies {
     implementation("com.dooapp.fxform2", "core", "9.0.0")
     implementation("com.panemu", "tiwulfx", "3.0")
 
-    // @TODO - remove when transitive dependency resolution is fixed for the API configuration
-    implementation("io.netty", "netty-buffer", nettyVersion)
+    // Default icon pack used for elements in the UI.
+    implementation(group = "org.kordamp.ikonli", name = "ikonli-core", version = "11.0.2")
+    implementation(group = "org.kordamp.ikonli", name = "ikonli-javafx", version = "11.0.2")
+    implementation("org.kordamp.ikonli:ikonli-foundation-pack:11.0.2")
+
+    implementation("org.hibernate.validator", "hibernate-validator", "6.0.2.Final")
+    implementation("org.glassfish", "javax.el", "3.0.1-b09")
 
     implementation(project(":legacy"))
+    implementation(project(":modern"))
     implementation(project(":scene3d"))
     implementation(project(":util"))
 }
 
 application {
-    mainClassName = "rs.emulate.editor.core.workbench.WorkbenchApplication"
+    mainClassName = "rs.emulate.editor/rs.emulate.editor.WorkbenchApplication"
     applicationDefaultJvmArgs = listOf(
         "--illegal-access=warn",
         "--add-opens", "javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
@@ -71,4 +81,30 @@ application {
 
 javafx {
     modules = listOf("javafx.controls", "javafx.fxml", "javafx.web")
+}
+
+task<Exec>("jlink") {
+    workingDir = buildDir
+
+    val jvm = Jvm.current()
+    val jvmHome = jvm.javaHome
+    val jvmJmodsHome = jvmHome.toPath().resolve("jmods")
+    val jlinkClasspath = sourceSets["main"].runtimeClasspath +
+        configurations.runtimeClasspath +
+        fileTree(jvmJmodsHome) {
+            include("*.jmod")
+        }
+
+    dependsOn(tasks.withType<KotlinCompile>())
+    doFirst {
+        commandLine = listOf(
+            jvm.getExecutable("jlink").toString(),
+            "--strip-debug",
+            "--no-header-files",
+            "--no-man-pages",
+            "--module-path", jlinkClasspath.asPath,
+            "--add-modules=rs.emulate.editor",
+            "--output", "$buildDir/dist"
+        )
+    }
 }

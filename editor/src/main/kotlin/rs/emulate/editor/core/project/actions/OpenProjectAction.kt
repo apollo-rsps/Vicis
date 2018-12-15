@@ -1,29 +1,24 @@
 package rs.emulate.editor.core.project.actions
 
-import javafx.event.ActionEvent
-import javafx.scene.Node
+import javafx.event.Event
 import javafx.scene.Parent
-import javafx.scene.Scene
-import javafx.scene.control.MenuItem
-import javafx.stage.Stage
-import rs.emulate.editor.core.action.Action
-import rs.emulate.editor.core.action.annotation.ActionDef
+import javafx.scene.control.Alert
+import rs.emulate.editor.core.action.WorkbenchAction
+import rs.emulate.editor.core.action.annotation.Action
 import rs.emulate.editor.core.action.annotation.MenuEntry
 import rs.emulate.editor.core.workbench.WorkbenchContext
 import rs.emulate.editor.javafx.loader.FxmlLoader
-import tornadofx.show
 import javax.inject.Inject
 
-@ActionDef(id = "open-project")
+@Action(id = "open-project")
 @MenuEntry(categories = ["file"])
-class OpenProjectAction @Inject constructor(val fxmlLoader: FxmlLoader, val ctx: WorkbenchContext) : Action {
-    override fun handle(event: ActionEvent) {
-        val dialog = fxmlLoader.load<Parent>(this.javaClass.getResource("/rs/emulate/editor/core/project/actions/OpenProjectDialog.fxml"))
-        val stage = Stage()
+class OpenProjectAction @Inject constructor(val fxmlLoader: FxmlLoader, val ctx: WorkbenchContext) : WorkbenchAction {
+    override suspend fun handle(event: Event) {
+        val dialogContent = fxmlLoader.load<Parent>(this.javaClass.getResource("/rs/emulate/editor/core/project/actions/OpenProjectDialog.fxml"))
+        val dialog = Alert(Alert.AlertType.NONE, "Open Project")
 
-        stage.scene = Scene(dialog)
-        stage.initOwner(ctx.window)
-        stage.show()
+        dialog.dialogPane.content = dialogContent
+        dialog.showAndWait()
     }
 
 }

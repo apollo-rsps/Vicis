@@ -1,7 +1,9 @@
 plugins {
     kotlin("jvm")
+    `java-library`
 }
 
+ext["moduleName"] = "rs.emulate.modern"
 
 val bouncycastleVersion: String by project
 val guavaVersion : String by project

@@ -30,7 +30,7 @@ object IdentikitDefinitionDecoder : ConfigDecoder<IdentikitDefinition> {
             3 -> playerDesignStyle = true
             in 40 until 50 -> originalColours[opcode - 40] = buffer.readUnsignedShort()
             in 50 until 60 -> replacementColours[opcode - 50] = buffer.readUnsignedShort()
-            in 60 until 70 -> widgetModels[opcode - 50] = buffer.readUnsignedShort()
+            in 60 until 70 -> widgetModels[opcode - 60] = buffer.readUnsignedShort()
         }
     }
 
