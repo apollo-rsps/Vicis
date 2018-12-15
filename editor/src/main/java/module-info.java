@@ -33,6 +33,9 @@ open module rs.emulate.editor {
 	requires org.kordamp.ikonli.javafx;
 	requires org.kordamp.ikonli.foundation;
 	requires kotlinx.coroutines.jdk8;
+	requires io.reactivex.rxjava2;
+	requires rxjavafx;
+	requires rxkotlin;
 
 	// Only export our main class.
 	exports rs.emulate.editor;

@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.multibindings.Multibinder
 import rs.emulate.editor.core.workbench.docking.DockingComponent
 import rs.emulate.editor.core.workbench.explorer.WorkbenchExplorerDockingComponent
+import rs.emulate.editor.core.workbench.properties.WorkbenchPropertySheetComponent
 
 class WorkbenchModule : AbstractModule() {
     override fun configure() {
@@ -15,5 +16,9 @@ class WorkbenchModule : AbstractModule() {
         dockingComponentBuilder
             .addBinding()
             .toInstance(WorkbenchExplorerDockingComponent())
+
+        dockingComponentBuilder
+            .addBinding()
+            .toInstance(WorkbenchPropertySheetComponent())
     }
 }

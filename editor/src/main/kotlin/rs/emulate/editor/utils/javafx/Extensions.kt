@@ -1,5 +1,6 @@
 package rs.emulate.editor.utils.javafx
 
+import javafx.beans.value.ObservableValue
 import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.event.Event
@@ -17,6 +18,8 @@ val Node.window : Window
 
 val Node.stage : Stage?
     get() = scene.window as? Stage
+
+fun <T> ObservableValue<T>.onChange(callback: (T) -> Unit) = addListener { _, _, newValue -> callback(newValue) }
 
 fun <E : Event> createAsyncEventHandler(handler: suspend (E) -> Unit): EventHandler<E> {
     val actor = GlobalScope.actor<E>(Dispatchers.Main, capacity = Channel.CONFLATED) {

@@ -7,6 +7,7 @@ import rs.emulate.editor.core.workbench.WorkbenchContext
 import rs.emulate.editor.core.workbench.explorer.node.ProjectListNode
 import rs.emulate.editor.core.workbench.explorer.tree.ExplorerTreeCellFactory
 import rs.emulate.editor.core.workbench.explorer.tree.ExplorerTreeItem
+import rs.emulate.editor.utils.javafx.createAsyncEventHandler
 import javax.inject.Inject
 
 class WorkbenchExplorer @Inject constructor(val ctx: WorkbenchContext, val openAction: OpenContentAction) {

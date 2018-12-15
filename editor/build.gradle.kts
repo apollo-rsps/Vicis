@@ -50,7 +50,9 @@ dependencies {
     implementation("net.clearcontrol:dockfx:0.1.12")
     implementation("com.dooapp.fxform2", "core", "9.0.0")
     implementation("com.panemu", "tiwulfx", "3.0")
-
+    implementation("io.reactivex.rxjava2:rxjava:2.2.4")
+    implementation("io.reactivex.rxjava2:rxjavafx:2.2.2")
+    implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")
     implementation("com.googlecode.cqengine:cqengine:3.0.0")
 
     // Default icon pack used for elements in the UI.
