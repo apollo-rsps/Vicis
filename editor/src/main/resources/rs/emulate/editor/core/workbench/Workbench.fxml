@@ -3,6 +3,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
+<?import org.controlsfx.control.StatusBar?>
 <BorderPane fx:controller="rs.emulate.editor.core.workbench.Workbench" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <top>
@@ -25,6 +26,7 @@
         </BorderPane>
     </center>
     <bottom>
+        <StatusBar fx:id="statusBar"/>
     </bottom>
 </BorderPane>
 

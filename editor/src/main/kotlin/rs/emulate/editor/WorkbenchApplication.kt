@@ -7,6 +7,7 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import rs.emulate.editor.core.CoreModule
 import rs.emulate.editor.core.action.WorkbenchActionModule
+import rs.emulate.editor.core.task.TaskModule
 import rs.emulate.editor.core.workbench.WorkbenchModule
 import rs.emulate.editor.javafx.JavaFxModule
 import rs.emulate.editor.javafx.loader.FxmlLoader
@@ -17,6 +18,7 @@ class WorkbenchApplication : Application() {
         val injector = Guice.createInjector(
             CoreModule(),
             JavaFxModule(),
+            TaskModule(),
             WorkbenchModule(),
             WorkbenchActionModule()
         )

@@ -8,12 +8,12 @@ interface WorkbenchExplorerNode {
 
     val isLeaf: Boolean
 
-    suspend fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>)
+    fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>)
 }
 
 abstract class WorkbenchExplorerLeaf : WorkbenchExplorerNode {
 
     override val isLeaf = true
 
-    override suspend fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>) {}
+    override fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>) {}
 }

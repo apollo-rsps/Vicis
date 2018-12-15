@@ -2,6 +2,7 @@ package rs.emulate.editor.core.workbench.explorer.tree
 
 import javafx.scene.control.TreeCell
 import javafx.scene.control.TreeView
+import javafx.scene.paint.Color
 import javafx.util.Callback
 import org.kordamp.ikonli.foundation.Foundation
 import org.kordamp.ikonli.javafx.FontIcon

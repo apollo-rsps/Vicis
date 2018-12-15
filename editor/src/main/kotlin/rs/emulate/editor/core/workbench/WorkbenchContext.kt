@@ -4,8 +4,6 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.stage.Window
 import rs.emulate.editor.core.project.Project
-import rs.emulate.editor.vfs.ResourceType
-import rs.emulate.editor.vfs.VirtualFileId
 import javax.inject.Singleton
 
 @Singleton
@@ -17,17 +15,13 @@ class WorkbenchContext {
         }
         get() = windowProp.get()
 
-    val projects = FXCollections.observableArrayList<Project<out VirtualFileId, out ResourceType>>()
+    val projects = FXCollections.observableArrayList<Project>()
 
-    fun openProject(project: Project<out VirtualFileId, out ResourceType>) {
+    fun openProject(project: Project) {
         projects.add(project)
     }
 
-    fun closeProject(project: Project<out VirtualFileId, out ResourceType>) {
+    fun closeProject(project: Project) {
         projects.remove(project)
-    }
-
-    init {
-
     }
 }

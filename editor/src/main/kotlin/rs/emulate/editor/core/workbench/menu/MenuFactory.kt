@@ -9,14 +9,11 @@ import javax.inject.Inject
 class MenuFactory @Inject constructor(val actions: @JvmSuppressWildcards Set<WorkbenchAction>) {
     fun createMenu(): WorkbenchMenu {
         val menus = mutableMapOf<String, Menu>()
+        val menu = Menu("File")
+        menus["File"] = menu
 
         actions.forEach { action ->
             val actionDef = action.actionDef
-            val menuDef = action.menuEntry ?: return@forEach
-
-            val category = menuDef.categories.fold("") { cat, next -> "${cat}.${next}" }
-            val categoryTitle = menuDef.categories.last()
-            val menu = menus.computeIfAbsent(category) { Menu(categoryTitle) }
             val menuItem = MenuItem(actionDef.id)
 
             menu.items.add(menuItem)

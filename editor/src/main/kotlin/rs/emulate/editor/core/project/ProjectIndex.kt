@@ -1,5 +1,5 @@
 package rs.emulate.editor.core.project
 
-class ProjectIndex {
+import javafx.collections.ObservableList
 
-}
+class ProjectIndex(val categories: ObservableList<ProjectIndexCategory>)

@@ -1,9 +1,12 @@
 package rs.emulate.editor.core.workbench
 
+import javafx.collections.ListChangeListener
 import javafx.fxml.FXML
 import javafx.scene.control.MenuBar
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
+import org.controlsfx.control.StatusBar
+import rs.emulate.editor.core.task.TaskRunner
 import rs.emulate.editor.core.workbench.docking.DockingArea
 import rs.emulate.editor.core.workbench.docking.DockingNodeFactory
 import rs.emulate.editor.core.workbench.menu.MenuFactory
@@ -17,7 +20,8 @@ class Workbench @Inject constructor(
     val ctx: WorkbenchContext,
     val fxmlLoader: FxmlLoader,
     val dockedNodeFactory: DockingNodeFactory,
-    val menuFactory: MenuFactory
+    val menuFactory: MenuFactory,
+    val taskRunner: TaskRunner
 ) {
 
     @FXML
@@ -39,6 +43,9 @@ class Workbench @Inject constructor(
     lateinit var menuBar: MenuBar
 
     @FXML
+    lateinit var statusBar: StatusBar
+
+    @FXML
     fun initialize() {
         dockedNodeFactory.createDockNodes().forEach {
             when (it.area) {
@@ -51,5 +58,14 @@ class Workbench @Inject constructor(
         menuFactory.createMenu().entries.forEach {
             menuBar.menus.add(it)
         }
+
+        taskRunner.tasks.addListener(ListChangeListener {
+            statusBar.progressProperty().unbind()
+
+            val activeTask = taskRunner.tasks.first()
+            val activeTaskProgress = activeTask.progressProperty()
+
+            statusBar.progressProperty().bind(activeTaskProgress)
+        })
     }
 }

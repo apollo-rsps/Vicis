@@ -4,11 +4,19 @@ import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.event.Event
 import javafx.event.EventHandler
+import javafx.scene.Node
+import javafx.stage.Stage
+import javafx.stage.Window
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.actor
 
+val Node.window : Window
+    get() = scene.window
+
+val Node.stage : Stage?
+    get() = scene.window as? Stage
 
 fun <E : Event> createAsyncEventHandler(handler: suspend (E) -> Unit): EventHandler<E> {
     val actor = GlobalScope.actor<E>(Dispatchers.Main, capacity = Channel.CONFLATED) {
@@ -21,6 +29,8 @@ fun <E : Event> createAsyncEventHandler(handler: suspend (E) -> Unit): EventHand
 }
 
 fun <E, F> bindWithMapping(src: ObservableList<F>, dest: ObservableList<E>, mapper: (F) -> E) {
+    dest.setAll(src.map(mapper))
+
     src.addListener(ListChangeListener { c ->
         while (c.next()) {
             if (c.wasRemoved()) {

@@ -1,19 +1,18 @@
 package rs.emulate.editor.core.workbench.explorer.node.index
 
 import javafx.collections.ObservableList
+import rs.emulate.editor.core.project.ProjectIndexCategory
 import rs.emulate.editor.core.workbench.explorer.WorkbenchExplorerNode
-import rs.emulate.editor.vfs.index.VirtualFileIndex
+import rs.emulate.editor.utils.javafx.bindWithMapping
 
-class IndexNode(val index: VirtualFileIndex<*, *>) : WorkbenchExplorerNode {
+class IndexNode(val index: ProjectIndexCategory) : WorkbenchExplorerNode {
 
     override val isLeaf = false
 
     override val title: String
-        get() = index.category.name
+        get() = index.type.name
 
-    override suspend fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>) {
-        for (entry in index.entries) {
-            dest.add(IndexEntryNode(entry))
-        }
+    override fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>) {
+        bindWithMapping(index.entries, dest) { IndexEntryNode(it) }
     }
 }

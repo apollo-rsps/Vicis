@@ -51,11 +51,12 @@ dependencies {
     implementation("com.dooapp.fxform2", "core", "9.0.0")
     implementation("com.panemu", "tiwulfx", "3.0")
 
+    implementation("com.googlecode.cqengine:cqengine:3.0.0")
+
     // Default icon pack used for elements in the UI.
     implementation(group = "org.kordamp.ikonli", name = "ikonli-core", version = "11.0.2")
     implementation(group = "org.kordamp.ikonli", name = "ikonli-javafx", version = "11.0.2")
     implementation("org.kordamp.ikonli:ikonli-foundation-pack:11.0.2")
-
     implementation("org.hibernate.validator", "hibernate-validator", "6.0.2.Final")
     implementation("org.glassfish", "javax.el", "3.0.1-b09")
 
@@ -70,6 +71,8 @@ application {
     applicationDefaultJvmArgs = listOf(
         "--illegal-access=warn",
         "--add-opens", "javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
+        "--add-opens", "javafx.base/com.sun.javafx.runtime=controlsfx",
+        "--add-opens", "javafx.graphics/javafx.scene=controlsfx",
         "--add-opens", "javafx.graphics/com.sun.glass.ui=ALL-UNNAMED",
         "--add-opens", "javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED",
         "--add-opens", "javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED",

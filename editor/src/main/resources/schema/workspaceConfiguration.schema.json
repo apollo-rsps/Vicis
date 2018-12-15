@@ -1,0 +1,18 @@
+{
+  "$id": "http://emulate.rs/vicis/schemas/workspaceConfiguration.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Workspace Configuration",
+  "type": "object",
+  "properties": {
+    "core": {
+      "type": "object",
+      "description": "Core configuration properties",
+      "properties": {
+        "task-pool-size": {
+          "type": "number",
+          "description": "Number of threads reserved for the background task pool."
+        }
+      }
+    }
+  }
+}
