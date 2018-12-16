@@ -7,7 +7,7 @@ import rs.emulate.util.readAsciiString
 
 object ObjectDefinitionDecoder : ConfigDecoder<ObjectDefinition> {
 
-    override val entryName: String = "seq"
+    override val entryName: String = "obj"
 
     override fun decode(id: Int, buffer: ByteBuf): ObjectDefinition {
         val definition = ObjectDefinition(id)
