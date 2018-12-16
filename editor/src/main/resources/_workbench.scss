@@ -1,0 +1,19 @@
+@import "_variables";
+
+.dock-pane {
+  .left, .right, .bottom {
+    -fx-border-color: $dock-border-color;
+  }
+
+  .left {
+    -fx-border-width: 0px 1px 0px 0px;
+  }
+
+  .right {
+    -fx-border-width: 0px 0px 0px 1px;
+  }
+
+  .bottom {
+    -fx-border-width: 1px 0px 0px 0px;
+  }
+}

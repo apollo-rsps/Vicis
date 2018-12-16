@@ -7,6 +7,8 @@ plugins {
     `java-library`
     kotlin("jvm")
     id("org.openjfx.javafxplugin")
+    id("kotlinx-serialization") version "1.3.11"
+    id("io.freefair.jsass-java") version "2.9.5"
 }
 
 ext["moduleName"] = "rs.emulate.util"

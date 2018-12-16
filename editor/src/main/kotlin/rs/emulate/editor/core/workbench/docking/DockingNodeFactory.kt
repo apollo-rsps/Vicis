@@ -2,6 +2,7 @@ package rs.emulate.editor.core.workbench.docking
 
 import javafx.scene.Node
 import rs.emulate.editor.javafx.loader.FxmlLoader
+import java.util.*
 import javax.inject.Inject
 
 class DockingNodeFactory @Inject constructor(
@@ -10,8 +11,9 @@ class DockingNodeFactory @Inject constructor(
 ) {
     fun createDockNodes() = dockingComponents
         .map {
-            val component = fxmlLoader.load<Node>(this.javaClass.getResource(it.fxml))
-            val node = DockingNode(component, it.area, it.title)
+            val resources = ResourceBundle.getBundle(it.resourceBundle)
+            val component = fxmlLoader.load<Node>(it.fxml, resources)
+            val node = DockingNode(component, it.area, resources.getString(it.title))
 
             node
         }

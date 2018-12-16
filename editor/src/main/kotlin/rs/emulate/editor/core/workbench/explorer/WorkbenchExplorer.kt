@@ -38,7 +38,7 @@ class WorkbenchExplorer @Inject constructor(val ctx: WorkbenchContext, val openA
     }
 
     suspend fun onItemOpened(event: MouseEvent) {
-        val selection = explorerTree.selectionModel.selectedItems.first()
+        val selection = explorerTree.selectionModel.selectedItems.first() ?: return
         val node = selection.value
 
         when (node) {
