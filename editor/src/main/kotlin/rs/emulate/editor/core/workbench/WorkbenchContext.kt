@@ -15,6 +15,13 @@ class WorkbenchContext {
         }
         get() = windowProp.get()
 
+    val selectionProperty = SimpleObjectProperty<WorkbenchSelection>()
+    var selection : WorkbenchSelection?
+        get() = selectionProperty.get()
+        set(value) {
+            selectionProperty.value = value
+        }
+
     val projects = FXCollections.observableArrayList<Project>()
 
     fun openProject(project: Project) {
@@ -24,4 +31,6 @@ class WorkbenchContext {
     fun closeProject(project: Project) {
         projects.remove(project)
     }
+
+
 }

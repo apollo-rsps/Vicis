@@ -11,7 +11,7 @@
         <MenuBar fx:id="menuBar"/>
     </top>
     <center>
-        <ResizableBorderPane>
+        <ResizableBorderPane >
             <center>
                 <TabPane fx:id="editorDock"  />
             </center>

@@ -14,6 +14,6 @@ class ProjectNode(val project: Project) : WorkbenchExplorerNode {
         get() = project.name
 
     override fun bindChildrenTo(dest: ObservableList<WorkbenchExplorerNode>) {
-        bindWithMapping(project.index.categories, dest) { IndexNode(it) }
+        bindWithMapping(project.index.categories, dest) { IndexNode(project, it) }
     }
 }
