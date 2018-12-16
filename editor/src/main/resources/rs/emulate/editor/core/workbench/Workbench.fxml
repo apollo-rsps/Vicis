@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import org.controlsfx.control.StatusBar?>
+<?import rs.emulate.editor.javafx.controls.Dock?>
 <?import rs.emulate.editor.javafx.controls.ResizableBorderPane?>
 <BorderPane fx:controller="rs.emulate.editor.core.workbench.Workbench" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
@@ -12,18 +14,18 @@
         <MenuBar fx:id="menuBar"/>
     </top>
     <center>
-        <ResizableBorderPane styleClass="dock-pane">
+        <ResizableBorderPane fx:id="dockPane" styleClass="dock-pane">
             <center>
                 <TabPane fx:id="editorDock"  />
             </center>
             <left>
-                <TabPane fx:id="leftDock" />
+                <Dock fx:id="leftDock" side="LEFT"/>
             </left>
             <right>
-                <TabPane fx:id="rightDock" />
+                <Dock fx:id="rightDock" side="RIGHT" />
             </right>
             <bottom>
-                <TabPane fx:id="bottomDock"  />
+                <Dock fx:id="bottomDock" side="BOTTOM"  />
             </bottom>
         </ResizableBorderPane>
     </center>

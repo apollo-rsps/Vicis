@@ -1,4 +1,10 @@
 $bar-background-color: #f2f2f2;
 $bar-border-color: #a0a0a0;
 
-$dock-border-color: #cfcfcf;
+$dock-border-color: #a0a0a0;
+$dock-bar-background-color: #F2F2F2;
+$dock-bar-hover-background-color: darken($dock-bar-background-color, 5%);
+$dock-bar-selected-background-color: darken($dock-bar-hover-background-color, 15%);
+
+$dock-item-title-border-color: #cfcfcf;
+$dock-item-title-background-color: #EEEEEE;

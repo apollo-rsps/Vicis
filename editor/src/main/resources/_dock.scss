@@ -1,0 +1,79 @@
+@import "_mixins";
+@import "_variables";
+
+.tab {
+  -fx-padding: 0;
+}
+
+.tab-header-content {
+  -fx-padding: 0;
+  -fx-margin: 0;
+}
+
+.titled-pane {
+  -fx-border: none;
+  -fx-border-insets: none;
+  -fx-padding: 0;
+  -fx-margin: 0;
+  -fx-min-width: 0;
+
+  .title {
+    -fx-background-color: $dock-item-title-background-color;
+    -fx-background-radius: none;
+    -fx-border-color: $dock-item-title-border-color;
+    -fx-border: 0 0 1px 0;
+  }
+
+  .content {
+    -fx-effect: none;
+    -fx-border: 0;
+    -fx-background-color: white;
+  }
+}
+
+.dock-bar {
+  @extend %layout-reset;
+
+  -fx-border-insets: none;
+  -fx-background-radius: none;
+  -fx-border-width: 0px 1px 0px 0px;
+
+  & .left {
+    -fx-border-width: 0px 1px 0px 0px;
+  }
+
+  & .right {
+    -fx-border-width: 0px 0px 0px 1px;
+  }
+
+  .toggle-button {
+    -fx-border: none;
+    -fx-padding: 2px 12px 2px 12px;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-background-color: $dock-bar-background-color;
+  }
+
+  .toggle-button:selected {
+    -fx-background-color: $dock-bar-selected-background-color;
+  }
+
+  & .left, & .right, & .bottom {
+    -fx-border-color: $dock-border-color;
+  }
+
+  .container {
+    -fx-spacing: none;
+    -fx-padding: 0;
+    -fx-margin: 0;
+    -fx-border: 0;
+    -fx-min-width: 0;
+    -fx-min-height: 0;
+  }
+
+
+
+  -fx-spacing: none;
+  -fx-background-insets: 0, 0 0 0 0;
+  -fx-background-color: $dock-bar-background-color;
+}

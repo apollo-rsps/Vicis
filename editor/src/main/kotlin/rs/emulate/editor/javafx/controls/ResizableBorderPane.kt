@@ -4,8 +4,10 @@ import io.reactivex.Observable.empty
 import io.reactivex.Observable.just
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.withLatestFrom
+import javafx.beans.value.ObservableValue
 import javafx.geometry.Side
 import javafx.scene.Cursor
+import javafx.scene.Node
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import rs.emulate.editor.utils.javafx.onChange
@@ -84,5 +86,10 @@ class ResizableBorderPane : BorderPane() {
                     Side.TOP, Side.BOTTOM -> borderSide.setPrefHeight(max(0.0, abs(newHeight)))
                 }
             }
+    }
+
+    fun bindResizeTarget(side: Side, target: ObservableValue<out Node>) {
+        val borderSide = sides.first { it.side == side }
+        borderSide.resizeTargetProperty.bind(target)
     }
 }

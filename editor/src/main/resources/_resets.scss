@@ -5,3 +5,11 @@
   -fx-focus-color: transparent;
   -fx-faint-focus-color: transparent;
 }
+
+.titled-pane > *.content {
+  -fx-border-color: transparent;
+}
+
+root {
+  -fx-background-insets: 0, 0 0 0 0;
+}

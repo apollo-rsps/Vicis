@@ -37,6 +37,7 @@ dependencies {
     implementation(kotlinx("coroutines-core", "1.0.1"))
     implementation(kotlinx("coroutines-javafx", "1.0.1"))
     implementation(kotlinx("coroutines-jdk8", "1.0.1"))
+    implementation(kotlinx("serialization-runtime", "0.9.1"))
 
     implementation("org.controlsfx", "controlsfx", controlsFxVersion)
     implementation("org.openjfx", "javafx-controls", openjfxVersion)
@@ -52,6 +53,7 @@ dependencies {
     implementation("net.clearcontrol:dockfx:0.1.12")
     implementation("com.dooapp.fxform2", "core", "9.0.0")
     implementation("com.panemu", "tiwulfx", "3.0")
+    implementation("org.fxmisc.cssfx:cssfx:1.0.0")
     implementation("io.reactivex.rxjava2:rxjava:2.2.4")
     implementation("io.reactivex.rxjava2:rxjavafx:2.2.2")
     implementation("io.reactivex.rxjava2:rxkotlin:2.3.0")

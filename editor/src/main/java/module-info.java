@@ -36,6 +36,7 @@ open module rs.emulate.editor {
 	requires io.reactivex.rxjava2;
 	requires rxjavafx;
 	requires rxkotlin;
+	requires kotlinx.serialization.runtime;
 
 	// Only export our main class.
 	exports rs.emulate.editor;

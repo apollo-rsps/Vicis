@@ -7,6 +7,7 @@ import javafx.geometry.Side
 import javafx.scene.Cursor
 import javafx.scene.Node
 import javafx.scene.control.Control
+import javafx.scene.layout.Pane
 import javafx.scene.layout.Region
 import rs.emulate.editor.utils.javafx.onChange
 
@@ -100,21 +101,26 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
      * Set the preferred width of the [resizeTarget] this side represents.
      */
     fun setPrefWidth(width: Double) {
-        val node = resizeTarget
+        val node = resizeTarget ?: return
         val resizeBounds = resizeTarget?.layoutBounds ?: dragTarget.layoutBounds
         val dragBounds = dragTarget.layoutBounds
         val padding = dragBounds.width - resizeBounds.width
         val newWidth = width - padding
 
-        when (node) {
-            is Control -> node.prefWidth = newWidth
-            is Region -> node.prefWidth = newWidth
-            else -> {
-                if (node != null) {
-                    println("Unrecognized type: ${node::class.simpleName}")
+        fun setWidth(node: Node, newWidth: Double) {
+            when (node) {
+                is Pane -> node.children.forEach { setWidth(it, newWidth) }
+                is Control -> node.minWidth = newWidth
+                is Region -> node.minWidth = newWidth
+                else -> {
+                    if (node != null) {
+                        println("Unrecognized type: ${node::class.simpleName}")
+                    }
                 }
             }
         }
+
+        setWidth(node, newWidth)
     }
 
     /**
@@ -122,14 +128,15 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
      */
     fun setPrefHeight(height: Double) {
         val node = resizeTarget
+        println("Resizing ${node}")
         val resizeBounds = resizeTarget?.layoutBounds ?: dragTarget.layoutBounds
         val dragBounds = dragTarget.layoutBounds
         val padding = dragBounds.height - resizeBounds.height
         val newHeight = height - padding
 
         when (node) {
-            is Control -> node.prefHeight = newHeight
-            is Region -> node.prefHeight = newHeight
+            is Control -> node.minHeight = newHeight
+            is Region -> node.minHeight = newHeight
             else -> {
                 if (node != null) {
                     println("Unrecognized type: ${node::class.simpleName}")

@@ -5,6 +5,11 @@
   @import "_workbench";
 }
 
+.dock {
+  @import "_dock";
+}
+
+
 .menu-bar {
   -fx-padding: 0;
   -fx-border-width: 0px 0px 1px 0px;

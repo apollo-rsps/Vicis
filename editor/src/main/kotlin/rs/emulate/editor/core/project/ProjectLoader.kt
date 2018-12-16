@@ -1,6 +1,6 @@
 package rs.emulate.editor.core.project
 
-import rs.emulate.editor.core.project.tasks.LoadProjectIndexTask
+import rs.emulate.editor.core.project.storage.ProjectStorage
 import rs.emulate.editor.core.project.tasks.LoadProjectIndexTaskFactory
 import rs.emulate.editor.core.task.TaskRunner
 import rs.emulate.editor.vfs.LegacyFileLoader
@@ -13,16 +13,10 @@ import javax.inject.Inject
 
 //}
 
-class ProjectLoader @Inject constructor(val taskRunner: TaskRunner, val taskFactory: LoadProjectIndexTaskFactory) {
+class ProjectLoader @Inject constructor(val taskRunner: TaskRunner, val loadTask: LoadProjectIndexTaskFactory) {
     suspend fun loadProject(name: String, vfsPath: Path, ty: ProjectType): Project {
         val vfsRoot = if (!Files.isDirectory(vfsPath)) vfsPath.parent else vfsPath
-        val storagePath = vfsRoot.resolve(".vicis")
-
-        if (Files.notExists(storagePath)) {
-            Files.createDirectories(storagePath)
-        }
-
-        val storage = ProjectStorage(storagePath)
+        val storage = ProjectStorage.resolve(vfsRoot)
 
         val (loader, indexer) = when (ty) {
             ProjectType.Legacy -> {
@@ -37,7 +31,13 @@ class ProjectLoader @Inject constructor(val taskRunner: TaskRunner, val taskFact
             }
         }
 
-        val index = taskRunner.run(LoadProjectIndexTask(storage, indexer))
+        val index = taskRunner.run(loadTask.create(storage, indexer))
+
+        storage.load(ProjectMetadata.serializer()).apply {
+            this.name = name
+            this.type = ty
+        }
+        storage.save()
 
         return Project(name, loader, index)
     }

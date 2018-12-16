@@ -2,14 +2,17 @@ package rs.emulate.editor.core.workbench
 
 import javafx.collections.ListChangeListener
 import javafx.fxml.FXML
+import javafx.geometry.Side
 import javafx.scene.control.MenuBar
-import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
+import javafx.scene.control.TitledPane
 import org.controlsfx.control.StatusBar
 import rs.emulate.editor.core.task.TaskRunner
 import rs.emulate.editor.core.workbench.docking.DockingArea
 import rs.emulate.editor.core.workbench.docking.DockingNodeFactory
 import rs.emulate.editor.core.workbench.menu.MenuFactory
+import rs.emulate.editor.javafx.controls.Dock
+import rs.emulate.editor.javafx.controls.ResizableBorderPane
 import rs.emulate.editor.javafx.loader.FxmlLoader
 import javax.inject.Inject
 
@@ -25,16 +28,19 @@ class Workbench @Inject constructor(
 ) {
 
     @FXML
+    lateinit var dockPane: ResizableBorderPane
+
+    @FXML
     lateinit var borderPane: TabPane
 
     @FXML
-    lateinit var bottomDock: TabPane
+    lateinit var bottomDock: Dock
 
     @FXML
-    lateinit var leftDock: TabPane
+    lateinit var leftDock: Dock
 
     @FXML
-    lateinit var rightDock: TabPane
+    lateinit var rightDock: Dock
 
     @FXML
     lateinit var centerDock: TabPane
@@ -48,11 +54,15 @@ class Workbench @Inject constructor(
     @FXML
     fun initialize() {
         dockedNodeFactory.createDockNodes().forEach {
-            when (it.area) {
-                DockingArea.LEFT -> leftDock.tabs.add(Tab(it.title, it.node))
-                DockingArea.RIGHT -> rightDock.tabs.add(Tab(it.title, it.node))
-                DockingArea.BOTTOM -> bottomDock.tabs.add(Tab(it.title, it.node))
+            val pane = TitledPane(it.title, it.node)
+
+            val dock = when (it.area) {
+                DockingArea.LEFT -> leftDock
+                DockingArea.RIGHT -> rightDock
+                DockingArea.BOTTOM -> bottomDock
             }
+
+            dock.addItem(pane)
         }
 
         menuFactory.createMenu().entries.forEach {
@@ -67,5 +77,8 @@ class Workbench @Inject constructor(
 
             statusBar.progressProperty().bind(activeTaskProgress)
         })
+
+        dockPane.bindResizeTarget(Side.LEFT, leftDock.contentAreaProperty)
+        dockPane.bindResizeTarget(Side.RIGHT, rightDock.contentAreaProperty)
     }
 }

@@ -17,6 +17,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven("https://kotlin.bintray.com/kotlinx")
         jcenter()
     }
 }
