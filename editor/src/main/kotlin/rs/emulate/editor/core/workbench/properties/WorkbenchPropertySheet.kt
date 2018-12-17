@@ -10,8 +10,8 @@ import rs.emulate.editor.vfs.ResourceType
 import javax.inject.Inject
 
 class WorkbenchPropertySheet @Inject constructor(
-    val ctx: WorkbenchContext,
-    val propertySupportMap: @JvmSuppressWildcards Map<ResourceType, ResourcePropertySupport>
+    private val ctx: WorkbenchContext,
+    private val propertySupportMap: @JvmSuppressWildcards Map<ResourceType, ResourcePropertySupport<*>>
 ) {
 
     @FXML
@@ -22,12 +22,10 @@ class WorkbenchPropertySheet @Inject constructor(
         ctx.selectionProperty.onChange {
             when (it) {
                 is VirtualFileSelection -> {
-                    propertySheet.items.setAll(
-                        propertySupportMap[it.type]?.createProperties(
-                            it.project.loader,
-                            it.vfsId
-                        )
-                    )
+                    val support = propertySupportMap[it.type]!!
+
+                    propertySheet.items.setAll(support.createProperties(it.project, it.vfsId))
+                    propertySheet.propertyEditorFactory = support
                 }
                 else -> propertySheet.items.clear()
             }

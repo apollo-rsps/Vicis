@@ -1,9 +1,26 @@
 package rs.emulate.editor.core.content.capabilities
 
+import javafx.util.Callback
 import org.controlsfx.control.PropertySheet
+import org.controlsfx.property.editor.PropertyEditor
+import rs.emulate.editor.core.project.Project
+import rs.emulate.editor.core.workbench.properties.ResourceProperty
+import rs.emulate.editor.core.workbench.properties.ResourcePropertySheetItem
 import rs.emulate.editor.vfs.VirtualFileId
-import rs.emulate.editor.vfs.VirtualFileLoader
 
-interface ResourcePropertySupport {
-    fun createProperties(loader: VirtualFileLoader<out VirtualFileId>, id: VirtualFileId) : List<PropertySheet.Item>
+interface ResourcePropertySupport<T : ResourceProperty> : Callback<PropertySheet.Item, PropertyEditor<*>> {
+
+    fun createEditor(item: ResourcePropertySheetItem<T>): PropertyEditor<*>?
+
+    fun createProperties(project: Project, id: VirtualFileId): List<PropertySheet.Item>
+
+    override fun call(param: PropertySheet.Item?): PropertyEditor<*>? {
+        return if (param is ResourcePropertySheetItem<*>) {
+            @Suppress("UNCHECKED_CAST")
+            createEditor(param as ResourcePropertySheetItem<T>)
+        } else {
+            null
+        }
+    }
+
 }

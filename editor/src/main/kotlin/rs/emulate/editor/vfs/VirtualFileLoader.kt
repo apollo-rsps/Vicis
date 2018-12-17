@@ -12,7 +12,7 @@ class LegacyFileLoader(
     private val cache: IndexedFileSystem // TODO inject this (or a similar interface)
 ) : VirtualFileLoader<LegacyFileId> {
 
-    private val configArchive by lazy { cache.getArchive(CONFIG_INDEX, CONFIG_ARCHIVE_ID) }
+    private val configArchive by lazy { cache.getArchive(ARCHIVE_INDEX, CONFIG_ARCHIVE_ID) }
 
     override fun load(id: LegacyFileId): ByteBuf? {
         return when (id) {
@@ -27,7 +27,7 @@ class LegacyFileLoader(
     }
 
     private fun loadArchiveEntry(id: LegacyFileId.ArchiveEntry): ByteBuf? {
-        val archive = cache.getArchive(0, id.file)
+        val archive = cache.getArchive(ARCHIVE_INDEX, id.file)
         return archive.getOrNull(id.name)?.buffer
     }
 
@@ -36,7 +36,7 @@ class LegacyFileLoader(
     }
 
     private companion object { // TODO move these elsewhere
-        const val CONFIG_INDEX = 0
+        const val ARCHIVE_INDEX = 0
         const val CONFIG_ARCHIVE_ID = 2
     }
 
