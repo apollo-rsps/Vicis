@@ -11,7 +11,7 @@ import javafx.scene.control.ToggleButton
 import javafx.scene.control.ToolBar
 import javafx.scene.layout.*
 import rs.emulate.editor.utils.javafx.doubleBinding
-import rs.emulate.editor.utils.javafx.mapObservableList
+import rs.emulate.editor.utils.javafx.mapped
 import rs.emulate.editor.utils.javafx.objectBinding
 import rs.emulate.editor.utils.javafx.onChange
 import java.util.concurrent.Callable
@@ -61,7 +61,7 @@ class Dock : BorderPane() {
             pane
         })
 
-        Bindings.bindContent(toolbar.items, items.mapObservableList { item ->
+        Bindings.bindContent(toolbar.items, items.mapped { item ->
             val button = ToggleButton()
             button.textProperty().bind(item.textProperty())
             button.selectedProperty().bindBidirectional(item.visibleProperty())

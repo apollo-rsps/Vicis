@@ -1,4 +1,4 @@
-package rs.emulate.editor.core.project.legacy.npc
+package rs.emulate.editor.legacy.npc
 
 import rs.emulate.editor.core.workbench.properties.ResourceProperty
 

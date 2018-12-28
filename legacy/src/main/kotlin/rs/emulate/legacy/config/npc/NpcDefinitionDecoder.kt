@@ -25,7 +25,7 @@ object NpcDefinitionDecoder : ConfigDecoder<NpcDefinition> {
         when (opcode) {
             1 -> {
                 val count = buffer.readUnsignedByte().toInt()
-                models = IntArray(count) { buffer.readUnsignedShort() }
+                models = MutableList(count) { buffer.readUnsignedShort() }
             }
             2 -> name = buffer.readAsciiString()
             3 -> description = buffer.readAsciiString()

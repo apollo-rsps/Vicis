@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.actor
+import kotlinx.coroutines.javafx.JavaFx
 
 val Node.window : Window
     get() = scene.window
@@ -22,7 +23,7 @@ val Node.stage : Stage?
 fun <T> ObservableValue<T>.onChange(callback: (T) -> Unit) = addListener { _, _, newValue -> callback(newValue) }
 
 fun <E : Event> createAsyncEventHandler(handler: suspend (E) -> Unit): EventHandler<E> {
-    val actor = GlobalScope.actor<E>(Dispatchers.Main, capacity = Channel.CONFLATED) {
+    val actor = GlobalScope.actor<E>(Dispatchers.JavaFx, capacity = Channel.CONFLATED) {
         for (event in channel) {
             handler(event)
         }
@@ -53,4 +54,4 @@ fun <E, F> bindWithMapping(src: ObservableList<F>, dest: ObservableList<E>, mapp
     })
 }
 
-fun <E, F> ObservableList<F>.mapObservableList(mapper: (F) -> E) = MappedList(mapper, this)
+fun <E, F> ObservableList<F>.mapped(mapper: (F) -> E) = MappedList(mapper, this)

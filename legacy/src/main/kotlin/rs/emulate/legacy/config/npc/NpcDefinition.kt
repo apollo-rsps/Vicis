@@ -4,7 +4,7 @@ import rs.emulate.legacy.config.Definition
 
 class NpcDefinition(
     override val id: Int,
-    var models: IntArray? = null,
+    var models: MutableList<Int> = mutableListOf(),
     var name: String = "null",
     var description: String? = null,
     var size: Int = 1,

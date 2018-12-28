@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings
 import javafx.beans.binding.DoubleBinding
 import javafx.beans.binding.ObjectBinding
 import javafx.beans.value.ObservableValue
+import javafx.collections.ObservableList
 import java.util.concurrent.Callable
 
 fun <S, T> ObservableValue<S>.objectBinding(mapper: (S) -> T): ObjectBinding<T> {
@@ -13,3 +14,5 @@ fun <S, T> ObservableValue<S>.objectBinding(mapper: (S) -> T): ObjectBinding<T> 
 fun <S> ObservableValue<S>.doubleBinding(mapper: (S) -> Double): DoubleBinding {
     return Bindings.createDoubleBinding(Callable { mapper(value) }, this)
 }
+
+fun <T> List<T>.bind(source: ObservableList<out T>) = Bindings.bindContent(this, source)
