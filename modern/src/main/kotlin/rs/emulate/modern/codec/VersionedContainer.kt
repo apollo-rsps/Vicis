@@ -1,4 +1,4 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
@@ -8,9 +8,9 @@ class VersionedContainer(private var buffer: ByteBuf, version: Int) {
     val checksum: Int
         get() = buffer.crc32()
 
-    var version = version
+    var version: Int = version
         set(value) {
-            value and 0xFFFF
+            field = value and 0xFFFF
         }
 
     /* returns an immutable buffer */

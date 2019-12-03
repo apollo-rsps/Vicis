@@ -1,6 +1,7 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.ByteBuf
+import rs.emulate.modern.Cache
 import rs.emulate.util.crypto.xtea.XteaKey
 import java.io.Closeable
 import java.io.FileNotFoundException
@@ -20,14 +21,6 @@ class CacheArchive(
     val listEntries: List<Int>
         get() = entry.childIds
 
-    private fun read(child: ReferenceTable.ChildEntry): ByteBuf {
-        return requireNotNull(archive[child.id]) { "Entry in ReferenceTable but not in Archive" }
-    }
-
-    private fun write(child: ReferenceTable.ChildEntry, buf: ByteBuf) {
-        archive[child.id] = buf
-    }
-
     operator fun contains(id: Int): Boolean {
         return id in entry
     }
@@ -38,12 +31,12 @@ class CacheArchive(
 
     /* returns an immutable buffer */
     fun read(id: Int): ByteBuf {
-        return read(entry[id] ?: throw FileNotFoundException())
+        return read(entry[id] ?: throw FileNotFoundException("Failed to find file $id (permitted=${listEntries}"))
     }
 
     /* returns an immutable buffer */
     fun read(name: String): ByteBuf {
-        return read(entry[name] ?: throw FileNotFoundException())
+        return read(entry[name] ?: throw FileNotFoundException("Failed to find file $name (permitted=${listEntries}"))
     }
 
     /* accepts an immutable buffer */
@@ -92,7 +85,9 @@ class CacheArchive(
         dirty = true
     }
 
-    fun flush() = flush(XteaKey.NONE)
+    fun flush() {
+        flush(XteaKey.NONE)
+    }
 
     fun flush(key: XteaKey) {
         if (dirty) {
@@ -101,5 +96,13 @@ class CacheArchive(
         }
     }
 
-    override fun close() = flush()
+    private fun read(child: ReferenceTable.ChildEntry): ByteBuf {
+        return requireNotNull(archive[child.id]) { "Entry in ReferenceTable but not in Archive" }
+    }
+
+    private fun write(child: ReferenceTable.ChildEntry, buf: ByteBuf) {
+        archive[child.id] = buf
+    }
+
+    override fun close(): Unit = flush()
 }

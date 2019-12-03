@@ -1,4 +1,4 @@
-package rs.emulate.modern.fs
+package rs.emulate.modern.codec.store
 
 sealed class FileStoreOption {
     object Write : FileStoreOption()

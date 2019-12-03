@@ -1,4 +1,4 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
@@ -83,8 +83,8 @@ class ChecksumTable {
     }
 
     class Entry(val id: Int) {
-        var checksum = 0
-        var version = 0
+        var checksum: Int = 0
+        var version: Int = 0
         var whirlpoolDigest: ByteBuf? = null
             set(value) {
                 field = value?.let(ByteBuf::asReadOnly)

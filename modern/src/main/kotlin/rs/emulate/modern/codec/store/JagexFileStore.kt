@@ -1,10 +1,9 @@
-package rs.emulate.modern.fs
+package rs.emulate.modern.codec.store
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.PagedFile
-import rs.emulate.modern.fs.FileStore.Companion.FILE_LEN
-import rs.emulate.modern.fs.FileStore.Companion.INDEX_LEN
+import rs.emulate.modern.codec.store.FileStore.Companion.FILE_LEN
+import rs.emulate.modern.codec.store.FileStore.Companion.INDEX_LEN
 import rs.emulate.util.getUnsignedMedium
 import rs.emulate.util.putMedium
 import rs.emulate.util.putTriByte
@@ -18,7 +17,7 @@ import java.nio.file.Path
 import java.nio.file.StandardOpenOption
 import java.nio.file.StandardOpenOption.READ
 import java.nio.file.StandardOpenOption.WRITE
-import java.util.Arrays
+import java.util.*
 import java.util.regex.Pattern
 
 class JagexFileStore(
@@ -411,7 +410,7 @@ class JagexFileStore(
                 Files.createFile(dataFile)
             }
 
-            if (!Arrays.asList(*options).contains(FileStoreOption.Write)) {
+            if (!listOf(*options).contains(FileStoreOption.Write)) {
                 options = Arrays.copyOf(options, options.size + 1)
                 options[options.size - 1] = FileStoreOption.Write
             }

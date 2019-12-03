@@ -1,8 +1,8 @@
-package rs.emulate.modern.fs
+package rs.emulate.modern.codec.store
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.fs.FileStore.Companion.FILE_LEN
+import rs.emulate.modern.codec.store.FileStore.Companion.FILE_LEN
 import java.io.FileNotFoundException
 import java.nio.file.FileVisitResult
 import java.nio.file.Files

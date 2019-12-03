@@ -1,15 +1,9 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import com.google.common.collect.Iterators
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.compression.CompressionType
-import rs.emulate.util.compression.bunzip2
-import rs.emulate.util.compression.bzip2
-import rs.emulate.util.compression.gunzip
-import rs.emulate.util.compression.gzip
-import rs.emulate.util.compression.lzma
-import rs.emulate.util.compression.unlzma
+import rs.emulate.util.compression.*
 import rs.emulate.util.crypto.xtea.XteaKey
 import rs.emulate.util.crypto.xtea.xteaDecrypt
 import rs.emulate.util.crypto.xtea.xteaEncrypt
@@ -56,9 +50,12 @@ class Container(val compression: CompressionType, buffer: ByteBuf) {
         fun ByteBuf.readContainer(key: XteaKey = XteaKey.NONE): Container {
             var buf = this
 
-            val compression = CompressionType[buf.readUnsignedByte().toInt()] ?: error("Invalid compression type")
-            val length = buf.readInt()
+            val compressionOrdinal = buf.readUnsignedByte().toInt()
+            val compression = checkNotNull(CompressionType[compressionOrdinal]) {
+                "Invalid compression type $compressionOrdinal."
+            }
 
+            val length = buf.readInt()
             var origBuf: ByteBuf? = null
 
             if (!key.isZero) {
@@ -66,31 +63,30 @@ class Container(val compression: CompressionType, buffer: ByteBuf) {
                 buf = buf.copy()
 
                 val start = buf.readerIndex()
-                var end = start + length
-
-                if (compression !== CompressionType.NONE) {
-                    end += 4
+                val end = if (compression === CompressionType.NONE) {
+                    start + length
+                } else {
+                    start + length + Int.SIZE_BYTES
                 }
 
                 buf.xteaDecrypt(start, end, key)
             }
 
-            val uncompressedLength: Int
-            if (compression === CompressionType.NONE) {
-                uncompressedLength = length
+            val uncompressedLength = if (compression === CompressionType.NONE) {
+                length
             } else {
-                uncompressedLength = buf.readInt()
-                origBuf?.skipBytes(4)
+                origBuf?.skipBytes(Int.SIZE_BYTES)
+                buf.readInt()
             }
 
-            var data = if (!key.isZero || compression !== CompressionType.NONE) {
+            var data = if (key.isZero && compression === CompressionType.NONE) {
+                buf.readBytes(length)
+            } else {
                 /*
                  * If the container is encrypted, we can use readSlice() as we are already operating on a copy.
                  * If the container is compressed, we can use readSlice() as the decompression functions create a copy.
                  */
                 buf.readSlice(length)
-            } else {
-                buf.readBytes(length)
             }
 
             origBuf?.skipBytes(length)

@@ -1,4 +1,4 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import rs.emulate.modern.ReferenceTable.Companion.readRefTable
+import rs.emulate.modern.codec.ReferenceTable.Companion.readRefTable
 
 class ReferenceTableTest {
 

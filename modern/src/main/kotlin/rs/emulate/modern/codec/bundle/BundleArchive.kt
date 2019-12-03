@@ -1,6 +1,8 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec.bundle
 
 import io.netty.buffer.ByteBuf
+import rs.emulate.modern.codec.Archive
+import rs.emulate.modern.codec.ReferenceTable
 import java.io.Closeable
 import java.io.FileNotFoundException
 

@@ -1,4 +1,4 @@
-package rs.emulate.modern.compression
+package rs.emulate.modern.codec
 
 enum class CompressionType(val id: Int) {
     NONE(0),

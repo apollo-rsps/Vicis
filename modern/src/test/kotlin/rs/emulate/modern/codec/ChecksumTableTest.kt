@@ -1,4 +1,4 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals

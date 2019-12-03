@@ -1,12 +1,15 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec.bundle
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.Archive.Companion.readArchive
-import rs.emulate.modern.Container.Companion.readContainer
-import rs.emulate.modern.ReferenceTable.Companion.readRefTable
+import rs.emulate.modern.codec.Archive
+import rs.emulate.modern.codec.Archive.Companion.readArchive
+import rs.emulate.modern.codec.Container
+import rs.emulate.modern.codec.Container.Companion.readContainer
+import rs.emulate.modern.codec.ReferenceTable
+import rs.emulate.modern.codec.ReferenceTable.Companion.readRefTable
 import java.io.FileNotFoundException
-import java.util.TreeMap
+import java.util.*
 
 class Bundle(private val referenceTable: ReferenceTable = ReferenceTable()) {
 

@@ -1,15 +1,15 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import com.google.common.collect.HashMultimap
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.fs.FileStore
+import rs.emulate.modern.codec.store.FileStore
 import rs.emulate.util.charset.hashCodeCp1252
 import rs.emulate.util.crypto.digest.Whirlpool
 import rs.emulate.util.readUnsignedIntSmart
 import rs.emulate.util.writeUnsignedIntSmart
 import java.io.IOException
-import java.util.TreeMap
+import java.util.*
 
 class ReferenceTable {
     private val entries = TreeMap<Int, Entry>()
@@ -384,7 +384,7 @@ class ReferenceTable {
         fun removeChild(id: Int) {
             val child = children.remove(id)
             require(child != null) { "ChildEntry with id $id does not exist" }
-            childrenByName.remove(child!!.nameHash, child)
+            childrenByName.remove(child.nameHash, child)
         }
     }
 

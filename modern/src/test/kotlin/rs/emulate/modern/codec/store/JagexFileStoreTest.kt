@@ -1,4 +1,4 @@
-package rs.emulate.modern.fs
+package rs.emulate.modern.codec.store
 
 import com.google.common.io.MoreFiles
 import com.google.common.jimfs.Configuration

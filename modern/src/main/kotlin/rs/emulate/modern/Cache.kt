@@ -1,12 +1,13 @@
 package rs.emulate.modern
 
 import io.netty.buffer.ByteBuf
-import rs.emulate.modern.Archive.Companion.readArchive
-import rs.emulate.modern.Container.Companion.readContainer
-import rs.emulate.modern.ReferenceTable.Companion.readRefTable
-import rs.emulate.modern.VersionedContainer.Companion.readVersionedContainer
-import rs.emulate.modern.fs.FileStore
-import rs.emulate.modern.fs.FileStoreOption
+import rs.emulate.modern.codec.*
+import rs.emulate.modern.codec.Archive.Companion.readArchive
+import rs.emulate.modern.codec.Container.Companion.readContainer
+import rs.emulate.modern.codec.ReferenceTable.Companion.readRefTable
+import rs.emulate.modern.codec.VersionedContainer.Companion.readVersionedContainer
+import rs.emulate.modern.codec.store.FileStore
+import rs.emulate.modern.codec.store.FileStoreOption
 import rs.emulate.util.crc32
 import rs.emulate.util.crypto.digest.readWhirlpoolDigest
 import rs.emulate.util.crypto.xtea.XteaKey
@@ -87,7 +88,7 @@ class Cache(
 
     fun openArchive(index: Int, file: Int, key: XteaKey = XteaKey.NONE): CacheArchive {
         val table = getReferenceTable(index)
-        val entry = table.getEntry(file) ?: throw FileNotFoundException()
+        val entry = table.getEntry(file) ?: throw FileNotFoundException("No file at ($index, $file)")
 
         return openArchive(index, entry, key)
     }

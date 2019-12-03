@@ -1,10 +1,10 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import rs.emulate.modern.VersionedContainer.Companion.readVersionedContainer
+import rs.emulate.modern.codec.VersionedContainer.Companion.readVersionedContainer
 
 class VersionedContainerTest {
 

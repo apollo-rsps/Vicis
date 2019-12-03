@@ -1,4 +1,4 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec.store
 
 import rs.emulate.util.channels.readFullyOrToEof
 import java.io.Closeable

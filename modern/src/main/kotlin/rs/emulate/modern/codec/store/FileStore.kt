@@ -1,4 +1,4 @@
-package rs.emulate.modern.fs
+package rs.emulate.modern.codec.store
 
 import io.netty.buffer.ByteBuf
 import java.io.Closeable
@@ -19,8 +19,8 @@ interface FileStore : Closeable {
     fun listFiles(index: Int): List<Int>
 
     companion object {
-        const val INDEX_LEN = 256
-        const val FILE_LEN = 65536
+        const val INDEX_LEN: Int = 256
+        const val FILE_LEN: Int = 65536
 
         fun open(root: Path, vararg options: FileStoreOption): FileStore {
             val dataFile = root.resolve(JagexFileStore.DATA_FILE)

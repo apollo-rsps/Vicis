@@ -1,17 +1,11 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
-import rs.emulate.modern.Container.Companion.readContainer
-import rs.emulate.modern.compression.CompressionType
-import rs.emulate.util.compression.bunzip2
-import rs.emulate.util.compression.bzip2
-import rs.emulate.util.compression.gunzip
-import rs.emulate.util.compression.gzip
-import rs.emulate.util.compression.lzma
-import rs.emulate.util.compression.unlzma
+import rs.emulate.modern.codec.Container.Companion.readContainer
+import rs.emulate.util.compression.*
 import rs.emulate.util.crypto.xtea.XteaKey
 import rs.emulate.util.crypto.xtea.xteaDecrypt
 import rs.emulate.util.crypto.xtea.xteaEncrypt

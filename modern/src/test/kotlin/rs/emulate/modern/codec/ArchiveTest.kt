@@ -1,10 +1,10 @@
-package rs.emulate.modern
+package rs.emulate.modern.codec
 
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
-import rs.emulate.modern.Archive.Companion.readArchive
+import rs.emulate.modern.codec.Archive.Companion.readArchive
 
 class ArchiveTest {
 
