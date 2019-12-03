@@ -1,5 +1,5 @@
+
 import org.gradle.internal.jvm.Jvm
-import org.jetbrains.kotlin.contracts.model.structure.UNKNOWN_COMPUTATION.type
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -7,8 +7,8 @@ plugins {
     `java-library`
     kotlin("jvm")
     id("org.openjfx.javafxplugin")
-    id("kotlinx-serialization") version "1.3.11"
-    id("io.freefair.jsass-java") version "2.9.5"
+    id("kotlinx-serialization") version "1.3.61"
+    id("io.freefair.jsass-java") version "4.1.5"
 }
 
 ext["moduleName"] = "rs.emulate.util"

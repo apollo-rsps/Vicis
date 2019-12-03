@@ -1,14 +1,11 @@
-import groovy.xml.dom.DOMCategory.attributes
 import org.gradle.jvm.tasks.Jar
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 
 plugins {
     base
-    kotlin("jvm") version "1.3.11" apply false
+    kotlin("jvm") version "1.3.61" apply false
     id("org.openjfx.javafxplugin") version "0.0.5" apply false
-    id("com.github.ben-manes.versions") version "0.20.0"
+    id("com.github.ben-manes.versions") version "0.27.0"
 }
 
 allprojects {
@@ -26,12 +23,12 @@ subprojects {
     afterEvaluate {
         dependencies {
             add("testImplementation", kotlin("test"))
-            add("testImplementation", "org.junit.jupiter:junit-jupiter-api:5.3.1")
-            add("testImplementation", "org.junit.jupiter:junit-jupiter-params:5.3.1")
-            add("testImplementation", "org.junit.jupiter:junit-jupiter-api:5.3.1")
+            add("testImplementation", "org.junit.jupiter:junit-jupiter-api:5.5.2")
+            add("testImplementation", "org.junit.jupiter:junit-jupiter-params:5.5.2")
+            add("testImplementation", "org.junit.jupiter:junit-jupiter-api:5.5.2")
             add("testImplementation", "io.mockk:mockk:1.7.15")
 
-            add("testRuntimeOnly", "org.junit.jupiter:junit-jupiter-engine:5.3.1")
+            add("testRuntimeOnly", "org.junit.jupiter:junit-jupiter-engine:5.5.2")
         }
 
         tasks.withType<Test> {
