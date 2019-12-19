@@ -17,7 +17,7 @@ object ConfigEntryDecoder {
         val count = index.readUnsignedShort()
         val definitions = ArrayList<T>(count)
 
-        var position = java.lang.Short.BYTES // Skip the count
+        var position = Short.SIZE_BYTES // Skip the count
 
         for (id in 0 until count) {
             data.readerIndex(position)
@@ -33,18 +33,25 @@ object ConfigEntryDecoder {
         val data = config[entry + Config.DATA_EXTENSION].buffer
         val index = config[entry + Config.INDEX_EXTENSION].buffer
 
-        val position = (file + 1) * java.lang.Short.BYTES // +1 to skip the count
-        if (position < index.readableBytes()) {
-            index.readerIndex(position)
-            val fileStart = index.readUnsignedShort()
-            val nextFileStart = index.readUnsignedShort()
-
-            data.readerIndex(fileStart)
-
-            return data.readSlice(nextFileStart - fileStart)
+        val indexPosition = (file + 1) * Short.SIZE_BYTES
+        if (indexPosition + Short.SIZE_BYTES > index.writerIndex()) {
+            return null
         }
 
-        return null
+        var position = Short.SIZE_BYTES // skip the count
+        index.readerIndex(position)
+
+        repeat(file) {
+            position += index.readUnsignedShort()
+        }
+
+        val length = index.getUnsignedShort(indexPosition)
+
+        return if (position + length > data.writerIndex()) {
+            null
+        } else {
+            data.slice(position, length)
+        }
     }
 
 }
