@@ -8,11 +8,12 @@ import rs.emulate.editor.core.workbench.properties.ResourceProperty
 import rs.emulate.editor.core.workbench.properties.ResourcePropertySheetItem
 import rs.emulate.editor.vfs.VirtualFileId
 
-interface ResourcePropertySupport<T : ResourceProperty> : Callback<PropertySheet.Item, PropertyEditor<*>> {
+interface ResourcePropertySupport<T : ResourceProperty, V : VirtualFileId>
+    : Callback<PropertySheet.Item, PropertyEditor<*>> {
 
     fun createEditor(item: ResourcePropertySheetItem<T>): PropertyEditor<*>?
 
-    fun createProperties(project: Project, id: VirtualFileId): List<PropertySheet.Item>
+    fun createProperties(project: Project<V>, id: V): List<PropertySheet.Item>
 
     override fun call(param: PropertySheet.Item?): PropertyEditor<*>? {
         return if (param is ResourcePropertySheetItem<*>) {

@@ -6,7 +6,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.json.JSON
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.StandardOpenOption
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 import kotlin.reflect.full.findAnnotation
@@ -46,13 +45,8 @@ class ProjectStorage(val root: Path) {
         managedComponents.forEach { (_, component) ->
             val json = JSON.stringify(component.serializer as KSerializer<Any>, component.data)
 
-            Files.writeString(
-                component.path,
-                json,
-                StandardOpenOption.WRITE,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING
-            )
+            Files.createDirectories(component.path.parent)
+            Files.writeString(component.path, json)
         }
     }
 

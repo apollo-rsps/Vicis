@@ -4,30 +4,27 @@ import javafx.scene.Node
 import javafx.scene.control.Alert
 import javafx.stage.FileChooser
 
-class Dialogs {
-    companion object {
-        fun createFileChooser(vararg extensionFilters: Pair<String, String>): FileChooser {
-            val fileChooser = FileChooser()
+object Dialogs {
 
-            fileChooser.extensionFilters.addAll(extensionFilters.map {
-                FileChooser.ExtensionFilter(
-                    it.second,
-                    it.first
-                )
-            })
+    fun createFileChooser(vararg extensionFilters: Pair<String, String>): FileChooser {
+        val fileChooser = FileChooser()
 
-            return fileChooser
+        fileChooser.extensionFilters += extensionFilters.map { (extension, description) ->
+            FileChooser.ExtensionFilter(description, extension)
         }
 
-        fun createDialog(content: Node): Alert {
-            val dialog = Alert(Alert.AlertType.NONE).apply {
-                dialogPane.content = content
-            }
-
-            val window = dialog.dialogPane.window
-            window.setOnCloseRequest { dialog.dialogPane.stage?.close() }
-
-            return dialog
-        }
+        return fileChooser
     }
+
+    fun createDialog(content: Node): Alert {
+        val dialog = Alert(Alert.AlertType.NONE).apply {
+            dialogPane.content = content
+        }
+
+        val window = dialog.dialogPane.window
+        window.setOnCloseRequest { dialog.dialogPane.stage?.close() }
+
+        return dialog
+    }
+
 }

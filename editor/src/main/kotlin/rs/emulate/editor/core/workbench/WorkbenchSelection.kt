@@ -6,8 +6,8 @@ import rs.emulate.editor.vfs.VirtualFileId
 
 sealed class WorkbenchSelection
 
-data class VirtualFileSelection(
-    val project: Project,
-    val vfsId: VirtualFileId,
+data class VirtualFileSelection<T : VirtualFileId>(
+    val project: Project<T>,
+    val vfsId: T,
     val type: ResourceType
 ) : WorkbenchSelection()

@@ -27,9 +27,9 @@ class LegacyFileIndexer(
         return listOf(
             configIndex(LegacyResourceType.Floor, FloorDefinitionDecoder),
             configIndex(LegacyResourceType.Identikit, IdentikitDefinitionDecoder),
-            configIndex(LegacyResourceType.Location, LocationDefinitionDecoder) { name },
-            configIndex(LegacyResourceType.Npc, NpcDefinitionDecoder) { name },
-            configIndex(LegacyResourceType.Object, ObjectDefinitionDecoder) { name },
+            configIndex(LegacyResourceType.Location, LocationDefinitionDecoder) { "$id: $name" },
+            configIndex(LegacyResourceType.Npc, NpcDefinitionDecoder) { "$id: $name" },
+            configIndex(LegacyResourceType.Object, ObjectDefinitionDecoder) { "$id: $name" },
             configIndex(LegacyResourceType.Sequence, SequenceDefinitionDecoder),
             configIndex(LegacyResourceType.SpotAnim, SpotAnimationDefinitionDecoder),
             configIndex(LegacyResourceType.Varbit, VarbitDefinitionDecoder),

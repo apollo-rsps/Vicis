@@ -19,7 +19,7 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
      * A flag indicating if this side can be resized.  Controls whether the resize handle is made present.
      */
     val resizableProperty = SimpleBooleanProperty(true)
-    var resizable : Boolean
+    var resizable: Boolean
         get() = resizableProperty.get()
         set(value) {
             resizableProperty.set(value)
@@ -29,7 +29,7 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
      * The [Node] that is the target of drag events, may be different from the node being resized.
      */
     val dragTargetProperty = SimpleObjectProperty<Node>()
-    var dragTarget : Node
+    var dragTarget: Node
         get() = dragTargetProperty.get()
         set(value) {
             dragTargetProperty.set(value)
@@ -39,7 +39,7 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
      * The [Node] that receives resize events.
      */
     val resizeTargetProperty = SimpleObjectProperty<Node>()
-    var resizeTarget : Node?
+    var resizeTarget: Node?
         get() = resizeTargetProperty.get()
         set(value) {
             resizeTargetProperty.set(value)
@@ -63,7 +63,7 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
      * Check if the coordinates given by [x] and [y] are within the resize box of this side.
      */
     fun isPointInResizeBounds(x: Double, y: Double): Boolean {
-        val node = dragTarget ?: return false
+        val node = dragTarget
 
         val layoutBounds = node.layoutBounds
         val resizeAnchorSize = RESIZE_ANCHOR_SIZE
@@ -112,11 +112,7 @@ class ResizableBorderPaneSide(val side: Side, initial: Property<out Node>) {
                 is Pane -> node.children.forEach { setWidth(it, newWidth) }
                 is Control -> node.minWidth = newWidth
                 is Region -> node.minWidth = newWidth
-                else -> {
-                    if (node != null) {
-                        println("Unrecognized type: ${node::class.simpleName}")
-                    }
-                }
+                else -> println("Unrecognized type: ${node::class.simpleName}")
             }
         }
 

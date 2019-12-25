@@ -1,12 +1,7 @@
 package rs.emulate.editor.vfs.index
 
-import rs.emulate.editor.vfs.LegacyFileId
-import rs.emulate.editor.vfs.LegacyResourceType
-import rs.emulate.editor.vfs.ModernFileId
-import rs.emulate.editor.vfs.ModernResourceType
-import rs.emulate.editor.vfs.ResourceType
-import rs.emulate.editor.vfs.VirtualFileId
-import java.util.Objects
+import rs.emulate.editor.vfs.*
+import java.util.*
 
 sealed class VirtualFileIndex<out T : VirtualFileId, R : ResourceType>(
     val category: R,
@@ -24,7 +19,7 @@ class ModernVirtualFileIndex(
 ) : VirtualFileIndex<ModernFileId, ModernResourceType>(category, entries)
 
 class VirtualFileIndexEntry<T : VirtualFileId>(val id: T, name: String?) {
-    val name = name ?: id.toString()
+    val name: String = name ?: id.toString()
 
     override fun equals(other: Any?): Boolean {
         return id == (other as? VirtualFileIndexEntry<*>)?.id

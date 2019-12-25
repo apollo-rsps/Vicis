@@ -11,6 +11,7 @@ import rs.emulate.editor.core.workbench.explorer.node.index.IndexEntryNode
 import rs.emulate.editor.core.workbench.explorer.tree.ExplorerTreeCellFactory
 import rs.emulate.editor.core.workbench.explorer.tree.ExplorerTreeItem
 import rs.emulate.editor.utils.javafx.createAsyncEventHandler
+import rs.emulate.editor.vfs.VirtualFileId
 import javax.inject.Inject
 
 class WorkbenchExplorer @Inject constructor(val ctx: WorkbenchContext, val openAction: OpenContentAction) {
@@ -38,11 +39,15 @@ class WorkbenchExplorer @Inject constructor(val ctx: WorkbenchContext, val openA
     }
 
     suspend fun onItemOpened(event: MouseEvent) {
-        val selection = explorerTree.selectionModel.selectedItems.first() ?: return
-        val node = selection.value
+        val selection = explorerTree.selectionModel.selectedItems.firstOrNull() ?: return
 
-        when (node) {
-            is IndexEntryNode -> ctx.selection = VirtualFileSelection(node.project, node.entry.vfsId, node.type)
+        when (val node = selection.value) {
+            is IndexEntryNode<*> -> ctx.selection = createIndexSelection(node)
         }
     }
+
+    private fun <V : VirtualFileId> createIndexSelection(node: IndexEntryNode<V>): VirtualFileSelection<V> {
+        return VirtualFileSelection(node.project, node.entry.vfsId, node.type)
+    }
+
 }

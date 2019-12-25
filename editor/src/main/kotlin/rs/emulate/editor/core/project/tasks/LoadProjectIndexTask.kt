@@ -24,8 +24,8 @@ interface LoadProjectIndexTaskFactory {
 class LoadProjectIndexTask @Inject constructor(
     @Assisted val storage: ProjectStorage,
     @Assisted val indexer: VirtualFileIndexer<out VirtualFileId, out ResourceType>
-) : Task<ProjectIndex>() {
-    override fun call(): ProjectIndex {
+) : Task<ProjectIndex<*>>() {
+    override fun call(): ProjectIndex<*> {
         updateProgress(0.0, 1.0)
 
         val indexList = indexer.index()

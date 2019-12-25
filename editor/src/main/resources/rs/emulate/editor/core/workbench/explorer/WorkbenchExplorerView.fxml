@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <TreeView xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="rs.emulate.editor.core.workbench.explorer.WorkbenchExplorer" fx:id="explorerTree"
-          minWidth="0" minHeight="0"
+          minWidth="250" minHeight="0"
+          prefWidth="250" prefHeight="700"
           showRoot="false" AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>

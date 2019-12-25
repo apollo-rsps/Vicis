@@ -4,7 +4,6 @@ import javafx.beans.binding.Bindings
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.Button
-import javafx.scene.control.ChoiceBox
 import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
 import org.controlsfx.validation.ValidationSupport
@@ -17,6 +16,8 @@ import rs.emulate.editor.utils.javafx.Dialogs
 import rs.emulate.editor.utils.javafx.createAsyncEventHandler
 import rs.emulate.editor.utils.javafx.stage
 import rs.emulate.editor.utils.javafx.window
+import java.io.File
+import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.Callable
 import javax.inject.Inject
@@ -44,10 +45,6 @@ class OpenProjectDialog @Inject constructor(val ctx: WorkbenchContext, val proje
     lateinit var vfsRootSelectorButton: Button
 
     @FXML
-    lateinit var vfsTypeInput: ChoiceBox<ProjectType>
-
-
-    @FXML
     fun initialize() {
         validator.registerValidator(
             projectNameInput,
@@ -64,23 +61,15 @@ class OpenProjectDialog @Inject constructor(val ctx: WorkbenchContext, val proje
             )
         )
 
-        validator.registerValidator(
-            vfsTypeInput,
-            true,
-            createEmptyValidator<String>("A cache type is required")
-        )
-
         val isValidBinding = Bindings.createBooleanBinding(
             Callable<Boolean> { validator.validationResult?.messages?.isEmpty() ?: false },
             validator.validationResultProperty()
         )
 
         openButton.disableProperty().bind(isValidBinding.not())
-        openButton.onAction = createAsyncEventHandler(this::onOpenAction)
-        cancelButton.onAction = createAsyncEventHandler(this::onCancelAction)
-        vfsRootSelectorButton.onAction = createAsyncEventHandler(this::onVfsRootSelectorAction)
-
-        vfsTypeInput.items.addAll(ProjectType.Legacy, ProjectType.Modern)
+        openButton.onAction = createAsyncEventHandler(::onOpenAction)
+        cancelButton.onAction = createAsyncEventHandler(::onCancelAction)
+        vfsRootSelectorButton.onAction = createAsyncEventHandler(::onVfsRootSelectorAction)
     }
 
     private suspend fun onCancelAction(action: ActionEvent) {
@@ -88,20 +77,52 @@ class OpenProjectDialog @Inject constructor(val ctx: WorkbenchContext, val proje
     }
 
     private suspend fun onVfsRootSelectorAction(action: ActionEvent) {
-        val fileChooser = Dialogs.createFileChooser(CACHE_FILE_NAME to "RuneScape data file")
-        val fileSelection = fileChooser.showOpenDialog(root.window)
+        val chooser = Dialogs.createFileChooser(
+            LEGACY_CACHE_FILE_NAME to "RuneScape data file",
+            MODERN_CACHE_FILE_NAME to "Runescape modern data file"
+        )
 
-        fileSelection?.let { vfsRootInput.text = it.absolutePath }
+        val parentResources = Paths.get("..").resolve("resources")
+        chooser.initialDirectory = if (Files.exists(parentResources)) {
+            parentResources.toFile()
+        } else {
+            val currentResources = Paths.get(".").resolve("resources")
+
+            if (Files.exists(currentResources)) {
+                currentResources.toFile()
+            } else {
+                File(System.getProperty("user.dir"))
+            }
+        }
+
+        val selection = chooser.showOpenDialog(root.window)
+        selection?.let {
+            vfsRootInput.text = it.absolutePath
+
+            if (projectNameInput.text.isNullOrBlank()) {
+                projectNameInput.text = it.parentFile.name
+            }
+        }
     }
 
     private suspend fun onOpenAction(action: ActionEvent) {
         root.stage?.close()
 
-        val project = projectLoader.loadProject(projectNameInput.text, Paths.get(vfsRootInput.text), vfsTypeInput.value)
+        val path = Paths.get(vfsRootInput.text)
+
+        val type = when {
+            path.endsWith(LEGACY_CACHE_FILE_NAME) -> ProjectType.Legacy
+            path.endsWith(MODERN_CACHE_FILE_NAME) -> ProjectType.Modern
+            else -> error("Unrecognised cache format")
+        }
+
+        val project = projectLoader.loadProject(projectNameInput.text, path, type)
         ctx.openProject(project)
     }
 
-    companion object {
-        const val CACHE_FILE_NAME: String = "main_file_cache.dat"
+    private companion object {
+        private const val LEGACY_CACHE_FILE_NAME = "main_file_cache.dat"
+        private const val MODERN_CACHE_FILE_NAME = "main_file_cache.idx255"
+
     }
 }

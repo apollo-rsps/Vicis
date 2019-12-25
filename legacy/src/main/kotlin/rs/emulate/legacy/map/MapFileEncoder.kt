@@ -7,8 +7,7 @@ import rs.emulate.legacy.map.MapConstants.MINIMUM_OVERLAY_TYPE
 import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
 import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
 import java.nio.ByteBuffer
-import java.util.ArrayList
-import java.util.Arrays
+import java.util.*
 
 /**
  * An encoder for [MapFile]s.
@@ -81,7 +80,7 @@ class MapFileEncoder(private val map: MapFile) {
             bytes[index++] = (height / HEIGHT_MULTIPLICAND).toByte()
         }
 
-        return ByteBuffer.wrap(Arrays.copyOf(bytes, index))
+        return ByteBuffer.wrap(bytes.copyOf(index))
     }
 
 }

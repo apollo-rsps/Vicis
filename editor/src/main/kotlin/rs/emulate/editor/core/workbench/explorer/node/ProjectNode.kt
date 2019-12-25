@@ -5,8 +5,9 @@ import rs.emulate.editor.core.project.Project
 import rs.emulate.editor.core.workbench.explorer.WorkbenchExplorerNode
 import rs.emulate.editor.core.workbench.explorer.node.index.IndexNode
 import rs.emulate.editor.utils.javafx.bindWithMapping
+import rs.emulate.editor.vfs.VirtualFileId
 
-class ProjectNode(val project: Project) : WorkbenchExplorerNode {
+class ProjectNode<V : VirtualFileId>(val project: Project<V>) : WorkbenchExplorerNode {
 
     override val isLeaf = false
 

@@ -6,7 +6,7 @@ import io.netty.buffer.Unpooled
 import rs.emulate.modern.codec.store.FileStore
 import rs.emulate.util.charset.hashCodeCp1252
 import rs.emulate.util.crypto.digest.Whirlpool
-import rs.emulate.util.readUnsignedIntSmart
+import rs.emulate.util.readUnsignedSmartInt
 import rs.emulate.util.writeUnsignedIntSmart
 import java.io.IOException
 import java.util.*
@@ -217,12 +217,12 @@ class ReferenceTable {
 
             table.flags = readUnsignedByte().toInt()
 
-            val size = if (table.format >= FORMAT_SMART) readUnsignedIntSmart() else readUnsignedShort()
+            val size = if (table.format >= FORMAT_SMART) readUnsignedSmartInt() else readUnsignedShort()
 
             /* read entry ids and create entries */
             var accumulator = 0
             val ids = IntArray(size) {
-                accumulator += if (table.format >= FORMAT_SMART) readUnsignedIntSmart() else readUnsignedShort()
+                accumulator += if (table.format >= FORMAT_SMART) readUnsignedSmartInt() else readUnsignedShort()
                 table.createEntry(accumulator)
 
                 accumulator
@@ -273,7 +273,7 @@ class ReferenceTable {
 
             /* read child sizes */
             val childSizes = IntArray(size) {
-                if (table.format >= FORMAT_SMART) readUnsignedIntSmart() else readUnsignedShort()
+                if (table.format >= FORMAT_SMART) readUnsignedSmartInt() else readUnsignedShort()
             }
 
             /* read child ids */
@@ -285,7 +285,7 @@ class ReferenceTable {
                 accumulator = 0
 
                 childIds[i] = IntArray(childSize) {
-                    accumulator += if (table.format >= FORMAT_SMART) readUnsignedIntSmart() else readUnsignedShort()
+                    accumulator += if (table.format >= FORMAT_SMART) readUnsignedSmartInt() else readUnsignedShort()
                     accumulator
                 }
 

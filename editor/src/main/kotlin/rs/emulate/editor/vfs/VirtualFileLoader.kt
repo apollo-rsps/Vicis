@@ -4,13 +4,13 @@ import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.config.ConfigEntryDecoder
 
-interface VirtualFileLoader<T : VirtualFileId> {
-    fun load(id: T): ByteBuf?
+sealed class VirtualFileLoader<I : VirtualFileId> {
+    abstract fun load(id: I): ByteBuf?
 }
 
 class LegacyFileLoader(
     private val cache: IndexedFileSystem // TODO inject this (or a similar interface)
-) : VirtualFileLoader<LegacyFileId> {
+) : VirtualFileLoader<LegacyFileId>() {
 
     private val configArchive by lazy { cache.getArchive(ARCHIVE_INDEX, CONFIG_ARCHIVE_ID) }
 

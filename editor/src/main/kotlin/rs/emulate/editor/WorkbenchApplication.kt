@@ -7,11 +7,11 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import rs.emulate.editor.core.CoreModule
 import rs.emulate.editor.core.action.WorkbenchActionModule
-import rs.emulate.editor.legacy.LegacyModule
 import rs.emulate.editor.core.task.TaskModule
 import rs.emulate.editor.core.workbench.WorkbenchModule
 import rs.emulate.editor.javafx.JavaFxModule
 import rs.emulate.editor.javafx.loader.FxmlLoader
+import rs.emulate.editor.legacy.LegacyModule
 
 class WorkbenchApplication : Application() {
 
@@ -26,9 +26,9 @@ class WorkbenchApplication : Application() {
         )
 
         val loader = injector.getInstance(FxmlLoader::class.java)
-        val workbench = loader.load<Parent>(this.javaClass.getResource("/rs/emulate/editor/core/workbench/Workbench.fxml"))
+        val workbench = loader.load<Parent>(javaClass.getResource("/rs/emulate/editor/core/workbench/Workbench.fxml"))
 
-        primaryStage.scene = Scene(workbench, 800.0, 500.0)
+        primaryStage.scene = Scene(workbench, 1200.0, 800.0)
         primaryStage.sizeToScene()
 
         primaryStage.show()

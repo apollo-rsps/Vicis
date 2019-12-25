@@ -22,13 +22,13 @@ class WorkbenchContext {
             selectionProperty.value = value
         }
 
-    val projects = FXCollections.observableArrayList<Project>()
+    val projects = FXCollections.observableArrayList<Project<*>>()
 
-    fun openProject(project: Project) {
+    fun openProject(project: Project<*>) {
         projects.add(project)
     }
 
-    fun closeProject(project: Project) {
+    fun closeProject(project: Project<*>) {
         projects.remove(project)
     }
 

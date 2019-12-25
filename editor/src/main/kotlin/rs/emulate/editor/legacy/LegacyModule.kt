@@ -13,7 +13,7 @@ class LegacyModule : AbstractModule() {
         val binder = MapBinder.newMapBinder(
             binder(),
             TypeLiteral.get(ResourceType::class.java),
-            object : TypeLiteral<ResourcePropertySupport<*>>() {}
+            object : TypeLiteral<ResourcePropertySupport<*, *>>() {}
         )
 
         binder.addBinding(LegacyResourceType.Npc).to(NpcPropertySupport::class.java)

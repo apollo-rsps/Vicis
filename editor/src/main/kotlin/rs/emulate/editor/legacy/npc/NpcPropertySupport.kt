@@ -7,14 +7,14 @@ import org.controlsfx.property.editor.PropertyEditor
 import rs.emulate.editor.core.content.capabilities.ResourcePropertySupport
 import rs.emulate.editor.core.project.Project
 import rs.emulate.editor.core.workbench.properties.ResourcePropertySheetItem
-import rs.emulate.editor.vfs.VirtualFileId
-import rs.emulate.legacy.config.npc.NpcDefinition
+import rs.emulate.editor.vfs.LegacyFileId
+import rs.emulate.legacy.config.npc.NpcDefinitionDecoder
 
-class NpcPropertySupport : ResourcePropertySupport<NpcProperty> {
+class NpcPropertySupport : ResourcePropertySupport<NpcProperty, LegacyFileId.ConfigEntry> {
 
     override fun createProperties(
-        project: Project,
-        id: VirtualFileId
+        project: Project<LegacyFileId.ConfigEntry>,
+        id: LegacyFileId.ConfigEntry
     ): List<PropertySheet.Item> {
         return BeanPropertyUtils.getProperties(NpcDefinition(1))
     }

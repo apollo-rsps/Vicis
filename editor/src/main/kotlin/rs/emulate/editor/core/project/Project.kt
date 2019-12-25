@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty
 import rs.emulate.editor.vfs.VirtualFileId
 import rs.emulate.editor.vfs.VirtualFileLoader
 
-class Project(name: String, val loader: VirtualFileLoader<out VirtualFileId>, val index: ProjectIndex) {
+class Project<V : VirtualFileId>(name: String, val loader: VirtualFileLoader<V>, val index: ProjectIndex<V>) {
     val nameProp = SimpleStringProperty(name)
     var name: String
         get() = nameProp.get()
