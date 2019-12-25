@@ -1,6 +1,0 @@
-description = 'Vicis Tools'
-
-dependencies {
-    implementation project(':legacy')
-    implementation project(':util')
-}
