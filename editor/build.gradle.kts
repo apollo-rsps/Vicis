@@ -73,7 +73,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "rs.emulate.editor/rs.emulate.editor.WorkbenchApplication"
+    mainClassName = "rs.emulate.editor.WorkbenchApplicationKt"
     applicationDefaultJvmArgs = listOf(
         "--illegal-access=warn",
         "--add-opens", "javafx.controls/javafx.scene.control.skin=ALL-UNNAMED",
