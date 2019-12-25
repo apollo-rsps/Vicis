@@ -17,16 +17,13 @@ fun ByteBuf.toByteArray(): ByteArray {
 fun ByteBuf.crc32(): Int {
     val bytes: ByteArray
     val off: Int
-    val len: Int
+    val len = readableBytes()
 
     if (hasArray()) {
         off = arrayOffset() + readerIndex()
-        len = readableBytes()
         bytes = array()
     } else {
         off = 0
-        len = readableBytes()
-
         bytes = ByteArray(len)
         getBytes(readerIndex(), bytes)
     }
@@ -36,7 +33,29 @@ fun ByteBuf.crc32(): Int {
     return crc32.value.toInt()
 }
 
-fun ByteBuf.readString(charset: Charset = Cp1252Charset): String {
+fun ByteBuf.readSmarts(): Int {
+    var value = 0
+    var next = readUnsignedSmart()
+
+    while (next == Short.MAX_VALUE.toInt()) {
+        value += Short.MAX_VALUE
+        next = readUnsignedSmart()
+    }
+
+    return value + next
+}
+
+fun ByteBuf.writeSmarts(value: Int) {
+    var remaining = value
+    do {
+        val write = remaining.coerceAtMost(Short.MAX_VALUE.toInt())
+        remaining -= write
+
+        writeUnsignedSmart(write)
+    } while (remaining != 0)
+}
+
+fun ByteBuf.readCString(charset: Charset = Cp1252Charset): String {
     val start = readerIndex()
 
     val end = forEachByte(ByteProcessor.FIND_NUL)
@@ -48,6 +67,12 @@ fun ByteBuf.readString(charset: Charset = Cp1252Charset): String {
     readBytes(bytes)
     readerIndex(readerIndex() + 1)
     return String(bytes, charset)
+}
+
+fun ByteBuf.writeCString(str: String, charset: Charset = Cp1252Charset) {
+    val bytes = str.toByteArray(charset)
+    writeBytes(bytes)
+    writeByte(0)
 }
 
 fun ByteBuf.readAsciiString(): String {
@@ -70,16 +95,10 @@ fun ByteBuf.writeAsciiString(string: String) {
     writeByte(10)
 }
 
-fun ByteBuf.writeCString(str: String, charset: Charset = Cp1252Charset) {
-    val bytes = str.toByteArray(charset)
-    writeBytes(bytes)
-    writeByte(0)
-}
-
 fun ByteBuf.readVersionedString(charset: Charset = Cp1252Charset): String {
     val version = readUnsignedByte().toInt()
     require(version == 0)
-    return readString(charset)
+    return readCString(charset)
 }
 
 fun ByteBuf.writeVersionedString(str: String) {
@@ -89,7 +108,7 @@ fun ByteBuf.writeVersionedString(str: String) {
 
 fun ByteBuf.readOptionalString(charset: Charset = Cp1252Charset): String? {
     val present = readBoolean()
-    return if (present) readString(charset) else null
+    return if (present) readCString(charset) else null
 }
 
 fun ByteBuf.writeOptionalString(str: String?, charset: Charset = Cp1252Charset) {
@@ -99,6 +118,16 @@ fun ByteBuf.writeOptionalString(str: String?, charset: Charset = Cp1252Charset) 
     } else {
         writeBoolean(false)
     }
+}
+
+fun ByteBuf.readUnsignedTriByte(): Int {
+    return readUnsignedByte().toInt() shl 16 or (readUnsignedByte().toInt() shl 8) or readUnsignedByte().toInt()
+}
+
+fun ByteBuf.writeTriByte(value: Int) {
+    writeByte(value shr 16 and 0xFF)
+    writeByte(value shr 8 and 0xFF)
+    writeByte(value and 0xFF)
 }
 
 fun ByteBuf.readUnsignedSmart(): Int {
@@ -119,7 +148,7 @@ fun ByteBuf.writeUnsignedSmart(value: Int) {
 }
 
 fun ByteBuf.readSignedSmart(): Int {
-    val peek = getByte(readerIndex()).toInt() and 0xFF
+    val peek = getUnsignedByte(readerIndex()).toInt()
     return if (peek < 128) {
         readUnsignedByte() - 64
     } else {
@@ -127,14 +156,12 @@ fun ByteBuf.readSignedSmart(): Int {
     }
 }
 
-fun ByteBuf.readUnsignedTriByte(): Int {
-    return readUnsignedByte().toInt() shl 16 or (readUnsignedByte().toInt() shl 8) or readUnsignedByte().toInt()
-}
-
-fun ByteBuf.writeTriByte(value: Int) {
-    writeByte(value shr 16 and 0xFF)
-    writeByte(value shr 8 and 0xFF)
-    writeByte(value and 0xFF)
+fun ByteBuf.writeSignedSmart(value: Int) {
+    when (value) {
+        in -0x7f..0x7f -> writeByte(value)
+        in -0x3fff..0x3fff -> writeShort(0xC000 or value)
+        else -> throw IllegalArgumentException("Expected $value to fall within range [${-0x3fff..0x3fff}]")
+    }
 }
 
 fun ByteBuf.readUnsignedMultiSmart(): Int {
@@ -161,7 +188,7 @@ fun ByteBuf.writeUnsignedMultiSmart(value: Int) {
     writeUnsignedSmart(remaining)
 }
 
-fun ByteBuf.readUnsignedIntSmart(): Int {
+fun ByteBuf.readUnsignedSmartInt(): Int {
     val peek = getByte(readerIndex()).toInt()
     return if (peek and 0x80 == 0) {
         readShort().toInt() and 0x7fff
@@ -175,6 +202,15 @@ fun ByteBuf.writeUnsignedIntSmart(value: Int) {
         in 0..0x7fff -> writeShort(value)
         in 0..0x7fffffff -> writeInt(-0x80000000 or value)
         else -> throw IllegalArgumentException("Expected $value to fall within range [${0..0x7fffffff}]")
+    }
+}
+
+fun ByteBuf.readOptionalIntSmart(): Int {
+    val peek = getByte(readerIndex()).toInt()
+    return if (peek < 0) {
+        readInt() and 0x7fffffff
+    } else {
+        readUnsignedShort().let { if (it == 32767) -1 else it }
     }
 }
 
@@ -197,16 +233,16 @@ fun ByteBuf.writeVarInt(value: Int) {
         if (value and 0x3fff.inv() != 0) {
             if (value and 0x1fffff.inv() != 0) {
                 if (value and 0xfffffff.inv() != 0) {
-                    writeByte(((value ushr 28) and 0x7f) or 0x80)
+                    writeByte((value ushr 28) and 0x7f or 0x80)
                 }
 
-                writeByte(((value ushr 21) and 0x7f) or 0x80)
+                writeByte((value ushr 21) and 0x7f or 0x80)
             }
 
-            writeByte(((value ushr 14) and 0x7f) or 0x80)
+            writeByte((value ushr 14) and 0x7f or 0x80)
         }
 
-        writeByte(((value ushr 7) and 0x7f) or 0x80)
+        writeByte((value ushr 7) and 0x7f or 0x80)
     }
 
     writeByte(value and 0x7f)
@@ -217,14 +253,16 @@ fun ByteBuf.readVarLong(bytes: Int): Long {
 
     var value = 0L
     var bits = (bytes - 1) * 8
+
     while (bits >= 0) {
         value = value or (readUnsignedByte().toInt() shl bits).toLong()
         bits -= 8
     }
+
     return value
 }
 
-fun ByteBuf.writeVarLong(bytes: Int, value: Long) {
+fun ByteBuf.writeVarLong(value: Long, bytes: Int) {
     require(bytes in 1..7)
 
     var bits = (bytes - 1) * 8

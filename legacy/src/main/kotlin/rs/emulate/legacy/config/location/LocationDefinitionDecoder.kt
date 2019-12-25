@@ -23,7 +23,11 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
             if (interactive == -1) {
                 interactive = if (actions.isNotEmpty()) {
                     1
-                } else if (models.isNotEmpty() && (modelTypes.isEmpty() || modelTypes.first() == 10)) 1 else 0
+                } else if (models.isNotEmpty() && (modelTypes.isEmpty() || modelTypes.first() == 10)) {
+                    1
+                } else {
+                    0
+                }
             }
 
             if (hollow) {
