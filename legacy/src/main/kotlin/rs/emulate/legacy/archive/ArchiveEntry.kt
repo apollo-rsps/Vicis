@@ -19,13 +19,13 @@ class ArchiveEntry(val identifier: Int, buffer: ByteBuf) {
      * The buffer of this entry.
      */
     val buffer: ByteBuf = buffer.copy()
-        get() = field.copy()
+        get() = field.copy(0, field.writerIndex())
 
     /**
      * Gets the size of this entry (i.e. the capacity of the [ByteBuf] backing it), in bytes.
      */
     val size: Int
-        get() = buffer.readableBytes()
+        get() = buffer.writerIndex()
 
     /**
      * Creates the archive entry.
