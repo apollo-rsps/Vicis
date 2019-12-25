@@ -1,7 +1,6 @@
 package rs.emulate.editor.legacy.npc
 
 import org.controlsfx.control.PropertySheet
-import org.controlsfx.property.BeanPropertyUtils
 import org.controlsfx.property.editor.Editors
 import org.controlsfx.property.editor.PropertyEditor
 import rs.emulate.editor.core.content.capabilities.ResourcePropertySupport
@@ -16,7 +15,11 @@ class NpcPropertySupport : ResourcePropertySupport<NpcProperty, LegacyFileId.Con
         project: Project<LegacyFileId.ConfigEntry>,
         id: LegacyFileId.ConfigEntry
     ): List<PropertySheet.Item> {
-        return BeanPropertyUtils.getProperties(NpcDefinition(1))
+        val loader = project.loader
+        val buf = loader.load(id) ?: error("Failed to decode $id.")
+
+        val definition = NpcDefinitionDecoder.decode(id.file, buf)
+        return NpcPropertySheetItem.from(definition)
     }
 
     override fun createEditor(item: ResourcePropertySheetItem<NpcProperty>): PropertyEditor<*>? {
