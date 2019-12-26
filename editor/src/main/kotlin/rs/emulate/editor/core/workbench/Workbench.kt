@@ -31,9 +31,6 @@ class Workbench @Inject constructor(
     lateinit var dockPane: ResizableBorderPane
 
     @FXML
-    lateinit var borderPane: TabPane
-
-    @FXML
     lateinit var bottomDock: Dock
 
     @FXML
@@ -43,7 +40,7 @@ class Workbench @Inject constructor(
     lateinit var rightDock: Dock
 
     @FXML
-    lateinit var centerDock: TabPane
+    lateinit var viewer: TabPane
 
     @FXML
     lateinit var menuBar: MenuBar
