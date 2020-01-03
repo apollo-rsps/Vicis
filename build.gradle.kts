@@ -15,6 +15,7 @@ allprojects {
     repositories {
         mavenCentral()
         maven("https://kotlin.bintray.com/kotlinx")
+        maven("https://dl.bintray.com/michaelbull/maven")
         jcenter()
     }
 }
@@ -22,6 +23,8 @@ allprojects {
 subprojects {
     afterEvaluate {
         dependencies {
+            add("compile", "com.michael-bull.kotlin-result:kotlin-result:1.1.4")
+
             add("testImplementation", kotlin("test"))
             add("testImplementation", "org.junit.jupiter:junit-jupiter-api:5.5.2")
             add("testImplementation", "org.junit.jupiter:junit-jupiter-params:5.5.2")
