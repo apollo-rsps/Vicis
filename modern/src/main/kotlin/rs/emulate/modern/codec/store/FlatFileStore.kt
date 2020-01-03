@@ -2,14 +2,13 @@ package rs.emulate.modern.codec.store
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.codec.store.FileStore.Companion.FILE_LEN
 import java.io.FileNotFoundException
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
-import java.util.Arrays
+import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -24,7 +23,6 @@ class FlatFileStore(
     }
 
     private fun getFilePath(index: Int, file: Int): Path {
-        require(file in 0 until FileStore.FILE_LEN)
         return getIndexPath(index).resolve(file.toString() + DATA_FILE_SUFFIX)
     }
 
@@ -35,7 +33,7 @@ class FlatFileStore(
         }
     }
 
-    override fun containsIndex(index: Int): Boolean {
+    override fun contains(index: Int): Boolean {
         val path = getIndexPath(index)
         return Files.isDirectory(path)
     }
@@ -102,11 +100,11 @@ class FlatFileStore(
 
     override fun listIndexes(): List<Int> {
         return Files.newDirectoryStream(root).use { stream ->
-            stream.filter { Files.isDirectory(it) }
+            stream.asSequence().filter { Files.isDirectory(it) }
                 .map { INDEX_DIR_PATTERN.matcher(it.fileName.toString()) }
                 .filter(Matcher::matches)
                 .map { it.group(1).toInt() }
-                .filter { it in 0 until FILE_LEN }
+                .toList()
         }
     }
 
@@ -115,11 +113,11 @@ class FlatFileStore(
 
         if (Files.isDirectory(indexPath)) {
             return Files.newDirectoryStream(indexPath).use { stream ->
-                stream.filter { Files.isRegularFile(it) }
+                stream.asSequence().filter { Files.isRegularFile(it) }
                     .map { DATA_FILE_PATTERN.matcher(it.fileName.toString()) }
                     .filter(Matcher::matches)
                     .map { it.group(1).toInt() }
-                    .filter { it in 0 until FILE_LEN }
+                    .toList()
             }
         } else {
             throw FileNotFoundException()

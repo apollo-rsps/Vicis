@@ -2,7 +2,6 @@ package rs.emulate.modern.codec.store
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.modern.codec.store.FileStore.Companion.FILE_LEN
 import rs.emulate.modern.codec.store.FileStore.Companion.INDEX_LEN
 import rs.emulate.util.getUnsignedMedium
 import rs.emulate.util.putMedium
@@ -40,16 +39,17 @@ class JagexFileStore(
             throw IOException("Cannot create an index of the cache is read-only")
         }
 
-        require(index in 0 until indexChannels.size)
+        require(index in indexChannels.indices)
 
         if (indexChannels[index] == null) {
             val file = root.resolve(INDEX_FILE_PREFIX + index)
             val channel = FileChannel.open(file, StandardOpenOption.CREATE, READ, WRITE)
+
             indexChannels[index] = PagedFile(channel, INDEX_BLOCK_SIZE, 1, true)
         }
     }
 
-    override fun containsIndex(index: Int): Boolean {
+    override operator fun contains(index: Int): Boolean {
         return indexChannels[index] != null
     }
 
@@ -61,8 +61,7 @@ class JagexFileStore(
     }
 
     override fun contains(index: Int, file: Int): Boolean {
-        require(index in 0 until indexChannels.size)
-        require(file in 0 until FILE_LEN)
+        require(index in indexChannels.indices)
 
         val indexChannel = indexChannels[index] ?: return false
 
@@ -83,18 +82,17 @@ class JagexFileStore(
     }
 
     override fun read(index: Int, file: Int): ByteBuf {
-        require(index in 0 until indexChannels.size)
-        require(file in 0 until FILE_LEN)
+        require(index in indexChannels.indices) { "Index $index out of bounds." }
 
         val indexChannel = indexChannels[index] ?: throw FileNotFoundException()
 
-        var pos = file.toLong()
-        if (pos >= indexChannel.size()) {
+        var position = file.toLong()
+        if (position >= indexChannel.size()) {
             throw FileNotFoundException()
         }
 
         indexBuffer.clear()
-        indexChannel.read(indexBuffer, pos)
+        indexChannel.read(indexBuffer, position)
         indexBuffer.flip()
 
         val size = indexBuffer.getUnsignedMedium()
@@ -109,42 +107,56 @@ class JagexFileStore(
             throw FileNotFoundException()
         }
 
+        val extended = file > 65535
+
+        val headerSize: Int
+        val dataSize: Int
+        if (extended) {
+            headerSize = EXTENDED_HEADER_SIZE
+            dataSize = EXTENDED_DATA_SIZE
+        } else {
+            headerSize = STANDARD_HEADER_SIZE
+            dataSize = STANDARD_DATA_SIZE
+        }
+
         var counter = 0
 
         do {
             if (sector <= 0) {
-                throw IOException("Sector is not positive")
+                throw IOException("Sector is not positive: $sector")
             }
 
-            pos = sector.toLong()
-            if (pos >= dataChannel.size()) {
+            position = sector.toLong()
+            if (position >= dataChannel.size()) {
                 throw IOException("Sector is outside data file")
             }
 
+            dataBuffer.limit(dataSize)
+
             dataBuffer.clear()
-            dataChannel.read(dataBuffer, pos)
+            dataChannel.read(dataBuffer, position)
             dataBuffer.flip()
 
-            val file0 = dataBuffer.short.toInt() and 0xFFFF
-            val counter0 = dataBuffer.short.toInt() and 0xFFFF
+            val file0 = if (extended) dataBuffer.getInt() else dataBuffer.getShort().toInt() and 0xFFFF
+            val counter0 = dataBuffer.getShort().toInt() and 0xFFFF
             val sector0 = dataBuffer.getUnsignedMedium()
             val index0 = dataBuffer.get().toInt() and 0xFF
 
             if (file0 != file) {
-                throw IOException("File mismatch")
+                throw IOException("File mismatch: expected $file, found $file0")
             }
 
             if (index0 != index) {
-                throw IOException("Index mismatch")
+                throw IOException("Index mismatch: expected $index, found $index0")
             }
 
             if (counter0 != counter) {
-                throw IOException("Counter mismatch")
+                throw IOException("Counter mismatch: expected $")
             }
 
-            val writableBytes = buf.remaining()
-            if (writableBytes < DATA_SIZE) {
-                dataBuffer.limit(HEADER_SIZE + writableBytes)
+            val remaining = buf.remaining()
+            if (remaining < dataSize) {
+                dataBuffer.limit(headerSize + remaining)
             }
 
             buf.put(dataBuffer)
@@ -162,9 +174,7 @@ class JagexFileStore(
     }
 
     override fun write(index: Int, file: Int, buf: ByteBuf) {
-        require(buf.readableBytes() <= MAX_FILE_SIZE)
-        require(index in 0 until indexChannels.size)
-        require(file in 0 until FILE_LEN)
+        require(index in indexChannels.indices)
 
         val indexChannel = indexChannels[index] ?: throw FileNotFoundException()
 
@@ -209,8 +219,19 @@ class JagexFileStore(
         indexBuffer.putMedium(sector)
 
         indexBuffer.flip()
-
         indexChannel.write(indexBuffer, pos)
+
+        val extended = file > 65535
+
+        val headerSize: Int
+        val dataSize: Int
+        if (extended) {
+            headerSize = EXTENDED_HEADER_SIZE
+            dataSize = EXTENDED_DATA_SIZE
+        } else {
+            headerSize = STANDARD_HEADER_SIZE
+            dataSize = STANDARD_DATA_SIZE
+        }
 
         var counter = 0
 
@@ -231,8 +252,8 @@ class JagexFileStore(
                 dataChannel.read(dataBuffer, pos)
                 dataBuffer.flip()
 
-                val file0 = dataBuffer.short.toInt() and 0xFFFF
-                val counter0 = dataBuffer.short.toInt() and 0xFFFF
+                val file0 = if (extended) dataBuffer.getInt() else dataBuffer.getShort().toInt() and 0xFFFF
+                val counter0 = dataBuffer.getShort().toInt() and 0xFFFF
                 val sector0 = dataBuffer.getUnsignedMedium()
                 val index0 = dataBuffer.get().toInt() and 0xFF
 
@@ -249,7 +270,7 @@ class JagexFileStore(
                 }
 
                 sector = sector0
-                existingSize -= DATA_SIZE
+                existingSize -= STANDARD_DATA_SIZE
             } else {
                 sector++
             }
@@ -266,23 +287,28 @@ class JagexFileStore(
             }
 
             /* set the next sector to zero if this is the last sector */
-            if (data.remaining() <= DATA_SIZE) {
+            if (data.remaining() <= STANDARD_DATA_SIZE) {
                 sector = 0
             }
 
             dataBuffer.clear()
 
-            dataBuffer.putShort(file.toShort())
+            if (extended) {
+                dataBuffer.putInt(file)
+            } else {
+                dataBuffer.putShort(file.toShort())
+            }
+
             dataBuffer.putShort(counter.toShort())
             dataBuffer.putMedium(sector)
             dataBuffer.put(index.toByte())
 
             var readableBytes = data.remaining()
-            if (readableBytes > DATA_SIZE) {
-                readableBytes = DATA_SIZE
+            if (readableBytes > dataSize) {
+                readableBytes = dataSize
             }
 
-            val temp = ByteArray(DATA_SIZE)
+            val temp = ByteArray(dataSize) // TODO can we avoid this?
             data.get(temp, 0, readableBytes)
 
             dataBuffer.put(temp).flip()
@@ -293,18 +319,17 @@ class JagexFileStore(
     }
 
     override fun remove(index: Int, file: Int) {
-        require(index in 0 until indexChannels.size)
-        require(file in 0 until FILE_LEN)
+        require(index in indexChannels.indices)
 
         val indexChannel = indexChannels[index] ?: throw FileNotFoundException()
-        val pos = file.toLong()
+        val position = file.toLong()
 
-        if (pos < indexChannel.size()) {
+        if (position < indexChannel.size()) {
             indexBuffer.clear()
             indexBuffer.putTriByte(0).putTriByte(0) // 6 bytes
             indexBuffer.flip()
 
-            indexChannel.write(indexBuffer, pos)
+            indexChannel.write(indexBuffer, position)
         }
     }
 
@@ -349,11 +374,14 @@ class JagexFileStore(
         private val READ_ONLY_OPTIONS = arrayOf<OpenOption>(READ)
 
         private const val INDEX_BLOCK_SIZE = 6
-        private const val HEADER_SIZE = 8
-        private const val DATA_SIZE = 512
-        private const val DATA_BLOCK_SIZE = HEADER_SIZE + DATA_SIZE
 
-        private const val MAX_FILE_SIZE = 65536 * DATA_SIZE
+        private const val STANDARD_HEADER_SIZE = 8
+        private const val STANDARD_DATA_SIZE = 512
+
+        private const val EXTENDED_HEADER_SIZE = 10
+        private const val EXTENDED_DATA_SIZE = 510
+
+        private const val DATA_BLOCK_SIZE = 520
 
         private const val INDEX_PAGES = 1
         private const val DATA_PAGES = 16
@@ -372,6 +400,7 @@ class JagexFileStore(
 
                     if (matcher.matches()) {
                         val index = matcher.group(1).toInt()
+
                         if (index >= 0 && index < indexFiles.size) {
                             indexFiles[index] = file
                         }
@@ -379,18 +408,19 @@ class JagexFileStore(
                 }
             }
 
-            val optionList = Arrays.asList(*options)
+            val optionList = listOf(*options)
             val nioOptions = if (FileStoreOption.Write in optionList) READ_WRITE_OPTIONS else READ_ONLY_OPTIONS
             val strict = FileStoreOption.Lenient !in optionList
 
             val dataChannel = PagedFile(FileChannel.open(dataFile, *nioOptions), DATA_BLOCK_SIZE, DATA_PAGES, strict)
-
             val indexChannels = arrayOfNulls<PagedFile>(indexFiles.size)
-            for (i in indexFiles.indices) {
-                val file = indexFiles[i]
+
+            for (index in indexFiles.indices) {
+                val file = indexFiles[index]
+
                 if (file != null) {
                     val channel = FileChannel.open(file, *nioOptions)
-                    indexChannels[i] = PagedFile(channel, INDEX_BLOCK_SIZE, INDEX_PAGES, strict)
+                    indexChannels[index] = PagedFile(channel, INDEX_BLOCK_SIZE, INDEX_PAGES, strict)
                 }
             }
 
@@ -410,7 +440,7 @@ class JagexFileStore(
                 Files.createFile(dataFile)
             }
 
-            if (!listOf(*options).contains(FileStoreOption.Write)) {
+            if (FileStoreOption.Write !in options) {
                 options = Arrays.copyOf(options, options.size + 1)
                 options[options.size - 1] = FileStoreOption.Write
             }

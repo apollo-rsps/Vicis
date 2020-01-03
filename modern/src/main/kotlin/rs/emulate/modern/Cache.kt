@@ -162,8 +162,8 @@ class Cache(
     }
 
     fun createChecksumTable(): ChecksumTable {
-        referenceTables.indices.find { dirtyReferenceTables[it] }?.let {
-            throw IllegalStateException("flush() must be called before createChecksumTable()")
+        check(referenceTables.indices.none { dirtyReferenceTables[it] }) {
+            "flush() must be called before createChecksumTable()"
         }
 
         val checksumTable = ChecksumTable()

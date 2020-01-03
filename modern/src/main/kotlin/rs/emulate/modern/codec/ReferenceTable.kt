@@ -108,7 +108,7 @@ class ReferenceTable {
         /* write size */
         when {
             format >= FORMAT_SMART -> buf.writeUnsignedIntSmart(size)
-            size <= 0xffff -> buf.writeShort(size)
+            size <= 0xFFFF -> buf.writeShort(size)
             else -> throw IOException("Format must be 7 or higher for reference tables with more than 65535 entries")
         }
 
@@ -116,6 +116,7 @@ class ReferenceTable {
         var last = 0
         for (id in entries.keys) {
             val delta = id - last
+
             if (format >= FORMAT_SMART) {
                 buf.writeUnsignedIntSmart(delta)
             } else {
@@ -333,8 +334,8 @@ class ReferenceTable {
         var nameHash = 0
             set(nameHash) {
                 table.entriesByName.remove(this.nameHash, this)
+                table.entriesByName.put(nameHash, this)
                 field = nameHash
-                table.entriesByName.put(this.nameHash, this)
             }
 
         val capacity: Int
@@ -391,9 +392,9 @@ class ReferenceTable {
     inner class ChildEntry(private val parent: Entry, val id: Int) {
         var nameHash = 0
             set(nameHash) {
-                this.parent.childrenByName.remove(this.nameHash, this)
+                parent.childrenByName.remove(this.nameHash, this)
+                parent.childrenByName.put(nameHash, this)
                 field = nameHash
-                this.parent.childrenByName.put(this.nameHash, this)
             }
 
         fun setName(name: String) {

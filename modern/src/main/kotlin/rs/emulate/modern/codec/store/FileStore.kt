@@ -7,8 +7,9 @@ import java.nio.file.Path
 
 interface FileStore : Closeable {
 
+    operator fun contains(index: Int): Boolean
+
     fun addIndex(index: Int)
-    fun containsIndex(index: Int): Boolean
     fun removeIndex(index: Int)
     fun listIndexes(): List<Int>
 
