@@ -8,20 +8,20 @@ import rs.emulate.editor.core.workbench.properties.ResourceProperty
 import rs.emulate.editor.core.workbench.properties.ResourcePropertySheetItem
 import rs.emulate.editor.vfs.VirtualFileId
 
-interface ResourcePropertySupport<T : ResourceProperty, V : VirtualFileId>
-    : Callback<PropertySheet.Item, PropertyEditor<*>> {
-
-    fun createEditor(item: ResourcePropertySheetItem<T>): PropertyEditor<*>?
-
+interface ResourcePropertySupport<T : ResourceProperty, V : VirtualFileId> : Callback<PropertySheet.Item, PropertyEditor<*>> {
     fun createProperties(project: Project<V>, id: V): List<PropertySheet.Item>
 
-    override fun call(param: PropertySheet.Item?): PropertyEditor<*>? {
-        return if (param is ResourcePropertySheetItem<*>) {
-            @Suppress("UNCHECKED_CAST")
-            createEditor(param as ResourcePropertySheetItem<T>)
+    override fun call(param: PropertySheet.Item): PropertyEditor<*> {
+        if (param is ResourcePropertySheetItem<*>) {
+            val editor = param.propertyEditorClass
+
+            val constructor = checkNotNull(editor.constructors.firstOrNull()) {
+                "PropertyEditor type $editor must have a constructor that takes a PropertySheet.Item"
+            }
+
+            return constructor.call(param)
         } else {
-            null
+            throw UnsupportedOperationException("Unrecognised PropertySheet.Item type ${param::class.simpleName}.")
         }
     }
-
 }

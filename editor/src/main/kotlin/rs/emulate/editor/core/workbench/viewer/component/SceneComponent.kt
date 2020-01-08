@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.scene.image.ImageView
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.Pane
+import rs.emulate.scene3d.Node
 import rs.emulate.scene3d.Scene
 import rs.emulate.scene3d.SceneAnimator
 import rs.emulate.scene3d.backend.opengl.OpenGLRenderer
@@ -66,5 +67,9 @@ class SceneComponent : Pane() {
         onStarted.subscribe { sceneAnimator.start() }
 
         children.add(frontBuffer)
+    }
+
+    fun addChild(child: Node) {
+        scene3d.addChild(child)
     }
 }

@@ -10,6 +10,11 @@ object ConfigEntryDecoder {
         return index.readUnsignedShort()
     }
 
+    fun fileCount(config: Archive, entry: String): Int {
+        val index = config[entry + Config.INDEX_EXTENSION].buffer
+        return index.readableBytes() / Short.SIZE_BYTES - 2
+    }
+
     fun <T : Definition> decode(config: Archive, decoder: ConfigDecoder<T>): List<T> {
         val data = config[decoder.entryName + Config.DATA_EXTENSION].buffer
         val index = config[decoder.entryName + Config.INDEX_EXTENSION].buffer

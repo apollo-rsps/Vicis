@@ -37,8 +37,8 @@ class WorkbenchPropertySheet @Inject constructor(
         } else {
             val properties = support.createProperties(selection.project, selection.vfsId)
 
-            propertySheet.items.setAll(properties)
             propertySheet.propertyEditorFactory = support
+            propertySheet.items.setAll(properties)
         }
     }
 

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @FxmlComponent
 class WorkbenchResourceViewer @Inject constructor(
-    private val ctx: WorkbenchContext,
+    ctx: WorkbenchContext,
     private val viewerSupportMap: @JvmSuppressWildcards Map<ResourceType, ResourceViewerSupport<*>>
 ) : TabPane() {
     private val tabMap = mutableMapOf<VirtualFileId, Tab>()
@@ -30,7 +30,7 @@ class WorkbenchResourceViewer @Inject constructor(
         @Suppress("UNCHECKED_CAST")
         val support = viewerSupportMap[selection.type] as ResourceViewerSupport<V>? ?: return
 
-        val view = support.createViewer(selection.vfsId)
+        val view = support.createViewer(selection.vfsId, selection.project.loader)
         val tab = tabMap.computeIfAbsent(selection.vfsId) { Tab(selection.vfsId.toString(), view.root) }
 
         tabs.add(tab)

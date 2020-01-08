@@ -16,3 +16,4 @@ sealed class LegacyFileId : VirtualFileId {
 }
 
 sealed class ModernFileId : VirtualFileId
+

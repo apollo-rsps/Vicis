@@ -5,8 +5,8 @@ import com.google.inject.TypeLiteral
 import com.google.inject.multibindings.MapBinder
 import rs.emulate.editor.core.content.capabilities.ResourcePropertySupport
 import rs.emulate.editor.core.content.capabilities.ResourceViewerSupport
-import rs.emulate.editor.legacy.npc.NpcPropertySupport
-import rs.emulate.editor.legacy.npc.NpcViewerSupport
+import rs.emulate.editor.legacy.config.npc.NpcPropertySupport
+import rs.emulate.editor.legacy.config.npc.NpcViewerSupport
 import rs.emulate.editor.vfs.LegacyResourceType
 import rs.emulate.editor.vfs.ResourceType
 

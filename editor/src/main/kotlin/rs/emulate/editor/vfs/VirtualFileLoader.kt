@@ -22,6 +22,10 @@ class LegacyFileLoader(
         }
     }
 
+    fun configFileCount(entry: String): Int { // TODO generalise?
+        return ConfigEntryDecoder.fileCount(configArchive, entry)
+    }
+
     private fun loadFileEntry(id: LegacyFileId.FileEntry): ByteBuf? {
         return cache[id.type, id.file]
     }
