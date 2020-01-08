@@ -21,6 +21,8 @@ dependencies {
 
     lwjglArtifacts.forEach {
         implementation("org.lwjgl", it, lwjglVersion)
+        runtimeOnly("org.lwjgl", it, lwjglVersion, classifier = "natives-windows")
+        runtimeOnly("org.lwjgl", it, lwjglVersion, classifier = "natives-linux")
     }
 }
 

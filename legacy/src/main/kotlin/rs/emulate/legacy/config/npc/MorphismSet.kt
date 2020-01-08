@@ -1,7 +1,6 @@
 package rs.emulate.legacy.config.npc
 
 import io.netty.buffer.ByteBuf
-import java.util.Arrays
 
 /**
  * A set of morphisms for an npc or object.
@@ -11,8 +10,8 @@ import java.util.Arrays
  * @param morphisms The morphisms.
  */
 data class MorphismSet(
-    val bitVariable: Int,
-    val parameterVariable: Int,
+    val varbit: Int,
+    val varp: Int,
     val morphisms: IntArray
 ) {
 
@@ -45,8 +44,8 @@ data class MorphismSet(
          * Encodes the specified [MorphismSet] into the specified [ByteBuf].
          */
         fun encode(buffer: ByteBuf, set: MorphismSet): ByteBuf {
-            buffer.writeShort(set.bitVariable)
-                .writeShort(set.parameterVariable)
+            buffer.writeShort(set.varbit)
+                .writeShort(set.varp)
                 .writeByte(set.count - 1)
             set.morphisms.forEach { buffer.writeShort(it) }
 
@@ -60,17 +59,17 @@ data class MorphismSet(
 
         other as MorphismSet
 
-        if (bitVariable != other.bitVariable) return false
-        if (parameterVariable != other.parameterVariable) return false
-        if (!Arrays.equals(morphisms, other.morphisms)) return false
+        if (varbit != other.varbit) return false
+        if (varp != other.varp) return false
+        if (!morphisms.contentEquals(other.morphisms)) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = bitVariable
-        result = 31 * result + parameterVariable
-        result = 31 * result + Arrays.hashCode(morphisms)
+        var result = varbit
+        result = 31 * result + varp
+        result = 31 * result + morphisms.contentHashCode()
         return result
     }
 

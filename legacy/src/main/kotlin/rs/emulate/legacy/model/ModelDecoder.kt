@@ -3,7 +3,7 @@ package rs.emulate.legacy.model
 import io.netty.buffer.ByteBuf
 import rs.emulate.legacy.model.ModelFeature.*
 import rs.emulate.util.readSignedSmart
-import java.util.HashSet
+import java.util.*
 
 /**
  * A decoder for [Model]s.
@@ -34,7 +34,7 @@ class ModelDecoder(private val buffer: ByteBuf) {
 
     fun decode(): Model {
         val header = buffer.copy()
-        header.readerIndex(buffer.capacity() - HEADER_SIZE)
+        header.readerIndex(buffer.readableBytes() - HEADER_SIZE)
 
         vertices = arrayOfNulls(header.readUnsignedShort())
         faces = arrayOfNulls(header.readUnsignedShort())
@@ -128,7 +128,7 @@ class ModelDecoder(private val buffer: ByteBuf) {
         faceDataOffset: Int,
         typesOffset: Int,
         coloursOffset: Int,
-        renderPrioritiesOffset: Int,
+        prioritiesOffset: Int,
         alphasOffset: Int,
         bonesOffset: Int,
         texturePointersOffset: Int
@@ -145,7 +145,7 @@ class ModelDecoder(private val buffer: ByteBuf) {
         colours.readerIndex(coloursOffset)
 
         val priorities = buffer.copy()
-        priorities.readerIndex(renderPrioritiesOffset)
+        priorities.readerIndex(prioritiesOffset)
 
         val alphas = buffer.copy()
         alphas.readerIndex(alphasOffset)

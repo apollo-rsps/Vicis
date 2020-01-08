@@ -16,7 +16,7 @@ import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.ArrayList
+import java.util.*
 import java.util.zip.CRC32
 
 /**
@@ -138,11 +138,13 @@ class IndexedFileSystem(base: Path, private val mode: AccessMode) : Closeable {
     }
 
     fun getIndex(type: Int, file: Int): Index {
-        Preconditions.checkElementIndex(type, indices.size, "File descriptor type out of bounds.")
+        Preconditions.checkElementIndex(type, indices.size, "File descriptor type ($type) out of bounds.")
 
         val index = indices[type]
         val position = (file * Index.BYTES).toLong()
-        require(position >= 0 && index.length() >= position + Index.BYTES) { "Could not find find index." }
+        require(position >= 0 && index.length() >= position + Index.BYTES) {
+            "Could not find find index for $file (maximum ${index.length() / Index.BYTES})."
+        }
 
         val bytes = ByteArray(Index.BYTES)
         synchronized(index) {

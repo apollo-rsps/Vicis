@@ -1,6 +1,6 @@
 package rs.emulate.scene3d
 
-import java.util.HashSet
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.properties.Delegates.observable
 
@@ -8,7 +8,7 @@ import kotlin.properties.Delegates.observable
  * Root node of the scene-graph.
  */
 class Scene : Node() {
-    override var  dirty: Boolean = true
+    override var dirty: Boolean = true
 
     /**
      * The width, in pixels, of the scenes viewport.

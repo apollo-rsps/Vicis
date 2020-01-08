@@ -1,17 +1,15 @@
 package rs.emulate.legacy.model
 
-import java.util.Arrays
-
 /**
  * A representation of a Model stored in the cache.
  *
  * @param textureCoordinates A pool of texture coordinates, projected into viewspace.
  */
 data class Model(
-    private val features: Set<ModelFeature>,
+    val features: Set<ModelFeature>,
     val faces: Array<Face>,
     val vertices: Array<Vertex>,
-    private val textureCoordinates: Array<TexCoord>
+    val textureCoordinates: Array<TexCoord>
 ) {
 
     /**
@@ -36,10 +34,10 @@ data class Model(
     override fun equals(other: Any?): Boolean {
         if (other is Model) {
             if (features != other.features) return false
-            if (!Arrays.equals(faces, other.faces)) return false
-            if (!Arrays.equals(vertices, other.vertices)) return false
+            if (!faces.contentEquals(other.faces)) return false
+            if (!vertices.contentEquals(other.vertices)) return false
 
-            return Arrays.equals(textureCoordinates, other.textureCoordinates)
+            return textureCoordinates.contentEquals(other.textureCoordinates)
         }
 
         return false
@@ -47,9 +45,9 @@ data class Model(
 
     override fun hashCode(): Int {
         var result = features.hashCode()
-        result = 31 * result + Arrays.hashCode(faces)
-        result = 31 * result + Arrays.hashCode(vertices)
-        return 31 * result + Arrays.hashCode(textureCoordinates)
+        result = 31 * result + faces.contentHashCode()
+        result = 31 * result + vertices.contentHashCode()
+        return 31 * result + textureCoordinates.contentHashCode()
     }
 
 }
