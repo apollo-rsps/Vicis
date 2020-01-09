@@ -36,6 +36,14 @@ class NpcViewerSupport : ResourceViewerSupport<LegacyFileId.ConfigEntry> {
         return object : ResourceView() {
             override val root = SceneComponent()
 
+            override fun onFocusGained() {
+                root.activeProperty.set(true)
+            }
+
+            override fun onFocusLost() {
+                root.activeProperty.set(false)
+            }
+
             init {
                 root.addChild(mesh)
             }

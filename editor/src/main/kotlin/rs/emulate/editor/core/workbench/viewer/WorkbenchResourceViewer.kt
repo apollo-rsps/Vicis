@@ -11,14 +11,32 @@ import rs.emulate.editor.vfs.ResourceType
 import rs.emulate.editor.vfs.VirtualFileId
 import javax.inject.Inject
 
+const val VIEWER_PROP_KEY = "viewer"
+const val RESOURCE_PROP_KEY = "resource"
+
+var Tab.view: ResourceView
+    get() = properties[VIEWER_PROP_KEY] as ResourceView
+    set(v) {
+        properties[VIEWER_PROP_KEY] = v
+    }
+
+var Tab.vfsId: VirtualFileId?
+    get() = properties[RESOURCE_PROP_KEY] as VirtualFileId
+    set(v) {
+        properties[RESOURCE_PROP_KEY] = v
+    }
+
+
 @FxmlComponent
 class WorkbenchResourceViewer @Inject constructor(
-    ctx: WorkbenchContext,
+    private val ctx: WorkbenchContext,
     private val viewerSupportMap: @JvmSuppressWildcards Map<ResourceType, ResourceViewerSupport<*>>
 ) : TabPane() {
-    private val tabMap = mutableMapOf<VirtualFileId, Tab>()
 
     init {
+        isFocusTraversable = true
+
+        // @TODO - 2-way binding between tab selection and workbench selection
         ctx.selectionProperty.onChange {
             when (it) {
                 is VirtualFileSelection<*> -> openView(it)
@@ -29,11 +47,25 @@ class WorkbenchResourceViewer @Inject constructor(
     fun <V : VirtualFileId> openView(selection: VirtualFileSelection<V>) {
         @Suppress("UNCHECKED_CAST")
         val support = viewerSupportMap[selection.type] as ResourceViewerSupport<V>? ?: return
+        var tab = tabs.find { it.vfsId == selection.vfsId }
 
-        val view = support.createViewer(selection.vfsId, selection.project.loader)
-        val tab = tabMap.computeIfAbsent(selection.vfsId) { Tab(selection.vfsId.toString(), view.root) }
+        if (tab == null) {
+            val view = support.createViewer(selection.vfsId, selection.project.loader)
+            tab = Tab(selection.vfsId.toString(), view.root)
+            tab.vfsId = selection.vfsId
+            tab.view = view
+            tab.setOnCloseRequest {
+                view.onFocusLost()
+                ctx.selection = null
+            }
 
-        tabs.add(tab)
+            tabs += tab
+        }
+
+        selectionModel.selectedItem?.view?.onFocusLost()
         selectionModel.select(tab)
+
+        tab.view.onFocusGained()
+        ctx.selection = selection
     }
 }
