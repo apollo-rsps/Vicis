@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 
 class SceneComponent : Pane() {
     private val scene3d = Scene()
-    val activeProperty = SimpleBooleanProperty(true)
+    val activeProperty = SimpleBooleanProperty(false)
 
     private val onSizeChanged = merge(changesOf(heightProperty()), changesOf(widthProperty())).throttleLast(200L, TimeUnit.MILLISECONDS)
     private val onVisibilityChanged = valuesOf(activeProperty).distinctUntilChanged()
@@ -51,10 +51,10 @@ class SceneComponent : Pane() {
 
             scene3d.width = newWidth
             scene3d.height = newHeight
-            scene3d.camera.perspective(newWidth, newHeight, 45f, 0.01f, 100f)
+            scene3d.camera.perspective(newWidth, newHeight, 70f, 0.01f, 100f)
         }
 
-        scene3d.camera.move(0f, 1f, -5f)
+        scene3d.camera.move(0f, 1f, 5f)
 
         val rendererTarget = JavaFXRenderTarget(frontBuffer)
         val renderer = OpenGLRenderer()

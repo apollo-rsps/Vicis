@@ -48,7 +48,7 @@ class OpenGLShaderProgram(
 
         glValidateProgram(id)
         if (glGetProgrami(id, GL_VALIDATE_STATUS) <= 0) {
-            throw RuntimeException("Failed to validate program: ${glGetProgramInfoLog(id)}")
+            throw RuntimeException("Failed to validate program: ${glGetProgramInfoLog(id)}, error: ${glGetError()}")
         }
     }
 
