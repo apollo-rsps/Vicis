@@ -51,7 +51,7 @@ class NpcViewerSupport : ResourceViewerSupport<LegacyFileId.ConfigEntry> {
     }
 
     // TODO temporary
-    private fun Vertex.toVec3f() = Vector3f(x * 0.01f, -y * 0.01f, z * 0.01f)
+    private fun Vertex.toVec3f() = Vector3f(-x * 0.01f, -y * 0.01f - 3f, z * 0.01f)
 
     private fun meshFromModels(models: List<Model>): Mesh {
         val positions = mutableListOf<Vector3f>()
