@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     `java-library`
+    id("com.jfrog.bintray")
 }
 
 ext["moduleName"] = "rs.emulate.legacy"

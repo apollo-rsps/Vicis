@@ -3,6 +3,7 @@ plugins {
     `java-library`
     `maven-publish`
     application
+    id("com.jfrog.bintray")
 }
 
 ext["moduleName"] = "rs.emulate.modern"
