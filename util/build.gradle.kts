@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     `java-library`
+    `maven-publish`
 }
 
 description = "Vicis Utilities"

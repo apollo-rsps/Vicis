@@ -27,13 +27,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./gradlew publish
+          ./gradlew bintrayUpload
         if: github.event_name == 'push'
 
       - name: Publish release binaries
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
         run: |
           NEW_VERSION=${GITHUB_REF##*/}
-          ./gradlew -Pversion=${NEW_VERSION} -Pbintray.repository=releases publish
+          ./gradlew -Pversion=${NEW_VERSION} -Pbintray.repository=releases bintrayUpload
         if: github.event_name == 'release'
