@@ -28,6 +28,16 @@ subprojects {
             dependencies {
                 val api by configurations
                 api("com.michael-bull.kotlin-result:kotlin-result:1.1.4")
+
+                val testImplementation by configurations
+                testImplementation(kotlin("test"))
+                testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+                testImplementation("org.junit.jupiter:junit-jupiter-params:5.5.2")
+                testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
+                testImplementation("io.mockk:mockk:1.7.15")
+
+                val testRuntimeOnly by configurations
+                testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.5.2")
             }
         }
 
