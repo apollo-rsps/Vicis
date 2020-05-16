@@ -38,16 +38,4 @@ class JagexFileStoreTest {
             }
         }
     }
-
-
-    @Test
-    fun `opens cache and reference table`() {
-        val fs = JagexFileStore.open(
-            Paths.get("/home/gtierney/workspace/github/apollo-rsps/vicis/data/resources/181"),
-            FileStoreOption.Lenient
-        )
-        val cache = ModernCache.open(fs)
-    }
-
-    // TODO add read/write/etc. tests
 }
