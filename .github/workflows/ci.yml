@@ -13,8 +13,27 @@ jobs:
         with:
           java-version: 11
 
+      - name: Archive RuneScape caches into GitHub Actions cache
+        id: cache-testdata
+        uses: actions/cache@v1
+        with:
+          path: testData/
+          key: rs-cache-testdata
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+
+      - name: Download RuneScape caches for integration tests
+        env:
+          LEGACY_CACHE_URL: ${{ secrets.RS2_377_CACHE }}
+          OSRS_CACHE_URL: ${{ secrets.OSRS_181_CACHE }}
+        run: |
+          mkdir -p testData/osrs/181 testData/rs2/377
+          curl "$LEGACY_CACHE_URL" -o rs2-377.tar.xz
+          tar -xf rs2-377.tar.xz -C testData/rs2/377
+          curl "$OSRS_CACHE_URL" -o osrs-181.tar.xz
+          tar -xf osrs-181.tar.xz -C testData/osrs/181
+        if: steps.cache-testdata.outputs.cache-hit != 'true'
 
       - name: Run tests with Gradle
         run: ./gradlew check
