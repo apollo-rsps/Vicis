@@ -1,6 +1,6 @@
 rootProject.name = "vicis"
 
-include("util", "legacy", "modern", "scene3d", "editor")
+include("util", "legacy", "modern", "scene3d", "common")
 
 pluginManagement {
     resolutionStrategy {

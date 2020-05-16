@@ -81,9 +81,44 @@ subprojects {
         }
 
         tasks.withType<Test> {
-            useJUnitPlatform()
+            useJUnitPlatform {
+                excludeTags("integration")
+            }
+
             testLogging {
                 events("passed", "skipped", "failed")
+            }
+        }
+
+        val integrationTest = tasks.register<Test>("integrationTest") {
+            description = "Runs integration tests."
+            group = "verification"
+
+            doFirst {
+                for ((key, value) in properties) {
+                    if (key.startsWith("VICIS")) {
+                        systemProperty(key, value.toString())
+                    }
+                }
+
+                useJUnitPlatform {
+                    includeTags("integration")
+                }
+            }
+
+            shouldRunAfter("test")
+        }
+
+        tasks.check { dependsOn(integrationTest) }
+
+        tasks.withType<JavaCompile>().configureEach {
+            val kotlinCompileTask = tasks.findByName("compileKotlin") as KotlinCompile
+
+            destinationDir = kotlinCompileTask.destinationDir
+            dependsOn(kotlinCompileTask)
+
+            doFirst {
+                options.compilerArgs = listOf("--module-path", classpath.asPath)
             }
         }
 

@@ -75,11 +75,11 @@ fun ByteBuf.writeCString(str: String, charset: Charset = Cp1252Charset) {
     writeByte(0)
 }
 
-fun ByteBuf.readAsciiString(): String {
+fun ByteBuf.readAsciiString(terminator: Int = 0): String {
     val builder = StringBuilder()
     var character = readByte()
 
-    while (character.toInt() != 10) {
+    while (character.toInt() != terminator) {
         builder.append(character.toChar())
         character = readByte()
     }
