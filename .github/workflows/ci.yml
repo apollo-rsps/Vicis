@@ -13,6 +13,13 @@ jobs:
         with:
           java-version: 11
 
+      - uses: actions/cache@v1
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Archive RuneScape caches into GitHub Actions cache
         id: cache-testdata
         uses: actions/cache@v1
