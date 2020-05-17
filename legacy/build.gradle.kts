@@ -19,6 +19,7 @@ dependencies {
     implementation("org.apache.commons", "commons-compress", commonsCompressVersion)
     implementation("com.google.guava", "guava", guavaVersion)
 
+    api(project(":common"))
     api(project(":util"))
 }
 

@@ -14,11 +14,4 @@ object Config {
      * The extension for entries containing the data index.
      */
     const val INDEX_EXTENSION = ".idx"
-
-    const val DEFINITION_TERMINATOR = 0
-
-}
-
-interface Definition {
-    val id: Int
 }

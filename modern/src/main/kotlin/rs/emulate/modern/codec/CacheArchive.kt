@@ -1,13 +1,13 @@
 package rs.emulate.modern.codec
 
 import io.netty.buffer.ByteBuf
-import rs.emulate.modern.Cache
+import rs.emulate.modern.ModernCache
 import rs.emulate.util.crypto.xtea.XteaKey
 import java.io.Closeable
 import java.io.FileNotFoundException
 
 class CacheArchive(
-    private val cache: Cache,
+    private val cache: ModernCache,
     private val index: Int,
     private val archive: Archive,
     private val entry: ReferenceTable.Entry

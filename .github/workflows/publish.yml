@@ -3,8 +3,6 @@ name: Publish to GitHub Packages
 on:
   release:
     types: [published]
-  push:
-    branches: [master]
 
 jobs:
   build:
@@ -22,14 +20,6 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
-
-      - name: Publish snapshot binaries
-        env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
-        run: |
-          ./gradlew bintrayUpload
-        if: github.event_name == 'push'
 
       - name: Publish release binaries
         env:
