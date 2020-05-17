@@ -1,6 +1,8 @@
 plugins {
     kotlin("jvm")
     id("org.openjfx.javafxplugin")
+    `maven-publish`
+    id("com.jfrog.bintray")
 }
 
 description = "Vicis 3D SceneGraph"

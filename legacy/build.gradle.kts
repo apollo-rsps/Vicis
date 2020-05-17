@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     `java-library`
+    `maven-publish`
     id("com.jfrog.bintray")
 }
 
