@@ -36,4 +36,7 @@ jobs:
         if: steps.cache-testdata.outputs.cache-hit != 'true'
 
       - name: Run tests with Gradle
-        run: ./gradlew check
+        run: |
+          ./gradlew check -Pvicis.runIntegrationTests=true \
+            -PVICIS_OSRS_CACHE=`pwd`/testData/osrs/181 \
+            -PVICIS_RS2_CACHE=`pwd`/testData/rs2/377

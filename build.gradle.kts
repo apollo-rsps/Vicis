@@ -94,6 +94,8 @@ subprojects {
             description = "Runs integration tests."
             group = "verification"
 
+            enabled = (rootProject.properties["vicis.runIntegrationTests"] as String?)?.toBoolean() == true
+
             doFirst {
                 for ((key, value) in properties) {
                     if (key.startsWith("VICIS")) {

@@ -5,6 +5,7 @@ import rs.emulate.common.Cache
 import rs.emulate.common.CacheDataReader
 import rs.emulate.common.CacheItem
 import rs.emulate.common.config.Definition
+import rs.emulate.common.config.npc.NpcDefinition
 import rs.emulate.common.config.obj.ObjectDefinition
 import rs.emulate.modern.codec.*
 import rs.emulate.modern.codec.Archive.Companion.readArchive
@@ -292,7 +293,8 @@ class ModernCache(
         }
 
         private val CONFIG_ENTRY_IDS = mapOf<KClass<out CacheItem<*>>, Int>(
-            ObjectDefinition::class to 10
+            ObjectDefinition::class to 10,
+            NpcDefinition::class to 9
         )
     }
 }
