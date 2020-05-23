@@ -1,4 +1,4 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
 
 /**
  * Contains [MapFile]-related constants.

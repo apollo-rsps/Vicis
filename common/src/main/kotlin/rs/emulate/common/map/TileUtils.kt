@@ -1,6 +1,6 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
 
-import rs.emulate.legacy.map.MapConstants.HEIGHT_MULTIPLICAND
+import rs.emulate.common.map.MapConstants.HEIGHT_MULTIPLICAND
 
 /*
  * Copyright (c) 2012-2013 Jonathan Edgecombe <jonathanedgecombe@gmail.com>
@@ -57,7 +57,10 @@ object TileUtils {
         val baseX = x - offset
         val baseZ = z - offset
 
-        return computeHeight(x + TILE_HEIGHT_X_OFFSET - baseX, z + TILE_HEIGHT_Z_OFFSET - baseZ) * HEIGHT_MULTIPLICAND
+        return computeHeight(
+            x + TILE_HEIGHT_X_OFFSET - baseX,
+            z + TILE_HEIGHT_Z_OFFSET - baseZ
+        ) * HEIGHT_MULTIPLICAND
     }
 
     /**
@@ -141,8 +144,26 @@ object TileUtils {
      * @return The smooth noise.
      */
     private fun smoothNoise(x: Int, z: Int): Int {
-        val corners = noise(x - 1, z - 1) + noise(x + 1, z - 1) + noise(x - 1, z + 1) + noise(x + 1, z + 1)
-        val sides = noise(x - 1, z) + noise(x + 1, z) + noise(x, z - 1) + noise(x, z + 1)
+        val corners = noise(
+            x - 1,
+            z - 1
+        ) + noise(
+            x + 1,
+            z - 1
+        ) + noise(
+            x - 1,
+            z + 1
+        ) + noise(x + 1, z + 1)
+        val sides = noise(
+            x - 1,
+            z
+        ) + noise(
+            x + 1,
+            z
+        ) + noise(
+            x,
+            z - 1
+        ) + noise(x, z + 1)
         val center = noise(x, z)
 
         return corners / 16 + sides / 8 + center / 4

@@ -1,4 +1,4 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
 
 /**
  * A plane of a map, which is a distinct height level.

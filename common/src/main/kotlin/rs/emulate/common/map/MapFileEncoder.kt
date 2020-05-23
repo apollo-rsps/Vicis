@@ -1,11 +1,11 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
 
-import rs.emulate.legacy.map.MapConstants.HEIGHT_MULTIPLICAND
-import rs.emulate.legacy.map.MapConstants.LOWEST_CONTINUED_TYPE
-import rs.emulate.legacy.map.MapConstants.MINIMUM_ATTRIBUTES_TYPE
-import rs.emulate.legacy.map.MapConstants.MINIMUM_OVERLAY_TYPE
-import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
-import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
+import rs.emulate.common.map.MapConstants.HEIGHT_MULTIPLICAND
+import rs.emulate.common.map.MapConstants.LOWEST_CONTINUED_TYPE
+import rs.emulate.common.map.MapConstants.MINIMUM_ATTRIBUTES_TYPE
+import rs.emulate.common.map.MapConstants.MINIMUM_OVERLAY_TYPE
+import rs.emulate.common.map.MapConstants.ORIENTATION_COUNT
+import rs.emulate.common.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
 import java.nio.ByteBuffer
 import java.util.*
 

@@ -1,16 +1,14 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
 
 import io.netty.buffer.ByteBuf
-import rs.emulate.legacy.IndexedFileSystem
-import rs.emulate.legacy.map.MapConstants.HEIGHT_MULTIPLICAND
-import rs.emulate.legacy.map.MapConstants.LOWEST_CONTINUED_TYPE
-import rs.emulate.legacy.map.MapConstants.MAP_INDEX
-import rs.emulate.legacy.map.MapConstants.MINIMUM_ATTRIBUTES_TYPE
-import rs.emulate.legacy.map.MapConstants.MINIMUM_OVERLAY_TYPE
-import rs.emulate.legacy.map.MapConstants.ORIENTATION_COUNT
-import rs.emulate.legacy.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
-import rs.emulate.legacy.map.Tile.Builder
-import rs.emulate.util.compression.gunzip
+import rs.emulate.common.CacheItemDecoder
+import rs.emulate.common.map.MapConstants.HEIGHT_MULTIPLICAND
+import rs.emulate.common.map.MapConstants.LOWEST_CONTINUED_TYPE
+import rs.emulate.common.map.MapConstants.MINIMUM_ATTRIBUTES_TYPE
+import rs.emulate.common.map.MapConstants.MINIMUM_OVERLAY_TYPE
+import rs.emulate.common.map.MapConstants.ORIENTATION_COUNT
+import rs.emulate.common.map.MapConstants.PLANE_HEIGHT_DIFFERENCE
+import rs.emulate.common.map.Tile.Builder
 import rs.emulate.util.world.Position
 
 /**
@@ -18,21 +16,19 @@ import rs.emulate.util.world.Position
  *
  * @param buffer The ByteBuf containing the MapFile data. Should not be compressed.
  */
-class MapFileDecoder(buffer: ByteBuf) {
-
-    private val buffer: ByteBuf = buffer.copy()
+object MapFileDecoder : CacheItemDecoder<MapId, MapFile> {
 
     /**
      * Decodes the data into a [MapFile].
      */
-    fun decode(): MapFile {
+    override fun decode(id: MapId, input: ByteBuf): MapFile {
         val planes = arrayOfNulls<MapPlane>(MapFile.PLANES)
 
         for (level in 0 until MapFile.PLANES) {
-            planes[level] = decodePlane(planes, level)
+            planes[level] = decodePlane(input, planes, level)
         }
 
-        return MapFile(planes.requireNoNulls())
+        return MapFile(id, planes.requireNoNulls())
     }
 
     /**
@@ -42,10 +38,10 @@ class MapFileDecoder(buffer: ByteBuf) {
      * @param level The height level.
      * @return The MapPlane.
      */
-    private fun decodePlane(planes: Array<MapPlane?>, level: Int): MapPlane {
+    private fun decodePlane(buf: ByteBuf, planes: Array<MapPlane?>, level: Int): MapPlane {
         val tiles = Array(MapFile.WIDTH) { x ->
             Array(MapFile.WIDTH) { z ->
-                decodeTile(planes, level, x, z)
+                decodeTile(buf, planes, level, x, z)
             }
         }
 
@@ -60,7 +56,7 @@ class MapFileDecoder(buffer: ByteBuf) {
      * @param x The x coordinate of the Tile.
      * @param z The z coordinate of the Tile.
      */
-    private fun decodeTile(planes: Array<MapPlane?>, level: Int, x: Int, z: Int): Tile {
+    private fun decodeTile(buffer: ByteBuf, planes: Array<MapPlane?>, level: Int, x: Int, z: Int): Tile {
         val builder = Builder(Position(x, z, level))
 
         var type: Int
@@ -92,16 +88,4 @@ class MapFileDecoder(buffer: ByteBuf) {
 
         return builder.build()
     }
-
-    companion object {
-
-        /**
-         * Creates a MapFileDecoder for the specified map file.
-         */
-        fun create(fs: IndexedFileSystem, map: Int): MapFileDecoder {
-            val decompressed = fs[MAP_INDEX, map].gunzip()
-            return MapFileDecoder(decompressed)
-        }
-    }
-
 }

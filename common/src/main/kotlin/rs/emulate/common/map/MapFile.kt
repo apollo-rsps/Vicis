@@ -1,11 +1,13 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
+
+import rs.emulate.common.CacheItem
 
 /**
  * A 3-dimensional 64x64 area of the map.
  *
  * @param planes The [MapPlane]s.
  */
-class MapFile(planes: Array<MapPlane>) {
+class MapFile(override val id: MapId, planes: Array<MapPlane>) : CacheItem<MapId> {
 
     val planes: Array<MapPlane> = planes.clone()
         get() = field.clone()

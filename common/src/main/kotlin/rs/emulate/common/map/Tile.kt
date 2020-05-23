@@ -1,4 +1,4 @@
-package rs.emulate.legacy.map
+package rs.emulate.common.map
 
 import rs.emulate.util.world.Position
 
@@ -39,7 +39,15 @@ class Tile(
         var underlay: Int = 0
 
         fun build(): Tile {
-            return Tile(position, attributes, height, overlay, overlayType, overlayOrientation, underlay)
+            return Tile(
+                position,
+                attributes,
+                height,
+                overlay,
+                overlayType,
+                overlayOrientation,
+                underlay
+            )
         }
 
     }
