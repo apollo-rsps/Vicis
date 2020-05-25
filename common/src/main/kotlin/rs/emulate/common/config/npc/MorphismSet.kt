@@ -31,9 +31,12 @@ data class MorphismSet(
         /**
          * Decodes a [MorphismSet] from the specified [ByteBuf].
          */
-        fun decode(buffer: ByteBuf): MorphismSet {
+        fun decode(buffer: ByteBuf, trailer: Boolean = false): MorphismSet {
             val varbit = buffer.readUnsignedShort()
             val varp = buffer.readUnsignedShort()
+            if (trailer) {
+                buffer.readUnsignedShort()
+            }
             val count = buffer.readUnsignedByte()
             val morphisms = IntArray(count + 1) { buffer.readUnsignedShort() }
 

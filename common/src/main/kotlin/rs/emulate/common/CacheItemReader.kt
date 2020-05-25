@@ -11,15 +11,17 @@ class CacheItemReader<CacheT, IdentityT, ItemT : CacheItem<IdentityT>>(
     /**
      * Read all available config [Definition]s into a lazily evaluated sequence.
      */
-    fun readAll() = reader.listing(cache).asSequence().map(this::read)
+    fun readAll() = reader.listing(cache).map(this::read).asSequence()
 
     /**
      * Read a single item and return the decoded representation.
      */
     fun read(id: IdentityT): ItemT {
-        val data = reader.load(cache, id)
-        val item = decoder.decode(id, data)
-
-        return item
+        try {
+            val data = reader.load(cache, id)
+            return decoder.decode(id, data)
+        } catch (err: Exception) {
+            throw Exception("Unable to decode item with id '$id'", err)
+        }
     }
 }

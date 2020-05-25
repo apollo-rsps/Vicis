@@ -5,6 +5,7 @@ import rs.emulate.common.config.Config
 import rs.emulate.common.config.ConfigDecoder
 import rs.emulate.common.config.npc.MorphismSet
 import rs.emulate.util.readAsciiString
+import rs.emulate.util.readUnsignedTriByte
 
 object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
 
@@ -68,18 +69,23 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
             22 -> delayShading = true
             23 -> occludes = true
             24 -> sequenceId = buffer.readUnsignedShort().let { if (it == 65535) -1 else it }
+            27 -> interactive = 1
             28 -> decorDisplacement = buffer.readUnsignedByte().toInt()
             29 -> brightness = buffer.readByte().toInt()
-            in 30 until 39 -> actions[opcode - 30] = buffer.readAsciiString().let { if (it == "hidden") null else it }
+            in 30 until 35 -> actions[opcode - 30] = buffer.readAsciiString().let { if (it == "hidden") null else it }
             39 -> diffusion = buffer.readByte().toInt()
-            40 -> {
+            40, 41 -> {
                 val count = buffer.readUnsignedByte().toInt()
 
                 repeat(count) {
                     val original = buffer.readUnsignedShort()
                     val replacement = buffer.readUnsignedShort()
 
-                    colours[original] = replacement
+                    if (opcode == 40) {
+                        colours[original] = replacement
+                    } else if (opcode == 41) {
+                        textures[original] = replacement
+                    }
                 }
             }
             60 -> minimapFunction = buffer.readUnsignedShort()
@@ -96,7 +102,37 @@ object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
             73 -> obstructsGround = true
             74 -> hollow = true
             75 -> supportsItems = buffer.readUnsignedByte().toInt()
-            77 -> morphisms = MorphismSet.decode(buffer)
+            77, 92 -> morphisms = MorphismSet.decode(buffer, opcode == 92)
+            78 -> {
+                buffer.readUnsignedShort()
+                buffer.readUnsignedByte()
+            }
+            79 -> {
+                buffer.readUnsignedShort()
+                buffer.readUnsignedShort()
+                buffer.readUnsignedByte()
+                val count = buffer.readUnsignedByte().toInt()
+                repeat(count) {
+                    buffer.readUnsignedShort()
+                }
+            }
+            81 -> buffer.readUnsignedByte()
+            82 -> buffer.readUnsignedShort()
+            249 -> {
+                val len = buffer.readUnsignedByte();
+
+                repeat(len.toInt()) {
+                    val isString = buffer.readUnsignedByte().toInt() == 1
+                    val key = buffer.readUnsignedMedium()
+                    val value = if(isString) {
+                        buffer.readAsciiString()
+                    } else {
+                        buffer.readInt()
+                    }
+
+                    params[key] = value
+                }
+            }
         }
     }
 

@@ -8,7 +8,7 @@ import java.nio.file.Paths
 import kotlin.reflect.KClass
 
 class Cache<CacheT : Closeable>(
-    private val fs: Closeable,
+    private val fs: CacheT,
     private val readers: Map<KClass<out CacheItem<*>>, CacheItemReader<CacheT, *, *>>
 ) : AutoCloseable by fs {
 
@@ -21,8 +21,21 @@ class Cache<CacheT : Closeable>(
         return reader
     }
 
+    /**
+     * Unwrap this [Cache] and return the underlying filesystem implementation.
+     */
+    fun unwrap() : CacheT = fs
+
+    fun <IdentityT, ItemT: CacheItem<IdentityT>> read(id: IdentityT, type: Class<ItemT>): ItemT {
+        return read(id, type.kotlin)
+    }
+
     fun <IdentityT, ItemT : CacheItem<IdentityT>> read(id: IdentityT, type: KClass<ItemT>): ItemT {
         return getReader(type).read(id)
+    }
+
+    fun <IdentityT, ItemT : CacheItem<IdentityT>> readAll(type: Class<ItemT>): Sequence<ItemT> {
+        return readAll(type.kotlin)
     }
 
     fun <IdentityT, ItemT : CacheItem<IdentityT>> readAll(type: KClass<ItemT>): Sequence<ItemT> {

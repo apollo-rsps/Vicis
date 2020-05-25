@@ -23,6 +23,8 @@ class LocationDefinition(
     var diffusion: Int = 0,
     var actions: Array<String?> = arrayOfNulls(10),
     var colours: MutableMap<Int, Int> = mutableMapOf(),
+    var textures: MutableMap<Int, Int> = mutableMapOf(),
+    var params: MutableMap<Int, Any> = mutableMapOf(),
     var minimapFunction: Int = 0,
     var inverted: Boolean = false,
     var castShadow: Boolean = true,
@@ -38,4 +40,9 @@ class LocationDefinition(
     var hollow: Boolean = false,
     var supportsItems: Int = if (solid) 1 else -1,
     var morphisms: MorphismSet = MorphismSet.EMPTY
-) : Definition
+) : Definition {
+    companion object {
+        @JvmStatic
+        fun create(id: Int) = LocationDefinition(id)
+    }
+}
