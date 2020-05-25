@@ -28,6 +28,8 @@ data class XteaKey(private val key: List<Int>) : Iterable<Int> {
 
     companion object {
         const val PARTS = 4
+
+        @JvmStatic
         val NONE = XteaKey(List(PARTS) { 0 })
 
         private val random = SecureRandom()
@@ -40,6 +42,7 @@ data class XteaKey(private val key: List<Int>) : Iterable<Int> {
             random.nextInt()
         }
 
+        @JvmStatic
         fun fromString(hex: String): XteaKey {
             require(hex.length == 8 * PARTS)
             return create {
@@ -47,6 +50,7 @@ data class XteaKey(private val key: List<Int>) : Iterable<Int> {
             }
         }
 
+        @JvmStatic
         fun fromArray(key: IntArray): XteaKey =
             XteaKey(key.toList())
     }

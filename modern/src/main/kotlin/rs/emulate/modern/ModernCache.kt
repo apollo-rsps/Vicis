@@ -277,10 +277,5 @@ class ModernCache(
 
             return ModernCache(store, referenceTables.toList())
         }
-
-        private val CONFIG_ENTRY_IDS = mapOf<KClass<out CacheItem<*>>, Int>(
-            ObjectDefinition::class to 10,
-            NpcDefinition::class to 9
-        )
     }
 }
