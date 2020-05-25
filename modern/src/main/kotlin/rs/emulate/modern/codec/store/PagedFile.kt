@@ -22,18 +22,20 @@ class PagedFile(
     }
 
     fun read(buf: ByteBuffer, pos: Long) {
-        cache.clear()
+        synchronized(cache) {
+            cache.clear()
 
-        if (cachePos == -1L || pos < cachePos || pos >= cachePos + pages) {
-            cachePos = pos
-            channel.readFullyOrToEof(cache, pos * pageSize)
+            if (cachePos == -1L || pos < cachePos || pos >= cachePos + pages) {
+                cachePos = pos
+                channel.readFullyOrToEof(cache, pos * pageSize)
+            }
+
+            val bytePos = (pos - cachePos).toInt() * pageSize
+            val byteLimit = bytePos + pageSize
+
+            cache.position(bytePos).limit(byteLimit)
+            buf.put(cache)
         }
-
-        val bytePos = (pos - cachePos).toInt() * pageSize
-        val byteLimit = bytePos + pageSize
-
-        cache.position(bytePos).limit(byteLimit)
-        buf.put(cache)
     }
 
     fun write(buf: ByteBuffer, pos: Long) {

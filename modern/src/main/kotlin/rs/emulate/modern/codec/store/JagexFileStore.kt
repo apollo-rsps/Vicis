@@ -27,9 +27,6 @@ class JagexFileStore(
     private val strict: Boolean = false
 ) : FileStore {
 
-    private val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
-    private val dataBuffer = ByteBuffer.allocate(DATA_BLOCK_SIZE)
-
     init {
         require(indexChannels.size == INDEX_LEN)
     }
@@ -70,7 +67,7 @@ class JagexFileStore(
             return false
         }
 
-        indexBuffer.clear()
+        val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
         indexChannel.read(indexBuffer, pos)
         indexBuffer.flip()
 
@@ -91,7 +88,7 @@ class JagexFileStore(
             throw FileNotFoundException()
         }
 
-        indexBuffer.clear()
+        val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
         indexChannel.read(indexBuffer, position)
         indexBuffer.flip()
 
@@ -120,6 +117,7 @@ class JagexFileStore(
         }
 
         var counter = 0
+        val dataBuffer = ByteBuffer.allocate(DATA_BLOCK_SIZE)
 
         do {
             if (sector <= 0) {
@@ -130,8 +128,6 @@ class JagexFileStore(
             if (position >= dataChannel.size()) {
                 throw IOException("Sector is outside data file")
             }
-
-            dataBuffer.limit(dataSize)
 
             dataBuffer.clear()
             dataChannel.read(dataBuffer, position)
@@ -188,7 +184,7 @@ class JagexFileStore(
 
         /* get existing file sector/size, if there is one */
         if (pos < indexChannel.size()) {
-            indexBuffer.clear()
+            val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
             indexChannel.read(indexBuffer, pos)
             indexBuffer.flip()
 
@@ -213,7 +209,7 @@ class JagexFileStore(
         }
 
         /* write index entry */
-        indexBuffer.clear()
+        val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
 
         indexBuffer.putMedium(size)
         indexBuffer.putMedium(sector)
@@ -248,7 +244,7 @@ class JagexFileStore(
                     throw IOException("Sector is outside data file")
                 }
 
-                dataBuffer.clear()
+                val dataBuffer = ByteBuffer.allocate(DATA_BLOCK_SIZE)
                 dataChannel.read(dataBuffer, pos)
                 dataBuffer.flip()
 
@@ -291,7 +287,7 @@ class JagexFileStore(
                 sector = 0
             }
 
-            dataBuffer.clear()
+            val dataBuffer = ByteBuffer.allocate(DATA_BLOCK_SIZE)
 
             if (extended) {
                 dataBuffer.putInt(file)
@@ -325,7 +321,7 @@ class JagexFileStore(
         val position = file.toLong()
 
         if (position < indexChannel.size()) {
-            indexBuffer.clear()
+            val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
             indexBuffer.putTriByte(0).putTriByte(0) // 6 bytes
             indexBuffer.flip()
 
@@ -342,7 +338,7 @@ class JagexFileStore(
         val size = indexChannel.size()
 
         return (0 until size).filter { file ->
-            indexBuffer.clear()
+            val indexBuffer = ByteBuffer.allocate(INDEX_BLOCK_SIZE)
             indexChannel.read(indexBuffer, file)
             indexBuffer.flip()
 
