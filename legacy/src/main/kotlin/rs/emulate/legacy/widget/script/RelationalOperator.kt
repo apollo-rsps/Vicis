@@ -6,7 +6,7 @@ package rs.emulate.legacy.widget.script
  * @param value The integer value.
  * @param token The String representation.
  */
-internal enum class RelationalOperator constructor(val value: Int, val token: String) {
+enum class RelationalOperator constructor(val value: Int, val token: String) {
 
     NOT_EQUAL(1, "!="),
     GREATER_OR_EQUAL(2, ">="),

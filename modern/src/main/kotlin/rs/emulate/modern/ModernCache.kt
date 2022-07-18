@@ -1,12 +1,6 @@
 package rs.emulate.modern
 
 import io.netty.buffer.ByteBuf
-import rs.emulate.common.Cache
-import rs.emulate.common.CacheDataReader
-import rs.emulate.common.CacheItem
-import rs.emulate.common.config.Definition
-import rs.emulate.common.config.npc.NpcDefinition
-import rs.emulate.common.config.obj.ObjectDefinition
 import rs.emulate.modern.codec.*
 import rs.emulate.modern.codec.Archive.Companion.readArchive
 import rs.emulate.modern.codec.Container.Companion.readContainer
@@ -14,7 +8,6 @@ import rs.emulate.modern.codec.ReferenceTable.Companion.readRefTable
 import rs.emulate.modern.codec.VersionedContainer.Companion.readVersionedContainer
 import rs.emulate.modern.codec.store.FileStore
 import rs.emulate.modern.codec.store.FileStoreOption
-import rs.emulate.modern.config.ModernConfigDataReader
 import rs.emulate.util.crc32
 import rs.emulate.util.crypto.digest.readWhirlpoolDigest
 import rs.emulate.util.crypto.xtea.XteaKey
@@ -22,12 +15,11 @@ import java.io.Closeable
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.nio.file.Path
-import kotlin.reflect.KClass
 
 class ModernCache(
     private val store: FileStore,
     private val referenceTables: List<ReferenceTable?>
-) : Closeable, Cache() {
+) : Closeable {
 
     private val dirtyReferenceTables = BooleanArray(referenceTables.size)
 
@@ -261,16 +253,6 @@ class ModernCache(
         store.write(index, file, versionedContainer.write())
     }
 
-    override fun <IdentityT> createDataReader(ty: KClass<out CacheItem<IdentityT>>): CacheDataReader<IdentityT> {
-        if (Definition::class.java.isAssignableFrom(ty.java)) {
-            val archiveEntryId = CONFIG_ENTRY_IDS[ty] ?: error("Unsupported type: $ty")
-            val loader = ModernConfigDataReader(this, archiveEntryId)
-            return loader as CacheDataReader<IdentityT>
-        }
-
-        TODO("Unimplemented")
-    }
-
     companion object {
         fun open(root: Path, vararg options: FileStoreOption): ModernCache {
             return open(FileStore.open(root, *options))
@@ -291,10 +273,5 @@ class ModernCache(
 
             return ModernCache(store, referenceTables.toList())
         }
-
-        private val CONFIG_ENTRY_IDS = mapOf<KClass<out CacheItem<*>>, Int>(
-            ObjectDefinition::class to 10,
-            NpcDefinition::class to 9
-        )
     }
 }

@@ -5,6 +5,7 @@ import rs.emulate.common.config.Config
 import rs.emulate.common.config.ConfigDecoder
 import rs.emulate.common.config.npc.MorphismSet
 import rs.emulate.util.readAsciiString
+import rs.emulate.util.readCString
 
 object LocationDefinitionDecoder : ConfigDecoder<LocationDefinition> {
 

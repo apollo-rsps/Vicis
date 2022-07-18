@@ -1,9 +1,7 @@
 plugins {
     kotlin("jvm")
-    `java-library`
+    java
     `maven-publish`
-    application
-    id("com.jfrog.bintray")
 }
 
 ext["moduleName"] = "rs.emulate.modern"
@@ -20,14 +18,9 @@ dependencies {
     implementation("com.google.guava", "guava", guavaVersion)
     implementation("org.bouncycastle", "bcprov-jdk15on", bouncycastleVersion)
 
-    testImplementation(project(":common", "testRuntime"))
     testImplementation("com.google.jimfs", "jimfs", jimfsVersion)
 
     api(project(":common"))
     api(project(":util"))
-}
-
-application {
-    mainClassName = "rs.emulate.modern.CacheKt"
 }
 

@@ -2,14 +2,9 @@ package rs.emulate.legacy
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import rs.emulate.common.Cache
-import rs.emulate.common.CacheDataReader
-import rs.emulate.common.CacheItem
-import rs.emulate.common.config.Definition
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.archive.ArchiveCodec
 import rs.emulate.legacy.archive.CompressionType
-import rs.emulate.legacy.config.LegacyConfigDataReader
 import rs.emulate.util.get
 import rs.emulate.util.writeTriByte
 import java.io.IOException
@@ -19,23 +14,15 @@ import java.nio.file.Files
 import java.nio.file.OpenOption
 import java.nio.file.Path
 import java.nio.file.StandardOpenOption
-import java.util.HashMap
-import kotlin.Comparator
-import kotlin.IllegalArgumentException
-import kotlin.Int
-import kotlin.String
-import kotlin.apply
-import kotlin.arrayOf
+import java.util.*
 import kotlin.collections.MutableMap.MutableEntry
-import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.collections.set
-import kotlin.reflect.KClass
 
 /**
  * A container for a set of [Archive]s.
  */
-class LegacyCache : Cache() {
+class LegacyCache {
 
     /**
      * The Map of FileDescriptors to Buffers.
@@ -58,7 +45,7 @@ class LegacyCache : Cache() {
         }
 
         val options = arrayOf<OpenOption>(StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
-            StandardOpenOption.WRITE)
+                StandardOpenOption.WRITE)
         val dataPath = base.resolve(dataFile)
 
         FileChannel.open(dataPath, *options).use { data ->
@@ -184,14 +171,6 @@ class LegacyCache : Cache() {
          * The default prefix of an index file.
          */
         private const val DEFAULT_INDEX_FILE_PREFIX = "main_file_cache.idx"
-    }
-
-    override fun <IdentityT> createDataReader(ty: KClass<out CacheItem<IdentityT>>): CacheDataReader<IdentityT> {
-        if (Definition::class.java.isAssignableFrom(ty.java)) {
-            return LegacyConfigDataReader(this, "test") as CacheDataReader<IdentityT>
-        }
-
-        TODO("Unimplemented")
     }
 
 }

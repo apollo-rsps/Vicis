@@ -43,9 +43,8 @@ object ObjectDefinitionDecoder : ConfigDecoder<ObjectDefinition> {
                 femaleTranslateY = buffer.readByte().toInt()
             }
             26 -> secondaryFemaleEquipmentId = buffer.readUnsignedShort()
-            in 30 until 35 -> groundActions[opcode - 30] =
-                buffer.readAsciiString(terminator = 0).let { if (it == "hidden") null else it }
-            in 35 until 40 -> widgetActions[opcode - 35] = buffer.readAsciiString(terminator = 0)
+            in 30 until 35 -> groundActions[opcode - 30] = buffer.readAsciiString().let { if (it == "hidden") null else it }
+            in 35 until 40 -> widgetActions[opcode - 35] = buffer.readAsciiString()
             40 -> {
                 val count = buffer.readUnsignedByte().toInt()
 

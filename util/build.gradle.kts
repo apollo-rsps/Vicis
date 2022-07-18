@@ -1,8 +1,6 @@
 plugins {
     kotlin("jvm")
     `java-library`
-    `maven-publish`
-    id("com.jfrog.bintray")
 }
 
 description = "Vicis Utilities"
