@@ -4,6 +4,7 @@ package rs.emulate.legacy.widget
  * The type of option a Widget may have.
  */
 enum class WidgetOption(val value: Int) {
+    NONE(0),
 
     /**
      * The OK option, indicating that the Widget's hover text will be set to 'OK'.
@@ -49,7 +50,7 @@ enum class WidgetOption(val value: Int) {
          */
         fun valueOf(value: Int): WidgetOption {
             return values().find { it.value == value } ?: throw IllegalArgumentException(
-                "No WidgetOption with the specified value exists.")
+                "No WidgetOption with the specified value ($value) exists.")
         }
     }
 

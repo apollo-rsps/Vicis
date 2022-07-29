@@ -12,6 +12,7 @@ import io.ktor.server.application.*
 import io.ktor.server.config.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import rs.emulate.common.config.ConfigDecoder
 import rs.emulate.common.config.Definition
 import rs.emulate.common.config.floor.FloorDefinitionDecoder
@@ -25,13 +26,19 @@ import rs.emulate.common.config.varbit.VarbitDefinitionDecoder
 import rs.emulate.common.config.varp.VarpDefinitionDecoder
 import rs.emulate.legacy.AccessMode
 import rs.emulate.legacy.IndexedFileSystem
+import rs.emulate.legacy.graphics.sprite.SpriteDecoder
 import rs.emulate.legacy.model.Model
 import rs.emulate.legacy.model.ModelDecoder
+import rs.emulate.legacy.widget.Widget
+import rs.emulate.legacy.widget.WidgetDecoder
 import rs.emulate.util.compression.gunzip
 import rs.emulate.vicis.web.storage.LegacyConfigStorageAdapter
+import java.awt.image.BufferedImage
+import java.awt.image.DataBufferInt
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.imageio.ImageIO
 
 
 val HTTP_DATE_FORMAT: SimpleDateFormat
@@ -82,6 +89,21 @@ fun Application.legacyCacheModule() {
     val fsPath = environment.config.tryGetString("vicis.cache") ?: error("No cache path provided")
     val fs = IndexedFileSystem(Paths.get(fsPath), AccessMode.READ_WRITE)
 
+    routing {
+        get("/sprites/{container}/{id}") {
+            val sprites = SpriteDecoder.create(fs, call.parameters["container"] ?: error("No container provided")).decode()
+            val sprite = sprites[call.parameters["id"]?.toIntOrNull() ?: error("No sprite ID provided")]
+
+            val image = BufferedImage(sprite.width, sprite.height, BufferedImage.TYPE_INT_ARGB)
+            val imageRaster = (image.raster.dataBuffer as DataBufferInt).data
+            System.arraycopy(sprite.raster, 0, imageRaster, 0, imageRaster.size)
+
+            call.respondOutputStream(ContentType.Image.PNG) {
+                ImageIO.write(image, "PNG", this)
+            }
+        }
+    }
+
     apiRouting {
         route("/models/{id}") {
             get<ModelParam, Model> { params ->
@@ -90,6 +112,15 @@ fun Application.legacyCacheModule() {
                 val model = ModelDecoder(modelData).decode()
 
                 respond(model)
+            }
+        }
+
+        route("/widgets") {
+            get<Unit, List<Widget>>() {
+                val widgetArchive = fs.getArchive(0, 3)
+                val widgets = WidgetDecoder(widgetArchive).decode()
+
+                respond(widgets)
             }
         }
 

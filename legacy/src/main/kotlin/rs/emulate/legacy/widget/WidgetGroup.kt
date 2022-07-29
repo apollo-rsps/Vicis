@@ -47,7 +47,9 @@ enum class WidgetGroup(val value: Int) {
     /**
      * The item list group, specifying that a Widget has a bespoke inventory, which serves only as a list of items.
      */
-    ITEM_LIST(7);
+    ITEM_LIST(7),
+
+    UNKNOWN_TEXT(8);
 
     companion object {
 

@@ -170,7 +170,7 @@ enum class LegacyInstructionType(
          */
         fun valueOf(value: Int): LegacyInstructionType {
             return values().find { instruction -> instruction.value == value }
-                ?: throw IllegalArgumentException("No instruction with the specified integer value exists.")
+                ?: throw IllegalArgumentException("No instruction with the specified integer value ($value) exists.")
         }
     }
 

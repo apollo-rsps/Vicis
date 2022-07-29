@@ -2,6 +2,7 @@ package rs.emulate.legacy.widget
 
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import rs.emulate.legacy.widget.component.WidgetComponent
 import rs.emulate.legacy.widget.script.LegacyClientScript
 import rs.emulate.legacy.widget.script.LegacyClientScriptCodec
 import rs.emulate.legacy.widget.type.Option
@@ -25,7 +26,7 @@ import java.lang.Short
  * @param option The [Option] of the Widget.
  * @param hoverText The hover text of the Widget.
  */
-abstract class Widget(
+class Widget(
     val id: Int,
     val parentId: Int?,
     val group: WidgetGroup,
@@ -36,6 +37,7 @@ abstract class Widget(
     val alpha: Int,
     val hoverId: Int?,
     val scripts: List<LegacyClientScript>,
+    val component: WidgetComponent,
     private val option: Option?,
     private val hoverText: String?
 ) {
@@ -44,7 +46,6 @@ abstract class Widget(
      * Encodes this Widget into a [ByteBuf].
      */
     fun encode(): ByteBuf {
-        val bespoke = encodeBespoke()
         val scripts = LegacyClientScriptCodec.encode(scripts)
         val option = encodeOption()
         val hoverText = encodeHoverText()
@@ -52,10 +53,8 @@ abstract class Widget(
         val parentSize = if (parentId != null) 2 * java.lang.Short.BYTES else java.lang.Short.BYTES
         val hoverSize = if (hoverId != null) java.lang.Short.BYTES else java.lang.Byte.BYTES
         val metaSize = 4 * java.lang.Short.BYTES + 3 * java.lang.Byte.BYTES
-        val specific =
-            scripts.readableBytes() + bespoke.readableBytes() + option.readableBytes() + hoverText.readableBytes()
 
-        val size = parentSize + metaSize + hoverSize + specific
+        val size = parentSize + metaSize + hoverSize
         val buffer = Unpooled.buffer(size) // TODO use composite buffer
 
         if (parentId != null) {
@@ -84,16 +83,12 @@ abstract class Widget(
         }
 
         buffer.writeBytes(scripts)
-        buffer.writeBytes(bespoke)
+//        buffer.writeBytes(bespoke)
         buffer.writeBytes(option)
 
         return buffer
     }
 
-    /**
-     * Encodes the bespoke data belonging to this Widget into a [ByteBuf].
-     */
-    protected abstract fun encodeBespoke(): ByteBuf
 
     /**
      * Encodes the hover text of this Widget into a [ByteBuf].
