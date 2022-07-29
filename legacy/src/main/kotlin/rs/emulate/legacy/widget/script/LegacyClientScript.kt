@@ -10,20 +10,31 @@ package rs.emulate.legacy.widget.script
  * - The accumulator register, which contains the result of the evaluation of the current instruction, and will modify
  *   the current value stored in the value register using the operator type held in the operator register.
  *
- * @param operator The [RelationalOperator] used to evaluate if the script state has changed.
- * @param default The default value of the clientscript.
- * @param instructions The [List] of [LegacyInstruction]s that make up this clientscript.
+ * @param instructions The [List] of [LegacyInstruction]s that make up this ClientScript.
  */
-class LegacyClientScript internal constructor(
-    val operator: RelationalOperator,
-    val default: Int,
-    instructions: List<LegacyInstruction>
-) {
+sealed class LegacyClientScript(instructions: List<LegacyInstruction>) {
 
     val instructions: List<LegacyInstruction> = instructions.toList()
 
     override fun toString(): String {
         return instructions.joinToString("\n", transform = LegacyInstruction::toString)
     }
+
+    /**
+     * A ClientScript that can have its result compared with a specified value, to yield `true` or `false`.
+     *
+     * @param operator The [RelationalOperator] used to test the result of the script.
+     * @param comparate The value the execution result is compared against.
+     */
+    class Predicate(
+        instructions: List<LegacyInstruction>,
+        val operator: RelationalOperator,
+        val comparate: Int
+    ) : LegacyClientScript(instructions)
+
+    /**
+     * A ClientScript that only returns a numeric value.
+     */
+    class Mathematical(instructions: List<LegacyInstruction>) : LegacyClientScript(instructions)
 
 }

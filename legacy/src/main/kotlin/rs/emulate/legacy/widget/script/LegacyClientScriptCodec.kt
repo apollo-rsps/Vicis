@@ -13,20 +13,19 @@ object LegacyClientScriptCodec {
      * Decodes a [List] of [LegacyClientScript]s from the specified [ByteBuf].
      */
     fun decode(buffer: ByteBuf): List<LegacyClientScript> {
-        var count = buffer.readUnsignedByte().toInt()
-        val operators = mutableListOf<RelationalOperator>()
-        val defaults = IntArray(count)
+        val predicateCount = buffer.readUnsignedByte().toInt()
+        val operators = ArrayList<RelationalOperator>(predicateCount)
+        val comparates = IntArray(predicateCount)
 
-        for (index in 0 until count) {
+        for (index in 0 until predicateCount) {
             operators += RelationalOperator.valueOf(buffer.readUnsignedByte().toInt())
-
-            defaults[index] = buffer.readUnsignedShort()
+            comparates[index] = buffer.readUnsignedShort()
         }
 
-        count = buffer.readUnsignedByte().toInt()
-        val scripts = mutableListOf<LegacyClientScript>()
+        val scriptCount = buffer.readUnsignedByte().toInt()
+        val scripts = ArrayList<LegacyClientScript>(scriptCount)
 
-        for (index in 0 until count) {
+        for (index in 0 until scriptCount) {
             val instructionCount = buffer.readUnsignedShort()
             val instructions = ArrayList<LegacyInstruction>(instructionCount)
 
@@ -35,11 +34,15 @@ object LegacyClientScriptCodec {
                 val type = LegacyInstructionType.valueOf(buffer.readUnsignedShort())
                 val operands = IntArray(type.operandCount) { buffer.readUnsignedShort() }
 
-                read += java.lang.Short.BYTES * (1 + type.operandCount)
+                read += (1 + type.operandCount)
                 instructions.add(LegacyInstruction.create(type, operands))
             }
 
-            scripts += LegacyClientScript(operators[index], defaults[index], instructions)
+            scripts += if (index < predicateCount) {
+                LegacyClientScript.Predicate(instructions, operators[index], comparates[index])
+            } else {
+                LegacyClientScript.Mathematical(instructions)
+            }
         }
 
         return scripts
@@ -52,13 +55,15 @@ object LegacyClientScriptCodec {
         val count = scripts.size
 
         val operators = Unpooled.buffer(count * java.lang.Byte.BYTES)
-        val defaults = Unpooled.buffer(count * java.lang.Short.BYTES)
+        val comparates = Unpooled.buffer(count * java.lang.Short.BYTES)
         val buffers = ArrayList<ByteBuf>(count)
         var size = count * (java.lang.Short.BYTES + java.lang.Byte.BYTES)
 
         for (script in scripts) {
-            operators.writeByte(script.operator.value)
-            defaults.writeShort(script.default)
+            if (script is LegacyClientScript.Predicate) {
+                operators.writeByte(script.operator.value)
+                comparates.writeShort(script.comparate)
+            }
 
             val instructions = script.instructions
             val buffer = Unpooled.buffer(instructions.size * java.lang.Short.BYTES)
@@ -73,7 +78,7 @@ object LegacyClientScriptCodec {
         }
 
         return Unpooled.compositeBuffer(2 + buffers.size).apply {
-            addComponents(operators, defaults)
+            addComponents(operators, comparates)
             addComponents(buffers)
         }
     }

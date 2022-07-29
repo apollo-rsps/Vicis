@@ -8,11 +8,10 @@ package rs.emulate.legacy.widget.script
  */
 enum class RelationalOperator constructor(val value: Int, val token: String) {
 
-    NOT_EQUAL(1, "!="),
-    GREATER_OR_EQUAL(2, ">="),
-    LESS_OR_EQUAL(3, "<="),
-    EQUAL(4, "=");
-
+    EQUAL(1, "="),
+    LESS_THAN(2, "<"),
+    GREATER_THAN(3, ">"),
+    NOT_EQUAL(4, "!=");
 
     companion object {
 
