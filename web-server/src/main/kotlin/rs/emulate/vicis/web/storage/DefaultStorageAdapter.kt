@@ -14,7 +14,7 @@ abstract class DefaultStorageAdapter<IdT, EntityT> : StorageAdapter<IdT, EntityT
     private var workingCopy: StorageWorkingCopy<IdT, EntityT>? = null
 
     private fun getOrCreateWorkingCopy(token: StorageCacheToken? = null): Result<StorageWorkingCopy<IdT, EntityT>, StorageError> {
-        if (workingCopy == null || workingCopy?.token != token) {
+        if (workingCopy == null ||  (token != null && workingCopy?.token != token)) {
             return loadWorkingCopy().onSuccess { newCopy -> workingCopy = newCopy }
         }
 
