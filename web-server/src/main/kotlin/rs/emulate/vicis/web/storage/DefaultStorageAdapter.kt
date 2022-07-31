@@ -2,6 +2,7 @@ package rs.emulate.vicis.web.storage
 
 import com.github.michaelbull.result.*
 import rs.emulate.vicis.web.storage.StorageCacheLookup.*
+import java.util.*
 
 data class StorageWorkingCopy<IdT, EntityT>(val items: Map<IdT, EntityT>, val token: StorageCacheToken)
 
@@ -13,16 +14,15 @@ abstract class DefaultStorageAdapter<IdT, EntityT> : StorageAdapter<IdT, EntityT
 
     private var workingCopy: StorageWorkingCopy<IdT, EntityT>? = null
 
-    private fun getOrCreateWorkingCopy(token: StorageCacheToken? = null): Result<StorageWorkingCopy<IdT, EntityT>, StorageError> {
-        if (workingCopy == null ||  (token != null && workingCopy?.token != token)) {
+    private fun getOrCreateWorkingCopy(): Result<StorageWorkingCopy<IdT, EntityT>, StorageError> {
+        if (workingCopy == null) {
             return loadWorkingCopy().onSuccess { newCopy -> workingCopy = newCopy }
         }
 
         return workingCopy?.let { Ok(it) } ?: Err(UnknownStorageError("Working copy was never initialized"))
     }
 
-    override fun getAll(token: StorageCacheToken?): Result<StorageCacheLookup<List<EntityT>>, StorageError> =
-        getOrCreateWorkingCopy(token)
+    override fun getAll(token: StorageCacheToken?) = getOrCreateWorkingCopy()
             .map { workingCopy ->
                 if (workingCopy.token == token) {
                     CacheHit()
@@ -31,7 +31,7 @@ abstract class DefaultStorageAdapter<IdT, EntityT> : StorageAdapter<IdT, EntityT
                 }
             }
 
-    override fun get(id: IdT, token: StorageCacheToken?) = getOrCreateWorkingCopy(token)
+    override fun get(id: IdT, token: StorageCacheToken?) = getOrCreateWorkingCopy()
         .map { workingCopy ->
             if (workingCopy.token == token) {
                 CacheHit()
@@ -40,11 +40,29 @@ abstract class DefaultStorageAdapter<IdT, EntityT> : StorageAdapter<IdT, EntityT
             }
         }
 
-    override fun putAll(entities: List<EntityT>, token: StorageCacheToken) {
-        TODO("Not yet implemented")
-    }
+    override fun putAll(entities: List<EntityT>, token: StorageCacheToken) = getOrCreateWorkingCopy()
+        .andThen { workingCopy ->
+            if (workingCopy.token == token) {
+                val newToken = StorageCacheToken(Random().nextLong().toString(16))
+                val newItems = HashMap(workingCopy.items)
+
+                entities.forEach {
+                    newItems[getElementId(it)] = it
+                }
+
+                this@DefaultStorageAdapter.workingCopy = StorageWorkingCopy(newItems, newToken)
+                Ok(Unit)
+            } else {
+                Err(DataConflict)
+            }
+        }
+
+    override fun put(entity: EntityT, token: StorageCacheToken) = putAll(listOf(entity), token)
 
     override fun flush() {
-        TODO("Not yet implemented")
+        val existingWorkingCopy = workingCopy
+        if (existingWorkingCopy != null) {
+            storeWorkingCopy(existingWorkingCopy)
+        }
     }
 }
