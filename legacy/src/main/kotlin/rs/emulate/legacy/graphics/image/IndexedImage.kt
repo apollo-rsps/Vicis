@@ -1,6 +1,7 @@
 package rs.emulate.legacy.graphics.image
 
 import rs.emulate.legacy.graphics.ImageFormat
+import rs.emulate.legacy.graphics.sprite.MediaId
 
 import java.util.Arrays
 import java.util.Objects
@@ -20,7 +21,7 @@ import java.util.Objects
  * @param resizeHeight The default height to resize the Image to, when requested.
  */
 class IndexedImage(
-    val name: String,
+    val name: MediaId,
     val format: ImageFormat,
     val width: Int,
     val height: Int,

@@ -1,5 +1,6 @@
 package rs.emulate.vicis.web
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.papsign.ktor.openapigen.OpenAPIGen
 import com.papsign.ktor.openapigen.model.schema.SchemaModel
 import com.papsign.ktor.openapigen.modules.ModuleProvider
@@ -22,8 +23,14 @@ import io.ktor.server.plugins.defaultheaders.*
 import io.ktor.server.plugins.partialcontent.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import rs.emulate.legacy.graphics.sprite.Sprite
 import kotlin.reflect.KType
 import kotlin.reflect.typeOf
+
+interface SpriteSerializationConfig {
+    @get:JsonIgnore
+    val raster: IntArray
+}
 
 fun Application.main() {
     install(DefaultHeaders)
@@ -38,7 +45,9 @@ fun Application.main() {
     }
 
     install(ContentNegotiation) {
-        jackson()
+        jackson() {
+            addMixIn(Sprite::class.java, SpriteSerializationConfig::class.java)
+        }
     }
 
     install(OpenAPIGen) {
@@ -53,7 +62,7 @@ fun Application.main() {
             }
         })
 
-        replaceModule(DefaultSchemaNamer, object: SchemaNamer {
+        replaceModule(DefaultSchemaNamer, object : SchemaNamer {
             val regex = Regex("[A-Za-z0-9_.]+")
             override fun get(type: KType): String {
                 return type.toString().replace(regex) { it.value.split(".").last() }.replace(Regex(">|<|, "), "_")

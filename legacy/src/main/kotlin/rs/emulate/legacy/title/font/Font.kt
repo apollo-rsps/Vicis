@@ -1,12 +1,14 @@
 package rs.emulate.legacy.title.font
 
+import rs.emulate.legacy.graphics.sprite.MediaId
+
 /**
  * A Font containing a set of character [Glyph]s.
  *
  * @param name The name of this font.
  * @param glyphs The array of Glyphs. Must have a length of `256`
  */
-class Font(val name: String, glyphs: Array<Glyph>) {
+class Font(val name: MediaId, glyphs: Array<Glyph>) {
 
     val glyphs: Array<Glyph>
         get() = field.clone()

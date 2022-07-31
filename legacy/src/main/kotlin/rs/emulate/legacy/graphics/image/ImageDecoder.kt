@@ -6,6 +6,7 @@ import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsConstants
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
+import rs.emulate.legacy.graphics.sprite.MediaId
 import rs.emulate.util.readUnsignedTriByte
 import java.io.IOException
 import java.util.Arrays
@@ -16,7 +17,7 @@ import java.util.Arrays
  * @param graphics The [Archive] containing the image.
  * @param name The name of the [IndexedImage(s)][IndexedImage] to decode.
  */
-class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, name) {
+class ImageDecoder(graphics: Archive, name: MediaId) : GraphicsDecoder(graphics, name) {
 
     /**
      * Decodes all available [IndexedImage]s.
@@ -93,7 +94,7 @@ class ImageDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, 
          *
          * @throws IOException If there is an error decoding the graphics [Archive].
          */
-        fun create(fs: IndexedFileSystem, name: String): ImageDecoder {
+        fun create(fs: IndexedFileSystem, name: MediaId): ImageDecoder {
             return ImageDecoder(fs.getArchive(0, GraphicsConstants.GRAPHICS_FILE_ID), name)
         }
     }

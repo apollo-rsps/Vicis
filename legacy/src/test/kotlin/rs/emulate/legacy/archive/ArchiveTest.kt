@@ -3,7 +3,6 @@ package rs.emulate.legacy.archive
 import io.netty.buffer.Unpooled
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import rs.emulate.legacy.archive.Archive.Companion.entryHash
 
 class ArchiveTest {
 

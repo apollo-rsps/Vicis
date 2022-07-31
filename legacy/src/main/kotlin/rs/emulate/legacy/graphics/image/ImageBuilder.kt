@@ -1,13 +1,14 @@
 package rs.emulate.legacy.graphics.image
 
 import rs.emulate.legacy.graphics.ImageFormat
+import rs.emulate.legacy.graphics.sprite.MediaId
 
 /**
  * A builder class for an [IndexedImage].
  *
  * @param name The name of the [IndexedImage].
  */
-class ImageBuilder(val name: String) {
+class ImageBuilder(val name: MediaId) {
 
     lateinit var format: ImageFormat
     var height: Int = 0
@@ -20,7 +21,6 @@ class ImageBuilder(val name: String) {
     var width: Int = 0
 
     init {
-        require(name.isNotEmpty()) { "Name cannot be empty." }
     }
 
     /**

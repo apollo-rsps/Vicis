@@ -4,6 +4,7 @@ import rs.emulate.legacy.IndexedFileSystem
 import rs.emulate.legacy.archive.Archive
 import rs.emulate.legacy.graphics.GraphicsDecoder
 import rs.emulate.legacy.graphics.ImageFormat
+import rs.emulate.legacy.graphics.sprite.MediaId
 
 /**
  * A [GraphicsDecoder] for [Font]s.
@@ -11,7 +12,7 @@ import rs.emulate.legacy.graphics.ImageFormat
  * @param graphics The [Archive] containing the font.
  * @param name The name of the [Font] to decode.
  */
-class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, name) {
+class FontDecoder(graphics: Archive, name: MediaId) : GraphicsDecoder(graphics, name) {
 
     /**
      * Decodes the [Font].
@@ -99,7 +100,7 @@ class FontDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, n
         /**
          * Creates a new FontDecoder for the Font with the specified name, using the specified [IndexedFileSystem].
          */
-        fun create(fs: IndexedFileSystem, name: String): FontDecoder {
+        fun create(fs: IndexedFileSystem, name: MediaId): FontDecoder {
             return FontDecoder(fs.getArchive(0, TITLE_FILE_ID), name)
         }
     }

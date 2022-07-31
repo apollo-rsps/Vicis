@@ -17,7 +17,8 @@ import java.util.Arrays
  * @param resizeWidth The default width to resize this sprite to, when requested.
  */
 class Sprite(
-    val name: String,
+    val name: MediaId,
+    val index: Int,
     raster: IntArray,
     val format: ImageFormat,
     val height: Int,

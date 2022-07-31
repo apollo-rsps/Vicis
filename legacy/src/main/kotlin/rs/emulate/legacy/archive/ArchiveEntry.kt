@@ -1,7 +1,6 @@
 package rs.emulate.legacy.archive
 
 import io.netty.buffer.ByteBuf
-import rs.emulate.legacy.archive.Archive.Companion.entryHash
 
 /**
  * A single entry in an [Archive].

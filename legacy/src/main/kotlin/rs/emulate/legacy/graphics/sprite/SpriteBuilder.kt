@@ -7,7 +7,7 @@ import rs.emulate.legacy.graphics.ImageFormat
  *
  * @param name The name of the [Sprite].
  */
-class SpriteBuilder(private var name: String) {
+class SpriteBuilder(private var name: MediaId, private var index: Int) {
 
     lateinit var format: ImageFormat
     var height: Int = 0
@@ -18,16 +18,12 @@ class SpriteBuilder(private var name: String) {
     var resizeWidth: Int = 0
     var width: Int = 0
 
-    init {
-        require(name.isNotEmpty()) { "Name cannot be empty." }
-    }
-
     /**
      * Builds the data contained in this builder into a [Sprite].
      */
     fun build(): Sprite {
         require(height != 0 && width != 0) { "Height and width must not be 0." }
-        return Sprite(name, raster, format, height, width, offsetX, offsetY, resizeHeight, resizeWidth)
+        return Sprite(name, index, raster, format, height, width, offsetX, offsetY, resizeHeight, resizeWidth)
     }
 
     /**
@@ -35,7 +31,7 @@ class SpriteBuilder(private var name: String) {
      * raster will be a deep copy.
      */
     fun duplicate(): SpriteBuilder {
-        val duplicate = SpriteBuilder(name)
+        val duplicate = SpriteBuilder(name, index)
 
         if (::format.isInitialized) {
             duplicate.format = format

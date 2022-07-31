@@ -1,7 +1,11 @@
 package rs.emulate.legacy.archive
 
 import java.io.FileNotFoundException
+import java.util.*
 
+public fun String.entryHash(): Int {
+    return uppercase(Locale.getDefault()).fold(0) { hash, character -> hash * 61 + character.toInt() - 32 }
+}
 /**
  * An archive in the RuneScape cache. An archive is a set of files that can be completely compressed, or each
  * individual file can be compressed.
@@ -33,9 +37,7 @@ class Archive(val entries: List<ArchiveEntry>) {
         /**
          * Hashes an [ArchiveEntry] name into an integer to be used as an identifier.
          */
-        fun String.entryHash(): Int {
-            return toUpperCase().fold(0) { hash, character -> hash * 61 + character.toInt() - 32 }
-        }
+
 
         val EMPTY_ARCHIVE = Archive(emptyList())
     }

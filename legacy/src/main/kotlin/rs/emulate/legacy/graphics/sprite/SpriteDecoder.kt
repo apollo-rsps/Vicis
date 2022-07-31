@@ -9,13 +9,19 @@ import rs.emulate.legacy.graphics.ImageFormat
 import rs.emulate.util.readUnsignedTriByte
 import java.util.Arrays
 
+// TODO: we should probably just always refer to media containers by id.
+sealed class MediaId {
+    data class Name(val value: String) : MediaId()
+    data class Id(val value: Int) : MediaId()
+}
+
 /**
  * Decodes a [Sprite] from the 2D-graphics archive.
  *
  * @param graphics The [Archive] containing the sprite.
  * @param name The name of the [Sprite] to decode.
  */
-class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics, name) {
+class SpriteDecoder(graphics: Archive, name: MediaId) : GraphicsDecoder(graphics, name) {
 
     /**
      * Decodes all [Sprite]s, returning the decoded Sprites as an [ImmutableList].
@@ -37,7 +43,7 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
         val sprites = mutableListOf<Sprite>()
 
         while (data.readableBytes() > 0 && index.readableBytes() > 0) {
-            sprites += decode(palette, resizeHeight, resizeWidth)
+            sprites += decode(sprites.size, palette, resizeHeight, resizeWidth)
         }
 
         return sprites.toList()
@@ -46,7 +52,7 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
     /**
      * Decodes data into a [Sprite].
      */
-    private fun decode(palette: IntArray, resizeHeight: Int, resizeWidth: Int): Sprite {
+    private fun decode(offset: Int, palette: IntArray, resizeHeight: Int, resizeWidth: Int): Sprite {
         val offsetX = index.readUnsignedByte()
         val offsetY = index.readUnsignedByte()
 
@@ -56,7 +62,7 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
         val format = ImageFormat.valueOf(index.readUnsignedByte().toInt())
         val raster = decodeRaster(format, width, height, palette)
 
-        return Sprite(name, raster, format, height, width, offsetX.toInt(), offsetY.toInt(), resizeHeight, resizeWidth)
+        return Sprite(name, offset, raster, format, height, width, offsetX.toInt(), offsetY.toInt(), resizeHeight, resizeWidth)
     }
 
     /**
@@ -91,7 +97,7 @@ class SpriteDecoder(graphics: Archive, name: String) : GraphicsDecoder(graphics,
          * Creates a new SpriteDecoder to decode a Sprite (or Sprites) with the specified name, using the specified
          * [IndexedFileSystem].
          */
-        fun create(fs: IndexedFileSystem, name: String): SpriteDecoder {
+        fun create(fs: IndexedFileSystem, name: MediaId): SpriteDecoder {
             return SpriteDecoder(fs.getArchive(0, GraphicsConstants.GRAPHICS_FILE_ID), name)
         }
     }
